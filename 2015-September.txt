@@ -1,0 +1,3424 @@
+From crbertoldo at gmail.com  Tue Sep  1 01:03:26 2015
+From: crbertoldo at gmail.com (Claudio Bertoldo)
+Date: Tue, 1 Sep 2015 02:03:26 -0300
+Subject: [Clearwater] [doubt] original sipp against an all_in_one
+	implementation
+In-Reply-To: <CY1PR0201MB0924B1A472C9434CF501ED71F4630@CY1PR0201MB0924.namprd02.prod.outlook.com>
+References: <CAC6=c0fTuDaQnQANb_Jd1D1OK88TVxiDOngx8=wN23AmSXMusg@mail.gmail.com>
+	<CO1PR02MB2403DD8AD9F13E7CF20D57C9B7C0@CO1PR02MB240.namprd02.prod.outlook.com>
+	<CAC6=c0e_sXPeBaPAchDU1BKpdk++QkpLt+zzD16Xde_ZOjhtxg@mail.gmail.com>
+	<CY1PR0201MB0924B1A472C9434CF501ED71F4630@CY1PR0201MB0924.namprd02.prod.outlook.com>
+Message-ID: <CAC6=c0fyopyNrC0nmJ+HYwY9QNaDXnoUtvGS7eSGHx7V2qqRRw@mail.gmail.com>
+
+Hi Robert,
+
+Thanks a lot for your feedback. My objective is to stress the All-in-one
+(OVF) implementation with the conventional version of SIPp (not that one
+specific/provided by Clearwater). The same thing that the procedure does,
+but thru a "manual and external way".
+
+Something like this:
+
+http://sipp-tutorial.blogspot.com.br/2013/08/sipp-linux-client-registration-with.html
+
+But using Clearwater of course, instead of Asterisk.
+
+I tried creating a csv with an only user provisioned thru the Ellis UI and
+a lot of different xml configuration. I also took the password provided by
+Ellis, converted to MD5 and embedded into the xml/packet. Still
+unsuccessful.
+
+So I think I had success with this xml, it could work. Maybe something in
+the Contact, Via and/or Authorization fields:
+
+
+?
+Thanks in advance.
+
+Claudio
+
+
+On Sun, Aug 23, 2015 at 7:01 PM, Robert Day <Robert.Day at metaswitch.com>
+wrote:
+
+> Hi Claudio,
+>
+>
+>
+> Our SIPp stress scripts assume that the users have a password of 7kkzTyGW
+> ? this is hardcoded at
+> https://github.com/Metaswitch/sprout/blob/master/clearwater-sip-stress.root/usr/share/clearwater/infrastructure/scripts/sip-stress#L13
+> .
+>
+>
+>
+> Our bulk provisioning instructions (
+> https://github.com/Metaswitch/crest/blob/dev/docs/Bulk-Provisioning%20Numbers.md)
+> include instructions for bulk-provisioning users with this password (see
+> the section starting ?If you are provisioning numbers for SIPp stress
+> testing, you will need to force them all to use the password '7kkzTyGW'.
+> This CSV file can be generated with??). Our bulk provisioning scripts
+> handle the conversion of that password into the SIP Digest HA1 (the MD5
+> hashing process you refer to).
+>
+>
+>
+> Note that this requires command-line bulk provisioning ? there?s no way to
+> force a password of 7kkzTyGW through the Ellis UI.
+>
+>
+>
+> Does that give you what you need to know? Please let me know if you have
+> any other questions.
+>
+>
+>
+> Best,
+>
+> Rob
+>
+>
+>
+> --
+>
+> Rob Day
+>
+> Software Engineer, Project Clearwater
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *Claudio Bertoldo
+> *Sent:* 15 August 2015 15:54
+> *To:* Eleanor Merry <Eleanor.Merry at metaswitch.com>
+> *Cc:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Clearwater] [doubt] original sipp against an all_in_one
+> implementation
+>
+>
+>
+> Hi Eleanor,
+>
+>
+>
+> Thanks.
+>
+>
+>
+> In fact I have already tried these files, but I don't know how to use them
+> with SIPp from an external VM stressing another with the All-in-one
+> implementation. I tried provisioning a single user and then modifying the
+> csv for this single user, but it didn't work anyway.
+>
+>
+>
+> I think it's simple, but I cannot accomplish. My All-in-one works well
+> (tested) and my SIPs as well (tested in another VM and sniffed its
+> packets). I get authentication error. I'm wondering about how to make the
+> xml/csv and provision the "user(s)" under test in the All-in-one.
+>
+>
+>
+> As I could understand, the user's password should go through MD5 + a
+> specific code.
+>
+>
+>
+> Claudio
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> On Fri, Aug 14, 2015 at 2:54 PM, Eleanor Merry <
+> Eleanor.Merry at metaswitch.com> wrote:
+>
+> Hi Claudio
+>
+>
+>
+> We have this file that we use regularly for our stress tests (
+> https://github.com/Metaswitch/sprout/blob/master/tests/load/call_load2.xml
+> - more details in
+> http://clearwater.readthedocs.org/en/latest/Clearwater_stress_testing/index.html),
+> and there are more examples in
+> https://github.com/Metaswitch/sprout/tree/master/tests/load
+>
+>
+>
+> Ellie
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *Claudio Bertoldo
+> *Sent:* 09 August 2015 08:01
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Clearwater] [doubt] original sipp against an all_in_one
+> implementation
+>
+>
+>
+> Howdy!
+>
+> Please, how can I run a sipp stress against an all_in_one implementation
+> from a remote machine?
+>
+> I need to use an original sipp implementation. Is there any sipp xml/csv
+> example ready for it? I've tried to create them, but I'm still facing
+> authentication error.
+>
+> Thanks in advance.
+>
+> Claudio
+>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150901/f765290b/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: Captura de Tela 2015-09-01 a?s 01.29.35.png
+Type: image/png
+Size: 38280 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150901/f765290b/attachment.png>
+
+From dennis.diamsay at gmail.com  Tue Sep  1 01:07:21 2015
+From: dennis.diamsay at gmail.com (Dennis Diamsay)
+Date: Tue, 1 Sep 2015 13:07:21 +0800
+Subject: [Clearwater] Clearwater integrate to MRF (Media Resource Function)
+Message-ID: <B2B3D3C2-7B73-40DA-B2FC-E259511D4C8E@gmail.com>
+
+Hi Community,
+
+We have Clearwater Manual Installed in our office and would like to explore more fearture/option of IMS.
+May i ask if there is any document or reading materials on how to integrate Clearwater to MRF (Media Resource Function)?
+
+Regards,
+Dennis
+
+
+
+
+From crbertoldo at gmail.com  Wed Sep  2 13:43:42 2015
+From: crbertoldo at gmail.com (Claudio Bertoldo)
+Date: Wed, 2 Sep 2015 14:43:42 -0300
+Subject: [Clearwater] [doubt] original sipp against an all_in_one
+	implementation
+In-Reply-To: <CAC6=c0fyopyNrC0nmJ+HYwY9QNaDXnoUtvGS7eSGHx7V2qqRRw@mail.gmail.com>
+References: <CAC6=c0fTuDaQnQANb_Jd1D1OK88TVxiDOngx8=wN23AmSXMusg@mail.gmail.com>
+	<CO1PR02MB2403DD8AD9F13E7CF20D57C9B7C0@CO1PR02MB240.namprd02.prod.outlook.com>
+	<CAC6=c0e_sXPeBaPAchDU1BKpdk++QkpLt+zzD16Xde_ZOjhtxg@mail.gmail.com>
+	<CY1PR0201MB0924B1A472C9434CF501ED71F4630@CY1PR0201MB0924.namprd02.prod.outlook.com>
+	<CAC6=c0fyopyNrC0nmJ+HYwY9QNaDXnoUtvGS7eSGHx7V2qqRRw@mail.gmail.com>
+Message-ID: <CAC6=c0e4BLEKAncc+0+8Jaxc-X7bJO=mD7MYE+k+TRHXWJtUYg@mail.gmail.com>
+
+Hi Robert,
+
+In fact I've figured out that it doesn't matter if it's all-in-one or not.
+I could ran the stress according to the Clearwater doc.
+
+I just would like to adapt the xml/csv for SIPp provided by you in order to
+use with the original SIPp tool against Clearwater. I'm trying it for a
+while with trial-and-error, but still unsuccessful.
+
+Do you think it's possible?
+
+Thanks in advance.
+
+Claudio
+
+On Tue, Sep 1, 2015 at 2:03 AM, Claudio Bertoldo <crbertoldo at gmail.com>
+wrote:
+
+> Hi Robert,
+>
+> Thanks a lot for your feedback. My objective is to stress the All-in-one
+> (OVF) implementation with the conventional version of SIPp (not that one
+> specific/provided by Clearwater). The same thing that the procedure does,
+> but thru a "manual and external way".
+>
+> Something like this:
+>
+>
+> http://sipp-tutorial.blogspot.com.br/2013/08/sipp-linux-client-registration-with.html
+>
+> But using Clearwater of course, instead of Asterisk.
+>
+> I tried creating a csv with an only user provisioned thru the Ellis UI and
+> a lot of different xml configuration. I also took the password provided by
+> Ellis, converted to MD5 and embedded into the xml/packet. Still
+> unsuccessful.
+>
+> So I think I had success with this xml, it could work. Maybe something in
+> the Contact, Via and/or Authorization fields:
+>
+>
+> ?
+> Thanks in advance.
+>
+> Claudio
+>
+>
+> On Sun, Aug 23, 2015 at 7:01 PM, Robert Day <Robert.Day at metaswitch.com>
+> wrote:
+>
+>> Hi Claudio,
+>>
+>>
+>>
+>> Our SIPp stress scripts assume that the users have a password of 7kkzTyGW
+>> ? this is hardcoded at
+>> https://github.com/Metaswitch/sprout/blob/master/clearwater-sip-stress.root/usr/share/clearwater/infrastructure/scripts/sip-stress#L13
+>> .
+>>
+>>
+>>
+>> Our bulk provisioning instructions (
+>> https://github.com/Metaswitch/crest/blob/dev/docs/Bulk-Provisioning%20Numbers.md)
+>> include instructions for bulk-provisioning users with this password (see
+>> the section starting ?If you are provisioning numbers for SIPp stress
+>> testing, you will need to force them all to use the password '7kkzTyGW'.
+>> This CSV file can be generated with??). Our bulk provisioning scripts
+>> handle the conversion of that password into the SIP Digest HA1 (the MD5
+>> hashing process you refer to).
+>>
+>>
+>>
+>> Note that this requires command-line bulk provisioning ? there?s no way
+>> to force a password of 7kkzTyGW through the Ellis UI.
+>>
+>>
+>>
+>> Does that give you what you need to know? Please let me know if you have
+>> any other questions.
+>>
+>>
+>>
+>> Best,
+>>
+>> Rob
+>>
+>>
+>>
+>> --
+>>
+>> Rob Day
+>>
+>> Software Engineer, Project Clearwater
+>>
+>>
+>>
+>> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+>> *On Behalf Of *Claudio Bertoldo
+>> *Sent:* 15 August 2015 15:54
+>> *To:* Eleanor Merry <Eleanor.Merry at metaswitch.com>
+>> *Cc:* clearwater at lists.projectclearwater.org
+>> *Subject:* Re: [Clearwater] [doubt] original sipp against an all_in_one
+>> implementation
+>>
+>>
+>>
+>> Hi Eleanor,
+>>
+>>
+>>
+>> Thanks.
+>>
+>>
+>>
+>> In fact I have already tried these files, but I don't know how to use
+>> them with SIPp from an external VM stressing another with the All-in-one
+>> implementation. I tried provisioning a single user and then modifying the
+>> csv for this single user, but it didn't work anyway.
+>>
+>>
+>>
+>> I think it's simple, but I cannot accomplish. My All-in-one works well
+>> (tested) and my SIPs as well (tested in another VM and sniffed its
+>> packets). I get authentication error. I'm wondering about how to make the
+>> xml/csv and provision the "user(s)" under test in the All-in-one.
+>>
+>>
+>>
+>> As I could understand, the user's password should go through MD5 + a
+>> specific code.
+>>
+>>
+>>
+>> Claudio
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>> On Fri, Aug 14, 2015 at 2:54 PM, Eleanor Merry <
+>> Eleanor.Merry at metaswitch.com> wrote:
+>>
+>> Hi Claudio
+>>
+>>
+>>
+>> We have this file that we use regularly for our stress tests (
+>> https://github.com/Metaswitch/sprout/blob/master/tests/load/call_load2.xml
+>> - more details in
+>> http://clearwater.readthedocs.org/en/latest/Clearwater_stress_testing/index.html),
+>> and there are more examples in
+>> https://github.com/Metaswitch/sprout/tree/master/tests/load
+>>
+>>
+>>
+>> Ellie
+>>
+>>
+>>
+>> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+>> *On Behalf Of *Claudio Bertoldo
+>> *Sent:* 09 August 2015 08:01
+>> *To:* clearwater at lists.projectclearwater.org
+>> *Subject:* [Clearwater] [doubt] original sipp against an all_in_one
+>> implementation
+>>
+>>
+>>
+>> Howdy!
+>>
+>> Please, how can I run a sipp stress against an all_in_one implementation
+>> from a remote machine?
+>>
+>> I need to use an original sipp implementation. Is there any sipp xml/csv
+>> example ready for it? I've tried to create them, but I'm still facing
+>> authentication error.
+>>
+>> Thanks in advance.
+>>
+>> Claudio
+>>
+>>
+>>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150902/7b4053bd/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: Captura de Tela 2015-09-01 a?s 01.29.35.png
+Type: image/png
+Size: 38280 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150902/7b4053bd/attachment.png>
+
+From ffavoreto at daitangroup.com  Wed Sep  2 14:17:39 2015
+From: ffavoreto at daitangroup.com (Felipe Pedroni Favoreto)
+Date: Wed, 2 Sep 2015 18:17:39 +0000
+Subject: [Clearwater] AWS all-in-one image not working
+Message-ID: <CP1PR80MB12866820707BBD97095854E7A9690@CP1PR80MB1286.lamprd80.prod.outlook.com>
+
+Hi all,
+
+
+I tried to install at AWS an all-in-one clearwater image using the last clearwater community AMI (Clearwater 2015-08-18 - ami-ab42f3c0 and also the  2015-08-18), but sprout, bone and homestead are not running.
+
+
+I checked it by "service <component> status" command as also with "netstat -nap | grep <component_port>" and I noticed that they are not running.
+
+
+Is someone having the same problem? Any idea?
+
+
+Regards,
+
+Felipe Pedroni Favoreto
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150902/cef2a640/attachment.html>
+
+From nicklin at itri.org.tw  Thu Sep  3 02:41:00 2015
+From: nicklin at itri.org.tw (nicklin at itri.org.tw)
+Date: Thu, 3 Sep 2015 06:41:00 +0000
+Subject: [Clearwater] Call problems
+Message-ID: <1441262458875.5400@itri.org.tw>
+
+?Hi community,
+
+
+I follow the manual installation guide to install six ubuntu14.04-server-x64 VMs, and they work successfully.
+
+
+I  try the IMS with use X-Lite-free(2 sets) and Zoiper-Biz(2 sets) in Win7-64bit environment.
+
+
+However, there are some problems that I want to clarify :
+
+
+1. The call?or video call? is able to run about 30 seconds, then it will be automatically terminated by callee .
+
+
+2. The caller has already called, but the callee sometimes does not receive any call.
+
+
+3. The status of friends in the contact  show incorrectly.
+
+?For example, both A and B register already, and they can make a call. However, either A or B shows offline/waiting for response in their each contact.?
+
+
+
+The problems occur in both X-Lite and Zoiper.
+
+
+Here is a proportion of Sprout log :
+
+
+02-09-2015 08:35:59.232 UTC Status memcached_config.cpp:109:  servers=
+02-09-2015 08:35:59.232 UTC Status memcachedstore.cpp:145: Updating memcached store configuration
+02-09-2015 08:35:59.232 UTC Status memcachedstore.cpp:166: Finished preparing new view, so flag that workers should switch to it
+02-09-2015 08:36:11.469 UTC Status load_monitor.cpp:237: Maximum incoming request rate/second increased to 829.906738 (based on a smoothed mean latency of 602 and 0 upstream overload responses)
+02-09-2015 08:36:29.484 UTC Status memcached_config.cpp:70: Reloading memcached configuration from '/etc/clearwater/cluster_settings'
+02-09-2015 08:36:29.485 UTC Status memcached_config.cpp:109:  servers=100.64.119.89:11211
+02-09-2015 08:36:29.485 UTC Status memcachedstore.cpp:145: Updating memcached store configuration
+02-09-2015 08:36:29.485 UTC Status memcachedstore.cpp:166: Finished preparing new view, so flag that workers should switch to it
+02-09-2015 08:36:29.485 UTC Status bgcfservice.cpp:68: No BGCF configuration (file ./bgcf.json does not exist)
+02-09-2015 08:36:29.485 UTC Status memcached_config.cpp:70: Reloading memcached configuration from '/etc/clearwater/remote_cluster_settings'
+02-09-2015 08:36:29.485 UTC Status memcached_config.cpp:109:  servers=
+02-09-2015 08:36:29.485 UTC Status memcachedstore.cpp:145: Updating memcached store configuration
+02-09-2015 08:36:29.485 UTC Status memcachedstore.cpp:166: Finished preparing new view, so flag that workers should switch to it
+02-09-2015 08:38:12.153 UTC Status bgcfservice.cpp:68: No BGCF configuration (file ./bgcf.json does not exist)
+02-09-2015 08:38:12.154 UTC Status memcached_config.cpp:70: Reloading memcached configuration from '/etc/clearwater/remote_cluster_settings'
+02-09-2015 08:38:12.154 UTC Status memcached_config.cpp:109:  servers=
+02-09-2015 08:38:12.154 UTC Status memcachedstore.cpp:145: Updating memcached store configuration
+02-09-2015 08:38:12.154 UTC Status memcachedstore.cpp:166: Finished preparing new view, so flag that workers should switch to it
+02-09-2015 08:38:12.154 UTC Status memcached_config.cpp:70: Reloading memcached configuration from '/etc/clearwater/cluster_settings'
+02-09-2015 08:38:12.154 UTC Status memcached_config.cpp:109:  servers=100.64.119.89:11211
+02-09-2015 08:38:12.154 UTC Status memcachedstore.cpp:145: Updating memcached store configuration
+02-09-2015 08:38:12.154 UTC Status memcachedstore.cpp:166: Finished preparing new view, so flag that workers should switch to it
+02-09-2015 08:39:18.023 UTC Status load_monitor.cpp:237: Maximum incoming request rate/second increased to 839.810730 (based on a smoothed mean latency of 960 and 0 upstream overload responses)
+02-09-2015 08:42:01.224 UTC Status load_monitor.cpp:237: Maximum incoming request rate/second increased to 849.721008 (based on a smoothed mean latency of 897 and 0 upstream overload responses)
+02-09-2015 08:42:48.717 UTC Status load_monitor.cpp:237: Maximum incoming request rate/second increased to 859.164612 (based on a smoothed mean latency of 5564 and 0 upstream overload responses)
+02-09-2015 08:42:54.878 UTC Status load_monitor.cpp:237: Maximum incoming request rate/second increased to 868.879700 (based on a smoothed mean latency of 2849 and 0 upstream overload responses)
+02-09-2015 08:43:25.608 UTC Status load_monitor.cpp:237: Maximum incoming request rate/second increased to 878.729309 (based on a smoothed mean latency of 1504 and 0 upstream overload responses)
+02-09-2015 08:48:36.669 UTC Error httpconnection.cpp:743: cURL failure with cURL error code 0 (see man 3 libcurl-errors) and HTTP error code 404
+02-09-2015 08:48:36.669 UTC Error hssconnection.cpp:593: Could not get subscriber data from HSS
+02-09-2015 08:48:37.105 UTC Error httpconnection.cpp:743: cURL failure with cURL error code 0 (see man 3 libcurl-errors) and HTTP error code 404
+02-09-2015 08:48:37.105 UTC Error hssconnection.cpp:593: Could not get subscriber data from HSS
+02-09-2015 08:49:25.694 UTC Status load_monitor.cpp:237: Maximum incoming request rate/second increased to 927.229126 (based on a smoothed mean latency of 5085 and 0 upstream overload responses)
+02-09-2015 08:49:43.593 UTC Status load_monitor.cpp:237: Maximum incoming request rate/second increased to 937.088806 (based on a smoothed mean latency of 1403 and 0 upstream overload responses)
+02-09-2015 08:50:10.339 UTC Error httpconnection.cpp:743: cURL failure with cURL error code 0 (see man 3 libcurl-errors) and HTTP error code 404
+02-09-2015 08:50:10.339 UTC Error hssconnection.cpp:593: Could not get subscriber data from HSS
+02-09-2015 08:50:11.039 UTC Error httpconnection.cpp:743: cURL failure with cURL error code 0 (see man 3 libcurl-errors) and HTTP error code 404
+02-09-2015 08:50:11.039 UTC Error hssconnection.cpp:593: Could not get subscriber data from HSS
+02-09-2015 08:50:46.380 UTC Status load_monitor.cpp:237: Maximum incoming request rate/second increased to 943.146790 (based on a smoothed mean latency of 39420 and 0 upstream overload responses)
+
+My deployment definition lists below :
+
+home_domain=ccma.org
+sprout_hostname=100.64.119.89
+hs_hostname=100.64.119.92:8888
+hs_provisioning_hostname=100.64.119.92:8889
+ralf_hostname=100.64.119.90:10888
+xdms_hostname=100.64.119.91:7888
+
+
+I appreciate any suggestion or direction.
+
+
+
+Best Wish :D ,
+
+Nick
+
+
+
+
+
+====================================================================
+???????????????????????????????????????????? 
+This email may contain confidential information. Please do not use or disclose it in any way and delete it if you are not the intended recipient.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150903/27c87392/attachment.html>
+
+From ppnaik at cse.iitb.ac.in  Thu Sep  3 13:49:30 2015
+From: ppnaik at cse.iitb.ac.in (ppnaik)
+Date: Thu, 03 Sep 2015 23:19:30 +0530
+Subject: [Clearwater] Issue with ellis
+Message-ID: <88d20439343f31ab822a576547284008@cse.iitb.ac.in>
+
+Hi,
+
+One of my friend is doing a clearwater setup and facing the following 
+issue:
+
+I'm creating a user on Ellis. As mentioned in the Clearwater website, 
+I'm opening the URL - http://ellis.testims.com.
+
+I tried to sign up. At the signup, system is asking me to enter a 
+"Signup code".
+
+May I know how to get it or generate it?
+I have followed the steps mentioned on the 
+http://clearwater.readthedocs.org/en/latest/Making_your_first_call/index.html 
+and 
+http://clearwater.readthedocs.org/en/latest/Installing_a_Chef_workstation/index.html#add-deployment-specific-configuration, 
+Referring to section "Add Deployment Specific configuration" and using 
+head command, generated a random secure key. At the time of signing a 
+new user, I'm using this key. But system is giving me an error saying 
+that signup code was incorrect.
+
+
+Please guide us in this regard.
+
+Thanks,
+
+Priyanka
+
+
+
+From Eleanor.Merry at metaswitch.com  Fri Sep  4 08:30:37 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Fri, 4 Sep 2015 12:30:37 +0000
+Subject: [Clearwater] Midnight's Children release note
+Message-ID: <CO1PR02MB240B7740989E65BA13634CA9B570@CO1PR02MB240.namprd02.prod.outlook.com>
+
+Hello,
+
+The release for sprint "Midnight's Children" has been cut.  The code for this release is tagged as release-80 in Github.
+
+We've been working on the following new features in this sprint:
+
+*         We've been continuing our work to add "stateful" statistics, covering the number of active registrations and the number of active calls in the Clearwater deployment as a whole.
+
+*         We've implemented a plaintext password provisioning API needed to support RCS integration (see https://github.com/Metaswitch/crest/blob/dev/docs/homestead_prov_api.md#private-id for details).
+
+This release includes the following bug fixes:
+
+*         max_session_expires isn't plumbed into Sprout's init.d file (https://github.com/Metaswitch/sprout/issues/1180)
+
+*         Bono crashes on stop/quiesce (https://github.com/Metaswitch/sprout/issues/1177)
+
+*         Sprout crashes with segment trap on any ipsec registration (https://github.com/Metaswitch/sprout/issues/1176)
+
+*         Statistics sproutInitialRegistrationAttempts, sproutInitialRegistrationFailures Don't work in SIP Digest Register Fail (https://github.com/Metaswitch/sprout/issues/1169)
+
+*         Manual install process does not apply cassandra schemas (https://github.com/Metaswitch/homestead/issues/235)
+
+*         "Bad request" errors when upgrading homestead.  (https://github.com/Metaswitch/homestead/issues/228)
+
+*         Removing ralf sometimes fails (https://github.com/Metaswitch/ralf/issues/168)
+
+*         Relative symbolic links to *_current.txt (https://github.com/Metaswitch/cpp-common/issues/282)
+
+*         homestead-provisioning's Nginx proxy isn't always configured (https://github.com/Metaswitch/crest/issues/224)
+
+*         Crest is not stopped properly on upgrade (https://github.com/Metaswitch/crest/issues/47)
+
+*         Missing quotes in clearwater-auto-config-docker.init.d (https://github.com/Metaswitch/clearwater-infrastructure/issues/234)
+
+*         clearwater-memcached stops memcached from upgrading cleanly (https://github.com/Metaswitch/clearwater-infrastructure/issues/228)
+
+*         clearwater-infrastructure.postinst & prerm fail if user's home doesn't have a .bashrc file (https://github.com/Metaswitch/clearwater-infrastructure/issues/219)
+
+*         cluster manager keeps updating /etc/clearwater/cluster_settings and /etc/chronos/chronos_cluster.conf for no apparent reason (https://github.com/Metaswitch/clearwater-etcd/issues/165)
+
+*         Missing quotes in clearwater-auto-config-docker.init.d (https://github.com/Metaswitch/clearwater-infrastructure/issues/234)
+
+*         Warnings when restarting clearwater-socket-factory (https://github.com/Metaswitch/clearwater-infrastructure/issues/238)
+
+For upgrading to this release, follow the instructions at http://clearwater.readthedocs.org/en/latest/Upgrading_a_Clearwater_deployment/index.html. If you are deploying an all-in-one node, the standard image (http://vm-images.cw-ngv.com/cw-aio.ova) has been updated for this release.
+
+Thanks,
+Ellie
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150904/6cd00505/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Fri Sep  4 08:57:07 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Fri, 4 Sep 2015 12:57:07 +0000
+Subject: [Clearwater] AWS all-in-one image not working
+In-Reply-To: <CP1PR80MB12866820707BBD97095854E7A9690@CP1PR80MB1286.lamprd80.prod.outlook.com>
+References: <CP1PR80MB12866820707BBD97095854E7A9690@CP1PR80MB1286.lamprd80.prod.outlook.com>
+Message-ID: <CO1PR02MB240CD2F0AC7999142F4EB239B570@CO1PR02MB240.namprd02.prod.outlook.com>
+
+Hi Felipe,
+
+I've just created an AIO node from the '2015-08-18' AMI, and I didn't see this problem. What's in the logs at /var/log/<sprout/bono/homestead>?
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Felipe Pedroni Favoreto
+Sent: 02 September 2015 19:18
+To: clearwater at lists.projectclearwater.org
+Subject: [Clearwater] AWS all-in-one image not working
+
+
+Hi all,
+
+
+
+I tried to install at AWS an all-in-one clearwater image using the last clearwater community AMI (Clearwater 2015-08-18 - ami-ab42f3c0 and also the  2015-08-18), but sprout, bone and homestead are not running.
+
+
+
+I checked it by "service <component> status" command as also with "netstat -nap | grep <component_port>" and I noticed that they are not running.
+
+
+
+Is someone having the same problem? Any idea?
+
+
+
+Regards,
+
+Felipe Pedroni Favoreto
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150904/ecc3357a/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Fri Sep  4 08:57:34 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Fri, 4 Sep 2015 12:57:34 +0000
+Subject: [Clearwater] Issue with ellis
+In-Reply-To: <88d20439343f31ab822a576547284008@cse.iitb.ac.in>
+References: <88d20439343f31ab822a576547284008@cse.iitb.ac.in>
+Message-ID: <CO1PR02MB2408AE946976DCE3BA1EAF39B570@CO1PR02MB240.namprd02.prod.outlook.com>
+
+Hi Priyanka, 
+
+The signup_key is in /etc/clearwater/shared_config on the Ellis node. To create an account on Ellis you need to use the same signup key as in /etc/clearwater/shared_config. 
+
+If you install Clearwater using chef, you can set what you want the signup key to be by adding it to the knife.rb file (as described in http://clearwater.readthedocs.org/en/latest/Installing_a_Chef_workstation/index.html#add-deployment-specific-configuration). Chef will then add this to the shared_config file. 
+
+If you manually installed Clearwater, then it's set up when the shared configuration file is created (see http://clearwater.readthedocs.org/en/latest/Manual_Install/index.html#provide-shared-configuration). 
+
+Ellie
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of ppnaik
+Sent: 03 September 2015 18:50
+To: clearwater at lists.projectclearwater.org
+Subject: [Clearwater] Issue with ellis
+
+Hi,
+
+One of my friend is doing a clearwater setup and facing the following
+issue:
+
+I'm creating a user on Ellis. As mentioned in the Clearwater website, I'm opening the URL - http://ellis.testims.com.
+
+I tried to sign up. At the signup, system is asking me to enter a "Signup code".
+
+May I know how to get it or generate it?
+I have followed the steps mentioned on the http://clearwater.readthedocs.org/en/latest/Making_your_first_call/index.html
+and
+http://clearwater.readthedocs.org/en/latest/Installing_a_Chef_workstation/index.html#add-deployment-specific-configuration,
+Referring to section "Add Deployment Specific configuration" and using head command, generated a random secure key. At the time of signing a new user, I'm using this key. But system is giving me an error saying that signup code was incorrect.
+
+
+Please guide us in this regard.
+
+Thanks,
+
+Priyanka
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+
+
+From Eleanor.Merry at metaswitch.com  Fri Sep  4 08:57:44 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Fri, 4 Sep 2015 12:57:44 +0000
+Subject: [Clearwater] Call problems
+In-Reply-To: <1441262458875.5400@itri.org.tw>
+References: <1441262458875.5400@itri.org.tw>
+Message-ID: <CO1PR02MB240EB44D62D2B04CE3F2A2A9B570@CO1PR02MB240.namprd02.prod.outlook.com>
+
+Hi Nick,
+
+Can you please send me the debug logs from Sprout for these problems? You can turn on debug logging by creating/editing the file /etc/clearwater/user_settings, adding log_level=5 and then restarting Sprout (service sprout stop ? it?s automatically restarted by monit). The logs are output in /var/log/sprout/sprout_<date>.
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of nicklin at itri.org.tw
+Sent: 03 September 2015 07:41
+To: clearwater at lists.projectclearwater.org
+Subject: [Clearwater] Call problems
+
+
+?Hi community,
+
+
+
+I follow the manual installation guide to install six ubuntu14.04-server-x64 VMs, and they work successfully.
+
+
+
+I  try the IMS with use X-Lite-free(2 sets) and Zoiper-Biz(2 sets) in Win7-64bit environment.
+
+
+
+However, there are some problems that I want to clarify :
+
+
+
+1. The call?or video call? is able to run about 30 seconds, then it will be automatically terminated by callee .
+
+
+
+2. The caller has already called, but the callee sometimes does not receive any call.
+
+
+
+3. The status of friends in the contact  show incorrectly.
+
+?For example, both A and B register already, and they can make a call. However, either A or B shows offline/waiting for response in their each contact.?
+
+
+
+
+
+The problems occur in both X-Lite and Zoiper.
+
+
+
+Here is a proportion of Sprout log :
+
+
+02-09-2015 08:35:59.232 UTC Status memcached_config.cpp:109:  servers=
+02-09-2015 08:35:59.232 UTC Status memcachedstore.cpp:145: Updating memcached store configuration
+02-09-2015 08:35:59.232 UTC Status memcachedstore.cpp:166: Finished preparing new view, so flag that workers should switch to it
+02-09-2015 08:36:11.469 UTC Status load_monitor.cpp:237: Maximum incoming request rate/second increased to 829.906738 (based on a smoothed mean latency of 602 and 0 upstream overload responses)
+02-09-2015 08:36:29.484 UTC Status memcached_config.cpp:70: Reloading memcached configuration from '/etc/clearwater/cluster_settings'
+02-09-2015 08:36:29.485 UTC Status memcached_config.cpp:109:  servers=100.64.119.89:11211
+02-09-2015 08:36:29.485 UTC Status memcachedstore.cpp:145: Updating memcached store configuration
+02-09-2015 08:36:29.485 UTC Status memcachedstore.cpp:166: Finished preparing new view, so flag that workers should switch to it
+02-09-2015 08:36:29.485 UTC Status bgcfservice.cpp:68: No BGCF configuration (file ./bgcf.json does not exist)
+02-09-2015 08:36:29.485 UTC Status memcached_config.cpp:70: Reloading memcached configuration from '/etc/clearwater/remote_cluster_settings'
+02-09-2015 08:36:29.485 UTC Status memcached_config.cpp:109:  servers=
+02-09-2015 08:36:29.485 UTC Status memcachedstore.cpp:145: Updating memcached store configuration
+02-09-2015 08:36:29.485 UTC Status memcachedstore.cpp:166: Finished preparing new view, so flag that workers should switch to it
+02-09-2015 08:38:12.153 UTC Status bgcfservice.cpp:68: No BGCF configuration (file ./bgcf.json does not exist)
+02-09-2015 08:38:12.154 UTC Status memcached_config.cpp:70: Reloading memcached configuration from '/etc/clearwater/remote_cluster_settings'
+02-09-2015 08:38:12.154 UTC Status memcached_config.cpp:109:  servers=
+02-09-2015 08:38:12.154 UTC Status memcachedstore.cpp:145: Updating memcached store configuration
+02-09-2015 08:38:12.154 UTC Status memcachedstore.cpp:166: Finished preparing new view, so flag that workers should switch to it
+02-09-2015 08:38:12.154 UTC Status memcached_config.cpp:70: Reloading memcached configuration from '/etc/clearwater/cluster_settings'
+02-09-2015 08:38:12.154 UTC Status memcached_config.cpp:109:  servers=100.64.119.89:11211
+02-09-2015 08:38:12.154 UTC Status memcachedstore.cpp:145: Updating memcached store configuration
+02-09-2015 08:38:12.154 UTC Status memcachedstore.cpp:166: Finished preparing new view, so flag that workers should switch to it
+02-09-2015 08:39:18.023 UTC Status load_monitor.cpp:237: Maximum incoming request rate/second increased to 839.810730 (based on a smoothed mean latency of 960 and 0 upstream overload responses)
+02-09-2015 08:42:01.224 UTC Status load_monitor.cpp:237: Maximum incoming request rate/second increased to 849.721008 (based on a smoothed mean latency of 897 and 0 upstream overload responses)
+02-09-2015 08:42:48.717 UTC Status load_monitor.cpp:237: Maximum incoming request rate/second increased to 859.164612 (based on a smoothed mean latency of 5564 and 0 upstream overload responses)
+02-09-2015 08:42:54.878 UTC Status load_monitor.cpp:237: Maximum incoming request rate/second increased to 868.879700 (based on a smoothed mean latency of 2849 and 0 upstream overload responses)
+02-09-2015 08:43:25.608 UTC Status load_monitor.cpp:237: Maximum incoming request rate/second increased to 878.729309 (based on a smoothed mean latency of 1504 and 0 upstream overload responses)
+02-09-2015 08:48:36.669 UTC Error httpconnection.cpp:743: cURL failure with cURL error code 0 (see man 3 libcurl-errors) and HTTP error code 404
+02-09-2015 08:48:36.669 UTC Error hssconnection.cpp:593: Could not get subscriber data from HSS
+02-09-2015 08:48:37.105 UTC Error httpconnection.cpp:743: cURL failure with cURL error code 0 (see man 3 libcurl-errors) and HTTP error code 404
+02-09-2015 08:48:37.105 UTC Error hssconnection.cpp:593: Could not get subscriber data from HSS
+02-09-2015 08:49:25.694 UTC Status load_monitor.cpp:237: Maximum incoming request rate/second increased to 927.229126 (based on a smoothed mean latency of 5085 and 0 upstream overload responses)
+02-09-2015 08:49:43.593 UTC Status load_monitor.cpp:237: Maximum incoming request rate/second increased to 937.088806 (based on a smoothed mean latency of 1403 and 0 upstream overload responses)
+02-09-2015 08:50:10.339 UTC Error httpconnection.cpp:743: cURL failure with cURL error code 0 (see man 3 libcurl-errors) and HTTP error code 404
+02-09-2015 08:50:10.339 UTC Error hssconnection.cpp:593: Could not get subscriber data from HSS
+02-09-2015 08:50:11.039 UTC Error httpconnection.cpp:743: cURL failure with cURL error code 0 (see man 3 libcurl-errors) and HTTP error code 404
+02-09-2015 08:50:11.039 UTC Error hssconnection.cpp:593: Could not get subscriber data from HSS
+02-09-2015 08:50:46.380 UTC Status load_monitor.cpp:237: Maximum incoming request rate/second increased to 943.146790 (based on a smoothed mean latency of 39420 and 0 upstream overload responses)
+
+My deployment definition lists below :
+
+home_domain=ccma.org
+sprout_hostname=100.64.119.89
+hs_hostname=100.64.119.92:8888
+hs_provisioning_hostname=100.64.119.92:8889
+ralf_hostname=100.64.119.90:10888
+xdms_hostname=100.64.119.91:7888
+
+
+I appreciate any suggestion or direction.
+
+
+
+Best Wish :D ,
+
+Nick
+
+
+
+????????????????????????????????????????????
+This email may contain confidential information. Please do not use or disclose it in any way and delete it if you are not the intended recipient.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150904/e6e6b4ab/attachment.html>
+
+From vimal.tewari at tcs.com  Mon Sep  7 01:12:24 2015
+From: vimal.tewari at tcs.com (Vimal Tewari)
+Date: Mon, 7 Sep 2015 10:42:24 +0530
+Subject: [Clearwater] Error while installing Homestead
+Message-ID: <OFFC7A45F1.61BFD71C-ON65257EB9.001B5B0C-65257EB9.001C99FD@tcs.com>
+
+ Hello,I am trying to install Clearwater and I am following manual install process.
+I am installing the components on Ubuntu 14.04 64 bit Server Edition ( trusty-server-cloudimg-amd64-disk1.img ) using the Openstack Cloud Platform.
+I am following? the steps mentioned at "http://clearwater.readthedocs.org/en/latest/Manual_Install/index.html".
+When I try to install Homestead, I? am facing two issues:
+
+1. When I run "sudo DEBIAN_FRONTEND=noninteractive apt-get install homestead homestead-prov clearwater-prov-tools --yes", I get the following error:
+Reading package lists... Done
+Building dependency tree?????? 
+Reading state information... Done
+E: Unable to locate package clearwater-prov-tools
+
+The file /etc/apt/sources.list.d/clearwater.list contains the following line 
+deb http://repo.cw-ngv.com/stable binary/
+
+Installing the signing key is successful and I verified that the key fingerprint is successful.
+
+
+2. I tried removing clearwater-prov-tools and ran the command again which led to the following error:Waiting for Cassandra.........................................................................................................................*** ERROR: Cassandra did not come online!Waiting for Cassandra.........................................................................................................................*** ERROR: Cassandra did not come online!Configuring monit for only localhost access????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????? [ OK ]Waiting for Cassandra.........................................................................................................................*** ERROR: Cassandra did not come online!
+
+In response to a similar query, Ellie has advised to use the latest release code or install clearwater-cassandra.
+I tried running 
+sudo DEBIAN_FRONTEND=noninteractive apt-get install clearwater-cassandra --yes
+but I got the same error.
+
+Request you to kindly help.
+
+Regards,
+Vimal Chandra Tewari
+ Tata Consultancy Services
+ Mailto: vimal.tewari at tcs.com
+ Website: http://www.tcs.com
+ ____________________________________________
+ Experience certainty.	IT Services
+ 			Business Solutions
+ 			Consulting
+ ____________________________________________
+ 
+=====-----=====-----=====
+Notice: The information contained in this e-mail
+message and/or attachments to it may contain 
+confidential or privileged information. If you are 
+not the intended recipient, any dissemination, use, 
+review, distribution, printing or copying of the 
+information contained in this e-mail message 
+and/or attachments to it are strictly prohibited. If 
+you have received this communication in error, 
+please notify us by reply e-mail or telephone and 
+immediately and permanently delete the message 
+and any attachments. Thank you
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150907/e4bae742/attachment.html>
+
+From lucas.tseng at itri.org.tw  Mon Sep  7 02:26:21 2015
+From: lucas.tseng at itri.org.tw (lucas.tseng at itri.org.tw)
+Date: Mon, 7 Sep 2015 06:26:21 +0000
+Subject: [Clearwater] How to create a specific telephone number account
+Message-ID: <1441607181912.39760@itri.org.tw>
+
+Hi Community,
+
+
+I am wondering if it is possible to create a specific telephone number account that not starts with "650555"
+
+for example, I want to create a account with private id: 060123456 at myims.net and public id: sip:060123456 at myims.net
+
+Thanks
+
+
+Lucas Tseng
+
+
+
+====================================================================
+???????????????????????????????????????????? 
+This email may contain confidential information. Please do not use or disclose it in any way and delete it if you are not the intended recipient.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150907/4e589d95/attachment.html>
+
+From mush.hasan123 at gmail.com  Mon Sep  7 18:00:29 2015
+From: mush.hasan123 at gmail.com (Mushfiq Hasan)
+Date: Tue, 8 Sep 2015 00:00:29 +0200
+Subject: [Clearwater] ims user plane measurement
+Message-ID: <CACjS0VT=3NTSYSyUXEpaVqD6qeyr9Aifc8jbK4zVQgks5OCVuQ@mail.gmail.com>
+
+Hi All,
+
+I'm new to IMS and I want to measure the performance of IMS, both control
+and user plane in a cloud platform like amazon EC2. The aim is to compare
+the performance for a cloud deployment of IMS compared to direct hardware.
+I think I can use IMS Bench and Project clearwater core for the control
+plane measurement. But I'm not sure how to do the user plane measurement.
+For user plane I want to measure latency, jitter etc. I think I need a
+media server. I found a media server SEMS (http://www.iptel.org/sems) which
+I think could be used. But I'm not totally sure how to proceed with the
+user plane measurement  and if I really need the media server. Also for
+user plane measurement do I need to use a separate load generator (like
+SIPp) and generate rtp traffic or I can use IMS Bench? Does it make sense
+to use two load generator for control and data plane separately?
+
+Any help including professional is appreciated.
+
+Regards,
+Mushfiq
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150908/a9b631d1/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Tue Sep  8 13:19:14 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Tue, 8 Sep 2015 17:19:14 +0000
+Subject: [Clearwater] Error while installing Homestead
+In-Reply-To: <OFFC7A45F1.61BFD71C-ON65257EB9.001B5B0C-65257EB9.001C99FD@tcs.com>
+References: <OFFC7A45F1.61BFD71C-ON65257EB9.001B5B0C-65257EB9.001C99FD@tcs.com>
+Message-ID: <BN3PR02MB1255286602916D7F528E06B89B530@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi,
+
+I'm sorry, we merged a change to the docs before the code was ready. We've now changed how our docs are displayed, so that http://clearwater.readthedocs.org/en/stable/ matches our stable code that's gone through QA, and http://clearwater.readthedocs.org/en/latest matches up with our bleeding edge code (which may be more unstable).
+
+In the Midnight's Children release (which is the current stable release), you shouldn't try and install clearwater-prov-tools.
+
+It looks like cassandra isn't running correctly on your node (the error commands come from Homestead attempting to insert its schema into cassandra). What do the logs in /var/log/cassandra say?
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Vimal Tewari
+Sent: 07 September 2015 06:12
+To: clearwater at lists.projectclearwater.org
+Subject: [Clearwater] Error while installing Homestead
+
+Hello,I am trying to install Clearwater and I am following manual install process.
+I am installing the components on Ubuntu 14.04 64 bit Server Edition ( trusty-server-cloudimg-amd64-disk1.img ) using the Openstack Cloud Platform.
+I am following  the steps mentioned at "http://clearwater.readthedocs.org/en/latest/Manual_Install/index.html".
+When I try to install Homestead, I  am facing two issues:
+
+1. When I run "sudo DEBIAN_FRONTEND=noninteractive apt-get install homestead homestead-prov clearwater-prov-tools --yes", I get the following error:
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+E: Unable to locate package clearwater-prov-tools
+
+The file /etc/apt/sources.list.d/clearwater.list contains the following line
+deb http://repo.cw-ngv.com/stable binary/
+
+Installing the signing key is successful and I verified that the key fingerprint is successful.
+
+
+2. I tried removing clearwater-prov-tools and ran the command again which led to the following error:Waiting for Cassandra.........................................................................................................................*** ERROR: Cassandra did not come online!Waiting for Cassandra.........................................................................................................................*** ERROR: Cassandra did not come online!Configuring monit for only localhost access                                                                                                                              [ OK ]Waiting for Cassandra.........................................................................................................................*** ERROR: Cassandra did not come online!
+
+In response to a similar query, Ellie has advised to use the latest release code or install clearwater-cassandra.
+I tried running
+sudo DEBIAN_FRONTEND=noninteractive apt-get install clearwater-cassandra --yes
+but I got the same error.
+
+Request you to kindly help.
+
+Regards,
+Vimal Chandra Tewari
+Tata Consultancy Services
+Mailto: vimal.tewari at tcs.com<mailto:vimal.tewari at tcs.com>
+Website: http://www.tcs.com
+____________________________________________
+Experience certainty. IT Services
+Business Solutions
+Consulting
+____________________________________________
+
+=====-----=====-----=====
+Notice: The information contained in this e-mail
+message and/or attachments to it may contain
+confidential or privileged information. If you are
+not the intended recipient, any dissemination, use,
+review, distribution, printing or copying of the
+information contained in this e-mail message
+and/or attachments to it are strictly prohibited. If
+you have received this communication in error,
+please notify us by reply e-mail or telephone and
+immediately and permanently delete the message
+and any attachments. Thank you
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150908/8439158b/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Tue Sep  8 13:19:29 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Tue, 8 Sep 2015 17:19:29 +0000
+Subject: [Clearwater] How to create a specific telephone number account
+In-Reply-To: <1441607181912.39760@itri.org.tw>
+References: <1441607181912.39760@itri.org.tw>
+Message-ID: <BN3PR02MB12553D02B2749627D3549A489B530@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi,
+
+You can indeed.
+
+When Ellis provisions a subscriber, it picks a number at random from its pool of available numbers. To have different available numbers, run the create_numbers script (https://github.com/Metaswitch/ellis/blob/dev/docs/create-numbers.md) with the numbers that you want.
+
+To provision a specific number, you can use the Ellis API ?C you can see details of the commands at https://github.com/Metaswitch/ellis/blob/dev/docs/api.md#provisioning-specific-numbers.
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of lucas.tseng at itri.org.tw
+Sent: 07 September 2015 07:26
+To: clearwater at lists.projectclearwater.org
+Subject: [Clearwater] How to create a specific telephone number account
+
+
+Hi Community,
+
+
+
+I am wondering if it is possible to create a specific telephone number account that not starts with "650555"
+
+for example, I want to create a account with private id: 060123456 at myims.net<mailto:060123456 at myims.net> and public id: sip:060123456 at myims.net
+
+Thanks
+
+
+
+Lucas Tseng
+
+
+?????????????????????C???Y???????????????????????????????????????????????K???N??????????
+This email may contain confidential information. Please do not use or disclose it in any way and delete it if you are not the intended recipient.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150908/9556b733/attachment.html>
+
+From Robert.Day at metaswitch.com  Tue Sep  8 18:27:57 2015
+From: Robert.Day at metaswitch.com (Robert Day)
+Date: Tue, 8 Sep 2015 22:27:57 +0000
+Subject: [Clearwater] [doubt] original sipp against an all_in_one
+ implementation
+In-Reply-To: <CAC6=c0e4BLEKAncc+0+8Jaxc-X7bJO=mD7MYE+k+TRHXWJtUYg@mail.gmail.com>
+References: <CAC6=c0fTuDaQnQANb_Jd1D1OK88TVxiDOngx8=wN23AmSXMusg@mail.gmail.com>
+	<CO1PR02MB2403DD8AD9F13E7CF20D57C9B7C0@CO1PR02MB240.namprd02.prod.outlook.com>
+	<CAC6=c0e_sXPeBaPAchDU1BKpdk++QkpLt+zzD16Xde_ZOjhtxg@mail.gmail.com>
+	<CY1PR0201MB0924B1A472C9434CF501ED71F4630@CY1PR0201MB0924.namprd02.prod.outlook.com>
+	<CAC6=c0fyopyNrC0nmJ+HYwY9QNaDXnoUtvGS7eSGHx7V2qqRRw@mail.gmail.com>
+	<CAC6=c0e4BLEKAncc+0+8Jaxc-X7bJO=mD7MYE+k+TRHXWJtUYg@mail.gmail.com>
+Message-ID: <CY1PR0201MB09248C27D1492DA0D3A7328CF4530@CY1PR0201MB0924.namprd02.prod.outlook.com>
+
+Hi Claudio,
+
+Sorry for the delay in responding. The Clearwater version of SIPp only has one change from the mainline version (to redo DNS lookups when a call fails, so we can move traffic away from failed Bono nodes to test fault-tolerance) ? this shouldn?t affect stress against all-in-one nodes.
+
+What issues are you seeing when running SIPp against Clearwater? (I?m a SIPp maintainer as well as a Clearwater developer, so should be able to help with both.)
+
+Best,
+Rob
+
+--
+Rob Day
+Software Engineer, Project Clearwater
+
+From: Claudio Bertoldo [mailto:crbertoldo at gmail.com]
+Sent: 02 September 2015 18:44
+To: Robert Day <Robert.Day at metaswitch.com>
+Cc: Eleanor Merry <Eleanor.Merry at metaswitch.com>; clearwater at lists.projectclearwater.org
+Subject: Re: [Clearwater] [doubt] original sipp against an all_in_one implementation
+
+Hi Robert,
+
+In fact I've figured out that it doesn't matter if it's all-in-one or not. I could ran the stress according to the Clearwater doc.
+
+I just would like to adapt the xml/csv for SIPp provided by you in order to use with the original SIPp tool against Clearwater. I'm trying it for a while with trial-and-error, but still unsuccessful.
+
+Do you think it's possible?
+
+Thanks in advance.
+
+Claudio
+
+On Tue, Sep 1, 2015 at 2:03 AM, Claudio Bertoldo <crbertoldo at gmail.com<mailto:crbertoldo at gmail.com>> wrote:
+Hi Robert,
+
+Thanks a lot for your feedback. My objective is to stress the All-in-one (OVF) implementation with the conventional version of SIPp (not that one specific/provided by Clearwater). The same thing that the procedure does, but thru a "manual and external way".
+
+Something like this:
+
+http://sipp-tutorial.blogspot.com.br/2013/08/sipp-linux-client-registration-with.html
+
+But using Clearwater of course, instead of Asterisk.
+
+I tried creating a csv with an only user provisioned thru the Ellis UI and a lot of different xml configuration. I also took the password provided by Ellis, converted to MD5 and embedded into the xml/packet. Still unsuccessful.
+
+So I think I had success with this xml, it could work. Maybe something in the Contact, Via and/or Authorization fields:
+
+[cid:image001.png at 01D0EA5F.DE574B80]
+?
+Thanks in advance.
+
+Claudio
+
+
+On Sun, Aug 23, 2015 at 7:01 PM, Robert Day <Robert.Day at metaswitch.com<mailto:Robert.Day at metaswitch.com>> wrote:
+Hi Claudio,
+
+Our SIPp stress scripts assume that the users have a password of 7kkzTyGW ? this is hardcoded at https://github.com/Metaswitch/sprout/blob/master/clearwater-sip-stress.root/usr/share/clearwater/infrastructure/scripts/sip-stress#L13.
+
+Our bulk provisioning instructions (https://github.com/Metaswitch/crest/blob/dev/docs/Bulk-Provisioning%20Numbers.md) include instructions for bulk-provisioning users with this password (see the section starting ?If you are provisioning numbers for SIPp stress testing, you will need to force them all to use the password '7kkzTyGW'. This CSV file can be generated with??). Our bulk provisioning scripts handle the conversion of that password into the SIP Digest HA1 (the MD5 hashing process you refer to).
+
+Note that this requires command-line bulk provisioning ? there?s no way to force a password of 7kkzTyGW through the Ellis UI.
+
+Does that give you what you need to know? Please let me know if you have any other questions.
+
+Best,
+Rob
+
+--
+Rob Day
+Software Engineer, Project Clearwater
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>] On Behalf Of Claudio Bertoldo
+Sent: 15 August 2015 15:54
+To: Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>>
+Cc: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Clearwater] [doubt] original sipp against an all_in_one implementation
+
+Hi Eleanor,
+
+Thanks.
+
+In fact I have already tried these files, but I don't know how to use them with SIPp from an external VM stressing another with the All-in-one implementation. I tried provisioning a single user and then modifying the csv for this single user, but it didn't work anyway.
+
+I think it's simple, but I cannot accomplish. My All-in-one works well (tested) and my SIPs as well (tested in another VM and sniffed its packets). I get authentication error. I'm wondering about how to make the xml/csv and provision the "user(s)" under test in the All-in-one.
+
+As I could understand, the user's password should go through MD5 + a specific code.
+
+Claudio
+
+
+
+
+
+
+On Fri, Aug 14, 2015 at 2:54 PM, Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>> wrote:
+Hi Claudio
+
+We have this file that we use regularly for our stress tests (https://github.com/Metaswitch/sprout/blob/master/tests/load/call_load2.xml - more details in http://clearwater.readthedocs.org/en/latest/Clearwater_stress_testing/index.html), and there are more examples in https://github.com/Metaswitch/sprout/tree/master/tests/load
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>] On Behalf Of Claudio Bertoldo
+Sent: 09 August 2015 08:01
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Clearwater] [doubt] original sipp against an all_in_one implementation
+
+
+Howdy!
+
+Please, how can I run a sipp stress against an all_in_one implementation from a remote machine?
+
+I need to use an original sipp implementation. Is there any sipp xml/csv example ready for it? I've tried to create them, but I'm still facing authentication error.
+
+Thanks in advance.
+
+Claudio
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150908/3fc3620d/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 38280 bytes
+Desc: image001.png
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150908/3fc3620d/attachment.png>
+
+From vimal.tewari at tcs.com  Wed Sep  9 01:19:24 2015
+From: vimal.tewari at tcs.com (Vimal Tewari)
+Date: Wed, 9 Sep 2015 10:49:24 +0530
+Subject: [Clearwater] Error while installing Homestead
+In-Reply-To: <BN3PR02MB1255286602916D7F528E06B89B530@BN3PR02MB1255.namprd02.prod.outlook.com>
+References: <BN3PR02MB1255286602916D7F528E06B89B530@BN3PR02MB1255.namprd02.prod.outlook.com>,
+	<OFFC7A45F1.61BFD71C-ON65257EB9.001B5B0C-65257EB9.001C99FD@tcs.com>
+Message-ID: <OFCABB62BE.9ADD1D53-ON65257EBB.001D3E1B-65257EBB.001D3E1E@tcs.com>
+
+ Hello Ellie,
+Thanks for your response. 
+I followed the steps mentioned in the document at http://clearwater.readthedocs.org/en/stable/Manual_Install/index.html but I am still getting an error while setting up cassandra for homer and homestead.
+
+Here is the log in /var/log/cassandra/system.log
+
+http://pastebin.com/1eg6GFhm
+
+Request you to kindly take a look and help me resolve this issue.
+
+Regards,
+Vimal Chandra Tewari
+ Tata Consultancy Services
+ Mailto: vimal.tewari at tcs.com
+ Website: http://www.tcs.com
+ ____________________________________________
+ Experience certainty.	IT Services
+ 			Business Solutions
+ 			Consulting
+ ____________________________________________
+ 
+
+-----Eleanor Merry <Eleanor.Merry at metaswitch.com> wrote: -----
+To: Vimal Tewari <vimal.tewari at tcs.com>, "clearwater at lists.projectclearwater.org" <clearwater at lists.projectclearwater.org>
+From: Eleanor Merry <Eleanor.Merry at metaswitch.com>
+Date: 09/08/2015 10:49PM
+Subject: RE: [Clearwater] Error while installing Homestead
+
+       
+ Hi, 
+ ?
+ I&#8217;m sorry, we merged a change to the docs before the code was ready. We&#8217;ve now changed how our docs are displayed, so that http://clearwater.readthedocs.org/en/stable/ matches our stable code that&#8217;s gone through QA, and http://clearwater.readthedocs.org/en/latest matches up with our bleeding edge code (which may be more unstable). 
+ ?
+ In the Midnight&#8217;s Children release (which is the current stable release), you shouldn&#8217;t try and install clearwater-prov-tools. 
+ ?
+ It looks like cassandra isn&#8217;t running correctly on your node (the error commands come from Homestead attempting to insert its schema into cassandra). What do  the logs in /var/log/cassandra say?
+ ?
+ Ellie
+ ?
+ From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Vimal Tewari
+ Sent: 07 September 2015 06:12
+ To: clearwater at lists.projectclearwater.org
+ Subject: [Clearwater] Error while installing Homestead
+ ?
+ Hello,I am trying to install Clearwater and I am following manual install process.
+ I am installing the components on Ubuntu 14.04 64 bit Server Edition ( trusty-server-cloudimg-amd64-disk1.img ) using the Openstack Cloud Platform.
+ I am following? the steps mentioned at "http://clearwater.readthedocs.org/en/latest/Manual_Install/index.html".
+ When I try to install Homestead, I? am facing two issues:
+ 
+ 1. When I run "sudo DEBIAN_FRONTEND=noninteractive apt-get install homestead homestead-prov clearwater-prov-tools --yes", I get the following error:
+ Reading package lists... Done
+ Building dependency tree?????? 
+ Reading state information... Done
+ E: Unable to locate package clearwater-prov-tools
+ 
+ The file /etc/apt/sources.list.d/clearwater.list contains the following line 
+ deb http://repo.cw-ngv.com/stable binary/
+ 
+ Installing the signing key is successful and I verified that the key fingerprint is successful.
+ 
+ 
+ 2. I tried removing clearwater-prov-tools and ran the command again which led to the following error:Waiting for Cassandra.........................................................................................................................*** ERROR: Cassandra  did not come online!Waiting for Cassandra.........................................................................................................................*** ERROR: Cassandra did not come online!Configuring monit for only localhost access?????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????  [ OK ]Waiting for Cassandra.........................................................................................................................*** ERROR: Cassandra did not come online!
+ 
+ In response to a similar query, Ellie has advised to use the latest release code or install clearwater-cassandra.
+ I tried running 
+ sudo DEBIAN_FRONTEND=noninteractive apt-get install clearwater-cassandra --yes
+ but I got the same error.
+ 
+ Request you to kindly help.
+ 
+ Regards,
+ Vimal Chandra Tewari
+ Tata Consultancy Services
+ Mailto: vimal.tewari at tcs.com
+ Website: http://www.tcs.com
+ ____________________________________________
+ Experience certainty. IT Services
+ Business Solutions
+ Consulting
+ ____________________________________________
+ =====-----=====-----=====
+ Notice: The information contained in this e-mail
+ message and/or attachments to it may contain 
+ confidential or privileged information. If you are 
+ not the intended recipient, any dissemination, use, 
+ review, distribution, printing or copying of the 
+ information contained in this e-mail message 
+ and/or attachments to it are strictly prohibited. If 
+ you have received this communication in error, 
+ please notify us by reply e-mail or telephone and 
+ immediately and permanently delete the message 
+ and any attachments. Thank you
+    
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150909/97c17052/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Wed Sep  9 12:56:08 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Wed, 9 Sep 2015 16:56:08 +0000
+Subject: [Clearwater] Error while installing Homestead
+In-Reply-To: <OFCABB62BE.9ADD1D53-ON65257EBB.001D3E1B-65257EBB.001D3E1E@tcs.com>
+References: <BN3PR02MB1255286602916D7F528E06B89B530@BN3PR02MB1255.namprd02.prod.outlook.com>,
+	<OFFC7A45F1.61BFD71C-ON65257EB9.001B5B0C-65257EB9.001C99FD@tcs.com>
+	<OFCABB62BE.9ADD1D53-ON65257EBB.001D3E1B-65257EBB.001D3E1E@tcs.com>
+Message-ID: <BN3PR02MB1255C7CB200A0AE37606CC849B520@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi Vimal,
+
+There's not much in the pasted log (only 20 lines). Is that all that was in system.log? What happens if you restart cassandra (run 'sudo service cassandra stop' - monit will automatically restart it)?
+
+Ellie
+
+From: Vimal Tewari [mailto:vimal.tewari at tcs.com]
+Sent: 09 September 2015 06:19
+To: Eleanor Merry
+Cc: clearwater at lists.projectclearwater.org
+Subject: RE: [Clearwater] Error while installing Homestead
+
+Hello Ellie,
+Thanks for your response.
+I followed the steps mentioned in the document at http://clearwater.readthedocs.org/en/stable/Manual_Install/index.html but I am still getting an error while setting up cassandra for homer and homestead.
+
+Here is the log in /var/log/cassandra/system.log
+
+http://pastebin.com/1eg6GFhm
+
+Request you to kindly take a look and help me resolve this issue.
+
+Regards,
+Vimal Chandra Tewari
+Tata Consultancy Services
+Mailto: vimal.tewari at tcs.com<mailto:vimal.tewari at tcs.com>
+Website: http://www.tcs.com
+____________________________________________
+Experience certainty. IT Services
+Business Solutions
+Consulting
+____________________________________________
+
+
+-----Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>> wrote: -----
+To: Vimal Tewari <vimal.tewari at tcs.com<mailto:vimal.tewari at tcs.com>>, "clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>" <clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>>
+From: Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>>
+Date: 09/08/2015 10:49PM
+Subject: RE: [Clearwater] Error while installing Homestead
+Hi,
+
+I'm sorry, we merged a change to the docs before the code was ready. We've now changed how our docs are displayed, so that http://clearwater.readthedocs.org/en/stable/ matches our stable code that's gone through QA, and http://clearwater.readthedocs.org/en/latest matches up with our bleeding edge code (which may be more unstable).
+
+In the Midnight's Children release (which is the current stable release), you shouldn't try and install clearwater-prov-tools.
+
+It looks like cassandra isn't running correctly on your node (the error commands come from Homestead attempting to insert its schema into cassandra). What do the logs in /var/log/cassandra say?
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Vimal Tewari
+Sent: 07 September 2015 06:12
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Clearwater] Error while installing Homestead
+
+Hello,I am trying to install Clearwater and I am following manual install process.
+I am installing the components on Ubuntu 14.04 64 bit Server Edition ( trusty-server-cloudimg-amd64-disk1.img ) using the Openstack Cloud Platform.
+I am following  the steps mentioned at "http://clearwater.readthedocs.org/en/latest/Manual_Install/index.html".
+When I try to install Homestead, I  am facing two issues:
+
+1. When I run "sudo DEBIAN_FRONTEND=noninteractive apt-get install homestead homestead-prov clearwater-prov-tools --yes", I get the following error:
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+E: Unable to locate package clearwater-prov-tools
+
+The file /etc/apt/sources.list.d/clearwater.list contains the following line
+deb http://repo.cw-ngv.com/stable binary/
+
+Installing the signing key is successful and I verified that the key fingerprint is successful.
+
+
+2. I tried removing clearwater-prov-tools and ran the command again which led to the following error:Waiting for Cassandra.........................................................................................................................*** ERROR: Cassandra did not come online!Waiting for Cassandra.........................................................................................................................*** ERROR: Cassandra did not come online!Configuring monit for only localhost access                                                                                                                              [ OK ]Waiting for Cassandra.........................................................................................................................*** ERROR: Cassandra did not come online!
+
+In response to a similar query, Ellie has advised to use the latest release code or install clearwater-cassandra.
+I tried running
+sudo DEBIAN_FRONTEND=noninteractive apt-get install clearwater-cassandra --yes
+but I got the same error.
+
+Request you to kindly help.
+
+Regards,
+Vimal Chandra Tewari
+Tata Consultancy Services
+Mailto: vimal.tewari at tcs.com<mailto:vimal.tewari at tcs.com>
+Website: http://www.tcs.com
+____________________________________________
+Experience certainty. IT Services
+Business Solutions
+Consulting
+____________________________________________
+
+=====-----=====-----=====
+Notice: The information contained in this e-mail
+message and/or attachments to it may contain
+confidential or privileged information. If you are
+not the intended recipient, any dissemination, use,
+review, distribution, printing or copying of the
+information contained in this e-mail message
+and/or attachments to it are strictly prohibited. If
+you have received this communication in error,
+please notify us by reply e-mail or telephone and
+immediately and permanently delete the message
+and any attachments. Thank you
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150909/6fb556b8/attachment.html>
+
+From atva_angel at yahoo.com  Sun Sep 13 11:47:12 2015
+From: atva_angel at yahoo.com (atva angel)
+Date: Sun, 13 Sep 2015 15:47:12 +0000 (UTC)
+Subject: [Clearwater] Regarding to IMPU and PSI on Clearwater
+Message-ID: <1854759891.115247.1442159232411.JavaMail.yahoo@mail.yahoo.com>
+
+Hi community,
+Could you please help to clarify some cases as below?
+1. As normal, I can define the IMPU on Ellis with SIP-URI format, i.e: 
+IMS user 12345678 has IMPI: 12345678 at example.com, IMPU - sip:12345678 at example.com. I wonder if Ellis/Clearwater could support TEL-URI format for the IMPU of IMS user or not, i.e: tel:+1123456782. I can not find where to define the IMS PSI on Ellis/Clearwater. Could you please to share your advice for this case?
+Thanks,Tam
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150913/78cc4a73/attachment.html>
+
+From atva_angel at yahoo.com  Mon Sep 14 14:55:56 2015
+From: atva_angel at yahoo.com (atva angel)
+Date: Mon, 14 Sep 2015 18:55:56 +0000 (UTC)
+Subject: [Clearwater] Bono does not forward the ACK to Sprout to complete
+	call setup
+Message-ID: <34890145.2416119.1442256956956.JavaMail.yahoo@mail.yahoo.com>
+
+Hi community,I need your help to check my issue because Bono does not forward the ACK to Sprout to complete call setup.- Call modelIMS client----OpenSBC----Bono(PCSCF)----Sprout(I/SCSCF, BGCF, integrated External AS)-----SIP Server----SIP client
+- Scenario1. IMS client makes call to SIP client2. SIP client answers
+- Issue:1. When SIP client answers, IMS Client sends ACK to Bono but Bono does not forward the ACK to Sprout. Therefore, Sprout does not have ACK to forward to the SIP Server/SIP client to complete call setup
+- In the debug log on BonoNote:Bono: 137.116.157.173Sprout: 137.116.157.174External AS (integrated in Clearwater): 137.116.157.190OpenSBC: 137.116.157.180
+
+14-09-2015 11:21:41.640 UTC Verbose pjsip:??? tcplis:5060 TCP listener 137.116.157.173:5060: got incoming TCP connection from 137.116.157.180:53924, sock=136
+14-09-2015 11:21:41.640 UTC Verbose pjsip: tcps0x7f0c3005 TCP server transport created
+14-09-2015 11:21:41.640 UTC Debug pjsip: sip_endpoint.c Processing incoming message: Request msg ACK/cseq=1 (rdata0x7f0c30057350)
+14-09-2015 11:21:41.640 UTC Verbose common_sip_processing.cpp:119: RX 1060 bytes Request msg ACK/cseq=1 (rdata0x7f0c30057350) from TCP 137.116.157.180:53924:
+--start msg--
+
+ACK sip:137.116.157.190:5060;transport=tcp;nt_end_pt=YM0+~K13kXpz6a05Mtd1t~K5jr0~X7rDXrfrM2~PUDn~Rn2rcevNknice~NC_2SS1y8J+90~EbtYMig~W11MCn9bcf4p6ffSe1bW_P5bfkpzqfQT6MC_h-tnj2~J4S137COd6_153X86c;nt_server_host=137.116.157.190:5060 SIP/2.0
+From: <sip:1514004152;phone-context=NATL at example.com;user=phone>;tag=9-13c4-65014-10d0-74746b01-10d0
+To: <sip:4004154 at example.com;user=phone>;tag=bc9a30722015914182127
+i: b1dda7687099748913c410d041af903cc2e11fe977a8-0062-6880
+CSeq: 1 ACK
+User-agent: OpenSBC/9.0
+Max-Forwards: 70
+Allow: ACK,BYE,CANCEL,INVITE,OPTIONS,INFO,SUBSCRIBE,REFER,NOTIFY,PRACK,UPDATE
+v: SIP/2.0/TCP OpenSBC:5052;maddr=137.116.157.180;branch=z9hG4bK-10e7-42081c-14830bfb-aaeb2158
+Route: <sip:m2eFktAiCj at 137.116.157.173:5060;transport=TCP;lr>
+Route: <sip:137.116.157.173:5058;transport=TCP;lr>
+Route: <sip:137.116.157.174:5054;transport=TCP;lr;service=scscf;billing-role=charge-orig>
+Route: <sip:137.116.157.190:5060;lr>
+m: <sip:1514004152 at 137.116.157.180:5052;transport=TCP>
+k: resource-priority,timer,path,service-route
+l: 0
+
+
+--end msg--
+14-09-2015 11:21:41.640 UTC Debug pjutils.cpp:1707: Logging SAS Call-ID marker, Call-ID b1dda7687099748913c410d041af903cc2e11fe977a8-0062-6880
+14-09-2015 11:21:41.640 UTC Debug thread_dispatcher.cpp:253: Queuing cloned received message 0x7f0c303e6a78 for worker threads
+14-09-2015 11:21:41.640 UTC Debug thread_dispatcher.cpp:149: Worker thread dequeue message 0x7f0c303e6a78
+14-09-2015 11:21:41.640 UTC Debug pjsip: sip_endpoint.c Distributing rdata to modules: Request msg ACK/cseq=1 (rdata0x7f0c303e6a78)
+14-09-2015 11:21:41.640 UTC Debug bono.cpp:255: Proxy RX request
+14-09-2015 11:21:41.640 UTC Debug pjutils.cpp:744: Cloned Request msg ACK/cseq=1 (rdata0x7f0c303e6a78) to tdta0x7f0c3405f0f0
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:773: Request received on non-trusted port 5060
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:1012: Perform access proxy routing for ACK request
+14-09-2015 11:21:41.641 UTC Debug pjutils.cpp:580: Found Route header, URI = sip:m2eFktAiCj at 137.116.157.173:5060;transport=TCP;lr
+14-09-2015 11:21:41.641 UTC Debug pjutils.cpp:583: Route header is local
+14-09-2015 11:21:41.641 UTC Debug pjutils.cpp:580: Found Route header, URI = sip:137.116.157.173:5058;transport=TCP;lr
+14-09-2015 11:21:41.641 UTC Debug pjutils.cpp:583: Route header is local
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:837: Top two route headers added by this node, checking transports and ports
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:845: Host names are the same and transports are different
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:853: Remove second route header
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:1149: Message received on non-trusted port 5060
+14-09-2015 11:21:41.641 UTC Debug flowtable.cpp:136: Find flow for transport tcps0x7f0c30057018 (2), remote address 137.116.157.180:53924
+14-09-2015 11:21:41.641 UTC Info bono.cpp:1339: Rejecting request from untrusted source
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:1743: Create RalfACR for node type P-CSCF with role Terminating
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:49: Created ACR (0x7f0c340056c0)
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:171: Created P-CSCF Ralf ACR
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:210: Set record type for P/S-CSCF
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:231: In-dialog ACK request => INTERIM_RECORD
+14-09-2015 11:21:41.641 UTC Verbose acr.cpp:629: Sending P-CSCF Ralf ACR (0x7f0c340056c0)
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:656: Building message
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:712: Building event
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:717: Adding Account-Record-Type AVP 3
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:737: Adding Service-Information AVP group
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:747: Adding 0 Subscription-Id AVPs
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:773: Adding IMS-Information AVP group
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:778: Adding Event-Type AVP group
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:807: Adding 0 Calling-Party-Address AVPs
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:827: Adding Called-Party-Address AVP
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:848: Adding 0 Called-Asserted-Identity AVPs
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:869: Adding 0 Associated-URI AVPs
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:888: Adding Time-Stamps AVP group
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:978: Adding 0 Transit-IOI-List AVPs
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1077: Adding Media AVPs
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1275: Adding SDP-Session-Description AVPs
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1082: Adding 0 Message-Body AVPs
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1172: Adding 0 Reason-Header AVPs
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1190: Adding 0 Access-Network-Information AVPs
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1208: Adding From-Address AVP
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1223: Adding Route-Header-Received AVP
+14-09-2015 11:21:41.642 UTC Debug httpresolver.cpp:71: HttpResolver::resolve for host 137.116.157.177, port 10888, family 2
+14-09-2015 11:21:41.642 UTC Debug baseresolver.cpp:503: Attempt to parse 137.116.157.177 as IP address
+14-09-2015 11:21:41.642 UTC Debug httpresolver.cpp:79: Target is an IP address
+14-09-2015 11:21:41.642 UTC Debug httpconnection.cpp:595: Sending HTTP request : http://137.116.157.177:10888/call-id/b1dda7687099748913c410d041af903cc2e11fe977a8-0062-6880 (trying 137.116.157.177) on new connection
+14-09-2015 11:21:41.643 UTC Debug httpconnection.cpp:896: Received header http/1.1200ok with value 
+14-09-2015 11:21:41.643 UTC Debug httpconnection.cpp:896: Received header content-length with value 0
+14-09-2015 11:21:41.643 UTC Debug httpconnection.cpp:896: Received header? with value 
+14-09-2015 11:21:41.644 UTC Debug httpconnection.cpp:610: Received HTTP response: status=200, doc=
+14-09-2015 11:21:41.644 UTC Debug acr.cpp:54: Destroyed ACR (0x7f0c340056c0)
+14-09-2015 11:21:41.644 UTC Debug pjsip: tdta0x7f0c3405 Destroying txdata Request msg ACK/cseq=1 (tdta0x7f0c3405f0f0)
+14-09-2015 11:21:41.644 UTC Debug thread_dispatcher.cpp:193: Worker thread completed processing message 0x7f0c303e6a78
+14-09-2015 11:21:41.644 UTC Debug thread_dispatcher.cpp:199: Request latency = 3678us
+14-09-2015 11:21:42.057 UTC Debug pjsip: tsx0x7f0c34066 Timeout timer event
+14-09-2015 11:21:42.057 UTC Debug pjsip: tsx0x7f0c34066 State changed from Completed to Terminated, event=TIMER
+14-09-2015 11:21:42.057 UTC Debug bono.cpp:359: tsx0x7f0c34066348 - tu_on_tsx_state UAC, TSX_STATE TIMER state=Terminated
+14-09-2015 11:21:42.057 UTC Debug bono.cpp:2927: tsx0x7f0c34066348 - uac_data = 0x7f0c3406cff0, uas_data = (nil)
+14-09-2015 11:21:42.057 UTC Debug pjsip: tsx0x7f0c34066 Timeout timer event
+14-09-2015 11:21:42.057 UTC Debug pjsip: tsx0x7f0c34066 State changed from Terminated to Destroyed, event=TIMER
+14-09-2015 11:21:42.057 UTC Debug bono.cpp:359: tsx0x7f0c34066348 - tu_on_tsx_state UAC, TSX_STATE TIMER state=Destroyed
+14-09-2015 11:21:42.058 UTC Debug bono.cpp:2927: tsx0x7f0c34066348 - uac_data = 0x7f0c3406cff0, uas_data = (nil)
+14-09-2015 11:21:42.058 UTC Debug bono.cpp:3014: tsx0x7f0c34066348 - UAC tsx destroyed
+
+Thanks,Tam
+
+
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150914/a2392151/attachment.html>
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: fail_ack.txt
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150914/a2392151/attachment.txt>
+
+From David.xin.Lin at alcatel-lucent.com  Wed Sep 16 04:18:10 2015
+From: David.xin.Lin at alcatel-lucent.com (LIN David DL)
+Date: Wed, 16 Sep 2015 08:18:10 +0000
+Subject: [Clearwater] Problems encountered when installing Clearwater
+ onAWS EC2
+In-Reply-To: <5D208D7670FA8649844651A541F9D9911EE43241@cnshjmbx03>
+References: <5D208D7670FA8649844651A541F9D9911EE43241@cnshjmbx03>
+Message-ID: <5D208D7670FA8649844651A541F9D9911EE64960@cnshjmbx03>
+
+Hi Ellie,
+
+I tried to re-install Clearwater on Amazon  EC2 for call load testing, but got the following error immediately after run the resize command.
+The command worked well when I tried it previously, but this time it asked for password of ubuntu at 52.20.74.145<mailto:ubuntu at 52.20.74.145>. I have no idea which service it is.
+
+My chef client IP is 54.165.106.241, chef server IP is 54.165.109.96. I don't know why it wants to connect to 52.20.74.145. Do you know what it is?
+
+ubuntu at ip-172-31-56-224:~/chef$ knife environment from file environments/clearwater.rb
+Updated Environment clearwater
+ubuntu at ip-172-31-56-224:~/chef$ knife deployment resize -E clearwater --sprout-count 3 -V
+INFO: Managing deployment in environment: clearwater
+INFO: Starting resize operation
+INFO: Creating security groups...
+INFO: Creating security groups finished
+INFO: Cleaning deployment...
+INFO: Running sudo nice -n 19 chef-client on chef_environment:clearwater
+ubuntu at 52.20.74.145's password: ERROR: Network Error: Connection timed out - connect(2)
+       Check your knife configuration and network settings
+
+Thanks,
+David
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150916/c699b05f/attachment.html>
+
+From Adam.Lindley at metaswitch.com  Wed Sep 16 06:36:41 2015
+From: Adam.Lindley at metaswitch.com (Adam Lindley)
+Date: Wed, 16 Sep 2015 10:36:41 +0000
+Subject: [Clearwater] Northern Lights release has been cut
+Message-ID: <F563E2A0B985304183EF3092B1596C6AE95286@ENFICSMBX1.datcon.co.uk>
+
+Hello,
+The release for sprint "Northern Lights" has been cut.  The code for this release is tagged as release-81 in Github.
+We've been working on the following new features in this sprint:
+
+*         We've split INVITE statistics out by cancellation - there are two new SNMP statistics for the number of INVITEs cancelled before a 1xx response and the number of INVITEs cancelled after a 1xx response. (http://clearwater.readthedocs.org/en/stable/Clearwater_SNMP_Statistics/index.html)
+
+*         We've added statistics for the Cx interface.
+
+*         We've made good progress on exposing the stateful statistics that are collected in Chronos, but we're not in a position to release this yet.
+
+*         We've added a new API to list all provisioned subscribers on Homestead (https://github.com/Metaswitch/crest/blob/dev/docs/homestead_prov_api.md#public-ids-read-only)
+
+This release includes the following bug fixes:
+
+*         Can't retrieve any SNMP registration statistics (https://github.com/Metaswitch/sprout/issues/1163)
+
+*         Homestead clustering plugin produces spurious error log without homestead-prov (https://github.com/Metaswitch/homestead/issues/243)
+
+*         Delete on the private API causes uncaught exceptions (https://github.com/Metaswitch/crest/issues/226)
+
+*         ENT logs, provisioning commands and fixes for issues #164 & #47 are missing. (https://github.com/Metaswitch/crest/issues/223)
+
+*         HSS deployed using chef has corrupt hostname (https://github.com/Metaswitch/chef/issues/223)
+
+*         Can't deploy HSS using chef (https://github.com/Metaswitch/chef/issues/222)
+
+*         Shared config sometimes not propagated to all nodes in a deployment (https://github.com/Metaswitch/chef/issues/204)
+
+*         Can't create a single box (https://github.com/Metaswitch/chef/issues/195)
+
+*         Warnings when restarting clearwater-socket-factory (https://github.com/Metaswitch/clearwater-infrastructure/issues/238)
+
+*         Process 'alarm_agent_process' does not exist (https://github.com/Metaswitch/clearwater-snmp-handlers/issues/85)
+
+*         Error when removing memcached (https://github.com/Metaswitch/memcached/issues/12)
+
+For upgrading to this release, follow the instructions at http://clearwater.readthedocs.org/en/latest/Upgrading_a_Clearwater_deployment/index.html. If you are deploying an all-in-one node, the standard image (http://vm-images.cw-ngv.com/cw-aio.ova) has been updated for this release.
+
+Adam
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150916/6f0706bf/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Thu Sep 17 05:15:01 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Thu, 17 Sep 2015 09:15:01 +0000
+Subject: [Clearwater] Problems encountered when installing Clearwater
+ onAWS EC2
+In-Reply-To: <5D208D7670FA8649844651A541F9D9911EE64960@cnshjmbx03>
+References: <5D208D7670FA8649844651A541F9D9911EE43241@cnshjmbx03>
+	<5D208D7670FA8649844651A541F9D9911EE64960@cnshjmbx03>
+Message-ID: <BN3PR02MB1255A1B305C3C8B3F95C7F309B5A0@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi David,
+
+As part of the resize the chef workstation ssh's onto each box in the 'clearwater'environment and runs 'chef-client' on it. It looks chef thinks that 52.20.74.145 is a box in the 'clearwater' deployment.
+
+When you destroyed the clearwater deployment before, how did you do it (e.g. through knife deployment delete or just deleting the boxes on amazon)?
+
+Ellie
+
+From: LIN David DL [mailto:David.xin.Lin at alcatel-lucent.com]
+Sent: 16 September 2015 09:18
+To: Eleanor Merry
+Cc: clearwater at lists.projectclearwater.org
+Subject: RE: [Clearwater] Problems encountered when installing Clearwater onAWS EC2
+
+Hi Ellie,
+
+I tried to re-install Clearwater on Amazon  EC2 for call load testing, but got the following error immediately after run the resize command.
+The command worked well when I tried it previously, but this time it asked for password of ubuntu at 52.20.74.145<mailto:ubuntu at 52.20.74.145>. I have no idea which service it is.
+
+My chef client IP is 54.165.106.241, chef server IP is 54.165.109.96. I don't know why it wants to connect to 52.20.74.145. Do you know what it is?
+
+ubuntu at ip-172-31-56-224:~/chef$ knife environment from file environments/clearwater.rb
+Updated Environment clearwater
+ubuntu at ip-172-31-56-224:~/chef$ knife deployment resize -E clearwater --sprout-count 3 -V
+INFO: Managing deployment in environment: clearwater
+INFO: Starting resize operation
+INFO: Creating security groups...
+INFO: Creating security groups finished
+INFO: Cleaning deployment...
+INFO: Running sudo nice -n 19 chef-client on chef_environment:clearwater
+ubuntu at 52.20.74.145's<mailto:ubuntu at 52.20.74.145's> password: ERROR: Network Error: Connection timed out - connect(2)
+       Check your knife configuration and network settings
+
+Thanks,
+David
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150917/95ff0734/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Thu Sep 17 05:15:04 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Thu, 17 Sep 2015 09:15:04 +0000
+Subject: [Clearwater] Bono does not forward the ACK to Sprout to
+	complete	call setup
+In-Reply-To: <34890145.2416119.1442256956956.JavaMail.yahoo@mail.yahoo.com>
+References: <34890145.2416119.1442256956956.JavaMail.yahoo@mail.yahoo.com>
+Message-ID: <BN3PR02MB1255CC7B410F610B1F4BFF159B5A0@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi,
+
+Bono rejects the ACK as it?s not part of a trusted flow
+
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:1149: Message received on non-trusted port 5060
+14-09-2015 11:21:41.641 UTC Debug flowtable.cpp:136: Find flow for transport tcps0x7f0c30057018 (2), remote address 137.116.157.180:53924
+14-09-2015 11:21:41.641 UTC Info bono.cpp:1339: Rejecting request from untrusted source
+
+The ACK isn?t coming from a client that Bono has previously known to be trusted (from a successful register). Do you know why the ACK is coming from a different client (IP:port) than the original INVITE?
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of atva angel
+Sent: 14 September 2015 19:56
+To: Clearwater Mail
+Subject: [Clearwater] Bono does not forward the ACK to Sprout to complete call setup
+
+Hi community,
+I need your help to check my issue because Bono does not forward the ACK to Sprout to complete call setup.
+- Call model
+IMS client----OpenSBC----Bono(PCSCF)----Sprout(I/SCSCF, BGCF, integrated External AS)-----SIP Server----SIP client
+
+- Scenario
+1. IMS client makes call to SIP client
+2. SIP client answers
+
+- Issue:
+1. When SIP client answers, IMS Client sends ACK to Bono but Bono does not forward the ACK to Sprout. Therefore, Sprout does not have ACK to forward to the SIP Server/SIP client to complete call setup
+
+- In the debug log on Bono
+Note:
+Bono: 137.116.157.173
+Sprout: 137.116.157.174
+External AS (integrated in Clearwater): 137.116.157.190
+OpenSBC: 137.116.157.180
+
+14-09-2015 11:21:41.640 UTC Verbose pjsip:    tcplis:5060 TCP listener 137.116.157.173:5060: got incoming TCP connection from 137.116.157.180:53924, sock=136
+14-09-2015 11:21:41.640 UTC Verbose pjsip: tcps0x7f0c3005 TCP server transport created
+14-09-2015 11:21:41.640 UTC Debug pjsip: sip_endpoint.c Processing incoming message: Request msg ACK/cseq=1 (rdata0x7f0c30057350)
+14-09-2015 11:21:41.640 UTC Verbose common_sip_processing.cpp:119: RX 1060 bytes Request msg ACK/cseq=1 (rdata0x7f0c30057350) from TCP 137.116.157.180:53924:
+--start msg--
+
+ACK sip:137.116.157.190:5060;transport=tcp;nt_end_pt=YM0+~K13kXpz6a05Mtd1t~K5jr0~X7rDXrfrM2~PUDn~Rn2rcevNknice~NC_2SS1y8J+90~EbtYMig~W11MCn9bcf4p6ffSe1bW_P5bfkpzqfQT6MC_h-tnj2~J4S137COd6_153X86c;nt_server_host=137.116.157.190:5060 SIP/2.0
+From: <sip:1514004152;phone-context=NATL at example.com;user=phone>;tag=9-13c4-65014-10d0-74746b01-10d0
+To: <sip:4004154 at example.com;user=phone>;tag=bc9a30722015914182127
+i: b1dda7687099748913c410d041af903cc2e11fe977a8-0062-6880
+CSeq: 1 ACK
+User-agent: OpenSBC/9.0
+Max-Forwards: 70
+Allow: ACK,BYE,CANCEL,INVITE,OPTIONS,INFO,SUBSCRIBE,REFER,NOTIFY,PRACK,UPDATE
+v: SIP/2.0/TCP OpenSBC:5052;maddr=137.116.157.180;branch=z9hG4bK-10e7-42081c-14830bfb-aaeb2158
+Route: <sip:m2eFktAiCj at 137.116.157.173:5060;transport=TCP;lr>
+Route: <sip:137.116.157.173:5058;transport=TCP;lr>
+Route: <sip:137.116.157.174:5054;transport=TCP;lr;service=scscf;billing-role=charge-orig>
+Route: <sip:137.116.157.190:5060;lr>
+m: <sip:1514004152 at 137.116.157.180:5052;transport=TCP>
+k: resource-priority,timer,path,service-route
+l: 0
+
+
+--end msg--
+14-09-2015 11:21:41.640 UTC Debug pjutils.cpp:1707: Logging SAS Call-ID marker, Call-ID b1dda7687099748913c410d041af903cc2e11fe977a8-0062-6880
+14-09-2015 11:21:41.640 UTC Debug thread_dispatcher.cpp:253: Queuing cloned received message 0x7f0c303e6a78 for worker threads
+14-09-2015 11:21:41.640 UTC Debug thread_dispatcher.cpp:149: Worker thread dequeue message 0x7f0c303e6a78
+14-09-2015 11:21:41.640 UTC Debug pjsip: sip_endpoint.c Distributing rdata to modules: Request msg ACK/cseq=1 (rdata0x7f0c303e6a78)
+14-09-2015 11:21:41.640 UTC Debug bono.cpp:255: Proxy RX request
+14-09-2015 11:21:41.640 UTC Debug pjutils.cpp:744: Cloned Request msg ACK/cseq=1 (rdata0x7f0c303e6a78) to tdta0x7f0c3405f0f0
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:773: Request received on non-trusted port 5060
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:1012: Perform access proxy routing for ACK request
+14-09-2015 11:21:41.641 UTC Debug pjutils.cpp:580: Found Route header, URI = sip:m2eFktAiCj at 137.116.157.173:5060;transport=TCP;lr
+14-09-2015 11:21:41.641 UTC Debug pjutils.cpp:583: Route header is local
+14-09-2015 11:21:41.641 UTC Debug pjutils.cpp:580: Found Route header, URI = sip:137.116.157.173:5058;transport=TCP;lr
+14-09-2015 11:21:41.641 UTC Debug pjutils.cpp:583: Route header is local
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:837: Top two route headers added by this node, checking transports and ports
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:845: Host names are the same and transports are different
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:853: Remove second route header
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:1149: Message received on non-trusted port 5060
+14-09-2015 11:21:41.641 UTC Debug flowtable.cpp:136: Find flow for transport tcps0x7f0c30057018 (2), remote address 137.116.157.180:53924
+14-09-2015 11:21:41.641 UTC Info bono.cpp:1339: Rejecting request from untrusted source
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:1743: Create RalfACR for node type P-CSCF with role Terminating
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:49: Created ACR (0x7f0c340056c0)
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:171: Created P-CSCF Ralf ACR
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:210: Set record type for P/S-CSCF
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:231: In-dialog ACK request => INTERIM_RECORD
+14-09-2015 11:21:41.641 UTC Verbose acr.cpp:629: Sending P-CSCF Ralf ACR (0x7f0c340056c0)
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:656: Building message
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:712: Building event
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:717: Adding Account-Record-Type AVP 3
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:737: Adding Service-Information AVP group
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:747: Adding 0 Subscription-Id AVPs
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:773: Adding IMS-Information AVP group
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:778: Adding Event-Type AVP group
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:807: Adding 0 Calling-Party-Address AVPs
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:827: Adding Called-Party-Address AVP
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:848: Adding 0 Called-Asserted-Identity AVPs
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:869: Adding 0 Associated-URI AVPs
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:888: Adding Time-Stamps AVP group
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:978: Adding 0 Transit-IOI-List AVPs
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1077: Adding Media AVPs
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1275: Adding SDP-Session-Description AVPs
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1082: Adding 0 Message-Body AVPs
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1172: Adding 0 Reason-Header AVPs
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1190: Adding 0 Access-Network-Information AVPs
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1208: Adding From-Address AVP
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1223: Adding Route-Header-Received AVP
+14-09-2015 11:21:41.642 UTC Debug httpresolver.cpp:71: HttpResolver::resolve for host 137.116.157.177, port 10888, family 2
+14-09-2015 11:21:41.642 UTC Debug baseresolver.cpp:503: Attempt to parse 137.116.157.177 as IP address
+14-09-2015 11:21:41.642 UTC Debug httpresolver.cpp:79: Target is an IP address
+14-09-2015 11:21:41.642 UTC Debug httpconnection.cpp:595: Sending HTTP request : http://137.116.157.177:10888/call-id/b1dda7687099748913c410d041af903cc2e11fe977a8-0062-6880 (trying 137.116.157.177) on new connection
+14-09-2015 11:21:41.643 UTC Debug httpconnection.cpp:896: Received header http/1.1200ok with value
+14-09-2015 11:21:41.643 UTC Debug httpconnection.cpp:896: Received header content-length with value 0
+14-09-2015 11:21:41.643 UTC Debug httpconnection.cpp:896: Received header  with value
+14-09-2015 11:21:41.644 UTC Debug httpconnection.cpp:610: Received HTTP response: status=200, doc=
+14-09-2015 11:21:41.644 UTC Debug acr.cpp:54: Destroyed ACR (0x7f0c340056c0)
+14-09-2015 11:21:41.644 UTC Debug pjsip: tdta0x7f0c3405 Destroying txdata Request msg ACK/cseq=1 (tdta0x7f0c3405f0f0)
+14-09-2015 11:21:41.644 UTC Debug thread_dispatcher.cpp:193: Worker thread completed processing message 0x7f0c303e6a78
+14-09-2015 11:21:41.644 UTC Debug thread_dispatcher.cpp:199: Request latency = 3678us
+14-09-2015 11:21:42.057 UTC Debug pjsip: tsx0x7f0c34066 Timeout timer event
+14-09-2015 11:21:42.057 UTC Debug pjsip: tsx0x7f0c34066 State changed from Completed to Terminated, event=TIMER
+14-09-2015 11:21:42.057 UTC Debug bono.cpp:359: tsx0x7f0c34066348 - tu_on_tsx_state UAC, TSX_STATE TIMER state=Terminated
+14-09-2015 11:21:42.057 UTC Debug bono.cpp:2927: tsx0x7f0c34066348 - uac_data = 0x7f0c3406cff0, uas_data = (nil)
+14-09-2015 11:21:42.057 UTC Debug pjsip: tsx0x7f0c34066 Timeout timer event
+14-09-2015 11:21:42.057 UTC Debug pjsip: tsx0x7f0c34066 State changed from Terminated to Destroyed, event=TIMER
+14-09-2015 11:21:42.057 UTC Debug bono.cpp:359: tsx0x7f0c34066348 - tu_on_tsx_state UAC, TSX_STATE TIMER state=Destroyed
+14-09-2015 11:21:42.058 UTC Debug bono.cpp:2927: tsx0x7f0c34066348 - uac_data = 0x7f0c3406cff0, uas_data = (nil)
+14-09-2015 11:21:42.058 UTC Debug bono.cpp:3014: tsx0x7f0c34066348 - UAC tsx destroyed
+
+Thanks,
+Tam
+
+
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150917/948914b6/attachment.html>
+
+From crbertoldo at gmail.com  Thu Sep 17 10:42:02 2015
+From: crbertoldo at gmail.com (Claudio Bertoldo)
+Date: Thu, 17 Sep 2015 11:42:02 -0300
+Subject: [Clearwater] [doubt] original sipp against an all_in_one
+	implementation
+In-Reply-To: <CY1PR0201MB09248C27D1492DA0D3A7328CF4530@CY1PR0201MB0924.namprd02.prod.outlook.com>
+References: <CAC6=c0fTuDaQnQANb_Jd1D1OK88TVxiDOngx8=wN23AmSXMusg@mail.gmail.com>
+	<CO1PR02MB2403DD8AD9F13E7CF20D57C9B7C0@CO1PR02MB240.namprd02.prod.outlook.com>
+	<CAC6=c0e_sXPeBaPAchDU1BKpdk++QkpLt+zzD16Xde_ZOjhtxg@mail.gmail.com>
+	<CY1PR0201MB0924B1A472C9434CF501ED71F4630@CY1PR0201MB0924.namprd02.prod.outlook.com>
+	<CAC6=c0fyopyNrC0nmJ+HYwY9QNaDXnoUtvGS7eSGHx7V2qqRRw@mail.gmail.com>
+	<CAC6=c0e4BLEKAncc+0+8Jaxc-X7bJO=mD7MYE+k+TRHXWJtUYg@mail.gmail.com>
+	<CY1PR0201MB09248C27D1492DA0D3A7328CF4530@CY1PR0201MB0924.namprd02.prod.outlook.com>
+Message-ID: <CAC6=c0dr02QoYgJJJ-od7=+H1hZoHpaDNPy9qoQVdJpu5iQjqg@mail.gmail.com>
+
+Hi Robert,
+
+Thanks a lot for your feedback and sorry for my delay. In fact, I could
+accomplish what I was wondering. I was a little bit lost in the xml
+parameters, so I let it as static as possible ("example.com" instead of
+"[service] and so on).
+
+*./sipp 192.168.56.110 -sf call.xml -inf users.csv -m 1000 -l 1
+-rate_increase 10 -fd 10 -rate_max 100 -trace_msg -trace_err*
+
+Both files attached.
+
+It's simple, only register transactions, so I'm crossing with other metrics
+(CPU, memory etc.) of the All-in-One VM.
+
+Best,
+
+Claudio
+
+
+
+On Tue, Sep 8, 2015 at 7:27 PM, Robert Day <Robert.Day at metaswitch.com>
+wrote:
+
+> Hi Claudio,
+>
+>
+>
+> Sorry for the delay in responding. The Clearwater version of SIPp only has
+> one change from the mainline version (to redo DNS lookups when a call
+> fails, so we can move traffic away from failed Bono nodes to test
+> fault-tolerance) ? this shouldn?t affect stress against all-in-one nodes.
+>
+>
+>
+> What issues are you seeing when running SIPp against Clearwater? (I?m a
+> SIPp maintainer as well as a Clearwater developer, so should be able to
+> help with both.)
+>
+>
+>
+> Best,
+>
+> Rob
+>
+>
+>
+> --
+>
+> Rob Day
+>
+> Software Engineer, Project Clearwater
+>
+>
+>
+> *From:* Claudio Bertoldo [mailto:crbertoldo at gmail.com]
+> *Sent:* 02 September 2015 18:44
+> *To:* Robert Day <Robert.Day at metaswitch.com>
+> *Cc:* Eleanor Merry <Eleanor.Merry at metaswitch.com>;
+> clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Clearwater] [doubt] original sipp against an all_in_one
+> implementation
+>
+>
+>
+> Hi Robert,
+>
+>
+>
+> In fact I've figured out that it doesn't matter if it's all-in-one or not.
+> I could ran the stress according to the Clearwater doc.
+>
+>
+>
+> I just would like to adapt the xml/csv for SIPp provided by you in order
+> to use with the original SIPp tool against Clearwater. I'm trying it for a
+> while with trial-and-error, but still unsuccessful.
+>
+>
+>
+> Do you think it's possible?
+>
+>
+>
+> Thanks in advance.
+>
+>
+>
+> Claudio
+>
+>
+>
+> On Tue, Sep 1, 2015 at 2:03 AM, Claudio Bertoldo <crbertoldo at gmail.com>
+> wrote:
+>
+> Hi Robert,
+>
+>
+>
+> Thanks a lot for your feedback. My objective is to stress the All-in-one
+> (OVF) implementation with the conventional version of SIPp (not that one
+> specific/provided by Clearwater). The same thing that the procedure does,
+> but thru a "manual and external way".
+>
+>
+>
+> Something like this:
+>
+>
+>
+>
+> http://sipp-tutorial.blogspot.com.br/2013/08/sipp-linux-client-registration-with.html
+>
+>
+>
+> But using Clearwater of course, instead of Asterisk.
+>
+>
+>
+> I tried creating a csv with an only user provisioned thru the Ellis UI and
+> a lot of different xml configuration. I also took the password provided by
+> Ellis, converted to MD5 and embedded into the xml/packet. Still
+> unsuccessful.
+>
+>
+>
+> So I think I had success with this xml, it could work. Maybe something in
+> the Contact, Via and/or Authorization fields:
+>
+>
+>
+> [image: cid:image001.png at 01D0EA5F.DE574B80]
+> ?
+>
+> Thanks in advance.
+>
+>
+>
+> Claudio
+>
+>
+>
+>
+>
+> On Sun, Aug 23, 2015 at 7:01 PM, Robert Day <Robert.Day at metaswitch.com>
+> wrote:
+>
+> Hi Claudio,
+>
+>
+>
+> Our SIPp stress scripts assume that the users have a password of 7kkzTyGW
+> ? this is hardcoded at
+> https://github.com/Metaswitch/sprout/blob/master/clearwater-sip-stress.root/usr/share/clearwater/infrastructure/scripts/sip-stress#L13
+> .
+>
+>
+>
+> Our bulk provisioning instructions (
+> https://github.com/Metaswitch/crest/blob/dev/docs/Bulk-Provisioning%20Numbers.md)
+> include instructions for bulk-provisioning users with this password (see
+> the section starting ?If you are provisioning numbers for SIPp stress
+> testing, you will need to force them all to use the password '7kkzTyGW'.
+> This CSV file can be generated with??). Our bulk provisioning scripts
+> handle the conversion of that password into the SIP Digest HA1 (the MD5
+> hashing process you refer to).
+>
+>
+>
+> Note that this requires command-line bulk provisioning ? there?s no way to
+> force a password of 7kkzTyGW through the Ellis UI.
+>
+>
+>
+> Does that give you what you need to know? Please let me know if you have
+> any other questions.
+>
+>
+>
+> Best,
+>
+> Rob
+>
+>
+>
+> --
+>
+> Rob Day
+>
+> Software Engineer, Project Clearwater
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *Claudio Bertoldo
+> *Sent:* 15 August 2015 15:54
+> *To:* Eleanor Merry <Eleanor.Merry at metaswitch.com>
+> *Cc:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Clearwater] [doubt] original sipp against an all_in_one
+> implementation
+>
+>
+>
+> Hi Eleanor,
+>
+>
+>
+> Thanks.
+>
+>
+>
+> In fact I have already tried these files, but I don't know how to use them
+> with SIPp from an external VM stressing another with the All-in-one
+> implementation. I tried provisioning a single user and then modifying the
+> csv for this single user, but it didn't work anyway.
+>
+>
+>
+> I think it's simple, but I cannot accomplish. My All-in-one works well
+> (tested) and my SIPs as well (tested in another VM and sniffed its
+> packets). I get authentication error. I'm wondering about how to make the
+> xml/csv and provision the "user(s)" under test in the All-in-one.
+>
+>
+>
+> As I could understand, the user's password should go through MD5 + a
+> specific code.
+>
+>
+>
+> Claudio
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> On Fri, Aug 14, 2015 at 2:54 PM, Eleanor Merry <
+> Eleanor.Merry at metaswitch.com> wrote:
+>
+> Hi Claudio
+>
+>
+>
+> We have this file that we use regularly for our stress tests (
+> https://github.com/Metaswitch/sprout/blob/master/tests/load/call_load2.xml
+> - more details in
+> http://clearwater.readthedocs.org/en/latest/Clearwater_stress_testing/index.html),
+> and there are more examples in
+> https://github.com/Metaswitch/sprout/tree/master/tests/load
+>
+>
+>
+> Ellie
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *Claudio Bertoldo
+> *Sent:* 09 August 2015 08:01
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Clearwater] [doubt] original sipp against an all_in_one
+> implementation
+>
+>
+>
+> Howdy!
+>
+> Please, how can I run a sipp stress against an all_in_one implementation
+> from a remote machine?
+>
+> I need to use an original sipp implementation. Is there any sipp xml/csv
+> example ready for it? I've tried to create them, but I'm still facing
+> authentication error.
+>
+> Thanks in advance.
+>
+> Claudio
+>
+>
+>
+>
+>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150917/8a03eab7/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 38280 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150917/8a03eab7/attachment.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: call.xml
+Type: text/xml
+Size: 2249 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150917/8a03eab7/attachment.xml>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: users.csv.zip
+Type: application/zip
+Size: 512986 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150917/8a03eab7/attachment.zip>
+
+From David.xin.Lin at alcatel-lucent.com  Thu Sep 17 20:43:35 2015
+From: David.xin.Lin at alcatel-lucent.com (LIN David DL)
+Date: Fri, 18 Sep 2015 00:43:35 +0000
+Subject: [Clearwater] Problems encountered when installing Clearwater
+ onAWS EC2
+In-Reply-To: <BN3PR02MB1255A1B305C3C8B3F95C7F309B5A0@BN3PR02MB1255.namprd02.prod.outlook.com>
+References: <5D208D7670FA8649844651A541F9D9911EE43241@cnshjmbx03>
+	<5D208D7670FA8649844651A541F9D9911EE64960@cnshjmbx03>
+	<BN3PR02MB1255A1B305C3C8B3F95C7F309B5A0@BN3PR02MB1255.namprd02.prod.outlook.com>
+Message-ID: <5D208D7670FA8649844651A541F9D9911EE6552D@cnshjmbx03>
+
+Hi Ellie,
+
+I destroyed the clearwater deployment through knife deployment delete. Do you think that I should use a new environment name each time?
+
+The chef workstation was newly created. (I created one each time when I do a new installation), but the chef-server is always the same one. There was no problem when I did this in the past.
+
+Thanks,
+David
+
+From: Eleanor Merry [mailto:Eleanor.Merry at metaswitch.com]
+Sent: 2015?9?17? 17:15
+To: LIN David DL
+Cc: clearwater at lists.projectclearwater.org
+Subject: RE: [Clearwater] Problems encountered when installing Clearwater onAWS EC2
+
+Hi David,
+
+As part of the resize the chef workstation ssh?s onto each box in the ?clearwater?environment and runs ?chef-client? on it. It looks chef thinks that 52.20.74.145 is a box in the ?clearwater? deployment.
+
+When you destroyed the clearwater deployment before, how did you do it (e.g. through knife deployment delete or just deleting the boxes on amazon)?
+
+Ellie
+
+From: LIN David DL [mailto:David.xin.Lin at alcatel-lucent.com]
+Sent: 16 September 2015 09:18
+To: Eleanor Merry
+Cc: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: RE: [Clearwater] Problems encountered when installing Clearwater onAWS EC2
+
+Hi Ellie,
+
+I tried to re-install Clearwater on Amazon  EC2 for call load testing, but got the following error immediately after run the resize command.
+The command worked well when I tried it previously, but this time it asked for password of ubuntu at 52.20.74.145<mailto:ubuntu at 52.20.74.145>. I have no idea which service it is.
+
+My chef client IP is 54.165.106.241, chef server IP is 54.165.109.96. I don?t know why it wants to connect to 52.20.74.145. Do you know what it is?
+
+ubuntu at ip-172-31-56-224:~/chef$ knife environment from file environments/clearwater.rb
+Updated Environment clearwater
+ubuntu at ip-172-31-56-224:~/chef$ knife deployment resize -E clearwater --sprout-count 3 -V
+INFO: Managing deployment in environment: clearwater
+INFO: Starting resize operation
+INFO: Creating security groups...
+INFO: Creating security groups finished
+INFO: Cleaning deployment...
+INFO: Running sudo nice -n 19 chef-client on chef_environment:clearwater
+ubuntu at 52.20.74.145's<mailto:ubuntu at 52.20.74.145's> password: ERROR: Network Error: Connection timed out - connect(2)
+       Check your knife configuration and network settings
+
+Thanks,
+David
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150918/218bf1c2/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Fri Sep 18 12:31:21 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Fri, 18 Sep 2015 16:31:21 +0000
+Subject: [Clearwater] Problems encountered when installing Clearwater
+ onAWS EC2
+In-Reply-To: <5D208D7670FA8649844651A541F9D9911EE6552D@cnshjmbx03>
+References: <5D208D7670FA8649844651A541F9D9911EE43241@cnshjmbx03>
+	<5D208D7670FA8649844651A541F9D9911EE64960@cnshjmbx03>
+	<BN3PR02MB1255A1B305C3C8B3F95C7F309B5A0@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<5D208D7670FA8649844651A541F9D9911EE6552D@cnshjmbx03>
+Message-ID: <BN3PR02MB1255675588F57DA9E75EFEDA9B590@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi David,
+
+You shouldn?t need to recreate the environment.
+Can you check if chef thinks that there are any nodes/clients left over from the ?clearwater? environment (run ?knife node list? and ?knife client list?).
+
+Ellie
+
+From: LIN David DL [mailto:David.xin.Lin at alcatel-lucent.com]
+Sent: 18 September 2015 01:44
+To: Eleanor Merry
+Cc: clearwater at lists.projectclearwater.org
+Subject: RE: [Clearwater] Problems encountered when installing Clearwater onAWS EC2
+
+Hi Ellie,
+
+I destroyed the clearwater deployment through knife deployment delete. Do you think that I should use a new environment name each time?
+
+The chef workstation was newly created. (I created one each time when I do a new installation), but the chef-server is always the same one. There was no problem when I did this in the past.
+
+Thanks,
+David
+
+From: Eleanor Merry [mailto:Eleanor.Merry at metaswitch.com]
+Sent: 2015?9?17? 17:15
+To: LIN David DL
+Cc: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: RE: [Clearwater] Problems encountered when installing Clearwater onAWS EC2
+
+Hi David,
+
+As part of the resize the chef workstation ssh?s onto each box in the ?clearwater?environment and runs ?chef-client? on it. It looks chef thinks that 52.20.74.145 is a box in the ?clearwater? deployment.
+
+When you destroyed the clearwater deployment before, how did you do it (e.g. through knife deployment delete or just deleting the boxes on amazon)?
+
+Ellie
+
+From: LIN David DL [mailto:David.xin.Lin at alcatel-lucent.com]
+Sent: 16 September 2015 09:18
+To: Eleanor Merry
+Cc: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: RE: [Clearwater] Problems encountered when installing Clearwater onAWS EC2
+
+Hi Ellie,
+
+I tried to re-install Clearwater on Amazon  EC2 for call load testing, but got the following error immediately after run the resize command.
+The command worked well when I tried it previously, but this time it asked for password of ubuntu at 52.20.74.145<mailto:ubuntu at 52.20.74.145>. I have no idea which service it is.
+
+My chef client IP is 54.165.106.241, chef server IP is 54.165.109.96. I don?t know why it wants to connect to 52.20.74.145. Do you know what it is?
+
+ubuntu at ip-172-31-56-224:~/chef$ knife environment from file environments/clearwater.rb
+Updated Environment clearwater
+ubuntu at ip-172-31-56-224:~/chef$ knife deployment resize -E clearwater --sprout-count 3 -V
+INFO: Managing deployment in environment: clearwater
+INFO: Starting resize operation
+INFO: Creating security groups...
+INFO: Creating security groups finished
+INFO: Cleaning deployment...
+INFO: Running sudo nice -n 19 chef-client on chef_environment:clearwater
+ubuntu at 52.20.74.145's<mailto:ubuntu at 52.20.74.145's> password: ERROR: Network Error: Connection timed out - connect(2)
+       Check your knife configuration and network settings
+
+Thanks,
+David
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150918/8f5d5640/attachment.html>
+
+From atva_angel at yahoo.com  Fri Sep 18 21:37:42 2015
+From: atva_angel at yahoo.com (atva angel)
+Date: Sat, 19 Sep 2015 01:37:42 +0000 (UTC)
+Subject: [Clearwater] Bono does not forward the ACK to Sprout to
+ complete	call setup
+In-Reply-To: <BN3PR02MB1255CC7B410F610B1F4BFF159B5A0@BN3PR02MB1255.namprd02.prod.outlook.com>
+References: <BN3PR02MB1255CC7B410F610B1F4BFF159B5A0@BN3PR02MB1255.namprd02.prod.outlook.com>
+Message-ID: <997084367.45932.1442626662846.JavaMail.yahoo@mail.yahoo.com>
+
+Hi Ellie,
+I've fixed my issue by changing the remote port to connect Bono on my OpenSBC to UDP.
+Thanks,Tam 
+
+
+     On Thursday, September 17, 2015 4:15 PM, Eleanor Merry <Eleanor.Merry at metaswitch.com> wrote:
+   
+
+ #yiv5513335240 #yiv5513335240 -- _filtered #yiv5513335240 {font-family:Calibri;panose-1:2 15 5 2 2 2 4 3 2 4;} _filtered #yiv5513335240 {font-family:Tahoma;panose-1:2 11 6 4 3 5 4 4 2 4;} _filtered #yiv5513335240 {}#yiv5513335240 #yiv5513335240 p.yiv5513335240MsoNormal, #yiv5513335240 li.yiv5513335240MsoNormal, #yiv5513335240 div.yiv5513335240MsoNormal {margin:0cm;margin-bottom:.0001pt;font-size:12.0pt;}#yiv5513335240 a:link, #yiv5513335240 span.yiv5513335240MsoHyperlink {color:blue;text-decoration:underline;}#yiv5513335240 a:visited, #yiv5513335240 span.yiv5513335240MsoHyperlinkFollowed {color:purple;text-decoration:underline;}#yiv5513335240 p.yiv5513335240MsoAcetate, #yiv5513335240 li.yiv5513335240MsoAcetate, #yiv5513335240 div.yiv5513335240MsoAcetate {margin:0cm;margin-bottom:.0001pt;font-size:8.0pt;}#yiv5513335240 span.yiv5513335240EmailStyle17 {color:#1F497D;}#yiv5513335240 span.yiv5513335240BalloonTextChar {}#yiv5513335240 .yiv5513335240MsoChpDefault {font-size:10.0pt;} _filtered #yiv5513335240 {margin:72.0pt 72.0pt 72.0pt 72.0pt;}#yiv5513335240 div.yiv5513335240WordSection1 {}#yiv5513335240 Hi,  ? Bono rejects the ACK as it?s not part of a trusted flow  ? 14-09-2015 11:21:41.641 UTC Debug bono.cpp:1149: Message received on non-trusted port 5060 14-09-2015 11:21:41.641 UTC Debug flowtable.cpp:136: Find flow for transport tcps0x7f0c30057018 (2), remote address 137.116.157.180:53924 14-09-2015 11:21:41.641 UTC Info bono.cpp:1339: Rejecting request from untrusted source  ? The ACK isn?t coming from a client that Bono has previously known to be trusted (from a successful register). Do you know why the ACK is coming from a different client (IP:port) than the original INVITE?  ? Ellie  ? From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]On Behalf Of atva angel
+Sent: 14 September 2015 19:56
+To: Clearwater Mail
+Subject: [Clearwater] Bono does not forward the ACK to Sprout to complete call setup  ? Hi community, I need your help to check my issue because Bono does not forward the ACK to Sprout to complete call setup. - Call model IMS client----OpenSBC----Bono(PCSCF)----Sprout(I/SCSCF, BGCF, integrated External AS)-----SIP Server----SIP client  ? - Scenario 1. IMS client makes call to SIP client 2. SIP client answers  ? - Issue: 1. When SIP client answers, IMS Client sends ACK to Bono but Bono does not forward the ACK to Sprout. Therefore, Sprout does not have ACK to forward to the SIP Server/SIP client to complete call setup  ? - In the debug log on Bono Note: Bono: 137.116.157.173 Sprout: 137.116.157.174 External AS (integrated in Clearwater): 137.116.157.190 OpenSBC: 137.116.157.180  ? 14-09-2015 11:21:41.640 UTC Verbose pjsip:??? tcplis:5060 TCP listener 137.116.157.173:5060: got incoming TCP connection from 137.116.157.180:53924, sock=136
+14-09-2015 11:21:41.640 UTC Verbose pjsip: tcps0x7f0c3005 TCP server transport created
+14-09-2015 11:21:41.640 UTC Debug pjsip: sip_endpoint.c Processing incoming message: Request msg ACK/cseq=1 (rdata0x7f0c30057350)
+14-09-2015 11:21:41.640 UTC Verbose common_sip_processing.cpp:119: RX 1060 bytes Request msg ACK/cseq=1 (rdata0x7f0c30057350) from TCP 137.116.157.180:53924:
+--start msg--
+
+ACK sip:137.116.157.190:5060;transport=tcp;nt_end_pt=YM0+~K13kXpz6a05Mtd1t~K5jr0~X7rDXrfrM2~PUDn~Rn2rcevNknice~NC_2SS1y8J+90~EbtYMig~W11MCn9bcf4p6ffSe1bW_P5bfkpzqfQT6MC_h-tnj2~J4S137COd6_153X86c;nt_server_host=137.116.157.190:5060 SIP/2.0
+From: <sip:1514004152;phone-context=NATL at example.com;user=phone>;tag=9-13c4-65014-10d0-74746b01-10d0
+To: <sip:4004154 at example.com;user=phone>;tag=bc9a30722015914182127
+i: b1dda7687099748913c410d041af903cc2e11fe977a8-0062-6880
+CSeq: 1 ACK
+User-agent: OpenSBC/9.0
+Max-Forwards: 70
+Allow: ACK,BYE,CANCEL,INVITE,OPTIONS,INFO,SUBSCRIBE,REFER,NOTIFY,PRACK,UPDATE
+v: SIP/2.0/TCP OpenSBC:5052;maddr=137.116.157.180;branch=z9hG4bK-10e7-42081c-14830bfb-aaeb2158
+Route: <sip:m2eFktAiCj at 137.116.157.173:5060;transport=TCP;lr>
+Route: <sip:137.116.157.173:5058;transport=TCP;lr>
+Route: <sip:137.116.157.174:5054;transport=TCP;lr;service=scscf;billing-role=charge-orig>
+Route: <sip:137.116.157.190:5060;lr>
+m: <sip:1514004152 at 137.116.157.180:5052;transport=TCP>
+k: resource-priority,timer,path,service-route
+l: 0
+
+
+--end msg--
+14-09-2015 11:21:41.640 UTC Debug pjutils.cpp:1707: Logging SAS Call-ID marker, Call-ID b1dda7687099748913c410d041af903cc2e11fe977a8-0062-6880
+14-09-2015 11:21:41.640 UTC Debug thread_dispatcher.cpp:253: Queuing cloned received message 0x7f0c303e6a78 for worker threads
+14-09-2015 11:21:41.640 UTC Debug thread_dispatcher.cpp:149: Worker thread dequeue message 0x7f0c303e6a78
+14-09-2015 11:21:41.640 UTC Debug pjsip: sip_endpoint.c Distributing rdata to modules: Request msg ACK/cseq=1 (rdata0x7f0c303e6a78)
+14-09-2015 11:21:41.640 UTC Debug bono.cpp:255: Proxy RX request
+14-09-2015 11:21:41.640 UTC Debug pjutils.cpp:744: Cloned Request msg ACK/cseq=1 (rdata0x7f0c303e6a78) to tdta0x7f0c3405f0f0
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:773: Request received on non-trusted port 5060
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:1012: Perform access proxy routing for ACK request
+14-09-2015 11:21:41.641 UTC Debug pjutils.cpp:580: Found Route header, URI = sip:m2eFktAiCj at 137.116.157.173:5060;transport=TCP;lr
+14-09-2015 11:21:41.641 UTC Debug pjutils.cpp:583: Route header is local
+14-09-2015 11:21:41.641 UTC Debug pjutils.cpp:580: Found Route header, URI = sip:137.116.157.173:5058;transport=TCP;lr
+14-09-2015 11:21:41.641 UTC Debug pjutils.cpp:583: Route header is local
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:837: Top two route headers added by this node, checking transports and ports
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:845: Host names are the same and transports are different
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:853: Remove second route header
+14-09-2015 11:21:41.641 UTC Debug bono.cpp:1149: Message received on non-trusted port 5060
+14-09-2015 11:21:41.641 UTC Debug flowtable.cpp:136: Find flow for transport tcps0x7f0c30057018 (2), remote address 137.116.157.180:53924
+14-09-2015 11:21:41.641 UTC Info bono.cpp:1339: Rejecting request from untrusted source
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:1743: Create RalfACR for node type P-CSCF with role Terminating
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:49: Created ACR (0x7f0c340056c0)
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:171: Created P-CSCF Ralf ACR
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:210: Set record type for P/S-CSCF
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:231: In-dialog ACK request => INTERIM_RECORD
+14-09-2015 11:21:41.641 UTC Verbose acr.cpp:629: Sending P-CSCF Ralf ACR (0x7f0c340056c0)
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:656: Building message
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:712: Building event
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:717: Adding Account-Record-Type AVP 3
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:737: Adding Service-Information AVP group
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:747: Adding 0 Subscription-Id AVPs
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:773: Adding IMS-Information AVP group
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:778: Adding Event-Type AVP group
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:807: Adding 0 Calling-Party-Address AVPs
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:827: Adding Called-Party-Address AVP
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:848: Adding 0 Called-Asserted-Identity AVPs
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:869: Adding 0 Associated-URI AVPs
+14-09-2015 11:21:41.641 UTC Debug acr.cpp:888: Adding Time-Stamps AVP group
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:978: Adding 0 Transit-IOI-List AVPs
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1077: Adding Media AVPs
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1275: Adding SDP-Session-Description AVPs
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1082: Adding 0 Message-Body AVPs
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1172: Adding 0 Reason-Header AVPs
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1190: Adding 0 Access-Network-Information AVPs
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1208: Adding From-Address AVP
+14-09-2015 11:21:41.642 UTC Debug acr.cpp:1223: Adding Route-Header-Received AVP
+14-09-2015 11:21:41.642 UTC Debug httpresolver.cpp:71: HttpResolver::resolve for host 137.116.157.177, port 10888, family 2
+14-09-2015 11:21:41.642 UTC Debug baseresolver.cpp:503: Attempt to parse 137.116.157.177 as IP address
+14-09-2015 11:21:41.642 UTC Debug httpresolver.cpp:79: Target is an IP address
+14-09-2015 11:21:41.642 UTC Debug httpconnection.cpp:595: Sending HTTP request : http://137.116.157.177:10888/call-id/b1dda7687099748913c410d041af903cc2e11fe977a8-0062-6880 (trying 137.116.157.177) on new connection
+14-09-2015 11:21:41.643 UTC Debug httpconnection.cpp:896: Received header http/1.1200ok with value
+14-09-2015 11:21:41.643 UTC Debug httpconnection.cpp:896: Received header content-length with value 0
+14-09-2015 11:21:41.643 UTC Debug httpconnection.cpp:896: Received header? with value
+14-09-2015 11:21:41.644 UTC Debug httpconnection.cpp:610: Received HTTP response: status=200, doc=
+14-09-2015 11:21:41.644 UTC Debug acr.cpp:54: Destroyed ACR (0x7f0c340056c0)
+14-09-2015 11:21:41.644 UTC Debug pjsip: tdta0x7f0c3405 Destroying txdata Request msg ACK/cseq=1 (tdta0x7f0c3405f0f0)
+14-09-2015 11:21:41.644 UTC Debug thread_dispatcher.cpp:193: Worker thread completed processing message 0x7f0c303e6a78
+14-09-2015 11:21:41.644 UTC Debug thread_dispatcher.cpp:199: Request latency = 3678us
+14-09-2015 11:21:42.057 UTC Debug pjsip: tsx0x7f0c34066 Timeout timer event
+14-09-2015 11:21:42.057 UTC Debug pjsip: tsx0x7f0c34066 State changed from Completed to Terminated, event=TIMER
+14-09-2015 11:21:42.057 UTC Debug bono.cpp:359: tsx0x7f0c34066348 - tu_on_tsx_state UAC, TSX_STATE TIMER state=Terminated
+14-09-2015 11:21:42.057 UTC Debug bono.cpp:2927: tsx0x7f0c34066348 - uac_data = 0x7f0c3406cff0, uas_data = (nil)
+14-09-2015 11:21:42.057 UTC Debug pjsip: tsx0x7f0c34066 Timeout timer event
+14-09-2015 11:21:42.057 UTC Debug pjsip: tsx0x7f0c34066 State changed from Terminated to Destroyed, event=TIMER
+14-09-2015 11:21:42.057 UTC Debug bono.cpp:359: tsx0x7f0c34066348 - tu_on_tsx_state UAC, TSX_STATE TIMER state=Destroyed
+14-09-2015 11:21:42.058 UTC Debug bono.cpp:2927: tsx0x7f0c34066348 - uac_data = 0x7f0c3406cff0, uas_data = (nil)
+14-09-2015 11:21:42.058 UTC Debug bono.cpp:3014: tsx0x7f0c34066348 - UAC tsx destroyed  ? Thanks, Tam  ?  ?  ?  ?  ? 
+
+  
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150919/455db2b0/attachment.html>
+
+From jcoimbra at daitangroup.com  Fri Sep 25 12:41:37 2015
+From: jcoimbra at daitangroup.com (Juliano Medeiros Coimbra)
+Date: Fri, 25 Sep 2015 16:41:37 +0000
+Subject: [Clearwater] Is CW-AIO losing registered SIP URIs?
+Message-ID: <CP1PR80MB214A25200573C8CAA47D4BBCE420@CP1PR80MB214.lamprd80.prod.outlook.com>
+
+Hello,
+
+
+I am using a CW-AIO image in the following version:
+
+
+$ dpkg -l sprout homer homestead
+
+Desired=Unknown/Install/Remove/Purge/Hold
+
+| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
+
+|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
+
+||/ Name                       Version                    Description
+
++++-==========================-==========================-====================================================================
+
+ii  homer                      1.0-150313.142251          homer, the Cassandra powered XDMS
+
+ii  homestead                  1.0-150313.140357          homestead, the HSS Cache/Gateway
+
+ii  sprout                     1.0-150313.150041          sprout, the SIP Router
+
+
+I've created a few users using Ellis (of course with no "demo account" option) and also using Homer and Homestead APIs, but after some time (sorry, I don't know how much time, but it seems to be days) those users got the following state:
+
+
+$ curl -X GET http://localhost:8889/impi/6505550716%40example.com/av
+{"status": 404, "message": "Not Found", "reason": "unknown", "detail": {}, "error": true}
+
+Therefore they also doesn't get registered through Sprout. The other scenario is a user that is found through this command above, but Sprout starts signaling "SIP/2.0 403 Forbidden".
+
+Am I missing a configuration parameter? Or just messing around with the APIs?
+
+
+I am sorry if this is a trivial question, but I am quite newbie with Project Clearwater. [?]
+
+
+Thanks
+
+
+Juliano Medeiros Coimbra, Architect
+T: +55.19.3112-1200 ext. 1454
+DaitanGroup | www.daitangroup.com<http://www.daitangroup.com/> | Highly Reliable Outsourcing. Value Added Services Worldwide.
+Privileged and confidential. If this message has been received in error, please notify sender and delete it immediately.
+Conte?do confidencial. Se esta mensagem foi recebida por engano, favor avisar o remetente e apag?-la.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150925/6839f234/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: OutlookEmoji-?.png
+Type: image/png
+Size: 488 bytes
+Desc: OutlookEmoji-?.png
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150925/6839f234/attachment.png>
+
+From vimal.tewari at tcs.com  Mon Sep 28 08:04:00 2015
+From: vimal.tewari at tcs.com (Vimal Tewari)
+Date: Mon, 28 Sep 2015 12:04:00 -0000
+Subject: [Clearwater] Error while installing Homestead
+In-Reply-To: <BN3PR02MB1255C7CB200A0AE37606CC849B520@BN3PR02MB1255.namprd02.prod.outlook.com>
+References: <BN3PR02MB1255C7CB200A0AE37606CC849B520@BN3PR02MB1255.namprd02.prod.outlook.com>,
+	<BN3PR02MB1255286602916D7F528E06B89B530@BN3PR02MB1255.namprd02.prod.outlook.com>,
+	<OFFC7A45F1.61BFD71C-ON65257EB9.001B5B0C-65257EB9.001C99FD@tcs.com>
+	<OFCABB62BE.9ADD1D53-ON65257EBB.001D3E1B-65257EBB.001D3E1E@tcs.com>
+Message-ID: <OF73CCFDE6.BB48F7CF-ON65257EBB.0069A230-65257EBB.0069A23B@tcs.com>
+
+Hello Ellie,
+I tried to install homer from scratch again but ran into the same error. Here is detailed information about the error
+
+1. While installing homer, I get the error on the installation window about cassandra not coming online. The following is a portion of the log on the installation window ( the part where I get the error )
+
+? http://pastebin.com/vZXEnmH2
+
+2. The installation ends with this abrupt error:
+
+byte-compiling /usr/share/clearwater/homer/env/lib/python2.7/site-packages/telephus/pool.py to pool.pyc
+running install_egg_info
+Writing /usr/share/clearwater/homer/env/lib/python2.7/site-packages/telephus-1.0.0_beta1-py2.7.egg-info
+/
+?* Restarting clearwater-infrastructure clearwater-infrastructure??????????????????????????????????????????????????????????????????? Waiting for Cassandra.....................FATAL -> Failed to fork.
+
+3. The logs in /var/log/cassandra/system.log is as follows:
+
+? http://pastebin.com/dAK4Avk1
+
+4. When I run "sudo service cassandra stop", nothing happens. Running "sudo monit summary" gives
+ubuntu at homer:~$ sudo service cassandra stop
+ubuntu at homer:~$ sudo monit summary
+The Monit daemon 5.8.1 uptime: 16m 
+
+Process 'ntp_process'?????????????? Running
+System 'node-homer'???????????????? Running
+Process 'nginx_process'???????????? Running
+Process 'homer_process'???????????? Execution failed
+Program 'poll_homer'??????????????? Not monitored
+Process 'clearwater_diags_monitor_process' Running
+Process 'cassandra_process'???????? Does not exist
+
+5. The contents of /etc/hosts is as follows:
+????????????????????????????? 
+ubuntu at homer:~$ cat /etc/hosts
+127.0.0.1 localhost
+127.0.1.1 homer
+
+# The following lines are desirable for IPv6 capable hosts
+::1 ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
+
+192.168.1.43 homer
+192.168.1.43 homer #+clearwater-infrastructure
+????????????????????????????? 
+6. The contents of /etc/clearwater/local_config is as follows:
+ubuntu at homer:~$ cat /etc/clearwater/local_config 
+local_ip=192.168.1.43
+public_ip=10.7.6.229
+public_hostname=homer
+etcd_cluster="192.168.1.43"
+
+7. The ubuntu image is trusty-server-cloudimg-amd64-disk1.img (64 bit Server edition ) which is the official Ubuntu cloud image.
+
+Request you to kindly help in resolving the issue.
+
+Regards,
+Vimal Chandra Tewari
+ Tata Consultancy Services
+ Mailto: vimal.tewari at tcs.com
+ Website: http://www.tcs.com
+ ____________________________________________
+ Experience certainty.	IT Services
+ 			Business Solutions
+ 			Consulting
+ ____________________________________________
+ 
+
+-----Eleanor Merry <Eleanor.Merry at metaswitch.com> wrote: -----
+To: Vimal Tewari <vimal.tewari at tcs.com>
+From: Eleanor Merry <Eleanor.Merry at metaswitch.com>
+Date: 09/09/2015 10:26PM
+Cc: "clearwater at lists.projectclearwater.org" <clearwater at lists.projectclearwater.org>
+Subject: RE: [Clearwater] Error while installing Homestead
+
+       
+ Hi Vimal,
+ ?
+ There&#8217;s not much in the pasted log (only 20 lines). Is that all that was in system.log? What happens if you restart cassandra (run &#8216;sudo service cassandra stop&#8217;  &#8211; monit will automatically restart it)?
+ ?
+ Ellie
+ ?
+ From: Vimal Tewari [mailto:vimal.tewari at tcs.com] 
+ Sent: 09 September 2015 06:19
+ To: Eleanor Merry
+ Cc: clearwater at lists.projectclearwater.org
+ Subject: RE: [Clearwater] Error while installing Homestead
+ ?
+ Hello Ellie,
+ Thanks for your response. 
+ I followed the steps mentioned in the document at  http://clearwater.readthedocs.org/en/stable/Manual_Install/index.html but I am still getting an error while setting up cassandra for homer and homestead.
+ 
+ Here is the log in /var/log/cassandra/system.log
+ 
+ http://pastebin.com/1eg6GFhm
+ 
+ Request you to kindly take a look and help me resolve this issue.
+ 
+ Regards,
+ Vimal Chandra Tewari
+ Tata Consultancy Services
+ Mailto: vimal.tewari at tcs.com
+ Website: http://www.tcs.com
+ ____________________________________________
+ Experience certainty. IT Services
+ Business Solutions
+ Consulting
+ ____________________________________________
+ 
+ 
+ -----Eleanor Merry <Eleanor.Merry at metaswitch.com> wrote: -----
+ 
+ 
+ To: Vimal Tewari <vimal.tewari at tcs.com>, "clearwater at lists.projectclearwater.org"  <clearwater at lists.projectclearwater.org>
+ From: Eleanor Merry <Eleanor.Merry at metaswitch.com>
+ Date: 09/08/2015 10:49PM
+ Subject: RE: [Clearwater] Error while installing Homestead
+ 
+ Hi, 
+ ?
+ I&#8217;m sorry, we merged a change to the docs before the code was ready. We&#8217;ve now changed how our docs  are displayed, so that http://clearwater.readthedocs.org/en/stable/ matches our stable code that&#8217;s gone through QA, and http://clearwater.readthedocs.org/en/latest matches up with our bleeding edge code (which may be more unstable). 
+ ?
+ In the Midnight&#8217;s Children release (which is the current stable release), you shouldn&#8217;t try and install  clearwater-prov-tools. 
+ ?
+ It looks like cassandra isn&#8217;t running correctly on your node (the error commands come from Homestead  attempting to insert its schema into cassandra). What do the logs in /var/log/cassandra say?
+ ?
+ Ellie
+ ?
+ From: Clearwater  [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Vimal Tewari
+ Sent: 07 September 2015 06:12
+ To: clearwater at lists.projectclearwater.org
+ Subject: [Clearwater] Error while installing Homestead
+ ?
+ Hello,I am trying to install Clearwater and I am following manual install process.
+ I am installing the components on Ubuntu 14.04 64 bit Server Edition ( trusty-server-cloudimg-amd64-disk1.img ) using the Openstack Cloud Platform.
+ I am following? the steps mentioned at "http://clearwater.readthedocs.org/en/latest/Manual_Install/index.html".
+ When I try to install Homestead, I? am facing two issues:
+ 
+ 1. When I run "sudo DEBIAN_FRONTEND=noninteractive apt-get install homestead homestead-prov clearwater-prov-tools --yes", I get the following error:
+ Reading package lists... Done
+ Building dependency tree?????? 
+ Reading state information... Done
+ E: Unable to locate package clearwater-prov-tools
+ 
+ The file /etc/apt/sources.list.d/clearwater.list contains the following line 
+ deb http://repo.cw-ngv.com/stable binary/
+ 
+ Installing the signing key is successful and I verified that the key fingerprint is successful.
+ 
+ 
+ 2. I tried removing clearwater-prov-tools and ran the command again which led to the following error:Waiting for Cassandra.........................................................................................................................*** ERROR: Cassandra  did not come online!Waiting for Cassandra.........................................................................................................................*** ERROR: Cassandra did not come online!Configuring monit for only localhost access?????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????  [ OK ]Waiting for Cassandra.........................................................................................................................*** ERROR: Cassandra did not come online!
+ 
+ In response to a similar query, Ellie has advised to use the latest release code or install clearwater-cassandra.
+ I tried running 
+ sudo DEBIAN_FRONTEND=noninteractive apt-get install clearwater-cassandra --yes
+ but I got the same error.
+ 
+ Request you to kindly help.
+ 
+ Regards,
+ Vimal Chandra Tewari
+ Tata Consultancy Services
+ Mailto: vimal.tewari at tcs.com
+ Website: http://www.tcs.com
+ ____________________________________________
+ Experience certainty. IT Services
+ Business Solutions
+ Consulting
+ ____________________________________________
+ =====-----=====-----=====
+ Notice: The information contained in this e-mail
+ message and/or attachments to it may contain 
+ confidential or privileged information. If you are 
+ not the intended recipient, any dissemination, use, 
+ review, distribution, printing or copying of the 
+ information contained in this e-mail message 
+ and/or attachments to it are strictly prohibited. If 
+ you have received this communication in error, 
+ please notify us by reply e-mail or telephone and 
+ immediately and permanently delete the message 
+ and any attachments. Thank you
+       
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150928/d872610e/attachment.html>
+
+From shayn at gigaspaces.com  Tue Sep 29 11:10:21 2015
+From: shayn at gigaspaces.com (Shay Naeh)
+Date: Tue, 29 Sep 2015 15:10:21 +0000
+Subject: [Clearwater] Deploying Clearwater with Haet
+Message-ID: <VI1PR04MB1407ACA5737D12995C11391BC74E0@VI1PR04MB1407.eurprd04.prod.outlook.com>
+
+Hello,
+I am trying deploying Clearwater on my OpenStack using the Heat templates as defined in here https://github.com/Metaswitch/clearwater-heat
+I am running into issues with Homestead where I get (see below):
+
+1.       Why LOCAL_IP=MUST BE CONFIGURED is not configured?
+
+2.       Regarding the Diameter stack I saw an open issue https://github.com/Metaswitch/homestead/issues/73 but when deleting the certificates and starting the Clearwater-infrastructure it fails again on the same problem.
+
+Thanks,
+Shay
+
+
+
+4007 - Description: Fatal - Failed to initialize Diameter stack in function fd_core_parseconf with error 2. @@Cause: The Diameter interface could not be initialized or encountered an error while running. @@Effect: The application will exit and restart until the problem is fixed. @@Action: (1). Check the configuration for the Diameter destination hosts. (2). Check the connectivity to the Diameter host using Wireshark.
+Sep 29 06:39:55 homestead-0 monit: Traceback (most recent call last):
+Sep 29 06:39:55 homestead-0 monit:   File "/usr/lib/python2.7/runpy.py", line 162, in _run_module_as_main
+Sep 29 06:39:55 homestead-0 monit:     "__main__", fname, loader, pkg_name)
+Sep 29 06:39:55 homestead-0 monit:   File "/usr/lib/python2.7/runpy.py", line 72, in _run_code
+Sep 29 06:39:55 homestead-0 monit:     exec code in run_globals
+Sep 29 06:39:55 homestead-0 monit:   File "/usr/share/clearwater/homestead/env/lib/python2.7/site-packages/crest-0.1-py2.7.egg/metaswitch/crest/main.py", line 50, in <module>
+Sep 29 06:39:55 homestead-0 monit:     from metaswitch.crest import api
+Sep 29 06:39:55 homestead-0 monit:   File "/usr/share/clearwater/homestead/env/local/lib/python2.7/site-packages/crest-0.1-py2.7.egg/metaswitch/crest/api/__init__.py", line 35, in <module>
+Sep 29 06:39:55 homestead-0 monit:     from metaswitch.crest.api import base
+Sep 29 06:39:55 homestead-0 monit:   File "/usr/share/clearwater/homestead/env/local/lib/python2.7/site-packages/crest-0.1-py2.7.egg/metaswitch/crest/api/base.py", line 48, in <module>
+Sep 29 06:39:55 homestead-0 monit:     from metaswitch.crest import settings
+Sep 29 06:39:55 homestead-0 monit:   File "/usr/share/clearwater/homestead/env/local/lib/python2.7/site-packages/crest-0.1-py2.7.egg/metaswitch/crest/settings.py", line 139, in <module>
+Sep 29 06:39:55 homestead-0 monit:     execfile(_local_settings_file)
+Sep 29 06:39:55 homestead-0 monit:   File "/usr/share/clearwater/homestead/env/local/lib/python2.7/site-packages/crest-0.1-py2.7.egg/metaswitch/crest/local_settings.py", line 55, in <module>
+Sep 29 06:39:55 homestead-0 monit:     LOCAL_IP = MUST_BE_CONFIGURED
+Sep 29 06:39:55 homestead-0 monit: NameError: name 'MUST_BE_CONFIGURED' is not defined
+Sep 29 06:39:55 homestead-0 monit:    ...fail!
+Sep 29 06:40:01 homestead-0 CRON[15030]: (root) CMD (/usr/lib/sysstat/sadc 1 1 /var/log/sysstat/clearwater-sa`date +%d` > /dev/null 2>&1)
+Sep 29 06:40:22 homestead-0 monit: CMD /etc/init.d/homestead-prov start
+Sep 29 06:40:26 homestead-0 monit: Traceback (most recent call last):
+Sep 29 06:40:26 homestead-0 monit:   File "/usr/lib/python2.7/runpy.py", line 162, in _run_module_as_main
+Sep 29 06:40:26 homestead-0 monit:     "__main__", fname, loader, pkg_name)
+Sep 29 06:40:26 homestead-0 monit:   File "/usr/lib/python2.7/runpy.py", line 72, in _run_code
+Sep 29 06:40:26 homestead-0 monit:     exec code in run_globals
+Sep 29 06:40:26 homestead-0 monit:   File "/usr/share/clearwater/homestead/env/lib/python2.7/site-packages/crest-0.1-py2.7.egg/metaswitch/crest/main.py", line 50, in <module>
+Sep 29 06:40:26 homestead-0 monit:     from metaswitch.crest import api
+Sep 29 06:40:26 homestead-0 monit:   File "/usr/share/clearwater/homestead/env/local/lib/python2.7/site-packages/crest-0.1-py2.7.egg/metaswitch/crest/api/__init__.py", line 35, in <module>
+Sep 29 06:40:26 homestead-0 monit:     from metaswitch.crest.api import base
+Sep 29 06:40:26 homestead-0 monit:   File "/usr/share/clearwater/homestead/env/local/lib/python2.7/site-packages/crest-0.1-py2.7.egg/metaswitch/crest/api/base.py", line 48, in <module>
+Sep 29 06:40:26 homestead-0 monit:     from metaswitch.crest import settings
+Sep 29 06:40:26 homestead-0 monit:   File "/usr/share/clearwater/homestead/env/local/lib/python2.7/site-packages/crest-0.1-py2.7.egg/metaswitch/crest/settings.py", line 139, in <module>
+Sep 29 06:40:26 homestead-0 monit:     execfile(_local_settings_file)
+Sep 29 06:40:26 homestead-0 monit:   File "/usr/share/clearwater/homestead/env/local/lib/python2.7/site-packages/crest-0.1-py2.7.egg/metaswitch/crest/local_settings.py", line 55, in <module>
+Sep 29 06:40:26 homestead-0 monit:     LOCAL_IP = MUST_BE_CONFIGURED
+Sep 29 06:40:26 homestead-0 monit: NameError: name 'MUST_BE_CONFIGURED' is not defined
+Sep 29 06:41:01 homestead-0 CRON[15050]: (root) CMD (/usr/lib/sysstat/sadc 1 1 /var/log/sysstat/clearwater-sa`date +%d` > /dev/null 2>&1)
+Sep 29 06:41:03 homestead-0 monit: CMD /etc/init.d/homestead-prov restart
+Sep 29 06:41:03 homestead-0 monit:  * Restarting homestead-prov homestead-prov
+Sep 29 06:41:03 homestead-0 homestead[15074]: 4005 - Description: Homestead started. @@Cause: The Homestead application is starting. @@Effect: Normal. @@Action: None.
+Sep 29 06:41:03 homestead-0 homestead[15074]: 1001 - Description: Diameter stack is starting. @@Cause: Diameter stack is beginning initialization. @@Effect: Normal. @@Action: None.
+Sep 29 06:41:03 homestead-0 homestead[15074]: 1002 - Description: Diameter stack initialization completed. @@Cause: Diameter stack has completed initialization. @@Effect: Normal. @@Action: None.
+Sep 29 06:41:03 homestead-0 homestead[15074]: 4007 - Description: Fatal - Failed to initialize Diameter stack in function fd_core_parseconf with error 2. @@Cause: The Diameter interface could not be initialized or encountered an error while running. @@Effect: The application will exit and restart until the problem is fixed. @@Action: (1). Check the configuration for the Diameter destination hosts. (2). Check the connectivity to the Diameter host using Wireshark.
+Sep 29 06:41:06 homestead-0 monit: Traceback (most recent call last):
+Sep 29 06:41:06 homestead-0 monit:   File "/usr/lib/python2.7/runpy.py", line 162, in _run_module_as_main
+Sep 29 06:41:06 homestead-0 monit:     "__main__", fname, loader, pkg_name)
+Sep 29 06:41:06 homestead-0 monit:   File "/usr/lib/python2.7/runpy.py", line 72, in _run_code
+Sep 29 06:41:06 homestead-0 monit:     exec code in run_globals
+Sep 29 06:41:06 homestead-0 monit:   File "/usr/share/clearwater/homestead/env/lib/python2.7/site-packages/crest-0.1-py2.7.egg/metaswitch/crest/main.py", line 50, in <module>
+Sep 29 06:41:06 homestead-0 monit:     from metaswitch.crest import api
+Sep 29 06:41:06 homestead-0 monit:   File "/usr/share/clearwater/homestead/env/local/lib/python2.7/site-packages/crest-0.1-py2.7.egg/metaswitch/crest/api/__init__.py", line 35, in <module>
+Sep 29 06:41:06 homestead-0 monit:     from metaswitch.crest.api import base
+Sep 29 06:41:06 homestead-0 monit:   File "/usr/share/clearwater/homestead/env/local/lib/python2.7/site-packages/crest-0.1-py2.7.egg/metaswitch/crest/api/base.py", line 48, in <module>
+Sep 29 06:41:06 homestead-0 monit:     from metaswitch.crest import settings
+Sep 29 06:41:06 homestead-0 monit:   File "/usr/share/clearwater/homestead/env/local/lib/python2.7/site-packages/crest-0.1-py2.7.egg/metaswitch/crest/settings.py", line 139, in <module>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150929/7fc24d11/attachment.html>
+
+From marstonaustin at gmail.com  Wed Sep 30 04:03:32 2015
+From: marstonaustin at gmail.com (Austin Marston)
+Date: Wed, 30 Sep 2015 10:03:32 +0200
+Subject: [Clearwater] Manual installation does not pass any live test
+Message-ID: <CAOVZBjCKd2-SaWZMiarswjXvm+QZyU9e4G3BHWPAFmt7yqqVBA@mail.gmail.com>
+
+Hi list,
+
+
+I just manually deployed over a VMware platform five VMs respectively with
+bono, homer,sprout,homestead, and ellis, with no HSS lookups nor I-CSCF
+function.
+I tried to test it with clearwater-live-test but every tests fail with the
+following error:
+RuntimeError thrown: - Expected 200, got 401
+
+
+
+I understood from old messages from the list that "401s are expected. The
+first time a client registers with Clearwater it will not provide
+authentication credentials. Sprout rejects the REGISTER message with a 401
+response, containing an authentication challenge. The client then sends
+another REGISTER with credentials."
+But still, I cannot get what I'm missing here even with level 5
+logs.
+Indeed, Bono seems to fail with both 403 and 401
+errors.
+
+
+In the remaining of this email I put parts of the logs of each VM to
+illustrate my problem.
+
+
+*Sprout
+logs:                                                                     *
+29-09-2015 16:31:33.994 UTC Error hssconnection.cpp:147: Failed to get
+Authentication Vector for 2010076236 at my.local.domain
+29-09-2015 16:31:34.005 UTC Error httpconnection.cpp:743: cURL failure with
+cURL error code 0 (see man 3 libcurl-errors) and HTTP error code 404
+29-09-2015 16:31:34.005 UTC Error hssconnection.cpp:147: Failed to get
+Authentication Vector for 2010018950 at my.local.domain
+[...]
+
+29-09-2015 16:31:34.145 UTC Error hssconnection.cpp:147: Failed to get
+Authentication Vector for 2010024050 at my.local.domain
+29-09-2015 16:31:39.414 UTC Status load_monitor.cpp:237: Maximum incoming
+request rate/second increased to 1675.491699 (based on a smoothed mean
+latency of 2810 and 0 upstream overload responses)
+29-09-2015 16:31:41.596 UTC Error memcachedstore.cpp:719: Failed to write
+data for av\\6505550473 at my.local.domain\0826351d69f0f550 to 1 replicas
+29-09-2015 16:31:41.596 UTC Error avstore.cpp:84: Failed to write
+Authentication Vector for private_id 6505550473 at my.local.domain
+29-09-2015 16:31:41.830 UTC Error memcachedstore.cpp:514: Failed to read
+data for av\\6505550473 at my.local.domain\0826351d69f0f550 from 1 replicas
+29-09-2015 16:31:41.830 UTC Warning authentication.cpp:242: Received an
+authentication request for 6505550473 at my.local.domain with nonce
+0826351d69f0f550, but no matching AV found
+
+
+
+
+*Homer
+logs:                                                                      *
+29-09-2015 16:31:33.566 UTC DEBUG base.py:283: Writing response body:
+{}
+29-09-2015 16:31:33.566 UTC INFO base.py:269: Sending 200 response to
+localhost for PUT
+http://http_homer/org.etsi.ngn.simservs/users/sip%3A6505550980%40my.local.domain/simservs.xml
+29-09-2015 16:31:39.797 UTC INFO base.py:256: Received request from
+localhost - PUT
+http://http_homer/org.etsi.ngn.simservs/users/sip%3A6505550758%40my.local.domain/simservs.xml
+29-09-2015 16:31:39.798 UTC INFO xsd.py:76: Performing XSD
+validation
+29-09-2015 16:31:39.801 UTC DEBUG base.py:283: Writing response body:
+{}
+29-09-2015 16:31:39.802 UTC INFO base.py:269: Sending 200 response to
+localhost for PUT
+http://http_homer/org.etsi.ngn.simservs/users/sip%3A6505550758%40my.local.domain/simservs.xml
+29-09-2015 16:31:43.436 UTC INFO base.py:256: Received request from
+localhost - PUT
+http://http_homer/org.etsi.ngn.simservs/users/sip%3A6505550048%40my.local.domain/simservs.xml
+29-09-2015 16:31:43.436 UTC INFO xsd.py:76: Performing XSD
+validation
+29-09-2015 16:31:43.439 UTC DEBUG base.py:283: Writing response body:
+{}
+
+
+
+
+*Homestead-prov
+logs:                                                             *
+29-09-2015 16:31:33.538 UTC INFO base.py:269: Sending 200 response to
+localhost for PUT
+http://http_homestead_prov/irs/1004b727-c478-4123-98f6-9b63802c6a8c/service_profiles/19e5a738-f3ec-4664-bd2b-958ab5a8310a/filter_criteria
+29-09-2015 16:31:34.183 UTC INFO base.py:256: Received request from
+localhost - PUT
+http://http_homestead_prov/private/6505550473%40my.local.domain
+29-09-2015 16:31:34.184 UTC DEBUG models.py:303: Create private ID6505550473
+@my.local.domain
+29-09-2015 16:31:34.185 UTC DEBUG cache.py:85: Put private ID
+'6505550473 at my.local.domain'
+into cache with AV: {'digest': {'ha1': u'33accced67a669ca7b3d7e96640ef7f4',
+'realm': u'my.local.domain', 'qop': 'auth'}}
+29-09-2015 16:31:34.187 UTC INFO base.py:269: Sending 200 response to
+localhost for PUT
+http://http_homestead_prov/private/6505550473%40my.local.domain
+
+
+*Homestead
+logs:                                                                  *
+29-09-2015 16:31:33.999 UTC Debug cassandra_store.cpp:731: Failed ONE read
+for get_columns. Try QUORUM
+29-09-2015 16:31:34.000 UTC Debug cassandra_store.cpp:432: Cassandra
+request failed: rc=2, Row 2010018950 at my.local.domain not present in
+column_family impi
+29-09-2015 16:31:34.000 UTC Debug handlers.cpp:196: Cache query failed -
+reject request
+29-09-2015 16:31:34.000 UTC Debug handlers.cpp:201: No cached av found for
+private ID 2010018950 at my.local.domain, public ID
+sip:2010018950 at my.local.domain - reject
+29-09-2015 16:31:34.000 UTC Verbose httpstack.cpp:69: Sending response 404
+to request for URL /impi/2010018950%40my.local.domain/av, args
+impu=sip%3A2010018950%40my.local.domain
+29-09-2015 16:31:34.000 UTC Verbose httpstack.cpp:286: Process request for
+URL /impi/2010070984%40my.local.domain/av, args impu=sip%3A2010070984%40my.
+local.domain
+29-09-2015 16:31:34.000 UTC Debug handlers.cpp:147: Parsed HTTP request:
+private ID 2010070984 at my.local.domain, public ID
+sip:2010070984 at my.local.domain, scheme Unknown, authorization
+29-09-2015 16:31:34.000 UTC Debug handlers.cpp:167: Querying cache for
+authentication vector for 2010070984 at my.local.domain/
+sip:2010070984 at my.local.domain
+29-09-2015 16:31:34.000 UTC Debug cassandra_store.cpp:279: Getting
+thread-local Client
+29-09-2015 16:31:34.000 UTC Debug cache.cpp:673: Looking for authentication
+vector for 2010070984 at my.local.domain
+29-09-2015 16:31:34.000 UTC Debug cache.cpp:686: Checking public ID
+sip:2010070984 at my.local.domain
+29-09-2015 16:31:34.000 UTC Debug cache.cpp:696: Issuing cache
+query
+29-09-2015 16:31:34.000 UTC Debug cassandra_store.cpp:731: Failed ONE read
+for get_columns. Try QUORUM
+29-09-2015 16:31:34.001 UTC Verbose httpstack.cpp:286: Process request for
+URL /impi/2010052484%40my.local.domain/av, args impu=sip%3A2010052484%40my.
+local.domain
+29-09-2015 16:31:34.001 UTC Debug handlers.cpp:147: Parsed HTTP request:
+private ID 2010052484 at my.local.domain, public ID
+sip:2010052484 at my.local.domain, scheme Unknown, authorization
+
+
+
+
+*Bono
+logs:                                                                       *
+29-09-2015 16:31:33.996 UTC Call-Disconnected: CALL_ID=2010076236///
+401485-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.008 UTC Call-Disconnected: CALL_ID=2010018950///
+419639-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.008 UTC Call-Disconnected: CALL_ID=2010070984///
+456772-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.008 UTC Call-Disconnected: CALL_ID=2010052484///
+428115-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.013 UTC Call-Disconnected: CALL_ID=2010023276///
+389993-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.013 UTC Call-Disconnected: CALL_ID=2010004256///
+394841-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.014 UTC Call-Disconnected: CALL_ID=2010076066///
+463823-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.014 UTC Call-Disconnected: CALL_ID=2010040994///
+436539-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.020 UTC Call-Disconnected: CALL_ID=2010047262///
+392603-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.021 UTC Call-Disconnected: CALL_ID=2010070408///
+400941-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.024 UTC Call-Disconnected: CALL_ID=2010001186///
+425962-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.030 UTC Call-Disconnected: CALL_ID=2010080220///
+434892-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.037 UTC Call-Disconnected: CALL_ID=2010026340///
+453694-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.049 UTC Call-Disconnected: CALL_ID=2010059662///
+396784-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.051 UTC Call-Disconnected: CALL_ID=2010007964///
+407878-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.059 UTC Call-Disconnected: CALL_ID=2010001412///
+417601-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.084 UTC Call-Disconnected: CALL_ID=2010048846///
+437109-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.085 UTC Call-Disconnected: CALL_ID=2010031554///
+390144-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.092 UTC Call-Disconnected: CALL_ID=2010083556///
+425110-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.092 UTC Call-Disconnected: CALL_ID=2010025210///
+446867-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.110 UTC Call-Disconnected: CALL_ID=2010060732///
+434889-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.112 UTC Call-Disconnected: CALL_ID=2010020690///
+399131-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.120 UTC Call-Disconnected: CALL_ID=2010065600///
+423893-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.123 UTC Call-Disconnected: CALL_ID=2010058752///
+460196-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.129 UTC Call-Disconnected: CALL_ID=2010070682///
+453479-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.129 UTC Call-Disconnected: CALL_ID=2010046438///
+394971-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.142 UTC Call-Disconnected: CALL_ID=2010049994///
+458825-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.144 UTC Call-Disconnected: CALL_ID=2010070470///
+420696-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:34.146 UTC Call-Disconnected: CALL_ID=2010024050///
+437499-9633 at 172.16.1.29 REASON=403
+29-09-2015 16:31:41.598 UTC Call-Disconnected: CALL_ID=
+17745eb3f9e50ecb8155e83aea81edae REASON=401
+29-09-2015 16:31:41.835 UTC Call-Disconnected: CALL_ID=
+17745eb3f9e50ecb8155e83aea81edae REASON=401
+29-09-2015 16:31:42.136 UTC Call-Disconnected: CALL_ID=
+17745eb3f9e50ecb8155e83aea81edae REASON=401
+29-09-2015 16:31:42.437 UTC Call-Disconnected: CALL_ID=
+17745eb3f9e50ecb8155e83aea81edae REASON=401
+29-09-2015 16:31:45.312 UTC Call-Disconnected: CALL_ID=
+88a59417552efe9582128c1c9d134862 REASON=401
+29-09-2015 16:31:45.320 UTC Call-Disconnected: CALL_ID=
+88a59417552efe9582128c1c9d134862 REASON=401
+29-09-2015 16:31:45.327 UTC Call-Disconnected: CALL_ID=
+88a59417552efe9582128c1c9d134862 REASON=401
+29-09-2015 16:31:45.334 UTC Call-Disconnected: CALL_ID=
+88a59417552efe9582128c1c9d134862 REASON=401
+29-09-2015 16:31:51.173 UTC Call-Disconnected: CALL_ID=
+a716eed59a862336ae71d2a329b77400 REASON=401
+29-09-2015 16:31:51.465 UTC Call-Disconnected: CALL_ID=
+a716eed59a862336ae71d2a329b77400 REASON=401
+29-09-2015 16:31:51.766 UTC Call-Disconnected: CALL_ID=
+a716eed59a862336ae71d2a329b77400 REASON=401
+
+
+
+
+*Ellis
+logs:                                                                      *
+29-09-2015 16:31:32.727 UTC DEBUG utils.py:94: Still expecting 0
+callbacks
+29-09-2015 16:31:34.324 UTC DEBUG numbers.py:121: Number allocation API
+call (PSTN = false)
+29-09-2015 16:31:34.650 UTC DEBUG numbers.py:134: Allocating a non-PSTN
+number
+29-09-2015 16:31:34.653 UTC DEBUG numbers.py:148: Fetched
+e7d0bf0c-e00a-41c8-8bc7-5377aa76dc97
+29-09-2015 16:31:35.426 UTC DEBUG numbers.py:160: Updated the
+owner
+29-09-2015 16:31:35.427 UTC DEBUG numbers.py:130: SIP URI sip:6505550758
+@my.local.domain
+29-09-2015 16:31:39.686 UTC DEBUG numbers.py:159: Populating other
+servers...
+29-09-2015 16:31:39.686 UTC DEBUG numbers.py:170: About to create private
+ID at Homestead
+29-09-2015 16:31:39.686 UTC WARNING homestead.py:279: Passing SIP password
+in the clear over http
+29-09-2015 16:31:39.698 UTC WARNING homestead.py:279: Passing SIP password
+in the clear over http
+29-09-2015 16:31:39.704 UTC WARNING homestead.py:279: Passing SIP password
+in the clear over http
+29-09-2015 16:31:39.720 UTC DEBUG numbers.py:175: Created private ID at
+Homestead
+29-09-2015 16:31:39.721 UTC WARNING homestead.py:279: Passing SIP password
+in the clear over http
+29-09-2015 16:31:39.794 UTC DEBUG utils.py:84: OK HTTP response.
+HTTPResponse(code=200,request_time=0.015350818634033203,buffer=<_io.BytesIO
+object at 0x7ff1a10d6f50>,_body=None,time_info={},request=<tornado.httpclient.HTTPRequest
+object at 0x7ff1a1070d50>,effective_url='
+http://hs.my.local.domain:8889/private/6505550758%40my.local.domain/associated_implicit_registration_sets/1ed1c2eb-745d-4d53-8be2-68116882268e',headers={'Date':
+'Tue, 29 Sep 2015 16:31:39 GMT', 'Content-Length': '0', 'Content-Type':
+'text/html; charset=UTF-8', 'Connection': 'close', 'Server': 'nginx/1.4.6
+(Ubuntu)'},error=None)
+29-09-2015 16:31:39.794 UTC DEBUG utils.py:94: Still expecting 2
+callbacks
+29-09-2015 16:31:39.803 UTC DEBUG utils.py:94: Still expecting 1
+callbacks
+29-09-2015 16:31:39.823 UTC DEBUG utils.py:84: OK HTTP response.
+HTTPResponse(code=200,request_time=0.030350208282470703,buffer=<_io.BytesIO
+object at 0x7ff1a10d6d10>,_body=None,time_info={},request=<tornado.httpclient.HTTPRequest
+object at 0x7ff1a10705d0>,effective_url='
+http://hs.my.local.domain:8889/irs/1ed1c2eb-745d-4d53-8be2-68116882268e/service_profiles/113003da-f6f3-4efa-8612-bcb4f5be908b/filter_criteria',headers={'Date':
+'Tue, 29 Sep 2015 16:31:39 GMT', 'Content-Length': '0', 'Content-Type':
+'text/html; charset=UTF-8', 'Connection': 'close', 'Server': 'nginx/1.4.6
+(Ubuntu)'},error=None)
+29-09-2015 16:31:39.823 UTC DEBUG utils.py:92: All requests
+successful.
+
+
+Many thanks for your help !
+
+
+
+PS: Let me know if the logs are not clear enough or if I should put them in
+attachment.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150930/f1a3b5db/attachment.html>
+
+From y.isaakyan at gmail.com  Wed Sep 30 04:33:35 2015
+From: y.isaakyan at gmail.com (Yuri Isaakyan)
+Date: Wed, 30 Sep 2015 11:33:35 +0300
+Subject: [Clearwater] bono on two interfaces for public and private network
+Message-ID: <01c501d0fb5a$b3019c40$1904d4c0$@gmail.com>
+
+Hi all,
+
+Is it possible to bind bono to two network interfaces for public and private
+network?
+
+BR,
+Yuri
+
+
+
+
+From Graeme.Robertson at metaswitch.com  Wed Sep 30 06:00:46 2015
+From: Graeme.Robertson at metaswitch.com (Graeme Robertson)
+Date: Wed, 30 Sep 2015 10:00:46 +0000
+Subject: [Clearwater] One Hundred Years of Solitude Release Note
+Message-ID: <DM2PR0201MB0701DA6D4F34FCF211BCE77EE34D0@DM2PR0201MB0701.namprd02.prod.outlook.com>
+
+The release for sprint "One Hundred Years of Solitude" has been cut.  The code for this release is tagged as release-82 in github.
+
+We've added one new feature this sprint:
+
+*         We've added a tool to display all the provisioned subscribers on a Clearwater system to our Homestead provisioning tools. See http://clearwater.readthedocs.org/en/stable/Provisioning_Subscribers/index.html#display-users for more details.
+
+This release includes the following bug fixes:
+
+*         Sprout crash when routing a tel: URI with strict routing (https://github.com/Metaswitch/sprout/issues/1170)
+
+*         Crash in Sprout when running under low stress (https://github.com/Metaswitch/sprout/issues/1124)
+
+*         SIP URIs with just npdi (and no other routing information) can loop pointlessly (https://github.com/Metaswitch/sprout/issues/1121)
+
+*         SAS logging around ENUM is confusing (particularly when 'npdi' is involved) (https://github.com/Metaswitch/sprout/issues/1120)
+
+*         Sprout fails if the subscriber it requested isn't available in the IFCs (https://github.com/Metaswitch/sprout/issues/1070)
+
+*         IPv6 is generally broken for the S-CSCF sproutlet (https://github.com/Metaswitch/sprout/issues/1029)
+
+*         Bad JSON returned from public ID query (https://github.com/Metaswitch/crest/issues/249)
+
+*         Can't scale down large EC2 deployment due to throttling (https://github.com/Metaswitch/chef/issues/179)
+
+*         Diags bundle should include `check_cluster_state` output (https://github.com/Metaswitch/clearwater-infrastructure/issues/248)
+
+*         clearwater-auto-config-docker does not set signaling_dns_server field correctly (https://github.com/Metaswitch/clearwater-infrastructure/issues/244)
+
+*         memcached-extra isn't used any more (https://github.com/Metaswitch/clearwater-infrastructure/issues/237)
+
+*         signalling vs. signaling (https://github.com/Metaswitch/clearwater-readthedocs/issues/92)
+
+*         Upgrading clearwater-etcd package doesn't restart etcd (https://github.com/Metaswitch/clearwater-etcd/issues/185)
+
+*         config manager logs aren't being cleared up by the cron jobs (https://github.com/Metaswitch/clearwater-etcd/issues/178)
+
+*         The tests don't run with the newest version of pbr (https://github.com/Metaswitch/clearwater-etcd/issues/176)
+
+*         Log spam on upgrade until json files uploaded (https://github.com/Metaswitch/clearwater-etcd/issues/171)
+
+*         We don't keep the tombstone_lifetime key in cluster_settings (https://github.com/Metaswitch/clearwater-etcd/issues/107)
+
+*         User experience of clusters of colocated nodes is not very nice (https://github.com/Metaswitch/clearwater-etcd/issues/49)
+
+*         mark_node_failed doesn't cope with multiple failures (https://github.com/Metaswitch/clearwater-etcd/issues/174)
+
+*         Timer IDs in Chronos are *really* not very unique (https://github.com/Metaswitch/chronos/issues/169)
+
+*         Chronos should have an internal community string (https://github.com/Metaswitch/chronos/issues/167)
+
+*         Chronos doesn't accept any requests when running under default configuration (https://github.com/Metaswitch/chronos/issues/166)
+
+
+For upgrading to this release, follow the instructions at http://clearwater.readthedocs.org/en/latest/Upgrading_a_Clearwater_deployment/index.html. If you are deploying an all-in-one node, the standard image (http://vm-images.cw-ngv.com/cw-aio.ova) has been updated for this release.
+
+
+
+Thanks,
+Graeme
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150930/d6ff98cb/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Wed Sep 30 13:36:32 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Wed, 30 Sep 2015 17:36:32 +0000
+Subject: [Clearwater] Error while installing Homestead
+In-Reply-To: <OF73CCFDE6.BB48F7CF-ON65257EBB.0069A230-65257EBB.0069A23B@tcs.com>
+References: <BN3PR02MB1255C7CB200A0AE37606CC849B520@BN3PR02MB1255.namprd02.prod.outlook.com>,
+	<BN3PR02MB1255286602916D7F528E06B89B530@BN3PR02MB1255.namprd02.prod.outlook.com>,
+	<OFFC7A45F1.61BFD71C-ON65257EB9.001B5B0C-65257EB9.001C99FD@tcs.com>
+	<OFCABB62BE.9ADD1D53-ON65257EBB.001D3E1B-65257EBB.001D3E1E@tcs.com>
+	<OF73CCFDE6.BB48F7CF-ON65257EBB.0069A230-65257EBB.0069A23B@tcs.com>
+Message-ID: <BN3PR02MB125581A70C82263C910A75509B4D0@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi Vimal,
+
+Have you set up the shared_config file? It doesn't look like you're using clearwater-etcd for configuration management, so you need to set up this file before you install homer (please see more details at http://clearwater.readthedocs.org/en/stable/Manual_Install/index.html#provide-shared-configuration and create a shared_config file on your Homer).
+
+Homer depends on some information in this file (e.g. the Sprout hostname) to successfully run.
+
+Ellie
+
+From: Vimal Tewari [mailto:vimal.tewari at tcs.com]
+Sent: 09 September 2015 20:14
+To: Eleanor Merry
+Cc: clearwater at lists.projectclearwater.org
+Subject: RE: [Clearwater] Error while installing Homestead
+
+Hello Ellie,
+I tried to install homer from scratch again but ran into the same error. Here is detailed information about the error
+
+1. While installing homer, I get the error on the installation window about cassandra not coming online. The following is a portion of the log on the installation window ( the part where I get the error )
+
+  http://pastebin.com/vZXEnmH2
+
+2. The installation ends with this abrupt error:
+
+byte-compiling /usr/share/clearwater/homer/env/lib/python2.7/site-packages/telephus/pool.py to pool.pyc
+running install_egg_info
+Writing /usr/share/clearwater/homer/env/lib/python2.7/site-packages/telephus-1.0.0_beta1-py2.7.egg-info
+/
+ * Restarting clearwater-infrastructure clearwater-infrastructure                                                                    Waiting for Cassandra.....................FATAL -> Failed to fork.
+
+3. The logs in /var/log/cassandra/system.log is as follows:
+
+  http://pastebin.com/dAK4Avk1
+
+4. When I run "sudo service cassandra stop", nothing happens. Running "sudo monit summary" gives
+ubuntu at homer:~$ sudo service cassandra stop
+ubuntu at homer:~$ sudo monit summary
+The Monit daemon 5.8.1 uptime: 16m
+
+Process 'ntp_process'               Running
+System 'node-homer'                 Running
+Process 'nginx_process'             Running
+Process 'homer_process'             Execution failed
+Program 'poll_homer'                Not monitored
+Process 'clearwater_diags_monitor_process' Running
+Process 'cassandra_process'         Does not exist
+
+5. The contents of /etc/hosts is as follows:
+
+ubuntu at homer:~$ cat /etc/hosts
+127.0.0.1 localhost
+127.0.1.1 homer
+
+# The following lines are desirable for IPv6 capable hosts
+::1 ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
+
+192.168.1.43 homer
+192.168.1.43 homer #+clearwater-infrastructure
+
+6. The contents of /etc/clearwater/local_config is as follows:
+ubuntu at homer:~$ cat /etc/clearwater/local_config
+local_ip=192.168.1.43
+public_ip=10.7.6.229
+public_hostname=homer
+etcd_cluster="192.168.1.43"
+
+7. The ubuntu image is trusty-server-cloudimg-amd64-disk1.img (64 bit Server edition ) which is the official Ubuntu cloud image.
+
+Request you to kindly help in resolving the issue.
+
+Regards,
+Vimal Chandra Tewari
+Tata Consultancy Services
+Mailto: vimal.tewari at tcs.com<mailto:vimal.tewari at tcs.com>
+Website: http://www.tcs.com
+____________________________________________
+Experience certainty. IT Services
+Business Solutions
+Consulting
+____________________________________________
+
+
+-----Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>> wrote: -----
+To: Vimal Tewari <vimal.tewari at tcs.com<mailto:vimal.tewari at tcs.com>>
+From: Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>>
+Date: 09/09/2015 10:26PM
+Cc: "clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>" <clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>>
+Subject: RE: [Clearwater] Error while installing Homestead
+Hi Vimal,
+
+There's not much in the pasted log (only 20 lines). Is that all that was in system.log? What happens if you restart cassandra (run 'sudo service cassandra stop' - monit will automatically restart it)?
+
+Ellie
+
+From: Vimal Tewari [mailto:vimal.tewari at tcs.com]
+Sent: 09 September 2015 06:19
+To: Eleanor Merry
+Cc: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: RE: [Clearwater] Error while installing Homestead
+
+Hello Ellie,
+Thanks for your response.
+I followed the steps mentioned in the document at http://clearwater.readthedocs.org/en/stable/Manual_Install/index.html but I am still getting an error while setting up cassandra for homer and homestead.
+
+Here is the log in /var/log/cassandra/system.log
+
+http://pastebin.com/1eg6GFhm
+
+Request you to kindly take a look and help me resolve this issue.
+
+Regards,
+Vimal Chandra Tewari
+Tata Consultancy Services
+Mailto: vimal.tewari at tcs.com<mailto:vimal.tewari at tcs.com>
+Website: http://www.tcs.com
+____________________________________________
+Experience certainty. IT Services
+Business Solutions
+Consulting
+____________________________________________
+
+
+-----Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>> wrote: -----
+To: Vimal Tewari <vimal.tewari at tcs.com<mailto:vimal.tewari at tcs.com>>, "clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>" <clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>>
+From: Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>>
+Date: 09/08/2015 10:49PM
+Subject: RE: [Clearwater] Error while installing Homestead
+Hi,
+
+I'm sorry, we merged a change to the docs before the code was ready. We've now changed how our docs are displayed, so that http://clearwater.readthedocs.org/en/stable/ matches our stable code that's gone through QA, and http://clearwater.readthedocs.org/en/latest matches up with our bleeding edge code (which may be more unstable).
+
+In the Midnight's Children release (which is the current stable release), you shouldn't try and install clearwater-prov-tools.
+
+It looks like cassandra isn't running correctly on your node (the error commands come from Homestead attempting to insert its schema into cassandra). What do the logs in /var/log/cassandra say?
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Vimal Tewari
+Sent: 07 September 2015 06:12
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Clearwater] Error while installing Homestead
+
+Hello,I am trying to install Clearwater and I am following manual install process.
+I am installing the components on Ubuntu 14.04 64 bit Server Edition ( trusty-server-cloudimg-amd64-disk1.img ) using the Openstack Cloud Platform.
+I am following  the steps mentioned at "http://clearwater.readthedocs.org/en/latest/Manual_Install/index.html".
+When I try to install Homestead, I  am facing two issues:
+
+1. When I run "sudo DEBIAN_FRONTEND=noninteractive apt-get install homestead homestead-prov clearwater-prov-tools --yes", I get the following error:
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+E: Unable to locate package clearwater-prov-tools
+
+The file /etc/apt/sources.list.d/clearwater.list contains the following line
+deb http://repo.cw-ngv.com/stable binary/
+
+Installing the signing key is successful and I verified that the key fingerprint is successful.
+
+
+2. I tried removing clearwater-prov-tools and ran the command again which led to the following error:Waiting for Cassandra.........................................................................................................................*** ERROR: Cassandra did not come online!Waiting for Cassandra.........................................................................................................................*** ERROR: Cassandra did not come online!Configuring monit for only localhost access                                                                                                                              [ OK ]Waiting for Cassandra.........................................................................................................................*** ERROR: Cassandra did not come online!
+
+In response to a similar query, Ellie has advised to use the latest release code or install clearwater-cassandra.
+I tried running
+sudo DEBIAN_FRONTEND=noninteractive apt-get install clearwater-cassandra --yes
+but I got the same error.
+
+Request you to kindly help.
+
+Regards,
+Vimal Chandra Tewari
+Tata Consultancy Services
+Mailto: vimal.tewari at tcs.com<mailto:vimal.tewari at tcs.com>
+Website: http://www.tcs.com
+____________________________________________
+Experience certainty. IT Services
+Business Solutions
+Consulting
+____________________________________________
+
+=====-----=====-----=====
+Notice: The information contained in this e-mail
+message and/or attachments to it may contain
+confidential or privileged information. If you are
+not the intended recipient, any dissemination, use,
+review, distribution, printing or copying of the
+information contained in this e-mail message
+and/or attachments to it are strictly prohibited. If
+you have received this communication in error,
+please notify us by reply e-mail or telephone and
+immediately and permanently delete the message
+and any attachments. Thank you
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20150930/3e9bbffd/attachment.html>
+

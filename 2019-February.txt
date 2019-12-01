@@ -1,0 +1,349 @@
+From prabhakaranm at newtglobal.com  Fri Feb  1 09:31:21 2019
+From: prabhakaranm at newtglobal.com (prabhakaranm at newtglobal.com)
+Date: Fri, 1 Feb 2019 14:31:21 +0000 (UTC)
+Subject: [Project Clearwater] Regarding Clearwater SIP call connection
+In-Reply-To: <1269888575.1318263.1549020995759@mail.yahoo.com>
+References: <1269888575.1318263.1549020995759.ref@mail.yahoo.com>
+	<1269888575.1318263.1549020995759@mail.yahoo.com>
+Message-ID: <1529150440.1390534.1549031481706@mail.yahoo.com>
+
+
+
+
+Hi,
+Can you please help in establishing client calls in SIP network.
+We created a Clearwater All in One AMI in AWS.We also received public identities and password in Ellis.
+But we are facing issue while making a call through X-LITE.I am not sure if i missed any configuration.
+
+Please help.
+Regards,Prabhakaran
+
+
+
+
+   
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190201/782b2db2/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: SIPClient2.PNG
+Type: image/png
+Size: 22372 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190201/782b2db2/attachment.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: SIPClient-1.PNG
+Type: image/png
+Size: 21847 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190201/782b2db2/attachment-0001.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: AWS-config.PNG
+Type: image/png
+Size: 23843 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190201/782b2db2/attachment-0002.png>
+
+From Anne.Boffey at metaswitch.com  Fri Feb  1 10:12:56 2019
+From: Anne.Boffey at metaswitch.com (Anne Boffey)
+Date: Fri, 1 Feb 2019 15:12:56 +0000
+Subject: [Project Clearwater] Regarding Clearwater SIP call connection
+Message-ID: <DM6PR02MB54340A23B14CCBE7857730E781920@DM6PR02MB5434.namprd02.prod.outlook.com>
+
+Hi Prabhakaran,
+
+Looking through https://clearwater.readthedocs.io/en/stable/Making_your_first_call.html and your client config my initial thought is that you have configured your client incorrectly.
+
+You have Server address (under topology) configured to example.com.
+
+However the docs state that for an All-in-One node that this should be configured to <aio-identity>
+*         Server: <domain> (or <aio-identity> on an All-in-One node)
+Hopefully this will fix your problem.
+If not please confirm that
+
+  *   Whether your clients are registering successfully
+  *   That you have other config correct i.e. Port, DNS Record.
+  *   You are using Zoiper for one of the clients
+Regards
+Anne
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190201/52e270dd/attachment.html>
+
+From prabhakaranm at newtglobal.com  Fri Feb  1 10:47:05 2019
+From: prabhakaranm at newtglobal.com (prabhakaranm at newtglobal.com)
+Date: Fri, 1 Feb 2019 15:47:05 +0000 (UTC)
+Subject: [Project Clearwater] Regarding Clearwater SIP call connection
+In-Reply-To: <DM6PR02MB54340A23B14CCBE7857730E781920@DM6PR02MB5434.namprd02.prod.outlook.com>
+References: <DM6PR02MB54340A23B14CCBE7857730E781920@DM6PR02MB5434.namprd02.prod.outlook.com>
+Message-ID: <385211202.1438262.1549036025862@mail.yahoo.com>
+
+Hi Anne,
+Thank you for the email.
+I have done the configuration based on your guidance.I have now used Zoiped
+   
+   - Whether your clients are registering successfully
+   
+   - Yes
+   
+   - That you have other config correct i.e. Port, DNS Record.
+   
+   - Port mentioned in Outpoubd proxy, please see below details from Zoiper
+   - DNS record- We are doing All in One Image in AWS , is it still needed
+   
+   - You are using Zoiper for one of the clients
+   
+   - Yes
+Request you to spare some time in reviewing below details
+Domian:3.90.15.2277UserName:6505550245Password:pass
+Use Auth username: <blank>Use outbound proxy:3.90.15.22777:5060
+
+
+
+      From: Anne Boffey <Anne.Boffey at metaswitch.com>
+ To: "clearwater at lists.projectclearwater.org" <clearwater at lists.projectclearwater.org> 
+ Sent: Friday, 1 February 2019 8:44 PM
+ Subject: Re: [Project Clearwater] Regarding Clearwater SIP call connection
+   
+ <!--#yiv4067867419 _filtered #yiv4067867419 {font-family:Wingdings;panose-1:5 0 0 0 0 0 0 0 0 0;} _filtered #yiv4067867419 {font-family:"Cambria Math";panose-1:2 4 5 3 5 4 6 3 2 4;} _filtered #yiv4067867419 {font-family:Calibri;panose-1:2 15 5 2 2 2 4 3 2 4;} _filtered #yiv4067867419 {font-family:Consolas;panose-1:2 11 6 9 2 2 4 3 2 4;} _filtered #yiv4067867419 {}-->Hi Prabhakaran,  ? Looking through https://clearwater.readthedocs.io/en/stable/Making_your_first_call.html and your client config my initial thought is that you have configured your client incorrectly.  ? You have Server address (under topology) configured to example.com.  ? However the docs state that for an All-in-One node that this should be configured to <aio-identity> ?????????Server:<domain> (or <aio-identity> on an All-in-One node) Hopefully this will fix your problem. If not please confirm that     
+   - Whether your clients are registering successfully 
+   - That you have other config correct i.e. Port, DNS Record.
+   - You are using Zoiper for one of the clients
+ Regards Anne   ? _______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+
+   
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190201/401bd4e0/attachment.html>
+
+From Anne.Boffey at metaswitch.com  Fri Feb  1 11:07:05 2019
+From: Anne.Boffey at metaswitch.com (Anne Boffey)
+Date: Fri, 1 Feb 2019 16:07:05 +0000
+Subject: [Project Clearwater] Regarding Clearwater SIP call connection
+Message-ID: <DM6PR02MB543486C2F48A0030DB026C2881920@DM6PR02MB5434.namprd02.prod.outlook.com>
+
+Prabhakaranm,
+
+Please can you read https://clearwater.readthedocs.io/en/stable/Making_your_first_call.html fully to be sure you are configuring your clients correctly.
+
+It clearly states that for an All-in-One image that you need to set the DNS record:
+
+If you are using an All-in-One node, you will also need to configure the following at your client.
+*         Outbound Proxy
+*         Outbound Proxy address: <aio-identity>
+*         Port: 5060 (or 8060 if installed in VirtualBox)
+*         DNS record for <aio-identity>
+Also I am not sure what your <aio-identity> is.
+
+In the initial question your client had Proxy Address set to ec2-3-87......... which looks like the <aio-identity>  you would have if you installed from an Amazon AMI.   However in your latest mail you are setting Domain and Outbound Proxy to an IP address 3.90.15.2277 which would be a different <aio-identity>
+
+Can you please read the document carefully and check you are configuring everything correctly.
+
+If you still have a problem:
+
+  *   Provide details of what you have done at each step.
+  *   Confirm registration works
+  *   Provide details on what configuration you have on the two clients
+
+Regards
+
+Anne
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190201/2029bb60/attachment.html>
+
+From prabhakaranm at newtglobal.com  Mon Feb  4 08:49:28 2019
+From: prabhakaranm at newtglobal.com (prabhakaranm at newtglobal.com)
+Date: Mon, 4 Feb 2019 13:49:28 +0000 (UTC)
+Subject: [Project Clearwater] Regarding Clearwater SIP call connection
+In-Reply-To: <385211202.1438262.1549036025862@mail.yahoo.com>
+References: <DM6PR02MB54340A23B14CCBE7857730E781920@DM6PR02MB5434.namprd02.prod.outlook.com>
+	<385211202.1438262.1549036025862@mail.yahoo.com>
+Message-ID: <273453271.2619809.1549288168964@mail.yahoo.com>
+
+Hi,
+I am still unable to configure X-Lite/Zoiper.
+I have now shifted gears to WebRTC method
+Can you please let me know what i have missed in the attached screenshot
+Regards,Prabhakaran      From: "prabhakaranm at newtglobal.com" <prabhakaranm at newtglobal.com>
+ To: "clearwater at lists.projectclearwater.org" <clearwater at lists.projectclearwater.org>; "Anne.Boffey at metaswitch.com" <Anne.Boffey at metaswitch.com> 
+ Sent: Friday, 1 February 2019 9:17 PM
+ Subject: Re: [Project Clearwater] Regarding Clearwater SIP call connection
+   
+Hi Anne,
+Thank you for the email.
+I have done the configuration based on your guidance.I have now used Zoiped
+   
+   - Whether your clients are registering successfully
+   
+   - Yes
+   
+   - That you have other config correct i.e. Port, DNS Record.
+   
+   - Port mentioned in Outpoubd proxy, please see below details from Zoiper
+   - DNS record- We are doing All in One Image in AWS , is it still needed
+   
+   - You are using Zoiper for one of the clients
+   
+   - Yes
+Request you to spare some time in reviewing below details
+Domian:3.90.15.2277UserName:6505550245Password:pass
+Use Auth username: <blank>Use outbound proxy:3.90.15.22777:5060
+
+
+
+      From: Anne Boffey <Anne.Boffey at metaswitch.com>
+ To: "clearwater at lists.projectclearwater.org" <clearwater at lists.projectclearwater.org> 
+ Sent: Friday, 1 February 2019 8:44 PM
+ Subject: Re: [Project Clearwater] Regarding Clearwater SIP call connection
+  
+ #yiv3650351082 #yiv3650351082 -- filtered {font-family:Wingdings;panose-1:5 0 0 0 0 0 0 0 0 0;}#yiv3650351082 filtered {panose-1:2 4 5 3 5 4 6 3 2 4;}#yiv3650351082 filtered {font-family:Calibri;panose-1:2 15 5 2 2 2 4 3 2 4;}#yiv3650351082 filtered {font-family:Consolas;panose-1:2 11 6 9 2 2 4 3 2 4;}#yiv3650351082 filtered {}#yiv3650351082 Hi Prabhakaran,  ? Looking through https://clearwater.readthedocs.io/en/stable/Making_your_first_call.html and your client config my initial thought is that you have configured your client incorrectly.  ? You have Server address (under topology) configured to example.com.  ? However the docs state that for an All-in-One node that this should be configured to <aio-identity> ?????????Server:<domain> (or <aio-identity> on an All-in-One node) Hopefully this will fix your problem. If not please confirm that     
+   - Whether your clients are registering successfully 
+   - That you have other config correct i.e. Port, DNS Record.
+   - You are using Zoiper for one of the clients
+ Regards Anne   ? _______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+
+   
+
+   
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190204/61bdef0d/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: CW_Data_2.PNG
+Type: image/png
+Size: 19786 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190204/61bdef0d/attachment.png>
+
+From Anne.Boffey at metaswitch.com  Tue Feb  5 04:34:24 2019
+From: Anne.Boffey at metaswitch.com (Anne Boffey)
+Date: Tue, 5 Feb 2019 09:34:24 +0000
+Subject: [Project Clearwater] MMTEL in a different container
+Message-ID: <DM6PR02MB5434CDA1769A453D7B279D27816E0@DM6PR02MB5434.namprd02.prod.outlook.com>
+
+Hi Gabriel,
+
+It is theoretically possible to run the MMTEL AS over a separated container but this is not something we have ever tested.
+
+As to the questions of how to turn on MMTEL services, this is possible using the Ellis Web UI. There should be a tab (or button) in the UI which will give control on a subscriber basis to enable call services i.e. Call barring etc.
+
+If you are still struggling to work out how to do this, can you send a series of screen shots of the different Ellis Web UI pages/tabs and I will try and explain a bit more how to use it.
+
+Regards
+
+Anne
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190205/7e468317/attachment.html>
+
+From Anne.Boffey at metaswitch.com  Thu Feb  7 10:39:54 2019
+From: Anne.Boffey at metaswitch.com (Anne Boffey)
+Date: Thu, 7 Feb 2019 15:39:54 +0000
+Subject: [Project Clearwater] Regarding Clearwater SIP call connection
+Message-ID: <DM6PR02MB5434D010E5A1A5FAC6091B9C81680@DM6PR02MB5434.namprd02.prod.outlook.com>
+
+Hi Prabhakaran,
+
+Sorry you are still having problems.
+
+The config you have for the WebRTC looks OK according to https://clearwater.readthedocs.io/en/stable/WebRTC_support_in_Clearwater.html
+
+You haven't said what WebRTC client you are using. The first thing to check is that you are using a browser that supports your client. The sipml5 demo using websockets, we have found that calls do not work when we use Chrome, but they do work with recent versions of Firefox.
+
+The second thing that I would look at is whether the websocket request is reaching Bono. I suggest running a packet capture on Bono e.g. using tcpdump, then checking to see whether the packets are making it through your network. You should be able to filter on port 5062. If nothing shows up, then it is worth checking that your firewall is configured correctly. If that does not identify the problem, can you send us debug logs from Bono showing a call? You can find instructions for setting the log level to 5 at https://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html#bono
+
+I hope that helps.
+
+Regards,
+
+Anne
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190207/5929acc8/attachment.html>
+
+From junaidaliyahya at gmail.com  Sun Feb 10 09:11:51 2019
+From: junaidaliyahya at gmail.com (Junaid Ali)
+Date: Sun, 10 Feb 2019 14:11:51 +0000
+Subject: [Project Clearwater] Regarding Clearwater SIP call connection
+In-Reply-To: <DM6PR02MB5434D010E5A1A5FAC6091B9C81680@DM6PR02MB5434.namprd02.prod.outlook.com>
+References: <DM6PR02MB5434D010E5A1A5FAC6091B9C81680@DM6PR02MB5434.namprd02.prod.outlook.com>
+Message-ID: <CA+kT6RXojq99RNX_GB3VdyH-nBsr-SA0ZsAMMUKnOeLPaxrSPQ@mail.gmail.com>
+
+Hi Prabhakaran,
+I recently used Zoiper (one client on Ubuntu and the other one on Android
+phone) and was successfully able to make calls. Can you share your
+configuration?
+
+P.S: I followed this document for Zoiper configuration:
+https://docs.opencloud.com/ocdoc/books/sentinel-volte-documentation/2.6.0/sentinel-volte-in-the-cloud/sentinel-volte-documentation-2.6.0-sentinel-volte-in-the-cloud.pdf
+(Page#46)
+
+On Thu, Feb 7, 2019 at 3:40 PM Anne Boffey <Anne.Boffey at metaswitch.com>
+wrote:
+
+> Hi Prabhakaran,
+>
+>
+>
+> Sorry you are still having problems.
+>
+>
+>
+> The config you have for the WebRTC looks OK according to
+> https://clearwater.readthedocs.io/en/stable/WebRTC_support_in_Clearwater.html
+>
+>
+>
+> You haven?t said what WebRTC client you are using. The first thing to
+> check is that you are using a browser that supports your client. The sipml5
+> demo using websockets, we have found that calls do not work when we use
+> Chrome, but they do work with recent versions of Firefox.
+>
+>
+>
+> The second thing that I would look at is whether the websocket request is
+> reaching Bono. I suggest running a packet capture on Bono e.g. using
+> tcpdump, then checking to see whether the packets are making it through
+> your network. You should be able to filter on port 5062. If nothing shows
+> up, then it is worth checking that your firewall is configured correctly.
+> If that does not identify the problem, can you send us debug logs from Bono
+> showing a call? You can find instructions for setting the log level to 5 at
+> https://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html#bono
+>
+>
+>
+> I hope that helps.
+>
+>
+>
+> Regards,
+>
+>
+>
+> Anne
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190210/6744eb11/attachment.html>
+

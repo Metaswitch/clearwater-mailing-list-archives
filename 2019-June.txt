@@ -1,0 +1,38 @@
+From isaac.pateau.1 at etsmtl.net  Wed Jun 12 02:04:03 2019
+From: isaac.pateau.1 at etsmtl.net (Pateau, Isaac)
+Date: Wed, 12 Jun 2019 15:04:03 +0900
+Subject: [Project Clearwater] Error when creating a user - Ellis
+Message-ID: <CAPht7n7bG7RpyD69RRnEf+Sw5hA_2dt+OESXPTZScutVLRYSWA@mail.gmail.com>
+
+Hello everyone!
+
+I am currently an intern at NTT and I have been trying to get a Clearwater
+cluster working on Kubernetes using the Clearwater-Docker repo from GitHub.
+With some workarounds from these two archived messages below, I have been
+able to get all my pods running:
+
+http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/2018-May/003980.html
+https://github.com/Metaswitch/clearwater-docker/issues/81#issuecomment-345677402
+
+However, I do currently have an issue similar to the one found below:
+
+http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/2013-July/000919.html
+
+Ellis is indeed able to ping Homestead, but I still am not able to create a
+user. (Having the "Failed to update server" issue) Phone numbers were also
+created correctly.
+
+What is different though is that the configuration in
+/etc/clearwater/shared_config seems to have the correct DNS entries and
+using the a curl to the hs_provisionning pod returns me a "OK" response. I
+also am able to do an ICMP ping from the Ellis pod to all the other ones
+without any problem.
+
+I am open to any suggestions that you might have.
+
+Regards,
+Isaac
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190612/65e92b5c/attachment.html>
+

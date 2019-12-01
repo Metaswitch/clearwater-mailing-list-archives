@@ -1,0 +1,4145 @@
+From zjuwxk at gmail.com  Sun Nov  1 09:39:13 2015
+From: zjuwxk at gmail.com (xiaoke wang)
+Date: Sun, 1 Nov 2015 22:39:13 +0800
+Subject: [Clearwater] Undefined method or attribute `roles' on `node'
+	(NoMethodError)
+Message-ID: <CAAqRWCFkupRjGpZibNHHUUj1PwwBKT=-HW7CuVri7F6VNWxCNw@mail.gmail.com>
+
+Dear all,
+
+I am trying to deploy clearwater on EC2. When I tried to delete the
+deployment and run the following command:
+
+knife deployment delete -E clearwater -VV
+
+I got the following message:
+
+/home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/node/attribute.rb:358:in
+`method_missing': Undefined method or attribute `roles' on `node'
+(NoMethodError)
+        from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/node.rb:236:in
+`method_missing'
+        from /home/ubuntu/chef/.chef/plugins/knife/knife-deployment-delete.rb:62:in
+`block in run'
+        from /home/ubuntu/chef/.chef/plugins/knife/knife-deployment-delete.rb:62:in
+`select'
+        from /home/ubuntu/chef/.chef/plugins/knife/knife-deployment-delete.rb:62:in
+`run'
+        from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/knife.rb:460:in
+`run_with_pretty_exceptions'
+        from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/knife.rb:173:in
+`run'
+        from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/application/knife.rb:123:in
+`run'
+        from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/bin/knife:25:in
+`<top (required)>'
+        from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/bin/knife:23:in `load'
+        from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/bin/knife:23:in `<main>'
+        from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/bin/ruby_executable_hooks:15:in
+`eval'
+        from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/bin/ruby_executable_hooks:15:in
+`<main>'
+
+But I can run the command
+
+knife deployment clean -E clearwater -VV
+
+without errors.
+
+Could anyone give me a hint about what's going wrong?
+
+Thanks,
+Xiaoke
+
+
+
+From tysonite at gmail.com  Mon Nov  2 13:29:46 2015
+From: tysonite at gmail.com (Mikhail Kulinich)
+Date: Mon, 2 Nov 2015 21:29:46 +0300
+Subject: [Clearwater] RTP forwarding
+In-Reply-To: <BN3PR02MB125581460270C38314CF53DD9B2F0@BN3PR02MB1255.namprd02.prod.outlook.com>
+References: <CAGY+F0L3+BYNJxJiMu2O44bkrad9C+PC6g+DLsParOXW5dBbow@mail.gmail.com>
+	<BN3PR02MB125581460270C38314CF53DD9B2F0@BN3PR02MB1255.namprd02.prod.outlook.com>
+Message-ID: <CAGY+F0LGB936WRzHwG_4dpGpMibOTzueCzqfjLn8V-JcKWGRiA@mail.gmail.com>
+
+Hi Ellie, thank you.
+
+Do you have plans to develop media anchoring on Bono?
+For instance, http://www.rtpproxy.org/ software may act as RTP proxy if I'm
+not mistaken. Or Clearwater architecture wouldn't support that?
+
+
+On Fri, Oct 30, 2015 at 10:34 PM, Eleanor Merry <
+Eleanor.Merry at metaswitch.com> wrote:
+
+> Hi Mikhail,
+>
+>
+>
+> That?s correct!
+>
+>
+>
+> Bono nodes run an instance of restund (http://www.creytiv.com/restund.html)
+> which acts as a STUN/TURN server to help establish media flows if the
+> endpoints support ICE (
+> https://en.wikipedia.org/wiki/Interactive_Connectivity_Establishment).
+> In the event that the endpoints are behind restrictive NATs, the restund
+> service may need to proxy the media streams to allow them to get through
+> the NATs (using TURN).
+>
+>
+>
+> If your endpoints are behind NATs but do not support ICE for media NAT
+> traversal, you will need the P-CSCF to anchor the media on all calls.  Bono
+> does not support this functionality, but our commercial P-CSCF, Perimeta (
+> http://www.metaswitch.com/products/perimeta-session-border-controller),
+> does.
+>
+>
+>
+> Ellie
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *Mikhail Kulinich
+> *Sent:* 27 October 2015 09:35
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Clearwater] RTP forwarding
+>
+>
+>
+> Hello!
+>
+> I found out that Bono requires some ports to be opened to external network.
+>
+> Here is the extraction from the firewall documentation page (
+> http://clearwater.readthedocs.org/en/stable/Clearwater_IP_Port_Usage/index.html
+> ):
+>
+> ?         RTP forwarding:
+>
+> ?         UDP/32768-65535
+>
+>
+>
+> As far as I understand, those ports may be used to carry RTP traffic
+> between 2 IMS clients if they are, for instance, on different sub-nets
+> (e.g. can't communicate directly with each other). Bono acts as RTP proxy.
+> Am I right? If not, could you please clarify what is RTP forwarding?
+>
+>
+> --
+>
+> Thank you,
+>
+> Mikhail
+>
+
+
+
+-- 
+Mikhail
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151102/4beb539e/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Tue Nov  3 12:57:11 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Tue, 3 Nov 2015 17:57:11 +0000
+Subject: [Clearwater] Undefined method or attribute `roles' on
+	`node'	(NoMethodError)
+In-Reply-To: <CAAqRWCFkupRjGpZibNHHUUj1PwwBKT=-HW7CuVri7F6VNWxCNw@mail.gmail.com>
+References: <CAAqRWCFkupRjGpZibNHHUUj1PwwBKT=-HW7CuVri7F6VNWxCNw@mail.gmail.com>
+Message-ID: <BN3PR02MB1255EC696E38A4FCFECEB6089B2B0@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi Xiaoke, 
+
+What happened when you tried to create the Clearwater deployment?
+
+It looks like the resize failed halfway through, and a node has been created that doesn't have any roles on it - we normally expect a node to have at least the clearwater-infrastructure role on it. 
+To work out which node is faulty, can you run 'knife node show <node name>' for each of your nodes? Then for any nodes that are missing roles, run 'knife node delete <node name>' and 'knife client delete <node name>', then delete the box on EC2. You can then run the 'knife deployment delete' command again
+
+Ellie
+
+ 
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of xiaoke wang
+Sent: 01 November 2015 14:39
+To: clearwater at lists.projectclearwater.org
+Subject: [Clearwater] Undefined method or attribute `roles' on `node' (NoMethodError)
+
+Dear all,
+
+I am trying to deploy clearwater on EC2. When I tried to delete the deployment and run the following command:
+
+knife deployment delete -E clearwater -VV
+
+I got the following message:
+
+/home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/node/attribute.rb:358:in
+`method_missing': Undefined method or attribute `roles' on `node'
+(NoMethodError)
+        from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/node.rb:236:in
+`method_missing'
+        from /home/ubuntu/chef/.chef/plugins/knife/knife-deployment-delete.rb:62:in
+`block in run'
+        from /home/ubuntu/chef/.chef/plugins/knife/knife-deployment-delete.rb:62:in
+`select'
+        from /home/ubuntu/chef/.chef/plugins/knife/knife-deployment-delete.rb:62:in
+`run'
+        from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/knife.rb:460:in
+`run_with_pretty_exceptions'
+        from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/knife.rb:173:in
+`run'
+        from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/application/knife.rb:123:in
+`run'
+        from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/bin/knife:25:in
+`<top (required)>'
+        from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/bin/knife:23:in `load'
+        from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/bin/knife:23:in `<main>'
+        from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/bin/ruby_executable_hooks:15:in
+`eval'
+        from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/bin/ruby_executable_hooks:15:in
+`<main>'
+
+But I can run the command
+
+knife deployment clean -E clearwater -VV
+
+without errors.
+
+Could anyone give me a hint about what's going wrong?
+
+Thanks,
+Xiaoke
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+
+
+From syeoman at opencloud.com  Tue Nov  3 17:37:50 2015
+From: syeoman at opencloud.com (Steve Yeoman)
+Date: Tue, 3 Nov 2015 17:37:50 -0500
+Subject: [Clearwater] IPSMGW support
+Message-ID: <CAM+QopvEDqta1Rv=ifUvxxhu2gQrL83OH957A6kRsoeFDNJ6QQ@mail.gmail.com>
+
+Hi,
+
+We're testing an IPSMGW solution, as per 3GPP 24.341, signalling flows in
+section B.5
+
+In the attached log, sprout is not applying the Tel URI to the
+P-Asserted-Identity header in the SIP MESSAGE as per section B-5.3 (page
+35).
+
+Can you confirm if Sprout supports this use-case? and if so how can I
+configure it to apply both the SIP and Tel URI values for the
+P-Asserted-Identity in the sip MESSAGE sent to the IP-SM-GW.
+
+thanks
+Steve Yeoman
+
+
+
+------------------------------------------------------------------------------------------
+Steve Yeoman, Software Engineer, http://www.opencloud.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151103/a5efeab7/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: sprout-ipsmgw.log
+Type: text/x-log
+Size: 80507 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151103/a5efeab7/attachment.bin>
+
+From zjuwxk at gmail.com  Wed Nov  4 00:34:48 2015
+From: zjuwxk at gmail.com (xiaoke wang)
+Date: Wed, 4 Nov 2015 13:34:48 +0800
+Subject: [Clearwater] Undefined method or attribute `roles' on `node'
+	(NoMethodError)
+In-Reply-To: <BN3PR02MB1255EC696E38A4FCFECEB6089B2B0@BN3PR02MB1255.namprd02.prod.outlook.com>
+References: <CAAqRWCFkupRjGpZibNHHUUj1PwwBKT=-HW7CuVri7F6VNWxCNw@mail.gmail.com>
+	<BN3PR02MB1255EC696E38A4FCFECEB6089B2B0@BN3PR02MB1255.namprd02.prod.outlook.com>
+Message-ID: <CAAqRWCH_3UaOzyHv8tPS8i=aenxK-NyND3v1XHVML-Ni1FE6_Q@mail.gmail.com>
+
+Dear Eleanor,
+
+The problem disappeared after I restart the chef server and chef
+client. So, I couldn't reproduce the problem.
+
+But now, I meet another problem, when I try to create an account via
+ellis, I get the following message in ellis's log:
+
+------
+04-11-2015 05:23:09.013 UTC INFO web.py:1447: 200 GET /ping (0.0.0.0) 0.33ms
+04-11-2015 05:23:20.947 UTC INFO users.py:71: Request to create new account
+04-11-2015 05:23:20.949 UTC INFO users.py:60: User email
+bob. at example.com not found
+04-11-2015 05:23:21.233 UTC INFO web.py:1447: 302 POST
+/accounts/?onsuccess=/index.html%23first&onfailure=/signup.html
+(0.0.0.0) 286.01ms
+04-11-2015 05:23:22.276 UTC WARNING numbers.py:142: No available numbers
+04-11-2015 05:23:22.276 UTC WARNING _base.py:163: 503 POST
+/accounts/bob.%40example.com/numbers/?cb=199db708aaK0 (0.0.0.0): No
+available numbers
+04-11-2015 05:23:22.277 UTC ERROR web.py:1447: 503 POST
+/accounts/bob.%40example.com/numbers/?cb=199db708aaK0 (0.0.0.0) 5.03ms
+04-11-2015 05:23:39.180 UTC INFO web.py:1447: 200 GET /ping (0.0.0.0) 0.33ms
+04-11-2015 05:23:43.630 UTC WARNING web.py:1447: 404 GET /favicon.ico
+(0.0.0.0) 2.41ms
+04-11-2015 05:23:59.225 UTC INFO web.py:1447: 200 GET /ping (0.0.0.0) 0.33ms
+------
+
+My environment is
+------
+chef_type:           environment
+cookbook_versions:
+  clearwater: = 0.1.0
+default_attributes:
+description:         Clearwater deployment - clearwater
+json_class:          Chef::Environment
+name:                clearwater
+override_attributes:
+  clearwater:
+    availability_zones: us-east-1a
+    gr:                 false
+    keypair:            fd_wang_usa
+    keypair_dir:        ~/.chef/
+    number_count:       1000
+    number_start:       6505550000
+    pstn_number_count:  0
+    repo_server:        http://repo.cw-ngv.com/stable
+    root_domain:        testclearwater.net
+------
+
+It seems to indicate the 1000 numbers are used up or not available.
+I have no idea where I went wrong :(
+
+Thanks,
+Xiaoke
+
+On Wed, Nov 4, 2015 at 1:57 AM, Eleanor Merry
+<Eleanor.Merry at metaswitch.com> wrote:
+> Hi Xiaoke,
+>
+> What happened when you tried to create the Clearwater deployment?
+>
+> It looks like the resize failed halfway through, and a node has been created that doesn't have any roles on it - we normally expect a node to have at least the clearwater-infrastructure role on it.
+> To work out which node is faulty, can you run 'knife node show <node name>' for each of your nodes? Then for any nodes that are missing roles, run 'knife node delete <node name>' and 'knife client delete <node name>', then delete the box on EC2. You can then run the 'knife deployment delete' command again
+>
+> Ellie
+>
+>
+> -----Original Message-----
+> From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of xiaoke wang
+> Sent: 01 November 2015 14:39
+> To: clearwater at lists.projectclearwater.org
+> Subject: [Clearwater] Undefined method or attribute `roles' on `node' (NoMethodError)
+>
+> Dear all,
+>
+> I am trying to deploy clearwater on EC2. When I tried to delete the deployment and run the following command:
+>
+> knife deployment delete -E clearwater -VV
+>
+> I got the following message:
+>
+> /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/node/attribute.rb:358:in
+> `method_missing': Undefined method or attribute `roles' on `node'
+> (NoMethodError)
+>         from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/node.rb:236:in
+> `method_missing'
+>         from /home/ubuntu/chef/.chef/plugins/knife/knife-deployment-delete.rb:62:in
+> `block in run'
+>         from /home/ubuntu/chef/.chef/plugins/knife/knife-deployment-delete.rb:62:in
+> `select'
+>         from /home/ubuntu/chef/.chef/plugins/knife/knife-deployment-delete.rb:62:in
+> `run'
+>         from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/knife.rb:460:in
+> `run_with_pretty_exceptions'
+>         from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/knife.rb:173:in
+> `run'
+>         from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/application/knife.rb:123:in
+> `run'
+>         from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/bin/knife:25:in
+> `<top (required)>'
+>         from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/bin/knife:23:in `load'
+>         from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/bin/knife:23:in `<main>'
+>         from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/bin/ruby_executable_hooks:15:in
+> `eval'
+>         from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/bin/ruby_executable_hooks:15:in
+> `<main>'
+>
+> But I can run the command
+>
+> knife deployment clean -E clearwater -VV
+>
+> without errors.
+>
+> Could anyone give me a hint about what's going wrong?
+>
+> Thanks,
+> Xiaoke
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+
+
+From Eleanor.Merry at metaswitch.com  Thu Nov  5 08:02:18 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Thu, 5 Nov 2015 13:02:18 +0000
+Subject: [Clearwater] Undefined method or attribute `roles' on `node'
+ (NoMethodError)
+In-Reply-To: <CAAqRWCH_3UaOzyHv8tPS8i=aenxK-NyND3v1XHVML-Ni1FE6_Q@mail.gmail.com>
+References: <CAAqRWCFkupRjGpZibNHHUUj1PwwBKT=-HW7CuVri7F6VNWxCNw@mail.gmail.com>
+	<BN3PR02MB1255EC696E38A4FCFECEB6089B2B0@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<CAAqRWCH_3UaOzyHv8tPS8i=aenxK-NyND3v1XHVML-Ni1FE6_Q@mail.gmail.com>
+Message-ID: <BN3PR02MB1255590C6FD94EF28DBBFF9F9B290@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi Xiaoke, 
+
+When you first log into Ellis, Ellis attempts to create a subscriber. To do so, Ellis needs a pool of numbers to create the subscriber from; it gets this pool through the create_numbers script (see https://github.com/Metaswitch/ellis/blob/dev/docs/create-numbers.md for more details). 
+
+Running create_numbers is normally done by Chef, however it's proving flaky at the moment. We?re tracking the issue at  https://github.com/Metaswitch/chef/issues/246 - and you can fix this up on your deployment by running sudo chef-client on your Ellis node.
+
+Ellie
+
+-----Original Message-----
+From: xiaoke wang [mailto:zjuwxk at gmail.com] 
+Sent: 04 November 2015 05:35
+To: Eleanor Merry
+Cc: clearwater at lists.projectclearwater.org
+Subject: Re: [Clearwater] Undefined method or attribute `roles' on `node' (NoMethodError)
+
+Dear Eleanor,
+
+The problem disappeared after I restart the chef server and chef client. So, I couldn't reproduce the problem.
+
+But now, I meet another problem, when I try to create an account via ellis, I get the following message in ellis's log:
+
+------
+04-11-2015 05:23:09.013 UTC INFO web.py:1447: 200 GET /ping (0.0.0.0) 0.33ms
+04-11-2015 05:23:20.947 UTC INFO users.py:71: Request to create new account
+04-11-2015 05:23:20.949 UTC INFO users.py:60: User email bob. at example.com not found
+04-11-2015 05:23:21.233 UTC INFO web.py:1447: 302 POST /accounts/?onsuccess=/index.html%23first&onfailure=/signup.html
+(0.0.0.0) 286.01ms
+04-11-2015 05:23:22.276 UTC WARNING numbers.py:142: No available numbers
+04-11-2015 05:23:22.276 UTC WARNING _base.py:163: 503 POST
+/accounts/bob.%40example.com/numbers/?cb=199db708aaK0 (0.0.0.0): No available numbers
+04-11-2015 05:23:22.277 UTC ERROR web.py:1447: 503 POST
+/accounts/bob.%40example.com/numbers/?cb=199db708aaK0 (0.0.0.0) 5.03ms
+04-11-2015 05:23:39.180 UTC INFO web.py:1447: 200 GET /ping (0.0.0.0) 0.33ms
+04-11-2015 05:23:43.630 UTC WARNING web.py:1447: 404 GET /favicon.ico
+(0.0.0.0) 2.41ms
+04-11-2015 05:23:59.225 UTC INFO web.py:1447: 200 GET /ping (0.0.0.0) 0.33ms
+------
+
+My environment is
+------
+chef_type:           environment
+cookbook_versions:
+  clearwater: = 0.1.0
+default_attributes:
+description:         Clearwater deployment - clearwater
+json_class:          Chef::Environment
+name:                clearwater
+override_attributes:
+  clearwater:
+    availability_zones: us-east-1a
+    gr:                 false
+    keypair:            fd_wang_usa
+    keypair_dir:        ~/.chef/
+    number_count:       1000
+    number_start:       6505550000
+    pstn_number_count:  0
+    repo_server:        http://repo.cw-ngv.com/stable
+    root_domain:        testclearwater.net
+------
+
+It seems to indicate the 1000 numbers are used up or not available.
+I have no idea where I went wrong :(
+
+Thanks,
+Xiaoke
+
+On Wed, Nov 4, 2015 at 1:57 AM, Eleanor Merry <Eleanor.Merry at metaswitch.com> wrote:
+> Hi Xiaoke,
+>
+> What happened when you tried to create the Clearwater deployment?
+>
+> It looks like the resize failed halfway through, and a node has been created that doesn't have any roles on it - we normally expect a node to have at least the clearwater-infrastructure role on it.
+> To work out which node is faulty, can you run 'knife node show <node 
+> name>' for each of your nodes? Then for any nodes that are missing 
+> roles, run 'knife node delete <node name>' and 'knife client delete 
+> <node name>', then delete the box on EC2. You can then run the 'knife 
+> deployment delete' command again
+>
+> Ellie
+>
+>
+> -----Original Message-----
+> From: Clearwater 
+> [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of 
+> xiaoke wang
+> Sent: 01 November 2015 14:39
+> To: clearwater at lists.projectclearwater.org
+> Subject: [Clearwater] Undefined method or attribute `roles' on `node' 
+> (NoMethodError)
+>
+> Dear all,
+>
+> I am trying to deploy clearwater on EC2. When I tried to delete the deployment and run the following command:
+>
+> knife deployment delete -E clearwater -VV
+>
+> I got the following message:
+>
+> /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/node/
+> attribute.rb:358:in
+> `method_missing': Undefined method or attribute `roles' on `node'
+> (NoMethodError)
+>         from 
+> /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/node.
+> rb:236:in
+> `method_missing'
+>         from 
+> /home/ubuntu/chef/.chef/plugins/knife/knife-deployment-delete.rb:62:in
+> `block in run'
+>         from 
+> /home/ubuntu/chef/.chef/plugins/knife/knife-deployment-delete.rb:62:in
+> `select'
+>         from 
+> /home/ubuntu/chef/.chef/plugins/knife/knife-deployment-delete.rb:62:in
+> `run'
+>         from 
+> /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/knife
+> .rb:460:in
+> `run_with_pretty_exceptions'
+>         from 
+> /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/knife
+> .rb:173:in
+> `run'
+>         from 
+> /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/lib/chef/appli
+> cation/knife.rb:123:in
+> `run'
+>         from 
+> /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/gems/chef-11.4.0/bin/knife:25:i
+> n
+> `<top (required)>'
+>         from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/bin/knife:23:in `load'
+>         from /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/bin/knife:23:in `<main>'
+>         from 
+> /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/bin/ruby_executable_hooks:15:in
+> `eval'
+>         from 
+> /home/ubuntu/.rvm/gems/ruby-1.9.3-p551/bin/ruby_executable_hooks:15:in
+> `<main>'
+>
+> But I can run the command
+>
+> knife deployment clean -E clearwater -VV
+>
+> without errors.
+>
+> Could anyone give me a hint about what's going wrong?
+>
+> Thanks,
+> Xiaoke
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.p
+> rojectclearwater.org
+
+From Eleanor.Merry at metaswitch.com  Fri Nov  6 09:40:29 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Fri, 6 Nov 2015 14:40:29 +0000
+Subject: [Clearwater] IPSMGW support
+In-Reply-To: <CAM+QopvEDqta1Rv=ifUvxxhu2gQrL83OH957A6kRsoeFDNJ6QQ@mail.gmail.com>
+References: <CAM+QopvEDqta1Rv=ifUvxxhu2gQrL83OH957A6kRsoeFDNJ6QQ@mail.gmail.com>
+Message-ID: <BN3PR02MB12557EFF36FF4B1BC16004B09B280@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi Steve,
+
+Sprout does support this use case. To get Sprout to add a P-Asserted-Identity for the tel URI you will need to set up the tel URI as an alias of the SIP URI.
+
+The spec (TS 24.229, rel 10, 5.4.3.2) says about adding a P-Asserted-Identity
+
+                If there was no original dialog identifier present in the topmost Route header field of the incoming request and if the served user is not considered a priviledged sender then:
+
+a)            if the P-Asserted-Identity header field contains only a SIP URI and if the S-CSCF has knowledge that the SIP URI contained in the received P-Asserted-Identity header field is an alias SIP URI for a tel URI, add a second P-Asserted-Identity header field containing this tel-URI, including the display name associated with the tel URI, if available;
+
+Sprout finds out what the aliases are for a public identity by getting the registration state from Homestead/HSS. The aliases for the requested public identity are all the public identities in the same Service Profile as the requested public identity.
+
+In the Sprout logs, the HSS lookup shows a only single public identity in the Service Profile, e.g
+                <ServiceProfile>
+                                                <PublicIdentity>
+                                                                <Identity>sip:6505550202 at example.com</Identity>
+                                                                <Extension>
+                                                                                <IdentityType>0</IdentityType>
+                                                                </Extension>
+                                                </PublicIdentity>
+                                                <InitialFilterCriteria> ?.
+
+Can you add the tel URI then as an alias to the SIP URI (by adding a PublicIdentity block to the RegistrationState XML)?
+
+Ellie
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Steve Yeoman
+Sent: 03 November 2015 22:38
+To: clearwater at lists.projectclearwater.org
+Subject: [Clearwater] IPSMGW support
+
+Hi,
+
+We're testing an IPSMGW solution, as per 3GPP 24.341, signalling flows in section B.5
+
+In the attached log, sprout is not applying the Tel URI to the P-Asserted-Identity header in the SIP MESSAGE as per section B-5.3 (page 35).
+
+Can you confirm if Sprout supports this use-case? and if so how can I configure it to apply both the SIP and Tel URI values for the P-Asserted-Identity in the sip MESSAGE sent to the IP-SM-GW.
+
+thanks
+Steve Yeoman
+
+
+
+------------------------------------------------------------------------------------------
+Steve Yeoman, Software Engineer, http://www.opencloud.com<http://www.opencloud.com/>
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151106/d15aaea1/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Fri Nov  6 09:49:46 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Fri, 6 Nov 2015 14:49:46 +0000
+Subject: [Clearwater] RTP forwarding
+In-Reply-To: <CAGY+F0LGB936WRzHwG_4dpGpMibOTzueCzqfjLn8V-JcKWGRiA@mail.gmail.com>
+References: <CAGY+F0L3+BYNJxJiMu2O44bkrad9C+PC6g+DLsParOXW5dBbow@mail.gmail.com>
+	<BN3PR02MB125581460270C38314CF53DD9B2F0@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<CAGY+F0LGB936WRzHwG_4dpGpMibOTzueCzqfjLn8V-JcKWGRiA@mail.gmail.com>
+Message-ID: <BN3PR02MB1255BC0698F4531429EDA12E9B280@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi Mikhail,
+
+We?ve got no current plans to add support for this.
+
+Why do you need this? Would you like to contribute to Clearwater by helping to add the support for this?
+
+Ellie
+
+From: Mikhail Kulinich [mailto:tysonite at gmail.com]
+Sent: 02 November 2015 18:30
+To: Eleanor Merry
+Cc: clearwater at lists.projectclearwater.org
+Subject: Re: [Clearwater] RTP forwarding
+
+Hi Ellie, thank you.
+
+Do you have plans to develop media anchoring on Bono?
+For instance, http://www.rtpproxy.org/ software may act as RTP proxy if I'm not mistaken. Or Clearwater architecture wouldn't support that?
+
+On Fri, Oct 30, 2015 at 10:34 PM, Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>> wrote:
+Hi Mikhail,
+
+That?s correct!
+
+Bono nodes run an instance of restund (http://www.creytiv.com/restund.html) which acts as a STUN/TURN server to help establish media flows if the endpoints support ICE (https://en.wikipedia.org/wiki/Interactive_Connectivity_Establishment).  In the event that the endpoints are behind restrictive NATs, the restund service may need to proxy the media streams to allow them to get through the NATs (using TURN).
+
+If your endpoints are behind NATs but do not support ICE for media NAT traversal, you will need the P-CSCF to anchor the media on all calls.  Bono does not support this functionality, but our commercial P-CSCF, Perimeta (http://www.metaswitch.com/products/perimeta-session-border-controller), does.
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>] On Behalf Of Mikhail Kulinich
+Sent: 27 October 2015 09:35
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Clearwater] RTP forwarding
+
+Hello!
+
+I found out that Bono requires some ports to be opened to external network.
+Here is the extraction from the firewall documentation page (http://clearwater.readthedocs.org/en/stable/Clearwater_IP_Port_Usage/index.html):
+
+?         RTP forwarding:
+
+?         UDP/32768-65535
+
+As far as I understand, those ports may be used to carry RTP traffic between 2 IMS clients if they are, for instance, on different sub-nets (e.g. can't communicate directly with each other). Bono acts as RTP proxy. Am I right? If not, could you please clarify what is RTP forwarding?
+
+--
+Thank you,
+Mikhail
+
+
+
+--
+Mikhail
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151106/63330810/attachment.html>
+
+From Andrew.Edmonds at metaswitch.com  Tue Nov 10 10:33:42 2015
+From: Andrew.Edmonds at metaswitch.com (Andrew Edmonds)
+Date: Tue, 10 Nov 2015 15:33:42 +0000
+Subject: [Clearwater]  Rob Roy Release Note
+Message-ID: <45C9564A9C7079479FD591C66FF89E1910A1A177@ENFICSMBX1.datcon.co.uk>
+
+The release for sprint "Rob Roy" has been cut. The code for this release is tagged as release-85 in github.
+
+This release introduces active expiry of any subscriptions to registration events. This uses the same infrastructure as for expiring registrations - Sprout now sets Chronos timers to pop on subscription expiry as well. These timer pops now trigger active expiration of the subscriptions in Sprout and cause termination NOTIFYs to be sent out to the subscriber.
+
+It includes the following bug fixes:
+
+*         A non-REGISTERing PBX origination within 30 seconds of a previous origination results in a 403 response vs. 407 (https://github.com/Metaswitch/sprout/issues/1217)
+
+*         enum.json is not reloaded by a 'service sprout reload' (https://github.com/Metaswitch/sprout/issues/1209)
+
+*         Reason Header Field of History-Info Header added for CDIV is malformed. (https://github.com/Metaswitch/sprout/issues/873)
+
+*         SRV priority interactions in Diameter don't work for A records (https://github.com/Metaswitch/homestead/issues/274)
+
+*         No logs in specified directory (https://github.com/Metaswitch/homestead/issues/272)
+
+*         Statistics aren't as accurate due to time taken to pop timers and repeat timers (https://github.com/Metaswitch/chronos/issues/158)
+
+*         Load Monitor keeps increasing token rate even if current rate is unproven (https://github.com/Metaswitch/cpp-common/issues/384)
+
+*         SAS can't decode all Diameter messages (https://github.com/Metaswitch/cpp-common/issues/373)
+
+*         Stop homer/homestead-prov in a more targeted way (https://github.com/Metaswitch/crest/issues/198)
+
+*         Ellis can keep hold of a MySQLdb lock (https://github.com/Metaswitch/ellis/issues/141)
+
+*         Clearwater-socket-factory dies in race condition with shared_config (https://github.com/Metaswitch/clearwater-infrastructure/issues/266)
+
+*         Alarms not reliably enabled on new installs (https://github.com/Metaswitch/clearwater-snmp-handlers/issues/98)
+
+*         The alarm agent should always get alarms, but not send them if snmp_ip is unset (https://github.com/Metaswitch/clearwater-snmp-handlers/issues/91)
+
+*         Duplicated clearwater-cluster-manager processes can cause problems with the logs (https://github.com/Metaswitch/clearwater-etcd/issues/218)
+
+*         etcd_cluster_key is required but documentation says nothing about it (https://github.com/Metaswitch/clearwater-etcd/issues/217)
+
+*         clearwater-config-manager doesn't like all the characters in the shared_config (https://github.com/Metaswitch/clearwater-etcd/issues/169)
+
+*         sudo service clearwater-etcd decommission took 20 minutes to complete and reported an error (https://github.com/Metaswitch/clearwater-etcd/issues/157)
+
+*         Chronos never leaves the ETCD cluster when Sprout is decommisioned (https://github.com/Metaswitch/clearwater-etcd/issues/131)
+
+To upgrade to this release, follow the instructions at http://clearwater.readthedocs.org/en/latest/Upgrading_a_Clearwater_deployment/index.html. If you are deploying an all-in-one node, the standard image (http://vm-images.cw-ngv.com/cw-aio.ova) has been updated for this release.
+
+Yours,
+
+Andrew
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151110/1b41c130/attachment.html>
+
+From sainath.ellendula at wipro.com  Fri Nov 13 05:59:45 2015
+From: sainath.ellendula at wipro.com (sainath.ellendula at wipro.com)
+Date: Fri, 13 Nov 2015 10:59:45 +0000
+Subject: [Clearwater] Reg: Clearwater SIP-IMS call set up error
+Message-ID: <KL1PR03MB1400600F1799043E70E7423DF2110@KL1PR03MB1400.apcprd03.prod.outlook.com>
+
+Hi Team,
+
+
+I was working on clearwater for SIP-IMS call set up, Made a call and getting error as
+
+"403 forbidden"
+
+
+
+
+Configuration details:
+
+ Username: 6505550848 at example.com
+
+password: secret
+
+
+I have given Authentication password as "secret" which has  taken from /etc/clearwater/config
+
+
+Could you please guide me here.
+
+
+Regards,
+
+Sai
+
+
+
+
+
+The information contained in this electronic message and any attachments to this message are intended for the exclusive use of the addressee(s) and may contain proprietary, confidential or privileged information. If you are not the intended recipient, you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately and destroy all copies of this message and any attachments. WARNING: Computer viruses can be transmitted via email. The recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email. www.wipro.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151113/2200ee69/attachment.html>
+
+From syeoman at opencloud.com  Sun Nov 15 17:09:13 2015
+From: syeoman at opencloud.com (Steve Yeoman)
+Date: Sun, 15 Nov 2015 17:09:13 -0500
+Subject: [Clearwater] IPSMGW support
+In-Reply-To: <BN3PR02MB12557EFF36FF4B1BC16004B09B280@BN3PR02MB1255.namprd02.prod.outlook.com>
+References: <CAM+QopvEDqta1Rv=ifUvxxhu2gQrL83OH957A6kRsoeFDNJ6QQ@mail.gmail.com>
+	<BN3PR02MB12557EFF36FF4B1BC16004B09B280@BN3PR02MB1255.namprd02.prod.outlook.com>
+Message-ID: <CAM+QopsLj1jqb0W9YQoBR4p53VgDrRscyfO+V0X5uHzBVpD4Og@mail.gmail.com>
+
+Hi,
+
+Thanks for that. To effect the aliasing of the Tel URI, I associated a
+second IMPU to the IMPI in HSS. Now Sprout is retrieving the registration
+details like this:
+
+08-11-2015 17:09:26.352 UTC Debug httpconnection.cpp:610: Received HTTP
+response: status=200, doc=<ClearwaterRegData>
+        <RegistrationState>REGISTERED</RegistrationState>
+        <IMSSubscription>
+                <PrivateID>6505550202 at example.com</PrivateID>
+                <ServiceProfile>
+                        <PublicIdentity>
+                                <Identity>sip:6505550202 at example.com
+</Identity>
+                                <Extension>
+                                        <IdentityType>0</IdentityType>
+                                </Extension>
+                        </PublicIdentity>
+                        <PublicIdentity>
+                                <Identity>tel:+6505550202</Identity>
+                                <Extension>
+                                        <IdentityType>0</IdentityType>
+                                        <Extension>
+
+<DisplayName>6505550202</DisplayName>
+                                        </Extension>
+                                </Extension>
+                        </PublicIdentity>
+
+I repeated the test, log attached. I'm still not seeing the second
+P-Asserted-Identity header in the MESSGE to the IPSMGW. Did I miss
+something?
+
+
+
+
+------------------------------------------------------------------------------------------
+Steve Yeoman, Software Engineer, http://www.opencloud.com
+Tel: +1 647 342 6183, Mobile: +1 416 662 4490
+
+
+On 6 November 2015 at 09:40, Eleanor Merry <Eleanor.Merry at metaswitch.com>
+wrote:
+
+> Hi Steve,
+>
+>
+>
+> Sprout does support this use case. To get Sprout to add a
+> P-Asserted-Identity for the tel URI you will need to set up the tel URI as
+> an alias of the SIP URI.
+>
+>
+>
+> The spec (TS 24.229, rel 10, 5.4.3.2) says about adding a
+> P-Asserted-Identity
+>
+>
+>
+>                 If there was no original dialog identifier present in the
+> topmost Route header field of the incoming request and if the served user
+> is not considered a priviledged sender then:
+>
+>
+>
+> a)            if the P-Asserted-Identity header field contains only a SIP
+> URI and if the S-CSCF has knowledge that the SIP URI contained in the
+> received P-Asserted-Identity header field is an alias SIP URI for a tel
+> URI, add a second P-Asserted-Identity header field containing this tel-URI,
+> including the display name associated with the tel URI, if available;
+>
+>
+>
+> Sprout finds out what the aliases are for a public identity by getting the
+> registration state from Homestead/HSS. The aliases for the requested public
+> identity are all the public identities in the same Service Profile as the
+> requested public identity.
+>
+>
+>
+> In the Sprout logs, the HSS lookup shows a only single public identity in
+> the Service Profile, e.g
+>
+>                 <ServiceProfile>
+>
+>                                                 <PublicIdentity>
+>
+>                                                                 <Identity>
+> sip:6505550202 at example.com</Identity>
+>
+>                                                                 <Extension>
+>
+>
+> <IdentityType>0</IdentityType>
+>
+>
+> </Extension>
+>
+>                                                 </PublicIdentity>
+>
+>                                                 <InitialFilterCriteria> ?.
+>
+>
+>
+> Can you add the tel URI then as an alias to the SIP URI (by adding a
+> PublicIdentity block to the RegistrationState XML)?
+>
+>
+>
+> Ellie
+>
+>
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *Steve Yeoman
+> *Sent:* 03 November 2015 22:38
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Clearwater] IPSMGW support
+>
+>
+>
+> Hi,
+>
+>
+>
+> We're testing an IPSMGW solution, as per 3GPP 24.341, signalling flows in
+> section B.5
+>
+>
+>
+> In the attached log, sprout is not applying the Tel URI to the
+> P-Asserted-Identity header in the SIP MESSAGE as per section B-5.3 (page
+> 35).
+>
+>
+>
+> Can you confirm if Sprout supports this use-case? and if so how can I
+> configure it to apply both the SIP and Tel URI values for the
+> P-Asserted-Identity in the sip MESSAGE sent to the IP-SM-GW.
+>
+>
+>
+> thanks
+>
+> Steve Yeoman
+>
+>
+>
+>
+>
+>
+>
+> ------------------------------------------------------------------------------------------
+>
+> Steve Yeoman, Software Engineer, http://www.opencloud.com
+>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151115/d5eac46e/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: ipsmgw-message-multiple-sip-identities.log
+Type: text/x-log
+Size: 149220 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151115/d5eac46e/attachment.bin>
+
+From marstonaustin at gmail.com  Mon Nov 16 11:55:37 2015
+From: marstonaustin at gmail.com (Austin Marston)
+Date: Mon, 16 Nov 2015 17:55:37 +0100
+Subject: [Clearwater] poll_etcd_cluster waiting on manual install
+Message-ID: <CAOVZBjA=SUo0rZ0YPa65A35L-9kGKHuc7bgGxaX7FAa4zBOxHg@mail.gmail.com>
+
+Hi all,
+
+I have a manual install of Clearwater without redundancy that I just
+deployed today from the last Clearwater release, and I cannot get my
+cluster to work.
+
+All my nodes seem to have their processes "running" or "status ok" however
+the 'poll_etcd_cluster' on each node keeps being "Waiting".
+
+Although my cluster seems healthy:
+[bono-sipp-sprout]user at cw-012:/var/log/sprout$ clearwater-etcdctl
+cluster-health
+cluster is healthy
+member 1d362398497f4d32 is healthy
+member 5beec250e4e21a93 is healthy
+member 66082b976e9208ce is healthy
+member bd214c262ac666e3 is healthy
+member d05d0bbb1534c7ee is healthy
+member fd62bae1dd31c0f8 is healthy
+
+there is still a bug I cannot catch and it does not seem to be
+configuration related as about 50% of the live tests passed and the other
+usually get 503 response.
+
+
+There are some Sprout etcd logs:
+2015/11/16 17:43:53 rafthttp: failed to dial fd62bae1dd31c0f8 on stream
+MsgApp v2 (dial tcp 172.16.1.13:2380: i/o timeout)
+2015/11/16 17:43:53 rafthttp: failed to dial fd62bae1dd31c0f8 on stream
+Message (dial tcp 172.16.1.13:2380: i/o timeout)
+2015/11/16 17:43:53 etcdhttp: [GET]
+/v2/keys/clearwater/site1/sprout/clustering/chronos?waitIndex=88&recursive=false&wait=true
+remote:172.16.1.12:39329
+2015/11/16 17:43:53 etcdhttp: [GET]
+/v2/keys/clearwater/site1/sprout/clustering/memcached?waitIndex=88&recursive=false&wait=true
+remote:172.16.1.12:39330
+[bono-sipp-sprout]user at cw-012:/var/log/sprout$ tail
+/var/log/clearwater-etcd/clearwater-etcd.log
+2015/11/16 17:47:06 rafthttp: failed to dial fd62bae1dd31c0f8 on stream
+MsgApp v2 (dial tcp 172.16.1.13:2380: i/o timeout)
+2015/11/16 17:47:06 rafthttp: failed to dial fd62bae1dd31c0f8 on stream
+Message (dial tcp 172.16.1.13:2380: i/o timeout)
+2015/11/16 17:47:06 etcdhttp: [GET]
+/v2/keys/clearwater/site1/configuration/shared_config?quorum=true remote:
+172.16.1.12:32817
+2015/11/16 17:47:06 etcdhttp: [GET]
+/v2/keys/clearwater/site1/configuration/scscf_json?quorum=true remote:
+172.16.1.12:32816
+2015/11/16 17:47:06 etcdhttp: [GET]
+/v2/keys/clearwater/site1/configuration/enum_json?quorum=true remote:
+172.16.1.12:32814
+2015/11/16 17:47:06 etcdhttp: [GET]
+/v2/keys/clearwater/site1/configuration/bgcf_json?quorum=true remote:
+172.16.1.12:32815
+2015/11/16 17:47:07 etcdhttp: [GET]
+/v2/keys/clearwater/site1/sprout/clustering/chronos?waitIndex=88&recursive=false&wait=true
+remote:172.16.1.12:45031
+2015/11/16 17:47:07 etcdhttp: [GET]
+/v2/keys/clearwater/site1/sprout/clustering/memcached?waitIndex=88&recursive=false&wait=true
+remote:172.16.1.12:45034
+2015/11/16 17:47:07 rafthttp: failed to dial fd62bae1dd31c0f8 on stream
+MsgApp v2 (dial tcp 172.16.1.13:2380: i/o timeout)
+2015/11/16 17:47:07 rafthttp: failed to dial fd62bae1dd31c0f8 on stream
+Message (dial tcp 172.16.1.13:2380: i/o timeout)
+
+Thank you in advance for any help!
+
+Austin
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151116/2e82a730/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Mon Nov 16 13:51:29 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Mon, 16 Nov 2015 18:51:29 +0000
+Subject: [Clearwater] Clearwater SIP-IMS call set up error
+In-Reply-To: <KL1PR03MB1400600F1799043E70E7423DF2110@KL1PR03MB1400.apcprd03.prod.outlook.com>
+References: <KL1PR03MB1400600F1799043E70E7423DF2110@KL1PR03MB1400.apcprd03.prod.outlook.com>
+Message-ID: <BN3PR02MB12558A6B9A0E2E8303A145279B1E0@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi Sai,
+
+How have you created your subscriber? Did you use Ellis? If so, then when you created the subscriber it will have displayed the password on the Dashboard, e.g:
+
+Private Identity:
+6505550848 at example.com
+Password: XyXjdAGVZ
+
+The password is only shown once (it's normally shown as 'Not available'). To generate a new password, click the reset button.
+
+The 'signup_key' in /etc/clearwater/shared_config controls who's allowed to create an account on Ellis. You need this to create an administrator account on Ellis - it's not used for subscriber passwords.
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of sainath.ellendula at wipro.com
+Sent: 13 November 2015 11:00
+To: clearwater at lists.projectclearwater.org
+Subject: [Clearwater] Reg: Clearwater SIP-IMS call set up error
+
+
+Hi Team,
+
+
+
+I was working on clearwater for SIP-IMS call set up, Made a call and getting error as
+
+"403 forbidden"
+
+
+
+
+
+
+
+Configuration details:
+
+ Username: 6505550848 at example.com<mailto:6505550848 at example.com>
+
+password: secret
+
+
+
+I have given Authentication password as "secret" which has  taken from /etc/clearwater/config
+
+
+
+Could you please guide me here.
+
+
+
+Regards,
+
+Sai
+
+
+
+
+
+
+
+
+The information contained in this electronic message and any attachments to this message are intended for the exclusive use of the addressee(s) and may contain proprietary, confidential or privileged information. If you are not the intended recipient, you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately and destroy all copies of this message and any attachments. WARNING: Computer viruses can be transmitted via email. The recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email. www.wipro.com<http://www.wipro.com>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151116/e0e3656c/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Mon Nov 16 14:02:52 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Mon, 16 Nov 2015 19:02:52 +0000
+Subject: [Clearwater] poll_etcd_cluster waiting on manual install
+In-Reply-To: <CAOVZBjA=SUo0rZ0YPa65A35L-9kGKHuc7bgGxaX7FAa4zBOxHg@mail.gmail.com>
+References: <CAOVZBjA=SUo0rZ0YPa65A35L-9kGKHuc7bgGxaX7FAa4zBOxHg@mail.gmail.com>
+Message-ID: <BN3PR02MB1255F0FA72FD67E3C455B2689B1E0@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi Austin,
+
+?Waiting? is an expected state of poll_etcd_cluster.
+We use monit (https://mmonit.com/monit/) to track our processes; and it checks around every 10 seconds for process liveness and responsiveness. We don?t want the poll_etcd_cluster script running that often though, so it?s set to only be checked on every 6th run through by monit. On the 5/6 times that monit doesn?t run the poll_etcd_cluster script it just sets the status as ?Waiting?.
+
+Can you please send me the debug Sprout logs from the tests that generate 503s?
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Austin Marston
+Sent: 16 November 2015 16:56
+To: clearwater at lists.projectclearwater.org
+Subject: [Clearwater] poll_etcd_cluster waiting on manual install
+
+Hi all,
+
+I have a manual install of Clearwater without redundancy that I just deployed today from the last Clearwater release, and I cannot get my cluster to work.
+
+All my nodes seem to have their processes "running" or "status ok" however the 'poll_etcd_cluster' on each node keeps being "Waiting".
+
+Although my cluster seems healthy:
+[bono-sipp-sprout]user at cw-012:/var/log/sprout$ clearwater-etcdctl cluster-health
+cluster is healthy
+member 1d362398497f4d32 is healthy
+member 5beec250e4e21a93 is healthy
+member 66082b976e9208ce is healthy
+member bd214c262ac666e3 is healthy
+member d05d0bbb1534c7ee is healthy
+member fd62bae1dd31c0f8 is healthy
+
+there is still a bug I cannot catch and it does not seem to be configuration related as about 50% of the live tests passed and the other usually get 503 response.
+
+
+There are some Sprout etcd logs:
+2015/11/16 17:43:53 rafthttp: failed to dial fd62bae1dd31c0f8 on stream MsgApp v2 (dial tcp 172.16.1.13:2380<http://172.16.1.13:2380>: i/o timeout)
+2015/11/16 17:43:53 rafthttp: failed to dial fd62bae1dd31c0f8 on stream Message (dial tcp 172.16.1.13:2380<http://172.16.1.13:2380>: i/o timeout)
+2015/11/16 17:43:53 etcdhttp: [GET] /v2/keys/clearwater/site1/sprout/clustering/chronos?waitIndex=88&recursive=false&wait=true remote:172.16.1.12:39329<http://172.16.1.12:39329>
+2015/11/16 17:43:53 etcdhttp: [GET] /v2/keys/clearwater/site1/sprout/clustering/memcached?waitIndex=88&recursive=false&wait=true remote:172.16.1.12:39330<http://172.16.1.12:39330>
+[bono-sipp-sprout]user at cw-012:/var/log/sprout$ tail /var/log/clearwater-etcd/clearwater-etcd.log
+2015/11/16 17:47:06 rafthttp: failed to dial fd62bae1dd31c0f8 on stream MsgApp v2 (dial tcp 172.16.1.13:2380<http://172.16.1.13:2380>: i/o timeout)
+2015/11/16 17:47:06 rafthttp: failed to dial fd62bae1dd31c0f8 on stream Message (dial tcp 172.16.1.13:2380<http://172.16.1.13:2380>: i/o timeout)
+2015/11/16 17:47:06 etcdhttp: [GET] /v2/keys/clearwater/site1/configuration/shared_config?quorum=true remote:172.16.1.12:32817<http://172.16.1.12:32817>
+2015/11/16 17:47:06 etcdhttp: [GET] /v2/keys/clearwater/site1/configuration/scscf_json?quorum=true remote:172.16.1.12:32816<http://172.16.1.12:32816>
+2015/11/16 17:47:06 etcdhttp: [GET] /v2/keys/clearwater/site1/configuration/enum_json?quorum=true remote:172.16.1.12:32814<http://172.16.1.12:32814>
+2015/11/16 17:47:06 etcdhttp: [GET] /v2/keys/clearwater/site1/configuration/bgcf_json?quorum=true remote:172.16.1.12:32815<http://172.16.1.12:32815>
+2015/11/16 17:47:07 etcdhttp: [GET] /v2/keys/clearwater/site1/sprout/clustering/chronos?waitIndex=88&recursive=false&wait=true remote:172.16.1.12:45031<http://172.16.1.12:45031>
+2015/11/16 17:47:07 etcdhttp: [GET] /v2/keys/clearwater/site1/sprout/clustering/memcached?waitIndex=88&recursive=false&wait=true remote:172.16.1.12:45034<http://172.16.1.12:45034>
+2015/11/16 17:47:07 rafthttp: failed to dial fd62bae1dd31c0f8 on stream MsgApp v2 (dial tcp 172.16.1.13:2380<http://172.16.1.13:2380>: i/o timeout)
+2015/11/16 17:47:07 rafthttp: failed to dial fd62bae1dd31c0f8 on stream Message (dial tcp 172.16.1.13:2380<http://172.16.1.13:2380>: i/o timeout)
+
+Thank you in advance for any help!
+
+Austin
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151116/0580beba/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Mon Nov 16 14:04:33 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Mon, 16 Nov 2015 19:04:33 +0000
+Subject: [Clearwater] IPSMGW support
+In-Reply-To: <CAM+QopsLj1jqb0W9YQoBR4p53VgDrRscyfO+V0X5uHzBVpD4Og@mail.gmail.com>
+References: <CAM+QopvEDqta1Rv=ifUvxxhu2gQrL83OH957A6kRsoeFDNJ6QQ@mail.gmail.com>
+	<BN3PR02MB12557EFF36FF4B1BC16004B09B280@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<CAM+QopsLj1jqb0W9YQoBR4p53VgDrRscyfO+V0X5uHzBVpD4Og@mail.gmail.com>
+Message-ID: <BN3PR02MB12554379D56CB2BF7E2045249B1E0@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi Steve,
+
+Thanks for sending the logs across. I agree that the IFCs now look correct ? I?m currently investigating why the P-Asserted-Identity header isn?t being added.
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Steve Yeoman
+Sent: 15 November 2015 22:09
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Clearwater] IPSMGW support
+
+Hi,
+
+Thanks for that. To effect the aliasing of the Tel URI, I associated a second IMPU to the IMPI in HSS. Now Sprout is retrieving the registration details like this:
+
+08-11-2015 17:09:26.352 UTC Debug httpconnection.cpp:610: Received HTTP response: status=200, doc=<ClearwaterRegData>
+        <RegistrationState>REGISTERED</RegistrationState>
+        <IMSSubscription>
+                <PrivateID>6505550202 at example.com<mailto:6505550202 at example.com></PrivateID>
+                <ServiceProfile>
+                        <PublicIdentity>
+                                <Identity>sip:6505550202 at example.com<mailto:sip%3A6505550202 at example.com></Identity>
+                                <Extension>
+                                        <IdentityType>0</IdentityType>
+                                </Extension>
+                        </PublicIdentity>
+                        <PublicIdentity>
+                                <Identity>tel:+6505550202</Identity<tel:+6505550202%3c/Identity>>
+                                <Extension>
+                                        <IdentityType>0</IdentityType>
+                                        <Extension>
+                                                <DisplayName>6505550202</DisplayName>
+                                        </Extension>
+                                </Extension>
+                        </PublicIdentity>
+
+I repeated the test, log attached. I'm still not seeing the second P-Asserted-Identity header in the MESSGE to the IPSMGW. Did I miss something?
+
+
+
+
+------------------------------------------------------------------------------------------
+Steve Yeoman, Software Engineer, http://www.opencloud.com<http://www.opencloud.com/>
+Tel: +1 647 342 6183<tel:%2B1%20647%20342%206183>, Mobile: +1 416 662 4490<tel:%2B1%20416%20662%204490>
+
+
+On 6 November 2015 at 09:40, Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>> wrote:
+Hi Steve,
+
+Sprout does support this use case. To get Sprout to add a P-Asserted-Identity for the tel URI you will need to set up the tel URI as an alias of the SIP URI.
+
+The spec (TS 24.229, rel 10, 5.4.3.2) says about adding a P-Asserted-Identity
+
+                If there was no original dialog identifier present in the topmost Route header field of the incoming request and if the served user is not considered a priviledged sender then:
+
+a)            if the P-Asserted-Identity header field contains only a SIP URI and if the S-CSCF has knowledge that the SIP URI contained in the received P-Asserted-Identity header field is an alias SIP URI for a tel URI, add a second P-Asserted-Identity header field containing this tel-URI, including the display name associated with the tel URI, if available;
+
+Sprout finds out what the aliases are for a public identity by getting the registration state from Homestead/HSS. The aliases for the requested public identity are all the public identities in the same Service Profile as the requested public identity.
+
+In the Sprout logs, the HSS lookup shows a only single public identity in the Service Profile, e.g
+                <ServiceProfile>
+                                                <PublicIdentity>
+                                                                <Identity>sip:6505550202 at example.com<mailto:sip%3A6505550202 at example.com></Identity>
+                                                                <Extension>
+                                                                                <IdentityType>0</IdentityType>
+                                                                </Extension>
+                                                </PublicIdentity>
+                                                <InitialFilterCriteria> ?.
+
+Can you add the tel URI then as an alias to the SIP URI (by adding a PublicIdentity block to the RegistrationState XML)?
+
+Ellie
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>] On Behalf Of Steve Yeoman
+Sent: 03 November 2015 22:38
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Clearwater] IPSMGW support
+
+Hi,
+
+We're testing an IPSMGW solution, as per 3GPP 24.341, signalling flows in section B.5
+
+In the attached log, sprout is not applying the Tel URI to the P-Asserted-Identity header in the SIP MESSAGE as per section B-5.3 (page 35).
+
+Can you confirm if Sprout supports this use-case? and if so how can I configure it to apply both the SIP and Tel URI values for the P-Asserted-Identity in the sip MESSAGE sent to the IP-SM-GW.
+
+thanks
+Steve Yeoman
+
+
+
+------------------------------------------------------------------------------------------
+Steve Yeoman, Software Engineer, http://www.opencloud.com<http://www.opencloud.com/>
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151116/5cabfd74/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Wed Nov 18 08:46:17 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Wed, 18 Nov 2015 13:46:17 +0000
+Subject: [Clearwater] IPSMGW support
+In-Reply-To: <BN3PR02MB12554379D56CB2BF7E2045249B1E0@BN3PR02MB1255.namprd02.prod.outlook.com>
+References: <CAM+QopvEDqta1Rv=ifUvxxhu2gQrL83OH957A6kRsoeFDNJ6QQ@mail.gmail.com>
+	<BN3PR02MB12557EFF36FF4B1BC16004B09B280@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<CAM+QopsLj1jqb0W9YQoBR4p53VgDrRscyfO+V0X5uHzBVpD4Og@mail.gmail.com>
+	<BN3PR02MB12554379D56CB2BF7E2045249B1E0@BN3PR02MB1255.namprd02.prod.outlook.com>
+Message-ID: <BN3PR02MB125542DF5C59EAA74B2D1B259B1C0@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi Steve,
+
+Actually, one of my colleagues has pointed out that the SIP URI and the Tel URI don?t quite match. The Tel URI has a +, the SIP URI does not, so they?re not exact aliases. Can you please fix this up and try the call again?
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Eleanor Merry
+Sent: 16 November 2015 19:05
+To: Steve Yeoman; clearwater at lists.projectclearwater.org
+Subject: Re: [Clearwater] IPSMGW support
+
+Hi Steve,
+
+Thanks for sending the logs across. I agree that the IFCs now look correct ? I?m currently investigating why the P-Asserted-Identity header isn?t being added.
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Steve Yeoman
+Sent: 15 November 2015 22:09
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Clearwater] IPSMGW support
+
+Hi,
+
+Thanks for that. To effect the aliasing of the Tel URI, I associated a second IMPU to the IMPI in HSS. Now Sprout is retrieving the registration details like this:
+
+08-11-2015 17:09:26.352 UTC Debug httpconnection.cpp:610: Received HTTP response: status=200, doc=<ClearwaterRegData>
+        <RegistrationState>REGISTERED</RegistrationState>
+        <IMSSubscription>
+                <PrivateID>6505550202 at example.com<mailto:6505550202 at example.com></PrivateID>
+                <ServiceProfile>
+                        <PublicIdentity>
+                                <Identity>sip:6505550202 at example.com<mailto:sip%3A6505550202 at example.com></Identity>
+                                <Extension>
+                                        <IdentityType>0</IdentityType>
+                                </Extension>
+                        </PublicIdentity>
+                        <PublicIdentity>
+                                <Identity>tel:+6505550202</Identity<tel:+6505550202%3c/Identity>>
+                                <Extension>
+                                        <IdentityType>0</IdentityType>
+                                        <Extension>
+                                                <DisplayName>6505550202</DisplayName>
+                                        </Extension>
+                                </Extension>
+                        </PublicIdentity>
+
+I repeated the test, log attached. I'm still not seeing the second P-Asserted-Identity header in the MESSGE to the IPSMGW. Did I miss something?
+
+
+
+
+------------------------------------------------------------------------------------------
+Steve Yeoman, Software Engineer, http://www.opencloud.com<http://www.opencloud.com/>
+Tel: +1 647 342 6183<tel:%2B1%20647%20342%206183>, Mobile: +1 416 662 4490<tel:%2B1%20416%20662%204490>
+
+
+On 6 November 2015 at 09:40, Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>> wrote:
+Hi Steve,
+
+Sprout does support this use case. To get Sprout to add a P-Asserted-Identity for the tel URI you will need to set up the tel URI as an alias of the SIP URI.
+
+The spec (TS 24.229, rel 10, 5.4.3.2) says about adding a P-Asserted-Identity
+
+                If there was no original dialog identifier present in the topmost Route header field of the incoming request and if the served user is not considered a priviledged sender then:
+
+a)            if the P-Asserted-Identity header field contains only a SIP URI and if the S-CSCF has knowledge that the SIP URI contained in the received P-Asserted-Identity header field is an alias SIP URI for a tel URI, add a second P-Asserted-Identity header field containing this tel-URI, including the display name associated with the tel URI, if available;
+
+Sprout finds out what the aliases are for a public identity by getting the registration state from Homestead/HSS. The aliases for the requested public identity are all the public identities in the same Service Profile as the requested public identity.
+
+In the Sprout logs, the HSS lookup shows a only single public identity in the Service Profile, e.g
+                <ServiceProfile>
+                                                <PublicIdentity>
+                                                                <Identity>sip:6505550202 at example.com<mailto:sip%3A6505550202 at example.com></Identity>
+                                                                <Extension>
+                                                                                <IdentityType>0</IdentityType>
+                                                                </Extension>
+                                                </PublicIdentity>
+                                                <InitialFilterCriteria> ?.
+
+Can you add the tel URI then as an alias to the SIP URI (by adding a PublicIdentity block to the RegistrationState XML)?
+
+Ellie
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>] On Behalf Of Steve Yeoman
+Sent: 03 November 2015 22:38
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Clearwater] IPSMGW support
+
+Hi,
+
+We're testing an IPSMGW solution, as per 3GPP 24.341, signalling flows in section B.5
+
+In the attached log, sprout is not applying the Tel URI to the P-Asserted-Identity header in the SIP MESSAGE as per section B-5.3 (page 35).
+
+Can you confirm if Sprout supports this use-case? and if so how can I configure it to apply both the SIP and Tel URI values for the P-Asserted-Identity in the sip MESSAGE sent to the IP-SM-GW.
+
+thanks
+Steve Yeoman
+
+
+
+------------------------------------------------------------------------------------------
+Steve Yeoman, Software Engineer, http://www.opencloud.com<http://www.opencloud.com/>
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151118/759fa99e/attachment.html>
+
+From syeoman at opencloud.com  Wed Nov 18 16:27:15 2015
+From: syeoman at opencloud.com (Steve Yeoman)
+Date: Wed, 18 Nov 2015 16:27:15 -0500
+Subject: [Clearwater] IPSMGW support
+In-Reply-To: <BN3PR02MB125542DF5C59EAA74B2D1B259B1C0@BN3PR02MB1255.namprd02.prod.outlook.com>
+References: <CAM+QopvEDqta1Rv=ifUvxxhu2gQrL83OH957A6kRsoeFDNJ6QQ@mail.gmail.com>
+	<BN3PR02MB12557EFF36FF4B1BC16004B09B280@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<CAM+QopsLj1jqb0W9YQoBR4p53VgDrRscyfO+V0X5uHzBVpD4Og@mail.gmail.com>
+	<BN3PR02MB12554379D56CB2BF7E2045249B1E0@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<BN3PR02MB125542DF5C59EAA74B2D1B259B1C0@BN3PR02MB1255.namprd02.prod.outlook.com>
+Message-ID: <CAM+Qopuk7WicxXB=joqh7xk1ui2gQ6ttCuJED5cj6E5oekH8Tg@mail.gmail.com>
+
+Hi Eleanor,
+
+Indeed, if the + is added to the SIP URI identity, then both
+P-Asserted-Identities are included in the message to the IPSMGW.
+
+Is there a reason for imposing that match restriction? logically you can
+alias any SIP URI identity to a Tel URI identity.
+
+e.g. in the spec, it has a different value for each of the identities:
+
+P-Asserted-Identity: "John Doe" <sip:user1_public1 at home1.net>
+P-Asserted-Identity: tel:+12125551111
+
+cheers
+Steve
+
+
+
+
+------------------------------------------------------------------------------------------
+Steve Yeoman, Software Engineer, http://www.opencloud.com
+Tel: +1 647 342 6183, Mobile: +1 416 662 4490
+
+
+On 18 November 2015 at 08:46, Eleanor Merry <Eleanor.Merry at metaswitch.com>
+wrote:
+
+> Hi Steve,
+>
+>
+>
+> Actually, one of my colleagues has pointed out that the SIP URI and the
+> Tel URI don?t quite match. The Tel URI has a +, the SIP URI does not, so
+> they?re not exact aliases. Can you please fix this up and try the call
+> again?
+>
+>
+>
+> Ellie
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *Eleanor Merry
+> *Sent:* 16 November 2015 19:05
+> *To:* Steve Yeoman; clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Clearwater] IPSMGW support
+>
+>
+>
+> Hi Steve,
+>
+>
+>
+> Thanks for sending the logs across. I agree that the IFCs now look correct
+> ? I?m currently investigating why the P-Asserted-Identity header isn?t
+> being added.
+>
+>
+>
+> Ellie
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org
+> <clearwater-bounces at lists.projectclearwater.org>] *On Behalf Of *Steve
+> Yeoman
+> *Sent:* 15 November 2015 22:09
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Clearwater] IPSMGW support
+>
+>
+>
+> Hi,
+>
+>
+>
+> Thanks for that. To effect the aliasing of the Tel URI, I associated a
+> second IMPU to the IMPI in HSS. Now Sprout is retrieving the registration
+> details like this:
+>
+>
+>
+> 08-11-2015 17:09:26.352 UTC Debug httpconnection.cpp:610: Received HTTP
+> response: status=200, doc=<ClearwaterRegData>
+>
+>         <RegistrationState>REGISTERED</RegistrationState>
+>
+>         <IMSSubscription>
+>
+>                 <PrivateID>6505550202 at example.com</PrivateID>
+>
+>                 <ServiceProfile>
+>
+>                         <PublicIdentity>
+>
+>                                 <Identity>sip:6505550202 at example.com
+> </Identity>
+>
+>                                 <Extension>
+>
+>                                         <IdentityType>0</IdentityType>
+>
+>                                 </Extension>
+>
+>                         </PublicIdentity>
+>
+>                         <PublicIdentity>
+>
+>                                 <Identity>tel:+6505550202</Identity
+> <+6505550202%3c/Identity>>
+>
+>                                 <Extension>
+>
+>                                         <IdentityType>0</IdentityType>
+>
+>                                         <Extension>
+>
+>
+> <DisplayName>6505550202</DisplayName>
+>
+>                                         </Extension>
+>
+>                                 </Extension>
+>
+>                         </PublicIdentity>
+>
+>
+>
+> I repeated the test, log attached. I'm still not seeing the second
+> P-Asserted-Identity header in the MESSGE to the IPSMGW. Did I miss
+> something?
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> ------------------------------------------------------------------------------------------
+>
+> Steve Yeoman, Software Engineer, http://www.opencloud.com
+>
+> Tel: +1 647 342 6183, Mobile: +1 416 662 4490
+>
+>
+>
+>
+>
+> On 6 November 2015 at 09:40, Eleanor Merry <Eleanor.Merry at metaswitch.com>
+> wrote:
+>
+> Hi Steve,
+>
+>
+>
+> Sprout does support this use case. To get Sprout to add a
+> P-Asserted-Identity for the tel URI you will need to set up the tel URI as
+> an alias of the SIP URI.
+>
+>
+>
+> The spec (TS 24.229, rel 10, 5.4.3.2) says about adding a
+> P-Asserted-Identity
+>
+>
+>
+>                 If there was no original dialog identifier present in the
+> topmost Route header field of the incoming request and if the served user
+> is not considered a priviledged sender then:
+>
+>
+>
+> a)            if the P-Asserted-Identity header field contains only a SIP
+> URI and if the S-CSCF has knowledge that the SIP URI contained in the
+> received P-Asserted-Identity header field is an alias SIP URI for a tel
+> URI, add a second P-Asserted-Identity header field containing this tel-URI,
+> including the display name associated with the tel URI, if available;
+>
+>
+>
+> Sprout finds out what the aliases are for a public identity by getting the
+> registration state from Homestead/HSS. The aliases for the requested public
+> identity are all the public identities in the same Service Profile as the
+> requested public identity.
+>
+>
+>
+> In the Sprout logs, the HSS lookup shows a only single public identity in
+> the Service Profile, e.g
+>
+>                 <ServiceProfile>
+>
+>                                                 <PublicIdentity>
+>
+>                                                                 <Identity>
+> sip:6505550202 at example.com</Identity>
+>
+>                                                                 <Extension>
+>
+>
+> <IdentityType>0</IdentityType>
+>
+>
+> </Extension>
+>
+>                                                 </PublicIdentity>
+>
+>                                                 <InitialFilterCriteria> ?.
+>
+>
+>
+> Can you add the tel URI then as an alias to the SIP URI (by adding a
+> PublicIdentity block to the RegistrationState XML)?
+>
+>
+>
+> Ellie
+>
+>
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *Steve Yeoman
+> *Sent:* 03 November 2015 22:38
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Clearwater] IPSMGW support
+>
+>
+>
+> Hi,
+>
+>
+>
+> We're testing an IPSMGW solution, as per 3GPP 24.341, signalling flows in
+> section B.5
+>
+>
+>
+> In the attached log, sprout is not applying the Tel URI to the
+> P-Asserted-Identity header in the SIP MESSAGE as per section B-5.3 (page
+> 35).
+>
+>
+>
+> Can you confirm if Sprout supports this use-case? and if so how can I
+> configure it to apply both the SIP and Tel URI values for the
+> P-Asserted-Identity in the sip MESSAGE sent to the IP-SM-GW.
+>
+>
+>
+> thanks
+>
+> Steve Yeoman
+>
+>
+>
+>
+>
+>
+>
+> ------------------------------------------------------------------------------------------
+>
+> Steve Yeoman, Software Engineer, http://www.opencloud.com
+>
+>
+>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151118/b56f9f41/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Thu Nov 19 09:26:18 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Thu, 19 Nov 2015 14:26:18 +0000
+Subject: [Clearwater] Clearwater Bono Module installation error
+In-Reply-To: <KL1PR03MB1400D4AA8D57D498981E0DE0F21B0@KL1PR03MB1400.apcprd03.prod.outlook.com>
+References: <PS1PR03MB14035CAE130884F089609F9AF21C0@PS1PR03MB1403.apcprd03.prod.outlook.com>,
+	<BN3PR02MB12556CC6217B72FC845B228E9B1C0@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<KL1PR03MB1400D4AA8D57D498981E0DE0F21B0@KL1PR03MB1400.apcprd03.prod.outlook.com>
+Message-ID: <BN3PR02MB125526002DC3AC9E1E8946C29B1B0@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi Sai,
+
+Why are you using our old install process? We have a new process - detailed at http://clearwater.readthedocs.org/en/stable/Manual_Install/ - that takes advantage of our new support for automatic clustering and config sharing. I strongly recommend that you use this process rather than the old one (indeed, I don't think the old install method will fully work with up-to-date code).
+
+Ellie
+
+
+From: sainath.ellendula at wipro.com [mailto:sainath.ellendula at wipro.com]
+Sent: 19 November 2015 07:17
+To: Eleanor Merry; clearwater at lists.projectclearwater.org
+Subject: Re: Clearwater Bono Module installation error
+
+
+Hi Ellie,
+
+
+
+Thanks for your response, I have followed the instructions from below path
+
+http://clearwater.readthedocs.org/en/latest/Old_Manual_Install/index.html
+
+
+In /etc/clearwater/config-- Kept it default as mentioned in installation steps and not configured any IPs. Once i will install packages of all Modules then will be assigning IPs.
+
+
+
+Is this the correct procedure to move further.
+
+
+
+Regards,
+
+Sai
+
+________________________________
+From: Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>>
+Sent: 18 November 2015 18:45
+To: Sainath Ellendula (WT01 - Product Engineering Service)
+Subject: RE: Clearwater Bono Module installation error
+
+
+Hi Sai,
+
+
+
+How are you installing Bono? Are you following the instructions at http://clearwater.readthedocs.org/en/latest/Manual_Install/index.html? What's in your /etc/clearwater/local_config and /etc/clearwater/config file?
+Manual Install - Clearwater Docs Home
+Manual Install Instructions. These instructions will take you through installing a minimal Clearwater system using the latest binary packages provided by the ...
+Read more...<http://clearwater.readthedocs.org/en/latest/Manual_Install/index.html>
+
+
+
+
+
+Also, can you please email the Clearwater mailing list, rather than me directly? (This means that we get a public searchable record of the emails, which will help our other users as well)
+
+
+
+Ellie
+
+
+
+From: sainath.ellendula at wipro.com<mailto:sainath.ellendula at wipro.com> [mailto:sainath.ellendula at wipro.com]
+Sent: 18 November 2015 05:42
+To: Eleanor Merry
+Subject: Clearwater Bono Module installation error
+
+
+
+
+
+Hi Ellie,
+
+
+
+I was trying to install all the modules which is mentioned in clearwater-IMS step by step.
+
+
+
+When i was trying to install Bono Module, getting error as:
+
+
+
+
+
+/usr/share/clearwater/infrastructure/scripts/restund: 3: /etc/clearwater/config: Syntax error: newline unexpected
+
+dpkg: error processing package restund (--configure):
+
+ subprocess installed post-installation script returned error exit status 2
+
+Errors were encountered while processing:
+
+ restund
+
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+
+
+
+Could you please guide me here.
+
+
+
+Thanks in advance!!!
+
+
+
+Regards,
+
+Sai
+
+
+
+
+
+The information contained in this electronic message and any attachments to this message are intended for the exclusive use of the addressee(s) and may contain proprietary, confidential or privileged information. If you are not the intended recipient, you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately and destroy all copies of this message and any attachments. WARNING: Computer viruses can be transmitted via email. The recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email. www.wipro.com<http://www.wipro.com>
+The information contained in this electronic message and any attachments to this message are intended for the exclusive use of the addressee(s) and may contain proprietary, confidential or privileged information. If you are not the intended recipient, you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately and destroy all copies of this message and any attachments. WARNING: Computer viruses can be transmitted via email. The recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email. www.wipro.com<http://www.wipro.com>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151119/5866c914/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Thu Nov 19 09:56:27 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Thu, 19 Nov 2015 14:56:27 +0000
+Subject: [Clearwater] IPSMGW support
+In-Reply-To: <CAM+Qopuk7WicxXB=joqh7xk1ui2gQ6ttCuJED5cj6E5oekH8Tg@mail.gmail.com>
+References: <CAM+QopvEDqta1Rv=ifUvxxhu2gQrL83OH957A6kRsoeFDNJ6QQ@mail.gmail.com>
+	<BN3PR02MB12557EFF36FF4B1BC16004B09B280@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<CAM+QopsLj1jqb0W9YQoBR4p53VgDrRscyfO+V0X5uHzBVpD4Og@mail.gmail.com>
+	<BN3PR02MB12554379D56CB2BF7E2045249B1E0@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<BN3PR02MB125542DF5C59EAA74B2D1B259B1C0@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<CAM+Qopuk7WicxXB=joqh7xk1ui2gQ6ttCuJED5cj6E5oekH8Tg@mail.gmail.com>
+Message-ID: <BN3PR02MB12555568EB3E1627BD7F5FD69B1B0@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi Steve,
+
+Thanks ? I?ve raised an issue (https://github.com/Metaswitch/sprout/issues/1267) to track fixing this up. For now can you work around this by matching the SIP URIs/Tel URIs in the Service Profile?
+
+Ellie
+
+
+From: Steve Yeoman [mailto:syeoman at opencloud.com]
+Sent: 18 November 2015 21:27
+To: Eleanor Merry
+Cc: clearwater at lists.projectclearwater.org
+Subject: Re: [Clearwater] IPSMGW support
+
+Hi Eleanor,
+
+Indeed, if the + is added to the SIP URI identity, then both P-Asserted-Identities are included in the message to the IPSMGW.
+
+Is there a reason for imposing that match restriction? logically you can alias any SIP URI identity to a Tel URI identity.
+
+e.g. in the spec, it has a different value for each of the identities:
+
+P-Asserted-Identity: "John Doe" <sip:user1_public1 at home1.net<mailto:sip%3Auser1_public1 at home1.net>>
+P-Asserted-Identity: tel:+12125551111
+
+cheers
+Steve
+
+
+
+
+------------------------------------------------------------------------------------------
+Steve Yeoman, Software Engineer, http://www.opencloud.com<http://www.opencloud.com/>
+Tel: +1 647 342 6183, Mobile: +1 416 662 4490
+
+
+On 18 November 2015 at 08:46, Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>> wrote:
+Hi Steve,
+
+Actually, one of my colleagues has pointed out that the SIP URI and the Tel URI don?t quite match. The Tel URI has a +, the SIP URI does not, so they?re not exact aliases. Can you please fix this up and try the call again?
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>] On Behalf Of Eleanor Merry
+Sent: 16 November 2015 19:05
+To: Steve Yeoman; clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Clearwater] IPSMGW support
+
+Hi Steve,
+
+Thanks for sending the logs across. I agree that the IFCs now look correct ? I?m currently investigating why the P-Asserted-Identity header isn?t being added.
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Steve Yeoman
+Sent: 15 November 2015 22:09
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Clearwater] IPSMGW support
+
+Hi,
+
+Thanks for that. To effect the aliasing of the Tel URI, I associated a second IMPU to the IMPI in HSS. Now Sprout is retrieving the registration details like this:
+
+08-11-2015 17:09:26.352 UTC Debug httpconnection.cpp:610: Received HTTP response: status=200, doc=<ClearwaterRegData>
+        <RegistrationState>REGISTERED</RegistrationState>
+        <IMSSubscription>
+                <PrivateID>6505550202 at example.com<mailto:6505550202 at example.com></PrivateID>
+                <ServiceProfile>
+                        <PublicIdentity>
+                                <Identity>sip:6505550202 at example.com<mailto:sip%3A6505550202 at example.com></Identity>
+                                <Extension>
+                                        <IdentityType>0</IdentityType>
+                                </Extension>
+                        </PublicIdentity>
+                        <PublicIdentity>
+                                <Identity>tel:+6505550202</Identity<tel:+6505550202%3c/Identity>>
+                                <Extension>
+                                        <IdentityType>0</IdentityType>
+                                        <Extension>
+                                                <DisplayName>6505550202</DisplayName>
+                                        </Extension>
+                                </Extension>
+                        </PublicIdentity>
+
+I repeated the test, log attached. I'm still not seeing the second P-Asserted-Identity header in the MESSGE to the IPSMGW. Did I miss something?
+
+
+
+
+------------------------------------------------------------------------------------------
+Steve Yeoman, Software Engineer, http://www.opencloud.com<http://www.opencloud.com/>
+Tel: +1 647 342 6183<tel:%2B1%20647%20342%206183>, Mobile: +1 416 662 4490<tel:%2B1%20416%20662%204490>
+
+
+On 6 November 2015 at 09:40, Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>> wrote:
+Hi Steve,
+
+Sprout does support this use case. To get Sprout to add a P-Asserted-Identity for the tel URI you will need to set up the tel URI as an alias of the SIP URI.
+
+The spec (TS 24.229, rel 10, 5.4.3.2) says about adding a P-Asserted-Identity
+
+                If there was no original dialog identifier present in the topmost Route header field of the incoming request and if the served user is not considered a priviledged sender then:
+
+a)            if the P-Asserted-Identity header field contains only a SIP URI and if the S-CSCF has knowledge that the SIP URI contained in the received P-Asserted-Identity header field is an alias SIP URI for a tel URI, add a second P-Asserted-Identity header field containing this tel-URI, including the display name associated with the tel URI, if available;
+
+Sprout finds out what the aliases are for a public identity by getting the registration state from Homestead/HSS. The aliases for the requested public identity are all the public identities in the same Service Profile as the requested public identity.
+
+In the Sprout logs, the HSS lookup shows a only single public identity in the Service Profile, e.g
+                <ServiceProfile>
+                                                <PublicIdentity>
+                                                                <Identity>sip:6505550202 at example.com<mailto:sip%3A6505550202 at example.com></Identity>
+                                                                <Extension>
+                                                                                <IdentityType>0</IdentityType>
+                                                                </Extension>
+                                                </PublicIdentity>
+                                                <InitialFilterCriteria> ?.
+
+Can you add the tel URI then as an alias to the SIP URI (by adding a PublicIdentity block to the RegistrationState XML)?
+
+Ellie
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>] On Behalf Of Steve Yeoman
+Sent: 03 November 2015 22:38
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Clearwater] IPSMGW support
+
+Hi,
+
+We're testing an IPSMGW solution, as per 3GPP 24.341, signalling flows in section B.5
+
+In the attached log, sprout is not applying the Tel URI to the P-Asserted-Identity header in the SIP MESSAGE as per section B-5.3 (page 35).
+
+Can you confirm if Sprout supports this use-case? and if so how can I configure it to apply both the SIP and Tel URI values for the P-Asserted-Identity in the sip MESSAGE sent to the IP-SM-GW.
+
+thanks
+Steve Yeoman
+
+
+
+------------------------------------------------------------------------------------------
+Steve Yeoman, Software Engineer, http://www.opencloud.com<http://www.opencloud.com/>
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151119/21e0a878/attachment.html>
+
+From syeoman at opencloud.com  Thu Nov 19 13:20:15 2015
+From: syeoman at opencloud.com (Steve Yeoman)
+Date: Thu, 19 Nov 2015 13:20:15 -0500
+Subject: [Clearwater] IPSMGW support
+In-Reply-To: <BN3PR02MB12555568EB3E1627BD7F5FD69B1B0@BN3PR02MB1255.namprd02.prod.outlook.com>
+References: <CAM+QopvEDqta1Rv=ifUvxxhu2gQrL83OH957A6kRsoeFDNJ6QQ@mail.gmail.com>
+	<BN3PR02MB12557EFF36FF4B1BC16004B09B280@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<CAM+QopsLj1jqb0W9YQoBR4p53VgDrRscyfO+V0X5uHzBVpD4Og@mail.gmail.com>
+	<BN3PR02MB12554379D56CB2BF7E2045249B1E0@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<BN3PR02MB125542DF5C59EAA74B2D1B259B1C0@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<CAM+Qopuk7WicxXB=joqh7xk1ui2gQ6ttCuJED5cj6E5oekH8Tg@mail.gmail.com>
+	<BN3PR02MB12555568EB3E1627BD7F5FD69B1B0@BN3PR02MB1255.namprd02.prod.outlook.com>
+Message-ID: <CAM+QopuagXEBygpdVL31hj0aEASqLyAn71OK3=09bW7RdiBJtQ@mail.gmail.com>
+
+Hi Ellie,
+
+Ok, thanks. I can use the workaround in the interim, no problem.
+
+thanks
+Steve
+
+------------------------------------------------------------------------------------------
+Steve Yeoman, Software Engineer, http://www.opencloud.com
+Tel: +1 647 342 6183, Mobile: +1 416 662 4490
+
+
+On 19 November 2015 at 09:56, Eleanor Merry <Eleanor.Merry at metaswitch.com>
+wrote:
+
+> Hi Steve,
+>
+>
+>
+> Thanks ? I?ve raised an issue (
+> https://github.com/Metaswitch/sprout/issues/1267) to track fixing this
+> up. For now can you work around this by matching the SIP URIs/Tel URIs in
+> the Service Profile?
+>
+>
+>
+> Ellie
+>
+>
+>
+>
+>
+> *From:* Steve Yeoman [mailto:syeoman at opencloud.com]
+> *Sent:* 18 November 2015 21:27
+> *To:* Eleanor Merry
+> *Cc:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Clearwater] IPSMGW support
+>
+>
+>
+> Hi Eleanor,
+>
+>
+>
+> Indeed, if the + is added to the SIP URI identity, then both
+> P-Asserted-Identities are included in the message to the IPSMGW.
+>
+>
+>
+> Is there a reason for imposing that match restriction? logically you can
+> alias any SIP URI identity to a Tel URI identity.
+>
+>
+>
+> e.g. in the spec, it has a different value for each of the identities:
+>
+>
+>
+> P-Asserted-Identity: "John Doe" <sip:user1_public1 at home1.net>
+>
+> P-Asserted-Identity: tel:+12125551111 <+12125551111>
+>
+>
+>
+> cheers
+>
+> Steve
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> ------------------------------------------------------------------------------------------
+>
+> Steve Yeoman, Software Engineer, http://www.opencloud.com
+>
+> Tel: +1 647 342 6183, Mobile: +1 416 662 4490
+>
+>
+>
+>
+>
+> On 18 November 2015 at 08:46, Eleanor Merry <Eleanor.Merry at metaswitch.com>
+> wrote:
+>
+> Hi Steve,
+>
+>
+>
+> Actually, one of my colleagues has pointed out that the SIP URI and the
+> Tel URI don?t quite match. The Tel URI has a +, the SIP URI does not, so
+> they?re not exact aliases. Can you please fix this up and try the call
+> again?
+>
+>
+>
+> Ellie
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *Eleanor Merry
+> *Sent:* 16 November 2015 19:05
+> *To:* Steve Yeoman; clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Clearwater] IPSMGW support
+>
+>
+>
+> Hi Steve,
+>
+>
+>
+> Thanks for sending the logs across. I agree that the IFCs now look correct
+> ? I?m currently investigating why the P-Asserted-Identity header isn?t
+> being added.
+>
+>
+>
+> Ellie
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org
+> <clearwater-bounces at lists.projectclearwater.org>] *On Behalf Of *Steve
+> Yeoman
+> *Sent:* 15 November 2015 22:09
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Clearwater] IPSMGW support
+>
+>
+>
+> Hi,
+>
+>
+>
+> Thanks for that. To effect the aliasing of the Tel URI, I associated a
+> second IMPU to the IMPI in HSS. Now Sprout is retrieving the registration
+> details like this:
+>
+>
+>
+> 08-11-2015 17:09:26.352 UTC Debug httpconnection.cpp:610: Received HTTP
+> response: status=200, doc=<ClearwaterRegData>
+>
+>         <RegistrationState>REGISTERED</RegistrationState>
+>
+>         <IMSSubscription>
+>
+>                 <PrivateID>6505550202 at example.com</PrivateID>
+>
+>                 <ServiceProfile>
+>
+>                         <PublicIdentity>
+>
+>                                 <Identity>sip:6505550202 at example.com
+> </Identity>
+>
+>                                 <Extension>
+>
+>                                         <IdentityType>0</IdentityType>
+>
+>                                 </Extension>
+>
+>                         </PublicIdentity>
+>
+>                         <PublicIdentity>
+>
+>                                 <Identity>tel:+6505550202</Identity
+> <+6505550202%3c/Identity>>
+>
+>                                 <Extension>
+>
+>                                         <IdentityType>0</IdentityType>
+>
+>                                         <Extension>
+>
+>
+> <DisplayName>6505550202</DisplayName>
+>
+>                                         </Extension>
+>
+>                                 </Extension>
+>
+>                         </PublicIdentity>
+>
+>
+>
+> I repeated the test, log attached. I'm still not seeing the second
+> P-Asserted-Identity header in the MESSGE to the IPSMGW. Did I miss
+> something?
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> ------------------------------------------------------------------------------------------
+>
+> Steve Yeoman, Software Engineer, http://www.opencloud.com
+>
+> Tel: +1 647 342 6183, Mobile: +1 416 662 4490
+>
+>
+>
+>
+>
+> On 6 November 2015 at 09:40, Eleanor Merry <Eleanor.Merry at metaswitch.com>
+> wrote:
+>
+> Hi Steve,
+>
+>
+>
+> Sprout does support this use case. To get Sprout to add a
+> P-Asserted-Identity for the tel URI you will need to set up the tel URI as
+> an alias of the SIP URI.
+>
+>
+>
+> The spec (TS 24.229, rel 10, 5.4.3.2) says about adding a
+> P-Asserted-Identity
+>
+>
+>
+>                 If there was no original dialog identifier present in the
+> topmost Route header field of the incoming request and if the served user
+> is not considered a priviledged sender then:
+>
+>
+>
+> a)            if the P-Asserted-Identity header field contains only a SIP
+> URI and if the S-CSCF has knowledge that the SIP URI contained in the
+> received P-Asserted-Identity header field is an alias SIP URI for a tel
+> URI, add a second P-Asserted-Identity header field containing this tel-URI,
+> including the display name associated with the tel URI, if available;
+>
+>
+>
+> Sprout finds out what the aliases are for a public identity by getting the
+> registration state from Homestead/HSS. The aliases for the requested public
+> identity are all the public identities in the same Service Profile as the
+> requested public identity.
+>
+>
+>
+> In the Sprout logs, the HSS lookup shows a only single public identity in
+> the Service Profile, e.g
+>
+>                 <ServiceProfile>
+>
+>                                                 <PublicIdentity>
+>
+>                                                                 <Identity>
+> sip:6505550202 at example.com</Identity>
+>
+>                                                                 <Extension>
+>
+>
+> <IdentityType>0</IdentityType>
+>
+>
+> </Extension>
+>
+>                                                 </PublicIdentity>
+>
+>                                                 <InitialFilterCriteria> ?.
+>
+>
+>
+> Can you add the tel URI then as an alias to the SIP URI (by adding a
+> PublicIdentity block to the RegistrationState XML)?
+>
+>
+>
+> Ellie
+>
+>
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *Steve Yeoman
+> *Sent:* 03 November 2015 22:38
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Clearwater] IPSMGW support
+>
+>
+>
+> Hi,
+>
+>
+>
+> We're testing an IPSMGW solution, as per 3GPP 24.341, signalling flows in
+> section B.5
+>
+>
+>
+> In the attached log, sprout is not applying the Tel URI to the
+> P-Asserted-Identity header in the SIP MESSAGE as per section B-5.3 (page
+> 35).
+>
+>
+>
+> Can you confirm if Sprout supports this use-case? and if so how can I
+> configure it to apply both the SIP and Tel URI values for the
+> P-Asserted-Identity in the sip MESSAGE sent to the IP-SM-GW.
+>
+>
+>
+> thanks
+>
+> Steve Yeoman
+>
+>
+>
+>
+>
+>
+>
+> ------------------------------------------------------------------------------------------
+>
+> Steve Yeoman, Software Engineer, http://www.opencloud.com
+>
+>
+>
+>
+>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151119/f771d26b/attachment.html>
+
+From sainath.ellendula at wipro.com  Thu Nov 19 02:17:26 2015
+From: sainath.ellendula at wipro.com (sainath.ellendula at wipro.com)
+Date: Thu, 19 Nov 2015 07:17:26 +0000
+Subject: [Clearwater] Clearwater Bono Module installation error
+In-Reply-To: <BN3PR02MB12556CC6217B72FC845B228E9B1C0@BN3PR02MB1255.namprd02.prod.outlook.com>
+References: <PS1PR03MB14035CAE130884F089609F9AF21C0@PS1PR03MB1403.apcprd03.prod.outlook.com>,
+	<BN3PR02MB12556CC6217B72FC845B228E9B1C0@BN3PR02MB1255.namprd02.prod.outlook.com>
+Message-ID: <KL1PR03MB1400D4AA8D57D498981E0DE0F21B0@KL1PR03MB1400.apcprd03.prod.outlook.com>
+
+Hi Ellie,
+
+
+Thanks for your response, I have followed the instructions from below path
+
+http://clearwater.readthedocs.org/en/latest/Old_Manual_Install/index.html
+
+
+In /etc/clearwater/config-- Kept it default as mentioned in installation steps and not configured any IPs. Once i will install packages of all Modules then will be assigning IPs.
+
+
+Is this the correct procedure to move further.
+
+
+Regards,
+
+Sai
+
+
+________________________________
+From: Eleanor Merry <Eleanor.Merry at metaswitch.com>
+Sent: 18 November 2015 18:45
+To: Sainath Ellendula (WT01 - Product Engineering Service)
+Subject: RE: Clearwater Bono Module installation error
+
+
+Hi Sai,
+
+
+
+How are you installing Bono? Are you following the instructions at http://clearwater.readthedocs.org/en/latest/Manual_Install/index.html? What's in your /etc/clearwater/local_config and /etc/clearwater/config file?
+
+Manual Install - Clearwater Docs Home
+Manual Install Instructions. These instructions will take you through installing a minimal Clearwater system using the latest binary packages provided by the ...
+Read more...<http://clearwater.readthedocs.org/en/latest/Manual_Install/index.html>
+
+
+
+
+
+Also, can you please email the Clearwater mailing list, rather than me directly? (This means that we get a public searchable record of the emails, which will help our other users as well)
+
+
+
+Ellie
+
+
+
+From: sainath.ellendula at wipro.com [mailto:sainath.ellendula at wipro.com]
+Sent: 18 November 2015 05:42
+To: Eleanor Merry
+Subject: Clearwater Bono Module installation error
+
+
+
+
+
+Hi Ellie,
+
+
+
+I was trying to install all the modules which is mentioned in clearwater-IMS step by step.
+
+
+
+When i was trying to install Bono Module, getting error as:
+
+
+
+
+
+/usr/share/clearwater/infrastructure/scripts/restund: 3: /etc/clearwater/config: Syntax error: newline unexpected
+
+dpkg: error processing package restund (--configure):
+
+ subprocess installed post-installation script returned error exit status 2
+
+Errors were encountered while processing:
+
+ restund
+
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+
+
+
+Could you please guide me here.
+
+
+
+Thanks in advance!!!
+
+
+
+Regards,
+
+Sai
+
+
+
+
+
+The information contained in this electronic message and any attachments to this message are intended for the exclusive use of the addressee(s) and may contain proprietary, confidential or privileged information. If you are not the intended recipient, you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately and destroy all copies of this message and any attachments. WARNING: Computer viruses can be transmitted via email. The recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email. www.wipro.com<http://www.wipro.com>
+
+The information contained in this electronic message and any attachments to this message are intended for the exclusive use of the addressee(s) and may contain proprietary, confidential or privileged information. If you are not the intended recipient, you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately and destroy all copies of this message and any attachments. WARNING: Computer viruses can be transmitted via email. The recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email. www.wipro.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151119/3068095c/attachment.html>
+
+From tysonite at gmail.com  Thu Nov 19 05:16:06 2015
+From: tysonite at gmail.com (Mikhail Kulinich)
+Date: Thu, 19 Nov 2015 13:16:06 +0300
+Subject: [Clearwater] RTP forwarding
+In-Reply-To: <BN3PR02MB1255BC0698F4531429EDA12E9B280@BN3PR02MB1255.namprd02.prod.outlook.com>
+References: <CAGY+F0L3+BYNJxJiMu2O44bkrad9C+PC6g+DLsParOXW5dBbow@mail.gmail.com>
+	<BN3PR02MB125581460270C38314CF53DD9B2F0@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<CAGY+F0LGB936WRzHwG_4dpGpMibOTzueCzqfjLn8V-JcKWGRiA@mail.gmail.com>
+	<BN3PR02MB1255BC0698F4531429EDA12E9B280@BN3PR02MB1255.namprd02.prod.outlook.com>
+Message-ID: <CAGY+F0J9T2N-9cmPt2A_v18ZpFHSHCvyxL=JLsdKvtWUw2BN_g@mail.gmail.com>
+
+Hello Ellie,
+
+Contribution is an option. We are discussing that.
+
+I have 2 cases in mind for RTP proxing on Bono:
+- RTP to RTP proxing when clients are located in a fully isolated networks
+- WebRTC to RTP and vice versa (as I understand from Clearwater
+documentation, it does not work now)
+
+
+On Fri, Nov 6, 2015 at 5:49 PM, Eleanor Merry <Eleanor.Merry at metaswitch.com>
+wrote:
+
+> Hi Mikhail,
+>
+>
+>
+> We?ve got no current plans to add support for this.
+>
+>
+>
+> Why do you need this? Would you like to contribute to Clearwater by
+> helping to add the support for this?
+>
+>
+>
+> Ellie
+>
+>
+>
+> *From:* Mikhail Kulinich [mailto:tysonite at gmail.com]
+> *Sent:* 02 November 2015 18:30
+> *To:* Eleanor Merry
+> *Cc:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Clearwater] RTP forwarding
+>
+>
+>
+> Hi Ellie, thank you.
+>
+>
+>
+> Do you have plans to develop media anchoring on Bono?
+>
+> For instance, http://www.rtpproxy.org/ software may act as RTP proxy if
+> I'm not mistaken. Or Clearwater architecture wouldn't support that?
+>
+>
+>
+> On Fri, Oct 30, 2015 at 10:34 PM, Eleanor Merry <
+> Eleanor.Merry at metaswitch.com> wrote:
+>
+> Hi Mikhail,
+>
+>
+>
+> That?s correct!
+>
+>
+>
+> Bono nodes run an instance of restund (http://www.creytiv.com/restund.html)
+> which acts as a STUN/TURN server to help establish media flows if the
+> endpoints support ICE (
+> https://en.wikipedia.org/wiki/Interactive_Connectivity_Establishment).
+> In the event that the endpoints are behind restrictive NATs, the restund
+> service may need to proxy the media streams to allow them to get through
+> the NATs (using TURN).
+>
+>
+>
+> If your endpoints are behind NATs but do not support ICE for media NAT
+> traversal, you will need the P-CSCF to anchor the media on all calls.  Bono
+> does not support this functionality, but our commercial P-CSCF, Perimeta (
+> http://www.metaswitch.com/products/perimeta-session-border-controller),
+> does.
+>
+>
+>
+> Ellie
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *Mikhail Kulinich
+> *Sent:* 27 October 2015 09:35
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Clearwater] RTP forwarding
+>
+>
+>
+> Hello!
+>
+> I found out that Bono requires some ports to be opened to external network.
+>
+> Here is the extraction from the firewall documentation page (
+> http://clearwater.readthedocs.org/en/stable/Clearwater_IP_Port_Usage/index.html
+> ):
+>
+> ?         RTP forwarding:
+>
+> ?         UDP/32768-65535
+>
+>
+>
+> As far as I understand, those ports may be used to carry RTP traffic
+> between 2 IMS clients if they are, for instance, on different sub-nets
+> (e.g. can't communicate directly with each other). Bono acts as RTP proxy.
+> Am I right? If not, could you please clarify what is RTP forwarding?
+>
+>
+> --
+>
+> Thank you,
+>
+> Mikhail
+>
+>
+>
+>
+> --
+>
+> Mikhail
+>
+
+
+
+-- 
+Mikhail
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151119/f26f7fb2/attachment.html>
+
+From sainath.ellendula at wipro.com  Fri Nov 20 00:42:01 2015
+From: sainath.ellendula at wipro.com (sainath.ellendula at wipro.com)
+Date: Fri, 20 Nov 2015 05:42:01 +0000
+Subject: [Clearwater] Clearwater Bono Module installation error
+In-Reply-To: <BN3PR02MB125526002DC3AC9E1E8946C29B1B0@BN3PR02MB1255.namprd02.prod.outlook.com>
+References: <PS1PR03MB14035CAE130884F089609F9AF21C0@PS1PR03MB1403.apcprd03.prod.outlook.com>,
+	<BN3PR02MB12556CC6217B72FC845B228E9B1C0@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<KL1PR03MB1400D4AA8D57D498981E0DE0F21B0@KL1PR03MB1400.apcprd03.prod.outlook.com>,
+	<BN3PR02MB125526002DC3AC9E1E8946C29B1B0@BN3PR02MB1255.namprd02.prod.outlook.com>
+Message-ID: <KL1PR03MB14007D62A9ABD0B11210763FF21A0@KL1PR03MB1400.apcprd03.prod.outlook.com>
+
+Hi Ellie,
+
+
+Thanks for information, I will follow the below detailed mentioned path.
+
+
+If i found any issues while installation, i'll get back to you for query.
+
+
+Regards,
+
+Sai
+
+________________________________
+From: Eleanor Merry <Eleanor.Merry at metaswitch.com>
+Sent: 19 November 2015 19:56
+To: Sainath Ellendula (WT01 - Product Engineering Service); clearwater at lists.projectclearwater.org
+Subject: RE: Clearwater Bono Module installation error
+
+
+Hi Sai,
+
+
+
+Why are you using our old install process? We have a new process ? detailed at http://clearwater.readthedocs.org/en/stable/Manual_Install/ ? that takes advantage of our new support for automatic clustering and config sharing. I strongly recommend that you use this process rather than the old one (indeed, I don?t think the old install method will fully work with up-to-date code).
+
+
+
+Ellie
+
+
+
+
+
+From: sainath.ellendula at wipro.com [mailto:sainath.ellendula at wipro.com]
+Sent: 19 November 2015 07:17
+To: Eleanor Merry; clearwater at lists.projectclearwater.org
+Subject: Re: Clearwater Bono Module installation error
+
+
+
+Hi Ellie,
+
+
+
+Thanks for your response, I have followed the instructions from below path
+
+http://clearwater.readthedocs.org/en/latest/Old_Manual_Install/index.html
+
+
+
+In /etc/clearwater/config-- Kept it default as mentioned in installation steps and not configured any IPs. Once i will install packages of all Modules then will be assigning IPs.
+
+
+
+Is this the correct procedure to move further.
+
+
+
+Regards,
+
+Sai
+
+
+
+________________________________
+
+From: Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>>
+Sent: 18 November 2015 18:45
+To: Sainath Ellendula (WT01 - Product Engineering Service)
+Subject: RE: Clearwater Bono Module installation error
+
+
+
+Hi Sai,
+
+
+
+How are you installing Bono? Are you following the instructions at http://clearwater.readthedocs.org/en/latest/Manual_Install/index.html? What?s in your /etc/clearwater/local_config and /etc/clearwater/config file?
+
+Manual Install - Clearwater Docs Home
+
+Manual Install Instructions. These instructions will take you through installing a minimal Clearwater system using the latest binary packages provided by the ...
+
+Read more...<http://clearwater.readthedocs.org/en/latest/Manual_Install/index.html>
+
+
+
+
+
+
+Also, can you please email the Clearwater mailing list, rather than me directly? (This means that we get a public searchable record of the emails, which will help our other users as well)
+
+
+
+Ellie
+
+
+
+From: sainath.ellendula at wipro.com<mailto:sainath.ellendula at wipro.com> [mailto:sainath.ellendula at wipro.com]
+Sent: 18 November 2015 05:42
+To: Eleanor Merry
+Subject: Clearwater Bono Module installation error
+
+
+
+
+
+Hi Ellie,
+
+
+
+I was trying to install all the modules which is mentioned in clearwater-IMS step by step.
+
+
+
+When i was trying to install Bono Module, getting error as:
+
+
+
+
+
+/usr/share/clearwater/infrastructure/scripts/restund: 3: /etc/clearwater/config: Syntax error: newline unexpected
+
+dpkg: error processing package restund (--configure):
+
+ subprocess installed post-installation script returned error exit status 2
+
+Errors were encountered while processing:
+
+ restund
+
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+
+
+
+Could you please guide me here.
+
+
+
+Thanks in advance!!!
+
+
+
+Regards,
+
+Sai
+
+
+
+
+
+The information contained in this electronic message and any attachments to this message are intended for the exclusive use of the addressee(s) and may contain proprietary, confidential or privileged information. If you are not the intended recipient, you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately and destroy all copies of this message and any attachments. WARNING: Computer viruses can be transmitted via email. The recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email. www.wipro.com<http://www.wipro.com>
+
+The information contained in this electronic message and any attachments to this message are intended for the exclusive use of the addressee(s) and may contain proprietary, confidential or privileged information. If you are not the intended recipient, you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately and destroy all copies of this message and any attachments. WARNING: Computer viruses can be transmitted via email. The recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email. www.wipro.com<http://www.wipro.com>
+
+The information contained in this electronic message and any attachments to this message are intended for the exclusive use of the addressee(s) and may contain proprietary, confidential or privileged information. If you are not the intended recipient, you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately and destroy all copies of this message and any attachments. WARNING: Computer viruses can be transmitted via email. The recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email. www.wipro.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151120/42f0f6a9/attachment.html>
+
+From syeoman at opencloud.com  Tue Nov 24 13:20:41 2015
+From: syeoman at opencloud.com (Steve Yeoman)
+Date: Tue, 24 Nov 2015 13:20:41 -0500
+Subject: [Clearwater] sprout crash for SIP message sent from IPSMGW
+Message-ID: <CAM+Qopt3yJvFCgHZ-nc5ikPAm-NqefYCFtOWrX1ahCENgYMnBg@mail.gmail.com>
+
+Hi,
+
+I noticed that Sprout crashes if an IPSMGW sends a Mobile Terminating SIP
+Message with the SCSCF address as the Request URI. Log attached.
+
+The message is not 100% correct according to 3GPP TS 24.341 (Table B 6 1),
+as it has the Request-URI and Route headers switched. Sprout works fine if
+the Request-URI is the destination and the Route is the sprout address. So
+it's an edge case.
+
+Presumably the crash should be handled better though. It's possible that
+messages like this will be received by sprout.
+
+cheers
+Steve
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------
+Steve Yeoman, Software Engineer, http://www.opencloud.com
+Tel: +1 647 342 6183, Mobile: +1 416 662 4490
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151124/4155bb7f/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: cw.log
+Type: text/x-log
+Size: 112445 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151124/4155bb7f/attachment.bin>
+
+From Eleanor.Merry at metaswitch.com  Tue Nov 24 13:30:58 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Tue, 24 Nov 2015 18:30:58 +0000
+Subject: [Clearwater] sprout crash for SIP message sent from IPSMGW
+In-Reply-To: <CAM+Qopt3yJvFCgHZ-nc5ikPAm-NqefYCFtOWrX1ahCENgYMnBg@mail.gmail.com>
+References: <CAM+Qopt3yJvFCgHZ-nc5ikPAm-NqefYCFtOWrX1ahCENgYMnBg@mail.gmail.com>
+Message-ID: <BN3PR02MB1255D635A4FF4F24CB49E5149B060@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi Steve,
+
+In the attached logs it looks like Homestead is crashing, not Sprout. Is that what you?re seeing?
+
+Can you please install the homestead-dbg package and send me the trace when this crashes? This will generate better diagnostics.
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Steve Yeoman
+Sent: 24 November 2015 18:21
+To: clearwater at lists.projectclearwater.org
+Subject: [Clearwater] sprout crash for SIP message sent from IPSMGW
+
+Hi,
+
+I noticed that Sprout crashes if an IPSMGW sends a Mobile Terminating SIP Message with the SCSCF address as the Request URI. Log attached.
+
+The message is not 100% correct according to 3GPP TS 24.341 (Table B 6 1), as it has the Request-URI and Route headers switched. Sprout works fine if the Request-URI is the destination and the Route is the sprout address. So it's an edge case.
+
+Presumably the crash should be handled better though. It's possible that messages like this will be received by sprout.
+
+cheers
+Steve
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------
+Steve Yeoman, Software Engineer, http://www.opencloud.com<http://www.opencloud.com/>
+Tel: +1 647 342 6183, Mobile: +1 416 662 4490
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151124/21a90c9c/attachment.html>
+
+From syeoman at opencloud.com  Tue Nov 24 13:51:26 2015
+From: syeoman at opencloud.com (Steve Yeoman)
+Date: Tue, 24 Nov 2015 13:51:26 -0500
+Subject: [Clearwater] sprout crash for SIP message sent from IPSMGW
+In-Reply-To: <BN3PR02MB1255D635A4FF4F24CB49E5149B060@BN3PR02MB1255.namprd02.prod.outlook.com>
+References: <CAM+Qopt3yJvFCgHZ-nc5ikPAm-NqefYCFtOWrX1ahCENgYMnBg@mail.gmail.com>
+	<BN3PR02MB1255D635A4FF4F24CB49E5149B060@BN3PR02MB1255.namprd02.prod.outlook.com>
+Message-ID: <CAM+Qopu0RYr2HULL-OeJSiAdHAuCc-VZHyngRN3=qPZZ6_wLSQ@mail.gmail.com>
+
+Hi Ellie,
+
+Yes you're right, it was in homestead not sprout.
+
+I installed the homestead-dbg package and tried the same test again. Oddly,
+this time there was no crash at all. log attached. It looks fine now.
+
+
+------------------------------------------------------------------------------------------
+Steve Yeoman, Software Engineer, http://www.opencloud.com
+Tel: +1 647 342 6183, Mobile: +1 416 662 4490
+
+
+On 24 November 2015 at 13:30, Eleanor Merry <Eleanor.Merry at metaswitch.com>
+wrote:
+
+> Hi Steve,
+>
+>
+>
+> In the attached logs it looks like Homestead is crashing, not Sprout. Is
+> that what you?re seeing?
+>
+>
+>
+> Can you please install the homestead-dbg package and send me the trace
+> when this crashes? This will generate better diagnostics.
+>
+>
+>
+> Ellie
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *Steve Yeoman
+> *Sent:* 24 November 2015 18:21
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Clearwater] sprout crash for SIP message sent from IPSMGW
+>
+>
+>
+> Hi,
+>
+>
+>
+> I noticed that Sprout crashes if an IPSMGW sends a Mobile Terminating SIP
+> Message with the SCSCF address as the Request URI. Log attached.
+>
+>
+>
+> The message is not 100% correct according to 3GPP TS 24.341 (Table B 6 1),
+> as it has the Request-URI and Route headers switched. Sprout works fine if
+> the Request-URI is the destination and the Route is the sprout address. So
+> it's an edge case.
+>
+>
+>
+> Presumably the crash should be handled better though. It's possible that
+> messages like this will be received by sprout.
+>
+>
+>
+> cheers
+>
+> Steve
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> ------------------------------------------------------------------------------------------
+>
+> Steve Yeoman, Software Engineer, http://www.opencloud.com
+>
+> Tel: +1 647 342 6183, Mobile: +1 416 662 4490
+>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151124/4dd78e7b/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: with-homestead-dbg.log
+Type: text/x-log
+Size: 22236 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151124/4dd78e7b/attachment.bin>
+
+From sainath.ellendula at wipro.com  Tue Nov 24 22:50:40 2015
+From: sainath.ellendula at wipro.com (sainath.ellendula at wipro.com)
+Date: Wed, 25 Nov 2015 03:50:40 +0000
+Subject: [Clearwater] Clearwater Bono Module installation error
+In-Reply-To: <KL1PR03MB14007D62A9ABD0B11210763FF21A0@KL1PR03MB1400.apcprd03.prod.outlook.com>
+References: <PS1PR03MB14035CAE130884F089609F9AF21C0@PS1PR03MB1403.apcprd03.prod.outlook.com>,
+	<BN3PR02MB12556CC6217B72FC845B228E9B1C0@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<KL1PR03MB1400D4AA8D57D498981E0DE0F21B0@KL1PR03MB1400.apcprd03.prod.outlook.com>,
+	<BN3PR02MB125526002DC3AC9E1E8946C29B1B0@BN3PR02MB1255.namprd02.prod.outlook.com>,
+	<KL1PR03MB14007D62A9ABD0B11210763FF21A0@KL1PR03MB1400.apcprd03.prod.outlook.com>
+Message-ID: <KL1PR03MB14005F728605F5341A5DEEDDF2050@KL1PR03MB1400.apcprd03.prod.outlook.com>
+
+Hi Ellie,
+
+
+I have Followed the below path for node-specific installation and Successfully installed Ellis & Bono. But when i was trying to install Homer & Homestead getting as connection refused.
+
+
+TCP poll failed to 127.0.0.1 9160
+nc: connect to 127.0.0.1 port 9160 (tcp) failed: Connection refused
+Failed to connect to '127.0.0.1:7199': Connection refused
+
+
+Due to which i cannot proceed further.
+
+
+Pls guide me here.
+
+
+Regards,
+
+Sai
+
+
+________________________________
+From: Sainath Ellendula (WT01 - Product Engineering Service)
+Sent: 20 November 2015 11:12
+To: Eleanor Merry; clearwater at lists.projectclearwater.org
+Subject: Re: Clearwater Bono Module installation error
+
+
+Hi Ellie,
+
+
+Thanks for information, I will follow the below detailed mentioned path.
+
+
+If i found any issues while installation, i'll get back to you for query.
+
+
+Regards,
+
+Sai
+
+________________________________
+From: Eleanor Merry <Eleanor.Merry at metaswitch.com>
+Sent: 19 November 2015 19:56
+To: Sainath Ellendula (WT01 - Product Engineering Service); clearwater at lists.projectclearwater.org
+Subject: RE: Clearwater Bono Module installation error
+
+
+Hi Sai,
+
+
+
+Why are you using our old install process? We have a new process ? detailed at http://clearwater.readthedocs.org/en/stable/Manual_Install/ ? that takes advantage of our new support for automatic clustering and config sharing. I strongly recommend that you use this process rather than the old one (indeed, I don?t think the old install method will fully work with up-to-date code).
+
+
+
+Ellie
+
+
+
+
+
+From: sainath.ellendula at wipro.com [mailto:sainath.ellendula at wipro.com]
+Sent: 19 November 2015 07:17
+To: Eleanor Merry; clearwater at lists.projectclearwater.org
+Subject: Re: Clearwater Bono Module installation error
+
+
+
+Hi Ellie,
+
+
+
+Thanks for your response, I have followed the instructions from below path
+
+http://clearwater.readthedocs.org/en/latest/Old_Manual_Install/index.html
+
+
+
+In /etc/clearwater/config-- Kept it default as mentioned in installation steps and not configured any IPs. Once i will install packages of all Modules then will be assigning IPs.
+
+
+
+Is this the correct procedure to move further.
+
+
+
+Regards,
+
+Sai
+
+
+
+________________________________
+
+From: Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>>
+Sent: 18 November 2015 18:45
+To: Sainath Ellendula (WT01 - Product Engineering Service)
+Subject: RE: Clearwater Bono Module installation error
+
+
+
+Hi Sai,
+
+
+
+How are you installing Bono? Are you following the instructions at http://clearwater.readthedocs.org/en/latest/Manual_Install/index.html? What?s in your /etc/clearwater/local_config and /etc/clearwater/config file?
+
+Manual Install - Clearwater Docs Home
+
+Manual Install Instructions. These instructions will take you through installing a minimal Clearwater system using the latest binary packages provided by the ...
+
+Read more...<http://clearwater.readthedocs.org/en/latest/Manual_Install/index.html>
+
+
+
+
+
+
+Also, can you please email the Clearwater mailing list, rather than me directly? (This means that we get a public searchable record of the emails, which will help our other users as well)
+
+
+
+Ellie
+
+
+
+From: sainath.ellendula at wipro.com<mailto:sainath.ellendula at wipro.com> [mailto:sainath.ellendula at wipro.com]
+Sent: 18 November 2015 05:42
+To: Eleanor Merry
+Subject: Clearwater Bono Module installation error
+
+
+
+
+
+Hi Ellie,
+
+
+
+I was trying to install all the modules which is mentioned in clearwater-IMS step by step.
+
+
+
+When i was trying to install Bono Module, getting error as:
+
+
+
+
+
+/usr/share/clearwater/infrastructure/scripts/restund: 3: /etc/clearwater/config: Syntax error: newline unexpected
+
+dpkg: error processing package restund (--configure):
+
+ subprocess installed post-installation script returned error exit status 2
+
+Errors were encountered while processing:
+
+ restund
+
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+
+
+
+Could you please guide me here.
+
+
+
+Thanks in advance!!!
+
+
+
+Regards,
+
+Sai
+
+
+
+
+
+The information contained in this electronic message and any attachments to this message are intended for the exclusive use of the addressee(s) and may contain proprietary, confidential or privileged information. If you are not the intended recipient, you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately and destroy all copies of this message and any attachments. WARNING: Computer viruses can be transmitted via email. The recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email. www.wipro.com<http://www.wipro.com>
+
+The information contained in this electronic message and any attachments to this message are intended for the exclusive use of the addressee(s) and may contain proprietary, confidential or privileged information. If you are not the intended recipient, you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately and destroy all copies of this message and any attachments. WARNING: Computer viruses can be transmitted via email. The recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email. www.wipro.com<http://www.wipro.com>
+
+The information contained in this electronic message and any attachments to this message are intended for the exclusive use of the addressee(s) and may contain proprietary, confidential or privileged information. If you are not the intended recipient, you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately and destroy all copies of this message and any attachments. WARNING: Computer viruses can be transmitted via email. The recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email. www.wipro.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151125/5873397b/attachment.html>
+
+From Graeme.Robertson at metaswitch.com  Wed Nov 25 13:36:32 2015
+From: Graeme.Robertson at metaswitch.com (Graeme Robertson)
+Date: Wed, 25 Nov 2015 18:36:32 +0000
+Subject: [Clearwater] Slaughterhouse-Five Release Note
+In-Reply-To: <BLUPR0201MB1763BC02A13849FF9BFF898CE3050@BLUPR0201MB1763.namprd02.prod.outlook.com>
+References: <BLUPR0201MB1763BC02A13849FF9BFF898CE3050@BLUPR0201MB1763.namprd02.prod.outlook.com>
+Message-ID: <BLUPR0201MB1763FD5E44651B48B81DDA18E3050@BLUPR0201MB1763.namprd02.prod.outlook.com>
+
+The release for sprint "Slaughterhouse-Five" has been cut.  The code for this release is tagged as release-86 in github.
+
+This release includes some enhancements to our SUBSCRIBE/NOTIFY function.
+
+*         We've done some refactoring in Sprout to ensure that the NOTIFYs we send are fully compliant with the IMS specifications.
+
+*         We've added regressible live tests to clearwater-live-test for this improved NOTIFY function, and for expiry of registrations and subscriptions.
+
+This release includes the following bug fixes.
+
+*         Regstore NOTIFYs only sending deltas  (https://github.com/Metaswitch/sprout/issues/1219)
+
+*         A non-REGISTERing PBX origination yields incorrect statistic counts. (https://github.com/Metaswitch/sprout/issues/1213)
+
+*         Chronos crashes at 50 registrations per second traffic load (https://github.com/Metaswitch/chronos/issues/195)
+
+*         Chronos code coverage is below standard (https://github.com/Metaswitch/chronos/issues/189)
+
+*         Walking the infinite table rolling over too far. (https://github.com/Metaswitch/chronos/issues/188)
+
+*         TimerHandler::get_timers_for_node not honouring Max_responses (https://github.com/Metaswitch/chronos/issues/177)
+
+*         Deleted Chronos timers popping (on separate node?) (https://github.com/Metaswitch/chronos/issues/175)
+
+*         recv_file_descriptor can return 0 on error (https://github.com/Metaswitch/cpp-common/issues/408)
+
+*         Some alarms are thrown way on boot because snmpd/alarm-agent isn't up yet (https://github.com/Metaswitch/clearwater-snmp-handlers/issues/96)
+
+
+For upgrading to this release, follow the instructions at http://clearwater.readthedocs.org/en/latest/Upgrading_a_Clearwater_deployment/index.html. If you are deploying an all-in-one node, the standard image (http://vm-images.cw-ngv.com/cw-aio.ova) has been updated for this release.
+
+
+
+Thanks,
+Graeme
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151125/ea23a7d9/attachment.html>
+
+From bp4mls at gmail.com  Wed Nov 25 15:50:57 2015
+From: bp4mls at gmail.com (Weiter Leiter)
+Date: Wed, 25 Nov 2015 21:50:57 +0100
+Subject: [Clearwater] bono logging
+Message-ID: <CANH-PnFhdwummH-L5ntE2=hGTPCemPO-p_Rm2BG9nESFnQ7QBQ@mail.gmail.com>
+
+Hi guys,
+
+I'd like to ask for some quick help troubleshooting some 403 Forbidden
+random replies to INVITEs.
+The setup is as simple as it gets: all-in-one on KVM, two Jitsi clients,
+provisioning done through Ellis.
+The clients register regularly, as expected.
+
+Now, every now and then, I start getting 403 to INVITEs or even re-INVITEs
+(on-hold), short after the dialog is correctly established.
+The 403 originate from bono and can't figure out why.
+
+The logs contain nothing. I tried raising the log level to 5, and even
+starting bono still attached to the console (-t), with --log-level=5.
+All it logs is:
+Log directory set to /var/log/bono
+Log level set to 5
+even when registrations and calls and OPTION pings are handled by it.
+
+Is that all bono would log on debug level?
+
+Any pointers would be appreciated.
+
+Many Thanks.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151125/385d9e54/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Thu Nov 26 11:41:23 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Thu, 26 Nov 2015 16:41:23 +0000
+Subject: [Clearwater] sprout crash for SIP message sent from IPSMGW
+In-Reply-To: <CAM+Qopu0RYr2HULL-OeJSiAdHAuCc-VZHyngRN3=qPZZ6_wLSQ@mail.gmail.com>
+References: <CAM+Qopt3yJvFCgHZ-nc5ikPAm-NqefYCFtOWrX1ahCENgYMnBg@mail.gmail.com>
+	<BN3PR02MB1255D635A4FF4F24CB49E5149B060@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<CAM+Qopu0RYr2HULL-OeJSiAdHAuCc-VZHyngRN3=qPZZ6_wLSQ@mail.gmail.com>
+Message-ID: <BN3PR02MB12550BA7943A9DF6522416B69B040@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi Steve,
+
+OK, please send me the trace if you see this crash again.
+
+It looks like you?ve updated the Homestead code as well as installing the debug package (based on the cassandra store logs you didn?t have at least this PR -  https://github.com/Metaswitch/cpp-common/pull/390/files - in your Homestead code). Can you please make sure that the rest of your Clearwater deployment is in sync with your Homestead?
+
+Ellie
+
+From: Steve Yeoman [mailto:syeoman at opencloud.com]
+Sent: 24 November 2015 18:51
+To: Eleanor Merry
+Cc: clearwater at lists.projectclearwater.org
+Subject: Re: [Clearwater] sprout crash for SIP message sent from IPSMGW
+
+Hi Ellie,
+
+Yes you're right, it was in homestead not sprout.
+
+I installed the homestead-dbg package and tried the same test again. Oddly, this time there was no crash at all. log attached. It looks fine now.
+
+
+------------------------------------------------------------------------------------------
+Steve Yeoman, Software Engineer, http://www.opencloud.com<http://www.opencloud.com/>
+Tel: +1 647 342 6183, Mobile: +1 416 662 4490
+
+
+On 24 November 2015 at 13:30, Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>> wrote:
+Hi Steve,
+
+In the attached logs it looks like Homestead is crashing, not Sprout. Is that what you?re seeing?
+
+Can you please install the homestead-dbg package and send me the trace when this crashes? This will generate better diagnostics.
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>] On Behalf Of Steve Yeoman
+Sent: 24 November 2015 18:21
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Clearwater] sprout crash for SIP message sent from IPSMGW
+
+Hi,
+
+I noticed that Sprout crashes if an IPSMGW sends a Mobile Terminating SIP Message with the SCSCF address as the Request URI. Log attached.
+
+The message is not 100% correct according to 3GPP TS 24.341 (Table B 6 1), as it has the Request-URI and Route headers switched. Sprout works fine if the Request-URI is the destination and the Route is the sprout address. So it's an edge case.
+
+Presumably the crash should be handled better though. It's possible that messages like this will be received by sprout.
+
+cheers
+Steve
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------
+Steve Yeoman, Software Engineer, http://www.opencloud.com<http://www.opencloud.com/>
+Tel: +1 647 342 6183<tel:%2B1%20647%20342%206183>, Mobile: +1 416 662 4490<tel:%2B1%20416%20662%204490>
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151126/f1fc7765/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Thu Nov 26 11:53:01 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Thu, 26 Nov 2015 16:53:01 +0000
+Subject: [Clearwater] Clearwater Bono Module installation error
+Message-ID: <BN3PR02MB12553F2A76B87D75C60B17069B040@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi Sai,
+
+Do you see the install complete? We've got a known issue (see https://github.com/Metaswitch/homestead/issues/269 for details) where this error message can be printed to the terminal, but the install should complete after a couple of minutes.
+
+Ellie
+
+From: sainath.ellendula at wipro.com [mailto:sainath.ellendula at wipro.com]
+Sent: 25 November 2015 03:51
+To: Eleanor Merry; clearwater at lists.projectclearwater.org
+Subject: Re: Clearwater Bono Module installation error
+
+
+Hi Ellie,
+
+
+
+I have Followed the below path for node-specific installation and Successfully installed Ellis & Bono. But when i was trying to install Homer & Homestead getting as connection refused.
+
+
+TCP poll failed to 127.0.0.1 9160
+nc: connect to 127.0.0.1 port 9160 (tcp) failed: Connection refused
+Failed to connect to '127.0.0.1:7199': Connection refused
+
+
+
+Due to which i cannot proceed further.
+
+
+
+Pls guide me here.
+
+
+
+Regards,
+
+Sai
+
+________________________________
+From: Sainath Ellendula (WT01 - Product Engineering Service)
+Sent: 20 November 2015 11:12
+To: Eleanor Merry; clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: Clearwater Bono Module installation error
+
+
+Hi Ellie,
+
+
+
+Thanks for information, I will follow the below detailed mentioned path.
+
+
+
+If i found any issues while installation, i'll get back to you for query.
+
+
+
+Regards,
+
+Sai
+
+________________________________
+From: Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>>
+Sent: 19 November 2015 19:56
+To: Sainath Ellendula (WT01 - Product Engineering Service); clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: RE: Clearwater Bono Module installation error
+
+
+Hi Sai,
+
+
+
+Why are you using our old install process? We have a new process - detailed at http://clearwater.readthedocs.org/en/stable/Manual_Install/ - that takes advantage of our new support for automatic clustering and config sharing. I strongly recommend that you use this process rather than the old one (indeed, I don't think the old install method will fully work with up-to-date code).
+
+
+
+Ellie
+
+
+
+
+
+From: sainath.ellendula at wipro.com<mailto:sainath.ellendula at wipro.com> [mailto:sainath.ellendula at wipro.com]
+Sent: 19 November 2015 07:17
+To: Eleanor Merry; clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: Clearwater Bono Module installation error
+
+
+
+Hi Ellie,
+
+
+
+Thanks for your response, I have followed the instructions from below path
+
+http://clearwater.readthedocs.org/en/latest/Old_Manual_Install/index.html
+
+
+
+In /etc/clearwater/config-- Kept it default as mentioned in installation steps and not configured any IPs. Once i will install packages of all Modules then will be assigning IPs.
+
+
+
+Is this the correct procedure to move further.
+
+
+
+Regards,
+
+Sai
+
+
+
+________________________________
+
+From: Eleanor Merry <Eleanor.Merry at metaswitch.com<mailto:Eleanor.Merry at metaswitch.com>>
+Sent: 18 November 2015 18:45
+To: Sainath Ellendula (WT01 - Product Engineering Service)
+Subject: RE: Clearwater Bono Module installation error
+
+
+
+Hi Sai,
+
+
+
+How are you installing Bono? Are you following the instructions at http://clearwater.readthedocs.org/en/latest/Manual_Install/index.html? What's in your /etc/clearwater/local_config and /etc/clearwater/config file?
+
+Manual Install - Clearwater Docs Home
+
+Manual Install Instructions. These instructions will take you through installing a minimal Clearwater system using the latest binary packages provided by the ...
+
+Read more...<http://clearwater.readthedocs.org/en/latest/Manual_Install/index.html>
+
+
+
+
+
+
+Also, can you please email the Clearwater mailing list, rather than me directly? (This means that we get a public searchable record of the emails, which will help our other users as well)
+
+
+
+Ellie
+
+
+
+From: sainath.ellendula at wipro.com<mailto:sainath.ellendula at wipro.com> [mailto:sainath.ellendula at wipro.com]
+Sent: 18 November 2015 05:42
+To: Eleanor Merry
+Subject: Clearwater Bono Module installation error
+
+
+
+
+
+Hi Ellie,
+
+
+
+I was trying to install all the modules which is mentioned in clearwater-IMS step by step.
+
+
+
+When i was trying to install Bono Module, getting error as:
+
+
+
+
+
+/usr/share/clearwater/infrastructure/scripts/restund: 3: /etc/clearwater/config: Syntax error: newline unexpected
+
+dpkg: error processing package restund (--configure):
+
+ subprocess installed post-installation script returned error exit status 2
+
+Errors were encountered while processing:
+
+ restund
+
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+
+
+
+Could you please guide me here.
+
+
+
+Thanks in advance!!!
+
+
+
+Regards,
+
+Sai
+
+
+
+
+
+The information contained in this electronic message and any attachments to this message are intended for the exclusive use of the addressee(s) and may contain proprietary, confidential or privileged information. If you are not the intended recipient, you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately and destroy all copies of this message and any attachments. WARNING: Computer viruses can be transmitted via email. The recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email. www.wipro.com<http://www.wipro.com>
+
+The information contained in this electronic message and any attachments to this message are intended for the exclusive use of the addressee(s) and may contain proprietary, confidential or privileged information. If you are not the intended recipient, you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately and destroy all copies of this message and any attachments. WARNING: Computer viruses can be transmitted via email. The recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email. www.wipro.com<http://www.wipro.com>
+The information contained in this electronic message and any attachments to this message are intended for the exclusive use of the addressee(s) and may contain proprietary, confidential or privileged information. If you are not the intended recipient, you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately and destroy all copies of this message and any attachments. WARNING: Computer viruses can be transmitted via email. The recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email. www.wipro.com<http://www.wipro.com>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151126/305d64a5/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Thu Nov 26 11:55:36 2015
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Thu, 26 Nov 2015 16:55:36 +0000
+Subject: [Clearwater] bono logging
+In-Reply-To: <CANH-PnFhdwummH-L5ntE2=hGTPCemPO-p_Rm2BG9nESFnQ7QBQ@mail.gmail.com>
+References: <CANH-PnFhdwummH-L5ntE2=hGTPCemPO-p_Rm2BG9nESFnQ7QBQ@mail.gmail.com>
+Message-ID: <BN3PR02MB1255B8D21BDE089980E7AF729B040@BN3PR02MB1255.namprd02.prod.outlook.com>
+
+Hi,
+
+What version of Clearwater are you running? We briefly broke Bono logging in the Pride and Prejudice release (see https://github.com/Metaswitch/sprout/commit/8c383c0601688a62db60dea89609444ea43efe1b for the fix) - if you?re using this release can you please upgrade to the newest Clearwater?
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Weiter Leiter
+Sent: 25 November 2015 20:51
+To: clearwater at lists.projectclearwater.org
+Subject: [Clearwater] bono logging
+
+Hi guys,
+
+I'd like to ask for some quick help troubleshooting some 403 Forbidden random replies to INVITEs.
+The setup is as simple as it gets: all-in-one on KVM, two Jitsi clients, provisioning done through Ellis.
+The clients register regularly, as expected.
+
+Now, every now and then, I start getting 403 to INVITEs or even re-INVITEs (on-hold), short after the dialog is correctly established.
+The 403 originate from bono and can't figure out why.
+
+The logs contain nothing. I tried raising the log level to 5, and even starting bono still attached to the console (-t), with --log-level=5.
+All it logs is:
+Log directory set to /var/log/bono
+Log level set to 5
+even when registrations and calls and OPTION pings are handled by it.
+
+Is that all bono would log on debug level?
+
+Any pointers would be appreciated.
+
+Many Thanks.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151126/2b6aabea/attachment.html>
+
+From gavin.murphy at newnet.com  Thu Nov 26 13:38:33 2015
+From: gavin.murphy at newnet.com (Gavin Murphy)
+Date: Thu, 26 Nov 2015 14:38:33 -0400
+Subject: [Clearwater] Terminating iFCs not being applied when ENUM enabled
+Message-ID: <565751A9.1070302@newnet.com>
+
+Hi,
+
+    I noticed that if ENUM is enabled, it looks like terminating filters 
+are not checked. Once the originating iFCs are checked, a request to 
+ENUM is sent out, even if the terminating party is a subscriber in the 
+local system. Is this expected, or a known issue (perhaps in the 
+specific release I have installed - Harry Potter)?
+
+Thanks,
+
+Gavin
+
+-- 
+Gavin Murphy
+VP Engineering, RCS Products
++1 (902) 406?8375 x1002
+gavin.murphy at newnet.com <mailto:gavin.murphy at newnet.com>
+www.newnet.com <http://www.newnet.com>
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+This e-mail is intended only for the named recipient(s) and may contain 
+information that is otherwise privileged, confidential and/or exempt 
+from disclosure under applicable law. No waiver of privilege, 
+confidence, or otherwise is intended by virtue of communication via the 
+internet. Any unauthorized use, dissemination or copying is strictly 
+prohibited. If you have received this e-mail in error, or are not the 
+named as a recipient, please immediately notify the sender and destroy 
+all copies of this e-mail.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151126/a04753c8/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: NewNet Logo.png
+Type: image/png
+Size: 28006 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151126/a04753c8/attachment.png>
+
+From syeoman at opencloud.com  Thu Nov 26 14:31:40 2015
+From: syeoman at opencloud.com (Steve Yeoman)
+Date: Thu, 26 Nov 2015 14:31:40 -0500
+Subject: [Clearwater] sprout crash for SIP message sent from IPSMGW
+In-Reply-To: <BN3PR02MB12550BA7943A9DF6522416B69B040@BN3PR02MB1255.namprd02.prod.outlook.com>
+References: <CAM+Qopt3yJvFCgHZ-nc5ikPAm-NqefYCFtOWrX1ahCENgYMnBg@mail.gmail.com>
+	<BN3PR02MB1255D635A4FF4F24CB49E5149B060@BN3PR02MB1255.namprd02.prod.outlook.com>
+	<CAM+Qopu0RYr2HULL-OeJSiAdHAuCc-VZHyngRN3=qPZZ6_wLSQ@mail.gmail.com>
+	<BN3PR02MB12550BA7943A9DF6522416B69B040@BN3PR02MB1255.namprd02.prod.outlook.com>
+Message-ID: <CAM+QopvvmXJQy5mzhRWT-7ROAJZ-gZhKpW=scUmVsibmN38QpQ@mail.gmail.com>
+
+Hi Ellie,
+
+I ran 'sudo clearwater-upgrade' on my deployment to get the latest of
+everything and tried the test again. It worked fine - no errors.
+
+if I see the error again I'll send it over (with debug).
+
+thanks
+Steve
+
+
+------------------------------------------------------------------------------------------
+Steve Yeoman, Software Engineer, http://www.opencloud.com
+Tel: +1 647 342 6183, Mobile: +1 416 662 4490
+
+
+On 26 November 2015 at 11:41, Eleanor Merry <Eleanor.Merry at metaswitch.com>
+wrote:
+
+> Hi Steve,
+>
+>
+>
+> OK, please send me the trace if you see this crash again.
+>
+>
+>
+> It looks like you?ve updated the Homestead code as well as installing the
+> debug package (based on the cassandra store logs you didn?t have at least
+> this PR -  https://github.com/Metaswitch/cpp-common/pull/390/files - in
+> your Homestead code). Can you please make sure that the rest of your
+> Clearwater deployment is in sync with your Homestead?
+>
+>
+>
+> Ellie
+>
+>
+>
+> *From:* Steve Yeoman [mailto:syeoman at opencloud.com]
+> *Sent:* 24 November 2015 18:51
+> *To:* Eleanor Merry
+> *Cc:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Clearwater] sprout crash for SIP message sent from IPSMGW
+>
+>
+>
+> Hi Ellie,
+>
+>
+>
+> Yes you're right, it was in homestead not sprout.
+>
+>
+>
+> I installed the homestead-dbg package and tried the same test again.
+> Oddly, this time there was no crash at all. log attached. It looks fine now.
+>
+>
+>
+>
+>
+> ------------------------------------------------------------------------------------------
+>
+> Steve Yeoman, Software Engineer, http://www.opencloud.com
+>
+> Tel: +1 647 342 6183, Mobile: +1 416 662 4490
+>
+>
+>
+>
+>
+> On 24 November 2015 at 13:30, Eleanor Merry <Eleanor.Merry at metaswitch.com>
+> wrote:
+>
+> Hi Steve,
+>
+>
+>
+> In the attached logs it looks like Homestead is crashing, not Sprout. Is
+> that what you?re seeing?
+>
+>
+>
+> Can you please install the homestead-dbg package and send me the trace
+> when this crashes? This will generate better diagnostics.
+>
+>
+>
+> Ellie
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *Steve Yeoman
+> *Sent:* 24 November 2015 18:21
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Clearwater] sprout crash for SIP message sent from IPSMGW
+>
+>
+>
+> Hi,
+>
+>
+>
+> I noticed that Sprout crashes if an IPSMGW sends a Mobile Terminating SIP
+> Message with the SCSCF address as the Request URI. Log attached.
+>
+>
+>
+> The message is not 100% correct according to 3GPP TS 24.341 (Table B 6 1),
+> as it has the Request-URI and Route headers switched. Sprout works fine if
+> the Request-URI is the destination and the Route is the sprout address. So
+> it's an edge case.
+>
+>
+>
+> Presumably the crash should be handled better though. It's possible that
+> messages like this will be received by sprout.
+>
+>
+>
+> cheers
+>
+> Steve
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> ------------------------------------------------------------------------------------------
+>
+> Steve Yeoman, Software Engineer, http://www.opencloud.com
+>
+> Tel: +1 647 342 6183, Mobile: +1 416 662 4490
+>
+>
+>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151126/6f411b82/attachment.html>
+
+From gavin.murphy at newnet.com  Fri Nov 27 16:34:00 2015
+From: gavin.murphy at newnet.com (Gavin Murphy)
+Date: Fri, 27 Nov 2015 17:34:00 -0400
+Subject: [Clearwater] Expired ODI Token
+Message-ID: <5658CC48.2060608@newnet.com>
+
+Hi,
+
+     we've come across a situation where sprout appears to be saying 
+that an ODI token that was issued a tenth of a second before has 
+"expired". Here are the logs (some logs omitted):
+
+27-11-2015 18:42:25.563 UTC Info scscfsproutlet.cpp:1084: Routing to 
+Application Server sip:10.42.38.155:10672 with ODI token odi_7VhkxDKy0r 
+for AsChain-term[0x7fa5d8308700]:6/7
+27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:148: Found next 
+routable URI: sip:odi_7VhkxDKy0r at 10.42.38.164:5054;lr
+27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:266: Found user - 
+odi_7VhkxDKy0r
+27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:266: Found user - 
+odi_7VhkxDKy0r
+27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:266: Found user - 
+odi_7VhkxDKy0r
+27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:180: No Sproutlet 
+found using service name or host
+27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:1074: Remove top 
+Route header Route: <sip:odi_7VhkxDKy0r at 10.42.38.164:5054;lr>
+27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:1521: Adding 
+message 0x7fa5a8615d20 => txdata 0x7fa5a86157b8 mapping
+27-11-2015 18:42:25.688 UTC Verbose sproutletproxy.cpp:1388: 
+scscf-0x7fa5a83ce810 pass initial request Request msg INVITE/cseq=1 
+(tdta0x7fa5a8615710) to Sproutlet
+27-11-2015 18:42:25.688 UTC Info scscfsproutlet.cpp:408: S-CSCF received 
+initial request
+27-11-2015 18:42:25.688 UTC Debug pjutils.cpp:2254: Setting session 
+expires value from Min-SE header: 90
+27-11-2015 18:42:25.688 UTC Debug scscfsproutlet.cpp:672: Route header 
+references this system
+27-11-2015 18:42:25.688 UTC Debug scscfsproutlet.cpp:685: Found ODI 
+token 7VhkxDKy0r
+27-11-2015 18:42:25.688 UTC Info scscfsproutlet.cpp:698: Expired ODI 
+token 7VhkxDKy0r so handle as OOTB request
+27-11-2015 18:42:25.688 UTC Debug scscfsproutlet.cpp:725: No ODI token, 
+or invalid ODI token, on request, and no P-Charging-Vector header (so 
+can't log ICID for correlation)
+
+Under what circumstances will sprout consider the ODI to no longer be 
+valid? I don't think it's actually expired given the time between when 
+it was issued and when it was reported as expired.
+
+Thanks,
+
+Gavin
+
+-- 
+Gavin Murphy
+VP Engineering, RCS Products
++1 (902) 406?8375 x1002
+gavin.murphy at newnet.com <mailto:gavin.murphy at newnet.com>
+www.newnet.com <http://www.newnet.com>
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+This e-mail is intended only for the named recipient(s) and may contain 
+information that is otherwise privileged, confidential and/or exempt 
+from disclosure under applicable law. No waiver of privilege, 
+confidence, or otherwise is intended by virtue of communication via the 
+internet. Any unauthorized use, dissemination or copying is strictly 
+prohibited. If you have received this e-mail in error, or are not the 
+named as a recipient, please immediately notify the sender and destroy 
+all copies of this e-mail.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151127/f16dac47/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: NewNet Logo.png
+Type: image/png
+Size: 28006 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151127/f16dac47/attachment.png>
+
+From Robert.Day at metaswitch.com  Mon Nov 30 11:58:47 2015
+From: Robert.Day at metaswitch.com (Robert Day)
+Date: Mon, 30 Nov 2015 16:58:47 +0000
+Subject: [Clearwater] Expired ODI Token
+In-Reply-To: <5658CC48.2060608@newnet.com>
+References: <5658CC48.2060608@newnet.com>
+Message-ID: <BY2PR0201MB1926C2C8FF44FD631A19B35AF4000@BY2PR0201MB1926.namprd02.prod.outlook.com>
+
+Hi Gavin,
+
+We expire the ODI token when the original transaction completes (as they?re used to keep track of which application servers we?ve already invoked for this request, so they?re not useful after the end of the transaction).
+
+Do you see a log saying ?Destroying AsChain 0x7fa5d8308700? amongst the logs you?ve omitted? If so, that will be the point at which the ODI token is expired.
+
+If the original transaction hasn?t completed, then I don?t think we should be expiring the ODI token ? if you can send across the full logs, I can investigate further. If the original transaction has completed, then it might be useful to get a better idea of what you?re trying to achieve by reusing the ODI token ? there might be alternative solutions.
+
+Best,
+Rob
+
+--
+Rob Day
+Software Engineer, Project Clearwater
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Gavin Murphy
+Sent: 27 November 2015 21:34
+To: clearwater at lists.projectclearwater.org
+Subject: [Clearwater] Expired ODI Token
+
+Hi,
+
+    we've come across a situation where sprout appears to be saying that an ODI token that was issued a tenth of a second before has "expired". Here are the logs (some logs omitted):
+
+27-11-2015 18:42:25.563 UTC Info scscfsproutlet.cpp:1084: Routing to Application Server sip:10.42.38.155:10672 with ODI token odi_7VhkxDKy0r for AsChain-term[0x7fa5d8308700]:6/7
+27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:148: Found next routable URI: sip:odi_7VhkxDKy0r at 10.42.38.164:5054;lr
+27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:266: Found user - odi_7VhkxDKy0r
+27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:266: Found user - odi_7VhkxDKy0r
+27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:266: Found user - odi_7VhkxDKy0r
+27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:180: No Sproutlet found using service name or host
+27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:1074: Remove top Route header Route: <sip:odi_7VhkxDKy0r at 10.42.38.164:5054;lr><sip:odi_7VhkxDKy0r at 10.42.38.164:5054;lr>
+27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:1521: Adding message 0x7fa5a8615d20 => txdata 0x7fa5a86157b8 mapping
+27-11-2015 18:42:25.688 UTC Verbose sproutletproxy.cpp:1388: scscf-0x7fa5a83ce810 pass initial request Request msg INVITE/cseq=1 (tdta0x7fa5a8615710) to Sproutlet
+27-11-2015 18:42:25.688 UTC Info scscfsproutlet.cpp:408: S-CSCF received initial request
+27-11-2015 18:42:25.688 UTC Debug pjutils.cpp:2254: Setting session expires value from Min-SE header: 90
+27-11-2015 18:42:25.688 UTC Debug scscfsproutlet.cpp:672: Route header references this system
+27-11-2015 18:42:25.688 UTC Debug scscfsproutlet.cpp:685: Found ODI token 7VhkxDKy0r
+27-11-2015 18:42:25.688 UTC Info scscfsproutlet.cpp:698: Expired ODI token 7VhkxDKy0r so handle as OOTB request
+27-11-2015 18:42:25.688 UTC Debug scscfsproutlet.cpp:725: No ODI token, or invalid ODI token, on request, and no P-Charging-Vector header (so can't log ICID for correlation)
+
+Under what circumstances will sprout consider the ODI to no longer be valid? I don't think it's actually expired given the time between when it was issued and when it was reported as expired.
+
+Thanks,
+
+Gavin
+--
+Gavin Murphy
+
+VP Engineering, RCS Products
+
++1 (902) 406?8375 x1002
+
+gavin.murphy at newnet.com<mailto:gavin.murphy at newnet.com>
+
+www.newnet.com<http://www.newnet.com>
+
+[cid:image001.png at 01D12B90.4D5D7330]
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+This e-mail is intended only for the named recipient(s) and may contain information that is otherwise privileged, confidential and/or exempt from disclosure under applicable law. No waiver of privilege, confidence, or otherwise is intended by virtue of communication via the internet. Any unauthorized use, dissemination or copying is strictly prohibited. If you have received this e-mail in error, or are not the named as a recipient, please immediately notify the sender and destroy all copies of this e-mail.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151130/25e70e51/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 28006 bytes
+Desc: image001.png
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151130/25e70e51/attachment.png>
+
+From gavin.murphy at newnet.com  Mon Nov 30 17:18:15 2015
+From: gavin.murphy at newnet.com (Gavin Murphy)
+Date: Mon, 30 Nov 2015 18:18:15 -0400
+Subject: [Clearwater] Expired ODI Token
+In-Reply-To: <BY2PR0201MB1926C2C8FF44FD631A19B35AF4000@BY2PR0201MB1926.namprd02.prod.outlook.com>
+References: <5658CC48.2060608@newnet.com>
+	<BY2PR0201MB1926C2C8FF44FD631A19B35AF4000@BY2PR0201MB1926.namprd02.prod.outlook.com>
+Message-ID: <565CCB27.8040803@newnet.com>
+
+Hi Robert,
+
+     it does appear that there is in fact an unexpected final status 
+being returned by the application server that is resulting in the token 
+being invalidated.
+
+Thanks for your help.
+
+Gavin
+
+On 30/11/2015 12:58 PM, Robert Day wrote:
+>
+> Hi Gavin,
+>
+> We expire the ODI token when the original transaction completes (as 
+> they?re used to keep track of which application servers we?ve already 
+> invoked for this request, so they?re not useful after the end of the 
+> transaction).
+>
+> Do you see a log saying ?Destroying AsChain 0x7fa5d8308700? amongst 
+> the logs you?ve omitted? If so, that will be the point at which the 
+> ODI token is expired.
+>
+> If the original transaction hasn?t completed, then I don?t think we 
+> should be expiring the ODI token ? if you can send across the full 
+> logs, I can investigate further. If the original transaction has 
+> completed, then it might be useful to get a better idea of what you?re 
+> trying to achieve by reusing the ODI token ? there might be 
+> alternative solutions.
+>
+> Best,
+>
+> Rob
+>
+> --
+>
+> Rob Day
+>
+> Software Engineer, Project Clearwater
+>
+> *From:*Clearwater 
+> [mailto:clearwater-bounces at lists.projectclearwater.org] *On Behalf Of 
+> *Gavin Murphy
+> *Sent:* 27 November 2015 21:34
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Clearwater] Expired ODI Token
+>
+> Hi,
+>
+>     we've come across a situation where sprout appears to be saying 
+> that an ODI token that was issued a tenth of a second before has 
+> "expired". Here are the logs (some logs omitted):
+>
+> 27-11-2015 18:42:25.563 UTC Info scscfsproutlet.cpp:1084: Routing to 
+> Application Server sip:10.42.38.155:10672 with ODI token 
+> odi_7VhkxDKy0r for AsChain-term[0x7fa5d8308700]:6/7
+> 27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:148: Found next 
+> routable URI: sip:odi_7VhkxDKy0r at 10.42.38.164:5054;lr
+> 27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:266: Found user - 
+> odi_7VhkxDKy0r
+> 27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:266: Found user - 
+> odi_7VhkxDKy0r
+> 27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:266: Found user - 
+> odi_7VhkxDKy0r
+> 27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:180: No Sproutlet 
+> found using service name or host
+> 27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:1074: Remove top 
+> Route header Route: <sip:odi_7VhkxDKy0r at 10.42.38.164:5054;lr> 
+> <sip:odi_7VhkxDKy0r at 10.42.38.164:5054;lr>
+> 27-11-2015 18:42:25.688 UTC Debug sproutletproxy.cpp:1521: Adding 
+> message 0x7fa5a8615d20 => txdata 0x7fa5a86157b8 mapping
+> 27-11-2015 18:42:25.688 UTC Verbose sproutletproxy.cpp:1388: 
+> scscf-0x7fa5a83ce810 pass initial request Request msg INVITE/cseq=1 
+> (tdta0x7fa5a8615710) to Sproutlet
+> 27-11-2015 18:42:25.688 UTC Info scscfsproutlet.cpp:408: S-CSCF 
+> received initial request
+> 27-11-2015 18:42:25.688 UTC Debug pjutils.cpp:2254: Setting session 
+> expires value from Min-SE header: 90
+> 27-11-2015 18:42:25.688 UTC Debug scscfsproutlet.cpp:672: Route header 
+> references this system
+> 27-11-2015 18:42:25.688 UTC Debug scscfsproutlet.cpp:685: Found ODI 
+> token 7VhkxDKy0r
+> 27-11-2015 18:42:25.688 UTC Info scscfsproutlet.cpp:698: Expired ODI 
+> token 7VhkxDKy0r so handle as OOTB request
+> 27-11-2015 18:42:25.688 UTC Debug scscfsproutlet.cpp:725: No ODI 
+> token, or invalid ODI token, on request, and no P-Charging-Vector 
+> header (so can't log ICID for correlation)
+>
+> Under what circumstances will sprout consider the ODI to no longer be 
+> valid? I don't think it's actually expired given the time between when 
+> it was issued and when it was reported as expired.
+>
+> Thanks,
+>
+> Gavin
+>
+> -- 
+>
+> *Gavin Murphy*
+>
+> VP Engineering, RCS Products
+>
+> +1 (902) 406?8375 x1002
+>
+> gavin.murphy at newnet.com <mailto:gavin.murphy at newnet.com>
+>
+> www.newnet.com <http://www.newnet.com>
+>
+> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+> This e-mail is intended only for the named recipient(s) and may 
+> contain information that is otherwise privileged, confidential and/or 
+> exempt from disclosure under applicable law. No waiver of privilege, 
+> confidence, or otherwise is intended by virtue of communication via 
+> the internet. Any unauthorized use, dissemination or copying is 
+> strictly prohibited. If you have received this e-mail in error, or are 
+> not the named as a recipient, please immediately notify the sender and 
+> destroy all copies of this e-mail.
+> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+>
+>
+
+
+-- 
+Gavin Murphy
+VP Engineering, RCS Products
++1 (902) 406?8375 x1002
+gavin.murphy at newnet.com <mailto:gavin.murphy at newnet.com>
+www.newnet.com <http://www.newnet.com>
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+This e-mail is intended only for the named recipient(s) and may contain 
+information that is otherwise privileged, confidential and/or exempt 
+from disclosure under applicable law. No waiver of privilege, 
+confidence, or otherwise is intended by virtue of communication via the 
+internet. Any unauthorized use, dissemination or copying is strictly 
+prohibited. If you have received this e-mail in error, or are not the 
+named as a recipient, please immediately notify the sender and destroy 
+all copies of this e-mail.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151130/489a6a88/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: image/png
+Size: 28006 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151130/489a6a88/attachment.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: NewNet Logo.png
+Type: image/png
+Size: 28006 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20151130/489a6a88/attachment-0001.png>
+

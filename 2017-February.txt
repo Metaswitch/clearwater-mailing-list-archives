@@ -1,0 +1,1326 @@
+From fabrizio.faustinoni at usi.ch  Mon Feb  6 14:05:22 2017
+From: fabrizio.faustinoni at usi.ch (Faustinoni Fabrizio)
+Date: Mon, 6 Feb 2017 19:05:22 +0000
+Subject: [Project Clearwater] High usage of memory
+Message-ID: <9962299A-A48C-4497-B6D0-6AA925F7D69B@usi.ch>
+
+Hi guys,
+
+I?ve 2 clearwater clusters, the first one has 6 machine (one for each node) and the second one has more node for each type.
+I noticed that the memory consumption is increased in the second cluster. Is this because of multiple nodes type?
+
+
+This is the free -m command on homestead  on the first cluster
+             total       used       free     shared    buffers     cached
+Mem:          2001       1612        388          0         18        105
+-/+ buffers/cache:       1488        513
+Swap:         1021          0       1021
+
+This is the free -m command on homestead-1 (the node that use more memory) on the second cluster
+
+             total       used       free     shared    buffers     cached
+Mem:          2001       1899        102         18         58        177
+-/+ buffers/cache:       1663        338
+Swap:         1021        351        670
+
+As you can see there is also a lot of swap here
+
+Is this normal?
+
+I?m running my cluster on Openstack with 1vpu and 2048Mb of ram foreach VM
+
+
+Thank you
+
+
+
+From leeshirley2002 at gmail.com  Mon Feb  6 23:15:42 2017
+From: leeshirley2002 at gmail.com (Xiaobai Li)
+Date: Mon, 6 Feb 2017 20:15:42 -0800
+Subject: [Project Clearwater] manually install clearwater on OpenStack - SIP
+ error 408
+Message-ID: <CAOJ1h8W6g-9DNnLdY_=1ze4=MLnhiZVnWmAPrfKghzsSVjFWpw@mail.gmail.com>
+
+Hi guys,
+
+I followed the manual installation instructions and successfully installed
+clearwater on Openstack using 7 vms (1 private DNS zone). I used the SIP
+client X-lite and successfully registered a user. However, sometimes the
+X-lite gives me a SIP error 408 and I couldn't make calls between
+registered users.
+Here is my settings for the X-lite:
+General:
+
+User ID: 6505550631
+Domain: ims.hom
+password: *******
+Display name: **
+Authorization name: 6505550631 at ims.hom
+
+Domain Proxy:
+Send outbound via:
+proxy: {bono ip address}
+
+Topology:
+sever address: ims.hom
+Username: 6505550631 at ims.hom
+password: ******
+
+
+Here I also attached the tcpdump between bono and my SIP client when
+registering a user, after 200 for registration it gives me 408 error for
+subscribe.
+
+Hope anyone can help me to figure out this problem. Thanks a lot!
+
+Shirley
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170206/d9d68d1e/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: tcpdump ss
+Type: application/octet-stream
+Size: 13735 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170206/d9d68d1e/attachment.obj>
+
+From Sebastian.Rex at metaswitch.com  Tue Feb  7 12:15:19 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Tue, 7 Feb 2017 17:15:19 +0000
+Subject: [Project Clearwater] Release note for Wartortle
+Message-ID: <BY2PR02MB16530BA682A5368E4A70F9918F430@BY2PR02MB1653.namprd02.prod.outlook.com>
+
+The release for Project Clearwater sprint "Wartortle" has been cut. The code for this release is tagged as release-116 in GitHub.
+
+This release includes the following bug fixes:
+
+
+*         Sprout became unresponsive, apparently due to a deadlock when processing CANCELs (https://github.com/Metaswitch/sprout/issues/1704)
+
+*         Sprout seg-faults in some CANCEL flows (https://github.com/Metaswitch/sprout/issues/1699)
+
+*         Sprout S-CSCF cannot handle Route header URIs with "scscf" in the user-part (https://github.com/Metaswitch/sprout/issues/1696)
+
+*         Inconsistent behaviour on attempting to reuse a failed transport (https://github.com/Metaswitch/sprout/issues/1679)
+
+*         Blocking a HSS's connection to one Homestead VM from a duplex pair causes registrations to fail for 30 seconds (https://github.com/Metaswitch/sprout/issues/1658)
+
+*         Misconfigured Sprout hostname in shared_config causes nonsense error (https://github.com/Metaswitch/sprout/issues/1631)
+
+*         Number-related BGCF logs say "routing directly", but that concept doesn't make sense (https://github.com/Metaswitch/sprout/issues/1611)
+
+*         Sprout hanging while quiescing when updating (https://github.com/Metaswitch/sprout/issues/1530)
+
+*         Sprout might never restart (race condition) (https://github.com/Metaswitch/sprout/issues/1326)
+
+*         REGISTERS fail with THRIFT_EAGAIN errors with 50ms latency between GR sites (https://github.com/Metaswitch/homestead/issues/420)
+
+*         homer and homestead-prov can't run on the same node (i.e. the AIO node is broken) (https://github.com/Metaswitch/crest/issues/333)
+
+*         Monit fails to start Homer even though it's not running (https://github.com/Metaswitch/crest/issues/305)
+
+*         The restore_backup script doesn't work when run in the signaling namespace (https://github.com/Metaswitch/clearwater-cassandra/issues/122)
+
+*         Monit doesn't restart an unresponsive Cassandra process (https://github.com/Metaswitch/clearwater-cassandra/issues/118)
+
+*         Cassandra failure with more than one Cassandra node (https://github.com/Metaswitch/clearwater-cassandra/issues/117)
+
+*         /etc/libnss-ato.conf differs from the version installed by dpkg (https://github.com/Metaswitch/clearwater-infrastructure/issues/415)
+
+*         `sudo service clearwater-infrastructure restart` gives a warning about clearwater-decommission.sh (https://github.com/Metaswitch/clearwater-infrastructure/issues/399)
+
+*         Enterprise MIB alarms do not display the hostname of the node raising the alarm (https://github.com/Metaswitch/clearwater-snmp-handlers/issues/170)
+
+*         astaire can deadlock with clearwater-cluster-manager (https://github.com/Metaswitch/astaire/issues/76)
+
+*         Astaire doesn't handle the memcache quit command (https://github.com/Metaswitch/astaire/issues/72)
+
+*         Service usage lists force-decommission, but this is not a valid option (https://github.com/Metaswitch/clearwater-etcd/issues/396)
+
+
+To upgrade to this release, follow the instructions at http://docs.projectclearwater.org/en/stable/Upgrading_a_Clearwater_deployment.html.  If you are deploying an all-in-one node, the standard image (http://vm-images.cw-ngv.com/cw-aio.ova) has been updated for this release.
+
+Seb
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170207/2d7f9b63/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Wed Feb  8 05:09:18 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Wed, 8 Feb 2017 10:09:18 +0000
+Subject: [Project Clearwater] manually install clearwater on OpenStack -
+ SIP error 408
+In-Reply-To: <CAOJ1h8W6g-9DNnLdY_=1ze4=MLnhiZVnWmAPrfKghzsSVjFWpw@mail.gmail.com>
+References: <CAOJ1h8W6g-9DNnLdY_=1ze4=MLnhiZVnWmAPrfKghzsSVjFWpw@mail.gmail.com>
+Message-ID: <SN1PR02MB166460FCDDD23245B26CB8568F420@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+Have you had a look at the sprout logs? Could you follow the instructions here: http://clearwater.readthedocs.io/en/latest/Troubleshooting_and_Recovery.html#sprout to turn on debug logging on sprout, and then repro the problem?
+
+You?ll then see a lot more info in /var/log/sprout/sprout_current.txt which should help you figure out what?s going wrong. If not, then send the sprout log file and we can take a look to see what might be happening.
+
+Thanks,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Xiaobai Li
+Sent: 07 February 2017 04:16
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] manually install clearwater on OpenStack - SIP error 408
+
+Hi guys,
+
+I followed the manual installation instructions and successfully installed clearwater on Openstack using 7 vms (1 private DNS zone). I used the SIP client X-lite and successfully registered a user. However, sometimes the X-lite gives me a SIP error 408 and I couldn't make calls between registered users.
+Here is my settings for the X-lite:
+General:
+
+User ID: 6505550631
+Domain: ims.hom
+password: *******
+Display name: **
+Authorization name: 6505550631 at ims.hom<mailto:6505550631 at ims.hom>
+
+Domain Proxy:
+Send outbound via:
+proxy: {bono ip address}
+
+Topology:
+sever address: ims.hom
+Username: 6505550631 at ims.hom<mailto:6505550631 at ims.hom>
+password: ******
+
+
+Here I also attached the tcpdump between bono and my SIP client when registering a user, after 200 for registration it gives me 408 error for subscribe.
+
+Hope anyone can help me to figure out this problem. Thanks a lot!
+
+Shirley
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170208/411a68f7/attachment.html>
+
+From david.m.oneill at intel.com  Thu Feb  9 11:09:04 2017
+From: david.m.oneill at intel.com (O Neill, David M)
+Date: Thu, 9 Feb 2017 16:09:04 +0000
+Subject: [Project Clearwater] FW: Kubernetes alternative approach
+Message-ID: <83C353AC9391744E988CDDDFB944567A262FFFF4@IRSMSX102.ger.corp.intel.com>
+
+Folks,
+
+At intel we are interested in looking at accelerating VNFs on intel based hardware.
+As such we have been looking into Clearwater IMS on Kubernetes.
+
+We drafted an alternative approach to the approach taken by Peter White on the branch "kubernetes_new".
+https://github.com/Intel-Corp/clearwater-kubernertes/tree/kubernetes_new
+
+We deploy bind9 as part of the solution and decouple all the container instances via kubernetes services.
+https://github.com/Intel-Corp/clearwater-kubernertes
+
+There are a number of implications to this.  Might be of some use, or not, looking forward to any feedback
+
+Enjoy
+
+
+
+
+
+--------------------------------------------------------------
+Intel Research and Development Ireland Limited
+Registered in Ireland
+Registered Office: Collinstown Industrial Park, Leixlip, County Kildare
+Registered Number: 308263
+
+
+This e-mail and any attachments may contain confidential material for the sole
+use of the intended recipient(s). Any review or distribution by others is
+strictly prohibited. If you are not the intended recipient, please contact the
+sender and delete all copies.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170209/8047255d/attachment.html>
+
+From Jace.Liang at itri.org.tw  Tue Feb 14 02:55:39 2017
+From: Jace.Liang at itri.org.tw (Jace.Liang at itri.org.tw)
+Date: Tue, 14 Feb 2017 07:55:39 +0000
+Subject: [Project Clearwater] Is the clearwater-stress test available for
+ version of repo 84?
+Message-ID: <02d946f9ba7d4c72a542c5d895ad3ddd@EXMB03.ITRI.DS>
+
+Dear developers,
+
+I would like to do the stress test for my deployment followed by
+http://clearwater.readthedocs.io/en/stable/Clearwater_stress_testing.html
+
+However, my current Clearwater deployment is based on repo84<http://repo.cw-ngv.com/archive/repo84/>,
+And I found something quite different from the latest instruction on web page of stress test.
+Is the stress test available for version repo84? Where to find the corresponding stress test instruction for repo84?
+Or I have to upgrade my Clearwater to the latest version?
+
+Thank you very much!
+
+
+
+--
+???????????????????????????????????????????? This email may contain confidential information. Please do not use or disclose it in any way and delete it if you are not the intended recipient.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170214/499793ad/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Tue Feb 14 07:27:33 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Tue, 14 Feb 2017 12:27:33 +0000
+Subject: [Project Clearwater] Is the clearwater-stress test available
+ for version of repo 84?
+In-Reply-To: <02d946f9ba7d4c72a542c5d895ad3ddd@EXMB03.ITRI.DS>
+References: <02d946f9ba7d4c72a542c5d895ad3ddd@EXMB03.ITRI.DS>
+Message-ID: <SN1PR02MB1664B3D79E9EFE32C22A617D8F580@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+As you??ve seen, there is no clearwater-sip-stress-coreonly package for repo84, but the latest version of the clearwater-sip-stress-coreonly package should work fine against an otherwise repo84 deployment. Therefore, you have a few options:
+
+
+1.       upgrade your deployment to the ??stable?? release (http://clearwater.readthedocs.io/en/stable/Upgrading_a_Clearwater_deployment.html)
+
+2.       use the older stress scripts, by following the instructions to install the clearwater-sip-stress package
+
+3.       use the newer scripts, by installing clearwater-sip-stress-coreonly from a later version of the repo.
+
+If you opt for (3), then you need to install your stress node manually (following the instructions here: http://clearwater.readthedocs.io/en/stable/Manual_Install.html#configure-the-apt-software-sources) and ensure that you point it at the ??stable?? repo.
+
+Regards,
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Jace.Liang at itri.org.tw
+Sent: 14 February 2017 07:56
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Is the clearwater-stress test available for version of repo 84?
+
+Dear developers,
+
+I would like to do the stress test for my deployment followed by
+http://clearwater.readthedocs.io/en/stable/Clearwater_stress_testing.html
+
+However, my current Clearwater deployment is based on repo84<http://repo.cw-ngv.com/archive/repo84/>,
+And I found something quite different from the latest instruction on web page of stress test.
+Is the stress test available for version repo84? Where to find the corresponding stress test instruction for repo84?
+Or I have to upgrade my Clearwater to the latest version?
+
+Thank you very much!
+
+
+
+--
+?????????????????????C???Y???????????????????????????????????????????????K???N?????????? This email may contain confidential information. Please do not use or disclose it in any way and delete it if you are not the intended recipient.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170214/60be305e/attachment.html>
+
+From marcello300sx at gmail.com  Tue Feb 14 17:33:01 2017
+From: marcello300sx at gmail.com (Marcello 300sx)
+Date: Tue, 14 Feb 2017 23:33:01 +0100
+Subject: [Project Clearwater] Wartortle Homestead is not running issue
+Message-ID: <CANX2aNHHi7bAoVom8BzAYL4YAGJSL8oy7Lp07+CwC14Cpf1ESA@mail.gmail.com>
+
+Hi All,
+
+I'd want to raise a trouble on wartortle release that I've just installed.
+After Upgrade I got the following issue on homestead syslog:
+
+Feb 14 22:06:34 homestead01 homestead[5767]: 4006 - Description: Fatal -
+Failed to initialize the cache for the CassandraStore - error code 3.
+@@Cause: The memory cache used to access Cassandra could not be
+initialized. @@Effect: The application will exit and restart until the
+problem is fixed. @@Action: (1). Check to see if Cassandra is running
+reliably. (2). See if the restart on Homestead clears the problem. (3). Try
+reinstalling Homestead and starting Homestead to see if the problem clears.
+
+moreover on /var/log/homestead/homestead_err.log I have:
+Thrift: Tue Feb 14 22:16:51 2017 TSocket::open() error on socket (after
+THRIFT_POLL) <Host: 127.0.0.1 Port: 9160>Connection refused
+
+and on /var/log/cassandra/system.log:
+ERROR [main] 2017-02-14 22:17:15,964 DatabaseDescriptor.java:141 - Fatal
+configuration error
+
+due to this issue I cannot have homestead running and cassandra is not
+stable also, so I cannot go in cqlsh cli. It seems Homestead cannot connect
+to cassandra.
+Here the monit summary, even if cassandra_process sometime is running,
+sometime it doesn't exist:
+[homestead]ubuntu at homestead01:~$ sudo monit summary
+Monit 5.18.1 uptime: 7h 45m
+ Service Name                     Status                      Type
+ node-homestead01                 Running                     System
+ snmpd_process                    Running                     Process
+ ntp_process                      Running                     Process
+ nginx_process                    Running                     Process
+ homestead_process                Does not exist              Process
+ homestead-prov_process           Running                     Process
+ clearwater_queue_manager_pro...  Running                     Process
+ etcd_process                     Running                     Process
+ clearwater_diags_monitor_pro...  Running                     Process
+ clearwater_config_manager_pr...  Running                     Process
+ clearwater_cluster_manager_p...  Running                     Process
+ cassandra_process                Does not exist              Process
+ nginx_ping                       Status ok                   Program
+ nginx_uptime                     Status ok                   Program
+ monit_uptime                     Status ok                   Program
+ homestead_uptime                 Waiting                     Program
+ poll_homestead                   Initializing                Program
+ check_cx_health                  Initializing                Program
+ poll_homestead-prov              Not monitored               Program
+ clearwater_queue_manager_uptime  Status ok                   Program
+ etcd_uptime                      Status ok                   Program
+ poll_etcd_cluster                Status failed               Program
+ poll_etcd                        Status ok                   Program
+ cassandra_uptime                 Not monitored               Program
+ poll_cassandra                   Not monitored               Program
+ poll_cqlsh                       Not monitored               Program
+
+and the content of local_config and share_config files is:
+/etc/clearwater/shared_config
+::::::::::::::
+# Deployment definitions
+home_domain=test.it
+sprout_hostname=sprout.test.it
+hs_hostname=hs.test.it:8888
+hs_provisioning_hostname=hs.test.it:8889
+ralf_hostname=ralf.test.it:10888
+xdms_hostname=homer.test.it:7888
+
+# Email server configuration
+#smtp_smarthost=<smtp server>
+#smtp_username=<username>
+#smtp_password=<password>
+#email_recovery_sender=clearwater at example.org
+
+# Keys
+signup_key=clearwater
+turn_workaround=clearwater
+ellis_api_key=clearwater
+ellis_cookie_key=clearwater
+
+#Bind
+signaling_dns_server=192.168.111.27
+enum_server=192.168.111.27
+enum_file=/etc/bind/e164.arpa.db
+::::::::::::::
+/etc/clearwater/user_settings
+::::::::::::::
+log_level=5
+
+If I try to run sudo service homestead stop and the status I get:
+[homestead]ubuntu at homestead01:~$ sudo service homestead stop
+[homestead]ubuntu at homestead01:~$ sudo service homestead status
+ * homestead is not running
+
+What do you think the issue can be ?
+
+Thank you very much,
+Best Regards,
+/Marcello
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170214/da7d3f63/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Wed Feb 15 06:10:03 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Wed, 15 Feb 2017 11:10:03 +0000
+Subject: [Project Clearwater] Wartortle Homestead is not running issue
+In-Reply-To: <CANX2aNHHi7bAoVom8BzAYL4YAGJSL8oy7Lp07+CwC14Cpf1ESA@mail.gmail.com>
+References: <CANX2aNHHi7bAoVom8BzAYL4YAGJSL8oy7Lp07+CwC14Cpf1ESA@mail.gmail.com>
+Message-ID: <SN1PR02MB166471FA44478E72491A37CE8F5B0@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+Is there any more information in the /var/log/cassandra/system.log? It sounds like cassandra is failing to start, which is causing the homestead errors you?re seeing.
+
+If possible, could you share with us the contents of /var/log/cassandra/system.log and /etc/cassandra/cassandra.yaml? That may allow us to see why cassandra can?t start up.
+
+Also, which release were you upgrading from?
+
+Thanks,
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Marcello 300sx
+Sent: 14 February 2017 22:33
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Wartortle Homestead is not running issue
+
+Hi All,
+I'd want to raise a trouble on wartortle release that I've just installed. After Upgrade I got the following issue on homestead syslog:
+
+Feb 14 22:06:34 homestead01 homestead[5767]: 4006 - Description: Fatal - Failed to initialize the cache for the CassandraStore - error code 3. @@Cause: The memory cache used to access Cassandra could not be initialized. @@Effect: The application will exit and restart until the problem is fixed. @@Action: (1). Check to see if Cassandra is running reliably. (2). See if the restart on Homestead clears the problem. (3). Try reinstalling Homestead and starting Homestead to see if the problem clears.
+moreover on /var/log/homestead/homestead_err.log I have:
+Thrift: Tue Feb 14 22:16:51 2017 TSocket::open() error on socket (after THRIFT_POLL) <Host: 127.0.0.1 Port: 9160>Connection refused
+and on /var/log/cassandra/system.log:
+ERROR [main] 2017-02-14 22:17:15,964 DatabaseDescriptor.java:141 - Fatal configuration error
+due to this issue I cannot have homestead running and cassandra is not stable also, so I cannot go in cqlsh cli. It seems Homestead cannot connect to cassandra.
+Here the monit summary, even if cassandra_process sometime is running, sometime it doesn't exist:
+[homestead]ubuntu at homestead01:~$ sudo monit summary
+Monit 5.18.1 uptime: 7h 45m
+ Service Name                     Status                      Type
+ node-homestead01                 Running                     System
+ snmpd_process                    Running                     Process
+ ntp_process                      Running                     Process
+ nginx_process                    Running                     Process
+ homestead_process                Does not exist              Process
+ homestead-prov_process           Running                     Process
+ clearwater_queue_manager_pro...  Running                     Process
+ etcd_process                     Running                     Process
+ clearwater_diags_monitor_pro...  Running                     Process
+ clearwater_config_manager_pr...  Running                     Process
+ clearwater_cluster_manager_p...  Running                     Process
+ cassandra_process                Does not exist              Process
+ nginx_ping                       Status ok                   Program
+ nginx_uptime                     Status ok                   Program
+ monit_uptime                     Status ok                   Program
+ homestead_uptime                 Waiting                     Program
+ poll_homestead                   Initializing                Program
+ check_cx_health                  Initializing                Program
+ poll_homestead-prov              Not monitored               Program
+ clearwater_queue_manager_uptime  Status ok                   Program
+ etcd_uptime                      Status ok                   Program
+ poll_etcd_cluster                Status failed               Program
+ poll_etcd                        Status ok                   Program
+ cassandra_uptime                 Not monitored               Program
+ poll_cassandra                   Not monitored               Program
+ poll_cqlsh                       Not monitored               Program
+and the content of local_config and share_config files is:
+/etc/clearwater/shared_config
+::::::::::::::
+# Deployment definitions
+home_domain=test.it<http://test.it>
+sprout_hostname=sprout.test.it<http://sprout.test.it>
+hs_hostname=hs.test.it:8888<http://hs.test.it:8888>
+hs_provisioning_hostname=hs.test.it:8889<http://hs.test.it:8889>
+ralf_hostname=ralf.test.it:10888<http://ralf.test.it:10888>
+xdms_hostname=homer.test.it:7888<http://homer.test.it:7888>
+
+# Email server configuration
+#smtp_smarthost=<smtp server>
+#smtp_username=<username>
+#smtp_password=<password>
+#email_recovery_sender=clearwater at example.org<mailto:clearwater at example.org>
+
+# Keys
+signup_key=clearwater
+turn_workaround=clearwater
+ellis_api_key=clearwater
+ellis_cookie_key=clearwater
+
+#Bind
+signaling_dns_server=192.168.111.27
+enum_server=192.168.111.27
+enum_file=/etc/bind/e164.arpa.db
+::::::::::::::
+/etc/clearwater/user_settings
+::::::::::::::
+log_level=5
+If I try to run sudo service homestead stop and the status I get:
+[homestead]ubuntu at homestead01:~$ sudo service homestead stop
+[homestead]ubuntu at homestead01:~$ sudo service homestead status
+ * homestead is not running
+What do you think the issue can be ?
+Thank you very much,
+Best Regards,
+/Marcello
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170215/9a73924a/attachment.html>
+
+From Jace.Liang at itri.org.tw  Wed Feb 15 20:32:47 2017
+From: Jace.Liang at itri.org.tw (Jace.Liang at itri.org.tw)
+Date: Thu, 16 Feb 2017 01:32:47 +0000
+Subject: [Project Clearwater] Is the clearwater-stress test available
+ for version of repo 84?
+In-Reply-To: <SN1PR02MB1664B3D79E9EFE32C22A617D8F580@SN1PR02MB1664.namprd02.prod.outlook.com>
+References: <02d946f9ba7d4c72a542c5d895ad3ddd@EXMB03.ITRI.DS>
+	<SN1PR02MB1664B3D79E9EFE32C22A617D8F580@SN1PR02MB1664.namprd02.prod.outlook.com>
+Message-ID: <652475c99f694f3a8d5c60c23b2cafa1@EXMB03.ITRI.DS>
+
+Hi Seb.
+Thank for you advice, I would like to try option 2 and 3,
+May I ask you where to find the older stress scripts?
+
+And another problem is the step of bulking provision number of subscribers.
+http://clearwater.readthedocs.io/en/stable/Clearwater_stress_testing.html?highlight=stress#deploying-a-stress-node
+I can?t find the ?stress_provision.sh? in the homestead node of repo84.
+Is there any alternative way to do that on repo84?
+
+Thank you.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Sebastian Rex
+Sent: Tuesday, February 14, 2017 8:28 PM
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Is the clearwater-stress test available for version of repo 84?
+
+Hi,
+
+As you?ve seen, there is no clearwater-sip-stress-coreonly package for repo84, but the latest version of the clearwater-sip-stress-coreonly package should work fine against an otherwise repo84 deployment. Therefore, you have a few options:
+
+
+1.       upgrade your deployment to the ?stable? release (http://clearwater.readthedocs.io/en/stable/Upgrading_a_Clearwater_deployment.html)
+
+2.       use the older stress scripts, by following the instructions to install the clearwater-sip-stress package
+
+3.       use the newer scripts, by installing clearwater-sip-stress-coreonly from a later version of the repo.
+
+If you opt for (3), then you need to install your stress node manually (following the instructions here: http://clearwater.readthedocs.io/en/stable/Manual_Install.html#configure-the-apt-software-sources) and ensure that you point it at the ?stable? repo.
+
+Regards,
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Jace.Liang at itri.org.tw<mailto:Jace.Liang at itri.org.tw>
+Sent: 14 February 2017 07:56
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Is the clearwater-stress test available for version of repo 84?
+
+Dear developers,
+
+I would like to do the stress test for my deployment followed by
+http://clearwater.readthedocs.io/en/stable/Clearwater_stress_testing.html
+
+However, my current Clearwater deployment is based on repo84<http://repo.cw-ngv.com/archive/repo84/>,
+And I found something quite different from the latest instruction on web page of stress test.
+Is the stress test available for version repo84? Where to find the corresponding stress test instruction for repo84?
+Or I have to upgrade my Clearwater to the latest version?
+
+Thank you very much!
+
+
+
+--
+???????????????????????????????????????????? This email may contain confidential information. Please do not use or disclose it in any way and delete it if you are not the intended recipient.
+
+
+--
+???????????????????????????????????????????? This email may contain confidential information. Please do not use or disclose it in any way and delete it if you are not the intended recipient.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170216/af237ea8/attachment.html>
+
+From marcello300sx at gmail.com  Wed Feb 15 11:41:11 2017
+From: marcello300sx at gmail.com (Marcello 300sx)
+Date: Wed, 15 Feb 2017 17:41:11 +0100
+Subject: [Project Clearwater] Wartortle Homestead is not running issue
+In-Reply-To: <CANX2aNHHi7bAoVom8BzAYL4YAGJSL8oy7Lp07+CwC14Cpf1ESA@mail.gmail.com>
+References: <CANX2aNHHi7bAoVom8BzAYL4YAGJSL8oy7Lp07+CwC14Cpf1ESA@mail.gmail.com>
+Message-ID: <CANX2aNGRUJx4b48rUts7gQABc66OPtAgcjbE_s37BaEWvyMUTQ@mail.gmail.com>
+
+Hi Seb,
+you can find them attached.
+
+Anyway I can see something that homestead doesn't like on cassandra yaml
+file and it suggests to delete the following lines:
+
+multithreaded_compaction, memtable_flush_queue_size,
+preheat_kernel_page_cache, in_memory_compaction_limit_in_mb,
+compaction_preheat_key_cache
+
+from your cassandra.yaml
+
+Do you think is suitable or some of these parameter is necessary?
+
+I upgraded from Quilava release.
+
+Cheers,
+/Marcello
+
+
+2017-02-14 23:33 GMT+01:00 Marcello 300sx <marcello300sx at gmail.com>:
+
+> Hi All,
+>
+> I'd want to raise a trouble on wartortle release that I've just installed.
+> After Upgrade I got the following issue on homestead syslog:
+>
+> Feb 14 22:06:34 homestead01 homestead[5767]: 4006 - Description: Fatal -
+> Failed to initialize the cache for the CassandraStore - error code 3.
+> @@Cause: The memory cache used to access Cassandra could not be
+> initialized. @@Effect: The application will exit and restart until the
+> problem is fixed. @@Action: (1). Check to see if Cassandra is running
+> reliably. (2). See if the restart on Homestead clears the problem. (3). Try
+> reinstalling Homestead and starting Homestead to see if the problem clears.
+>
+> moreover on /var/log/homestead/homestead_err.log I have:
+> Thrift: Tue Feb 14 22:16:51 2017 TSocket::open() error on socket (after
+> THRIFT_POLL) <Host: 127.0.0.1 Port: 9160>Connection refused
+>
+> and on /var/log/cassandra/system.log:
+> ERROR [main] 2017-02-14 22:17:15,964 DatabaseDescriptor.java:141 - Fatal
+> configuration error
+>
+> due to this issue I cannot have homestead running and cassandra is not
+> stable also, so I cannot go in cqlsh cli. It seems Homestead cannot connect
+> to cassandra.
+> Here the monit summary, even if cassandra_process sometime is running,
+> sometime it doesn't exist:
+> [homestead]ubuntu at homestead01:~$ sudo monit summary
+> Monit 5.18.1 uptime: 7h 45m
+>  Service Name                     Status                      Type
+>  node-homestead01                 Running                     System
+>  snmpd_process                    Running                     Process
+>  ntp_process                      Running                     Process
+>  nginx_process                    Running                     Process
+>  homestead_process                Does not exist              Process
+>  homestead-prov_process           Running                     Process
+>  clearwater_queue_manager_pro...  Running                     Process
+>  etcd_process                     Running                     Process
+>  clearwater_diags_monitor_pro...  Running                     Process
+>  clearwater_config_manager_pr...  Running                     Process
+>  clearwater_cluster_manager_p...  Running                     Process
+>  cassandra_process                Does not exist              Process
+>  nginx_ping                       Status ok                   Program
+>  nginx_uptime                     Status ok                   Program
+>  monit_uptime                     Status ok                   Program
+>  homestead_uptime                 Waiting                     Program
+>  poll_homestead                   Initializing                Program
+>  check_cx_health                  Initializing                Program
+>  poll_homestead-prov              Not monitored               Program
+>  clearwater_queue_manager_uptime  Status ok                   Program
+>  etcd_uptime                      Status ok                   Program
+>  poll_etcd_cluster                Status failed               Program
+>  poll_etcd                        Status ok                   Program
+>  cassandra_uptime                 Not monitored               Program
+>  poll_cassandra                   Not monitored               Program
+>  poll_cqlsh                       Not monitored               Program
+>
+> and the content of local_config and share_config files is:
+> /etc/clearwater/shared_config
+> ::::::::::::::
+> # Deployment definitions
+> home_domain=test.it
+> sprout_hostname=sprout.test.it
+> hs_hostname=hs.test.it:8888
+> hs_provisioning_hostname=hs.test.it:8889
+> ralf_hostname=ralf.test.it:10888
+> xdms_hostname=homer.test.it:7888
+>
+> # Email server configuration
+> #smtp_smarthost=<smtp server>
+> #smtp_username=<username>
+> #smtp_password=<password>
+> #email_recovery_sender=clearwater at example.org
+>
+> # Keys
+> signup_key=clearwater
+> turn_workaround=clearwater
+> ellis_api_key=clearwater
+> ellis_cookie_key=clearwater
+>
+> #Bind
+> signaling_dns_server=192.168.111.27
+> enum_server=192.168.111.27
+> enum_file=/etc/bind/e164.arpa.db
+> ::::::::::::::
+> /etc/clearwater/user_settings
+> ::::::::::::::
+> log_level=5
+>
+> If I try to run sudo service homestead stop and the status I get:
+> [homestead]ubuntu at homestead01:~$ sudo service homestead stop
+> [homestead]ubuntu at homestead01:~$ sudo service homestead status
+>  * homestead is not running
+>
+> What do you think the issue can be ?
+>
+> Thank you very much,
+> Best Regards,
+> /Marcello
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170215/0a9da7df/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: vIMS_Clearwater_Labs.zip
+Type: application/zip
+Size: 1226999 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170215/0a9da7df/attachment.zip>
+
+From Sebastian.Rex at metaswitch.com  Thu Feb 16 08:09:41 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Thu, 16 Feb 2017 13:09:41 +0000
+Subject: [Project Clearwater] Wartortle Homestead is not running issue
+In-Reply-To: <CANX2aNGRUJx4b48rUts7gQABc66OPtAgcjbE_s37BaEWvyMUTQ@mail.gmail.com>
+References: <CANX2aNHHi7bAoVom8BzAYL4YAGJSL8oy7Lp07+CwC14Cpf1ESA@mail.gmail.com>
+	<CANX2aNGRUJx4b48rUts7gQABc66OPtAgcjbE_s37BaEWvyMUTQ@mail.gmail.com>
+Message-ID: <SN1PR02MB16641C2D62C38702D542FC398F5A0@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+Thanks for that. We upgraded the version of Cassandra that?s used from 2.0.14 to 2.1.15 in the Quilava release (as per the release note: http://www.projectclearwater.org/sprint-quilava-release-note). Were you upgrading from an older release than Quilava? It looks like something has gone wrong during this upgrade (and also, you may have missed the upgrade steps listed in that document).
+
+It looks like, for some reason, the yaml file was not re-generated when your cassandra was upgraded. Did you hit any problems when running the upgrade on this node? If you did, I?d suggest running ?sudo clearwater-upgrade? again and verify that there are no errors before continuing.
+
+If you didn?t hit any problems in the upgrade, then you should be able to fix this by running the following commands on your homestead node:
+
+touch "/etc/clearwater/force_cassandra_yaml_refresh"
+sudo service clearwater-cluster-manager stop
+
+This should trigger the cluster manager to refresh the cassandra yaml file, which should then allow cassandra to start successfully.
+
+Assuming that works, once cassandra is running again don?t forget to run ?/usr/share/clearwater/bin/run-in-signaling-namespace nodetool upgradesstables? as specified in the Quilava release note.
+
+Regards,
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Marcello 300sx
+Sent: 15 February 2017 16:41
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Wartortle Homestead is not running issue
+
+Hi Seb,
+you can find them attached.
+Anyway I can see something that homestead doesn't like on cassandra yaml file and it suggests to delete the following lines:
+
+multithreaded_compaction, memtable_flush_queue_size,
+preheat_kernel_page_cache, in_memory_compaction_limit_in_mb,
+compaction_preheat_key_cache
+
+from your cassandra.yaml
+Do you think is suitable or some of these parameter is necessary?
+I upgraded from Quilava release.
+Cheers,
+/Marcello
+
+
+2017-02-14 23:33 GMT+01:00 Marcello 300sx <marcello300sx at gmail.com<mailto:marcello300sx at gmail.com>>:
+Hi All,
+I'd want to raise a trouble on wartortle release that I've just installed. After Upgrade I got the following issue on homestead syslog:
+
+Feb 14 22:06:34 homestead01 homestead[5767]: 4006 - Description: Fatal - Failed to initialize the cache for the CassandraStore - error code 3. @@Cause: The memory cache used to access Cassandra could not be initialized. @@Effect: The application will exit and restart until the problem is fixed. @@Action: (1). Check to see if Cassandra is running reliably. (2). See if the restart on Homestead clears the problem. (3). Try reinstalling Homestead and starting Homestead to see if the problem clears.
+moreover on /var/log/homestead/homestead_err.log I have:
+Thrift: Tue Feb 14 22:16:51 2017 TSocket::open() error on socket (after THRIFT_POLL) <Host: 127.0.0.1 Port: 9160>Connection refused
+and on /var/log/cassandra/system.log:
+ERROR [main] 2017-02-14 22:17:15,964 DatabaseDescriptor.java:141 - Fatal configuration error
+due to this issue I cannot have homestead running and cassandra is not stable also, so I cannot go in cqlsh cli. It seems Homestead cannot connect to cassandra.
+Here the monit summary, even if cassandra_process sometime is running, sometime it doesn't exist:
+[homestead]ubuntu at homestead01:~$ sudo monit summary
+Monit 5.18.1 uptime: 7h 45m
+ Service Name                     Status                      Type
+ node-homestead01                 Running                     System
+ snmpd_process                    Running                     Process
+ ntp_process                      Running                     Process
+ nginx_process                    Running                     Process
+ homestead_process                Does not exist              Process
+ homestead-prov_process           Running                     Process
+ clearwater_queue_manager_pro...  Running                     Process
+ etcd_process                     Running                     Process
+ clearwater_diags_monitor_pro...  Running                     Process
+ clearwater_config_manager_pr...  Running                     Process
+ clearwater_cluster_manager_p...  Running                     Process
+ cassandra_process                Does not exist              Process
+ nginx_ping                       Status ok                   Program
+ nginx_uptime                     Status ok                   Program
+ monit_uptime                     Status ok                   Program
+ homestead_uptime                 Waiting                     Program
+ poll_homestead                   Initializing                Program
+ check_cx_health                  Initializing                Program
+ poll_homestead-prov              Not monitored               Program
+ clearwater_queue_manager_uptime  Status ok                   Program
+ etcd_uptime                      Status ok                   Program
+ poll_etcd_cluster                Status failed               Program
+ poll_etcd                        Status ok                   Program
+ cassandra_uptime                 Not monitored               Program
+ poll_cassandra                   Not monitored               Program
+ poll_cqlsh                       Not monitored               Program
+and the content of local_config and share_config files is:
+/etc/clearwater/shared_config
+::::::::::::::
+# Deployment definitions
+home_domain=test.it<http://test.it>
+sprout_hostname=sprout.test.it<http://sprout.test.it>
+hs_hostname=hs.test.it:8888<http://hs.test.it:8888>
+hs_provisioning_hostname=hs.test.it:8889<http://hs.test.it:8889>
+ralf_hostname=ralf.test.it:10888<http://ralf.test.it:10888>
+xdms_hostname=homer.test.it:7888<http://homer.test.it:7888>
+
+# Email server configuration
+#smtp_smarthost=<smtp server>
+#smtp_username=<username>
+#smtp_password=<password>
+#email_recovery_sender=clearwater at example.org<mailto:clearwater at example.org>
+
+# Keys
+signup_key=clearwater
+turn_workaround=clearwater
+ellis_api_key=clearwater
+ellis_cookie_key=clearwater
+
+#Bind
+signaling_dns_server=192.168.111.27
+enum_server=192.168.111.27
+enum_file=/etc/bind/e164.arpa.db
+::::::::::::::
+/etc/clearwater/user_settings
+::::::::::::::
+log_level=5
+If I try to run sudo service homestead stop and the status I get:
+[homestead]ubuntu at homestead01:~$ sudo service homestead stop
+[homestead]ubuntu at homestead01:~$ sudo service homestead status
+ * homestead is not running
+What do you think the issue can be ?
+Thank you very much,
+Best Regards,
+/Marcello
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170216/e0faa4ef/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Thu Feb 16 08:19:31 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Thu, 16 Feb 2017 13:19:31 +0000
+Subject: [Project Clearwater] Is the clearwater-stress test available
+ for version of repo 84?
+In-Reply-To: <652475c99f694f3a8d5c60c23b2cafa1@EXMB03.ITRI.DS>
+References: <02d946f9ba7d4c72a542c5d895ad3ddd@EXMB03.ITRI.DS>
+	<SN1PR02MB1664B3D79E9EFE32C22A617D8F580@SN1PR02MB1664.namprd02.prod.outlook.com>
+	<652475c99f694f3a8d5c60c23b2cafa1@EXMB03.ITRI.DS>
+Message-ID: <SN1PR02MB16642FBBFDACE4AFFE0A86D38F5A0@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Since you??re using a very old release, the documentation for running stress from the release-84 version of the code isn??t on our readthedocs pages. However, you can still find the old instructions in our GitHub repo.
+
+The old instructions for running stress can be found here: https://github.com/Metaswitch/clearwater-readthedocs/blob/release-84/docs/Clearwater_stress_testing.md
+
+The old instructions for bulk provisioning subscribers can be found here: https://github.com/Metaswitch/crest/blob/release-84/docs/Bulk-Provisioning%20Numbers.md
+
+Using these, you should be able to do option (2).
+
+If you want to try option (3), you may be able to use the current instructions for installing the clearwater-sip-stress-coreonly node, and the old instructions for bulk provisioning subscribers (but we??ve never tried running the new stress scripts against such an old deployment).
+
+Regards,
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Jace.Liang at itri.org.tw
+Sent: 16 February 2017 01:33
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Is the clearwater-stress test available for version of repo 84?
+
+Hi Seb.
+Thank for you advice, I would like to try option 2 and 3,
+May I ask you where to find the older stress scripts?
+
+And another problem is the step of bulking provision number of subscribers.
+http://clearwater.readthedocs.io/en/stable/Clearwater_stress_testing.html?highlight=stress#deploying-a-stress-node
+I can??t find the ??stress_provision.sh?? in the homestead node of repo84.
+Is there any alternative way to do that on repo84?
+
+Thank you.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Sebastian Rex
+Sent: Tuesday, February 14, 2017 8:28 PM
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] Is the clearwater-stress test available for version of repo 84?
+
+Hi,
+
+As you??ve seen, there is no clearwater-sip-stress-coreonly package for repo84, but the latest version of the clearwater-sip-stress-coreonly package should work fine against an otherwise repo84 deployment. Therefore, you have a few options:
+
+
+1.       upgrade your deployment to the ??stable?? release (http://clearwater.readthedocs.io/en/stable/Upgrading_a_Clearwater_deployment.html)
+
+2.       use the older stress scripts, by following the instructions to install the clearwater-sip-stress package
+
+3.       use the newer scripts, by installing clearwater-sip-stress-coreonly from a later version of the repo.
+
+If you opt for (3), then you need to install your stress node manually (following the instructions here: http://clearwater.readthedocs.io/en/stable/Manual_Install.html#configure-the-apt-software-sources) and ensure that you point it at the ??stable?? repo.
+
+Regards,
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Jace.Liang at itri.org.tw<mailto:Jace.Liang at itri.org.tw>
+Sent: 14 February 2017 07:56
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Is the clearwater-stress test available for version of repo 84?
+
+Dear developers,
+
+I would like to do the stress test for my deployment followed by
+http://clearwater.readthedocs.io/en/stable/Clearwater_stress_testing.html
+
+However, my current Clearwater deployment is based on repo84<http://repo.cw-ngv.com/archive/repo84/>,
+And I found something quite different from the latest instruction on web page of stress test.
+Is the stress test available for version repo84? Where to find the corresponding stress test instruction for repo84?
+Or I have to upgrade my Clearwater to the latest version?
+
+Thank you very much!
+
+
+
+--
+?????????????????????C???Y???????????????????????????????????????????????K???N?????????? This email may contain confidential information. Please do not use or disclose it in any way and delete it if you are not the intended recipient.
+
+
+--
+?????????????????????C???Y???????????????????????????????????????????????K???N?????????? This email may contain confidential information. Please do not use or disclose it in any way and delete it if you are not the intended recipient.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170216/1b0cd3b0/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Mon Feb 20 07:50:20 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Mon, 20 Feb 2017 12:50:20 +0000
+Subject: [Project Clearwater] FW: Getting error in installation of
+ Clearwater IMS node: bono and Sprout
+In-Reply-To: <CAK=ku5Q_B2vaPiFbiELY3AX8n--bhF6KE=O_cLgTFtDC5Ex4sA@mail.gmail.com>
+References: <CAK=ku5Q_B2vaPiFbiELY3AX8n--bhF6KE=O_cLgTFtDC5Ex4sA@mail.gmail.com>
+Message-ID: <SN1PR02MB16648463BCFAA5A0CFB4FE668F5E0@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+We?ve spotted this email, which I presume was meant to go to the mailing list? In future, you?re more likely to get a response if you send the email to the mailing list.
+
+What release are you trying to install? Also, what do you see if you try to run:
+
+apt-get install clearwater-tcp-scalability
+
+on its own?
+
+Thanks,
+Seb.
+
+________________________________
+
+From: Yash Khosla [mailto:yashkhosla010 at gmail.com]
+Sent: 13 February 2017 01:36
+To: Eleanor Merry
+Subject: Getting error in installation of Clearwater IMS node: bono and Sprout
+
+I am getting following error on installation of bono-node
+
+
+---------------------------------------------------------------------------------------------------------------------------
+dpkg: error processing package clearwater-tcp-scalability (--configure):
+ subprocess installed post-installation script returned error exit status 255
+dpkg: dependency problems prevent configuration of bono:
+ bono depends on clearwater-tcp-scalability; however:
+  Package clearwater-tcp-scalability is not configured yet.
+
+dpkg: error processing package bono (--configure):
+ dependency problems - leaving unconfigured
+dpkg: dependency problems prevent configuration of bono-node:
+ bono-node depends on bono (= 1.0-170206.152741); however:
+  Package bono is not configured yet.
+
+dpkg: error processing package bono-node (--configure):
+ dependency problems - leaving unconfigured
+No apport report written because the error message indicates its a followup error from a previous failure.
+                                                                                                          No apport report written because the error message indicates its a followup error from a previous failure.
+                                                                               Errors were encountered while processing:
+ clearwater-tcp-scalability
+ bono
+ bono-node
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+-----------------------------------------------------------------------------------------------------------------------
+please provide me some solution.
+Thanks & Regards
+Vikram Pal, Yash Khosla
+Western University, London, Ontario.
+Electrical and Computer Engineering department
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170220/eff97d72/attachment.html>
+
+From g at projectclearwater.org  Thu Feb 23 10:32:00 2017
+From: g at projectclearwater.org (Graeme Robertson (projectclearwater.org))
+Date: Thu, 23 Feb 2017 15:32:00 +0000
+Subject: [Project Clearwater] Release note for Xerneas
+References: <DM5PR02MB2281FA6D723EA8D222F142C6E3530@DM5PR02MB2281.namprd02.prod.outlook.com>
+Message-ID: <DM5PR02MB2281280CEFC5E3D05EF4457AE3530@DM5PR02MB2281.namprd02.prod.outlook.com>
+
+The release for Project Clearwater sprint "Xerneas" has been cut. The code for this release is tagged as release-117 in GitHub.
+
+This release includes the following bug fixes:
+
+
+*         Sprout can send a 504 Server Timeout too early if it doesn't receive a response to a REGISTER (https://github.com/Metaswitch/sprout/issues/1732)
+
+*         *** Error in `/usr/share/clearwater/bin/sprout': double free or corruption (out): 0x00007f521c3b4be0 *** (https://github.com/Metaswitch/sprout/issues/1727)
+
+*         Reported 'Exception Call-ID' on a crash is wrong (https://github.com/Metaswitch/sprout/issues/1721)
+
+*         Network failures don't get counted under the sproutInitialRegistrationFailures statistic (https://github.com/Metaswitch/sprout/issues/1718)
+
+*         Sprout doesn't respond to management HTTP requests (https://github.com/Metaswitch/sprout/issues/1713)
+
+*         Sprout process is killed by monit when the VM boots up (https://github.com/Metaswitch/sprout/issues/1684)
+
+*         Sprout supports fewer subscribers than the target (https://github.com/Metaswitch/sprout/issues/1674)
+
+*         'Warning scscfsproutlet.cpp:1856: No charging role in Route header, assume originating' when using a sprout_rr_level other than the default (https://github.com/Metaswitch/sprout/issues/1667)
+
+*         ENT log for an invalid enum.json file suggests the wrong cause (https://github.com/Metaswitch/sprout/issues/1608)
+
+*         Sprout generates log spam for REGISTERs with reused credentials. (https://github.com/Metaswitch/sprout/issues/1261)
+
+*         Homestead supports fewer subscribers than the target (https://github.com/Metaswitch/homestead/issues/414)
+
+*         Homestead crashed when changing DNS records and restarting processes (https://github.com/Metaswitch/homestead/issues/406)
+
+*         Homestead crash (https://github.com/Metaswitch/homestead/issues/392)
+
+*         Cassandra fails to come up if the Cluster Manager is restarted whilst it's joining the cluster (https://github.com/Metaswitch/homestead/issues/390)
+
+*         We don't add the Service-Context-Id AVP to ACRs (https://github.com/Metaswitch/ralf/issues/262)
+
+*         Memcached not replicating data in a GR system (https://github.com/Metaswitch/cpp-common/issues/609)
+
+*         /usr/share/clearwater/bin/create_user creates undeletable users if cancelled (https://github.com/Metaswitch/crest/issues/336)
+
+*         Errors in /var/log/clearwater-diags-monitor.log (https://github.com/Metaswitch/clearwater-infrastructure/issues/424)
+
+*         Poll processes can end up being unmonitored because of issue alarm failures (https://github.com/Metaswitch/clearwater-infrastructure/issues/391)
+
+*         During stress nodes raise and clear the ETCD_CLUSTER_HEALTH alarm (https://github.com/Metaswitch/clearwater-etcd/issues/407)
+
+*         Chronos cluster failed to form after deployment (https://github.com/Metaswitch/clearwater-etcd/issues/401)
+
+*         poll_etcd isn't monitored on boot (https://github.com/Metaswitch/clearwater-etcd/issues/384)
+
+*         Log spam in syslog when SNMP queries are received (https://github.com/Metaswitch/clearwater-net-snmp/issues/9)
+
+To upgrade to this release, follow the instructions at http://docs.projectclearwater.org/en/stable/Upgrading_a_Clearwater_deployment.html.  If you are deploying an all-in-one node, the standard image (http://vm-images.cw-ngv.com/cw-aio.ova) has been updated for this release.
+
+Thanks,
+Graeme
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170223/acc3ede1/attachment.html>
+
+From jacky at tataelxsi.co.in  Mon Feb 27 02:55:53 2017
+From: jacky at tataelxsi.co.in (JACKSON JULIET ROY)
+Date: Mon, 27 Feb 2017 07:55:53 +0000
+Subject: [Project Clearwater] Throttling effect in sprout
+Message-ID: <SIXPR04MB0778427BABD4CC0F12816184E0570@SIXPR04MB0778.apcprd04.prod.outlook.com>
+
+Dear All,
+
+We are trying to evaluate the performance of single sprout node against two sprout nodes in the Clearwater IMS for the SIP call load. (using multi VM based CW IMS image) This is to demonstrate the necessity and advantage of scaling out the sprout node.
+
+So what we are attempting is to find out the overload point of single sprout when calls start failing, whereas for the similar load two sprout scenario works fine. We use SIPp to emulate calls. We normally generate from 50 calls/sec and keep in increasing till 100/150 calls per second.
+
+However when we are experimenting the above scenario (first to find the overload point for single sprout), we  are finding inconsistent observation. Some time single sprout creates call failures for even 50 calls/ sec, but if we experiment after sometime single sprout is able to tolerate even more than 100 calls per seconds. Based on our study from CW website, we understand that this might be due to  dynamic throttling supported  by CW IMS nodes.  We have tried to manipulate the value of max tokens as well as the token rate to ensure there is no dynamic throttling, however couldn't find any visible improvement in the observation. Due to this we are unable to fix the overload point for single sprout hence couldn't able to do a testing for getting visible performance improvement comparison between single and two sprout nodes.
+
+I have few queries here. Can you please help us in getting clarity here?
+
+
+1)      Is there a possibility exist to disable dynamic throttling? If not, any parameter setting e.g. token related parameter will ensure throttling is not happening?
+
+2)      Is there a predefined overload point in terms of number SIP calls/ sec for a single sprout? (we are suing single single core, 2 GB RAM, 20 GB hard disk VM for sprout)
+
+3)      Is there any recommended parameters for this kind of testing -  in terms of SIP load ie calls/sec. any configuration parameter setting (like token as well as any other)?
+
+4)      As per our understanding sprout is first component expected to be scaled out because it will be more loaded than any other CW IMS nodes. Is our understanding is correct?
+
+5)      When we scale out sprout, scaling out sprout alone is enough or any other nodes also expected to be scaled out to see the performance improvement?
+
+Thanks,
+Jackson
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170227/0416a9ba/attachment.html>
+
+From leeshirley2002 at gmail.com  Tue Feb 28 18:34:13 2017
+From: leeshirley2002 at gmail.com (Xiaobai Li)
+Date: Tue, 28 Feb 2017 15:34:13 -0800
+Subject: [Project Clearwater] Fwd: manually install clearwater on OpenStack
+ - SIP error 408
+In-Reply-To: <CAOJ1h8W6g-9DNnLdY_=1ze4=MLnhiZVnWmAPrfKghzsSVjFWpw@mail.gmail.com>
+References: <CAOJ1h8W6g-9DNnLdY_=1ze4=MLnhiZVnWmAPrfKghzsSVjFWpw@mail.gmail.com>
+Message-ID: <CAOJ1h8VoY0wxRnyANV0TH=7NJHRE4-ceTZkNaPPVqJBUnnMS9g@mail.gmail.com>
+
+Hi guys,
+
+I wrote an email before to ask an 408 error when registering manually
+installed clearwater through X-Lite. Currently, when I am trying to
+register, it will directly give me an 408 time out error. Here I attached
+the log information on sprout. Hope anyone who could help me to figure out
+what's going on.
+
+The log information on sprout node as follows.
+
+Thanks a lot!
+
+--start msg--
+
+
+
+OPTIONS sip:poll-sip at 172.27.1.21:5054 SIP/2.0
+
+Via: SIP/2.0/TCP 172.27.1.21;rport;branch=z9hG4bK-4490
+
+Max-Forwards: 2
+
+To: <sip:poll-sip at 172.27.1.21:5054>
+
+From: poll-sip <sip:poll-sip at 172.27.1.21>;tag=4490
+
+Call-ID: poll-sip-4490
+
+CSeq: 4490 OPTIONS
+
+Contact: <sip:172.27.1.21>
+
+Accept: application/sdp
+
+Content-Length: 0
+
+User-Agent: poll-sip
+
+^M
+
+
+
+--end msg--
+
+28-02-2017 23:26:34.660 UTC Debug uri_classifier.cpp:174: home domain:
+false, local_to_node: true, is_gruu: false, enforce_user_phone: false,
+prefer_sip: true, treat_number_as_phone: false
+
+28-02-2017 23:26:34.660 UTC Debug uri_classifier.cpp:204: Classified URI as
+3
+
+28-02-2017 23:26:34.660 UTC Debug common_sip_processing.cpp:213: Skipping
+SAS logging for OPTIONS request
+
+28-02-2017 23:26:34.660 UTC Debug thread_dispatcher.cpp:264: Queuing cloned
+received message 0x7fab0800d108 for worker threads
+
+28-02-2017 23:26:34.660 UTC Debug thread_dispatcher.cpp:150: Worker thread
+dequeue message 0x7fab0800d108
+
+28-02-2017 23:26:34.660 UTC Debug pjsip: sip_endpoint.c Distributing rdata
+to modules: Request msg OPTIONS/cseq=4490 (rdata0x7fab0800d108)
+
+28-02-2017 23:26:34.660 UTC Debug uri_classifier.cpp:174: home domain:
+false, local_to_node: true, is_gruu: false, enforce_user_phone: false,
+prefer_sip: true, treat_number_as_phone: false
+
+28-02-2017 23:26:34.660 UTC Debug uri_classifier.cpp:204: Classified URI as
+3
+
+28-02-2017 23:26:34.660 UTC Debug pjsip:       endpoint Response msg
+200/OPTIONS/cseq=4490 (tdta0x7fab14009f50) created
+
+28-02-2017 23:26:34.660 UTC Verbose common_sip_processing.cpp:136: TX 268
+bytes Response msg 200/OPTIONS/cseq=4490 (tdta0x7fab14009f50) to TCP
+172.27.1.21:53896:
+
+--start msg--
+
+
+
+SIP/2.0 200 OK^M
+
+Via: SIP/2.0/TCP 172.27.1.21;rport=53896;received=172.27.1.21;branch=
+z9hG4bK-4490^M
+
+Call-ID: poll-sip-4490^M
+
+From: "poll-sip" <sip:poll-sip at 172.27.1.21>;tag=4490^M
+
+To: <sip:poll-sip at 172.27.1.21>;tag=z9hG4bK-4490^M
+
+CSeq: 4490 OPTIONS^M
+
+Content-Length:  0^M
+
+^M
+
+
+
+--end msg--
+
+28-02-2017 23:26:34.660 UTC Debug common_sip_processing.cpp:262: Skipping
+SAS logging for OPTIONS response
+
+28-02-2017 23:26:34.660 UTC Debug pjsip: tdta0x7fab1400 Destroying txdata
+Response msg 200/OPTIONS/cseq=4490 (tdta0x7fab14009f50)
+
+28-02-2017 23:26:34.660 UTC Debug thread_dispatcher.cpp:200: Worker thread
+completed processing message 0x7fab0800d108
+
+28-02-2017 23:26:34.660 UTC Debug thread_dispatcher.cpp:206: Request
+latency = 125us
+
+28-02-2017 23:26:34.681 UTC Verbose httpstack.cpp:342: Process request for
+URL /ping, args (null)
+
+28-02-2017 23:26:34.681 UTC Verbose httpstack.cpp:90: Sending response 200
+to request for URL /ping, args (null)
+
+28-02-2017 23:26:36.662 UTC Verbose pjsip: tcps0x7fab0800 TCP connection
+closed
+
+28-02-2017 23:26:36.662 UTC Status connection_tracker.cpp:92: Connection
+0x7fab0800a428 has been destroyed
+
+28-02-2017 23:26:36.662 UTC Verbose pjsip: tcps0x7fab0800 TCP transport
+destroyed with reason 70016: End of file (PJ_EEOF)
+
+---------- Forwarded message ----------
+From: Xiaobai Li <leeshirley2002 at gmail.com>
+Date: 2017-02-06 20:15 GMT-08:00
+Subject: manually install clearwater on OpenStack - SIP error 408
+To: clearwater at lists.projectclearwater.org
+
+
+Hi guys,
+
+I followed the manual installation instructions and successfully installed
+clearwater on Openstack using 7 vms (1 private DNS zone). I used the SIP
+client X-lite and successfully registered a user. However, sometimes the
+X-lite gives me a SIP error 408 and I couldn't make calls between
+registered users.
+Here is my settings for the X-lite:
+General:
+
+User ID: 6505550631 <(650)%20555-0631>
+Domain: ims.hom
+password: *******
+Display name: **
+Authorization name: 6505550631 <(650)%20555-0631>@ims.hom
+
+Domain Proxy:
+Send outbound via:
+proxy: {bono ip address}
+
+Topology:
+sever address: ims.hom
+Username: 6505550631 <(650)%20555-0631>@ims.hom
+password: ******
+
+
+Here I also attached the tcpdump between bono and my SIP client when
+registering a user, after 200 for registration it gives me 408 error for
+subscribe.
+
+Hope anyone can help me to figure out this problem. Thanks a lot!
+
+Shirley
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170228/a06169ef/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: tcpdump ss
+Type: application/octet-stream
+Size: 13735 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170228/a06169ef/attachment.obj>
+

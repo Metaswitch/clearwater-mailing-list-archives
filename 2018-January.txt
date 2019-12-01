@@ -1,0 +1,1961 @@
+From Ying.Huang at metaswitch.com  Mon Jan  8 08:35:22 2018
+From: Ying.Huang at metaswitch.com (Ying Huang)
+Date: Mon, 8 Jan 2018 13:35:22 +0000
+Subject: [Project Clearwater] 502 Bad Gateway and other errors while
+ running live tests
+In-Reply-To: <PN1PR0101MB1565566F284C9678CCCE3142A3340@PN1PR0101MB1565.INDPRD01.PROD.OUTLOOK.COM>
+References: <PN1PR0101MB1565566F284C9678CCCE3142A3340@PN1PR0101MB1565.INDPRD01.PROD.OUTLOOK.COM>
+Message-ID: <BN6PR02MB2802BFFA06317317A559DEB7F8130@BN6PR02MB2802.namprd02.prod.outlook.com>
+
+Hi Kedar,
+
+The reply was delayed by new year break. I don't think you should be making those changes in init.d/bono, it's  more likely your local setting for icscf is wrong.
+
+
+Thanks,
+Ying
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Kedar Ambekar
+Sent: 12 December 2017 13:23
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] 502 Bad Gateway and other errors while running live tests
+
+Hi,
+
+I have installed Clearwater with heat templates (available on ONAP wiki) directly on openstack. Appreciate help on below issues.
+
+
+  1.  When I run Clearwater live tests, all tests fail with below  error.
+
+
+
+RuntimeError thrown:
+
+   - Account creation failed with HTTP code 502, body {"status": 502, "message": "Bad Gateway", "reason": "Upstream request failed", "detail": {"Upstream error": "599", "Upstream URL": "None"}, "error": true}
+
+
+
+  1.  ps for bono process shows this.
+
+
+
+[bono]ubuntu at 0:/etc/clearwater$ ps -ef |grep bono
+
+bono 6897 1 0 05:06 ? 00:00:11 /usr/share/clearwater/bin/bono --domain= --localhost=10.0.0.28,0.bono.me.cw-ngv.com --al ias=10.0.0.28,0.bono.me.cw-ngv.com, --pcscf=5060,5058 --webrtc-port=5062 --routing-proxy=icscf.,5052,50,600 --sas=0.0.0.0,bono at 0.bono.me.cw-ngv.com --dns-server=127.0.0.1 --worker-threads=2 --analytics=/var/log/bono --log-file=/var/log/bono --log-level=2 --daemon --pidfile=/var/run/bono/bono.pid
+
+
+
+  1.  In bono, I saw these logs.
+
+ UTC Error sip_connection_pool.cpp:190: Failed to resolve icscf. to an IP address - Not found (PJ_ENOTFOUND)
+
+UTC Warning dnscachedresolver.cpp:828: Failed to retrieve record for icscf.: Domain name not found
+
+
+
+  1.  To debug above issues, I ended up making these changes in /etc/init.d/bono and restarted bono service.
+
+
+
+DAEMON_ARGS="--domain=me.cw-ngv.com  (instead of -domain=$home_domain)
+
+upstream_hostname=icscf.sprout.me.cw-ngv.com (instead of upstream_hostname=icscf.$sprout_hostname)
+
+
+  1.  But now, I get below error in bono. Port 5052 is not in listen mode on sprout.
+
+UTC Warning pjsip: tcpc0x7f90cc07 TCP connect() error: Connection refused [code=120111]
+UTC Warning pjsip: tcpc0x7f90cc07 Unable to connect to <sprout ip>:5052
+============================================================================================================================
+Disclaimer:  This message and the information contained herein is proprietary and confidential and subject to the Tech Mahindra policy statement, you may review the policy at http://www.techmahindra.com/Disclaimer.html externally http://tim.techmahindra.com/tim/disclaimer.html internally within TechMahindra.
+============================================================================================================================
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180108/c0b288d8/attachment.html>
+
+From case at gci.com  Tue Jan  9 20:13:28 2018
+From: case at gci.com (Roger Case)
+Date: Wed, 10 Jan 2018 01:13:28 +0000
+Subject: [Project Clearwater] Bono Send Invite using TCP,
+ Header Reduction
+In-Reply-To: <DM5PR0201MB36238C158A91D9C0159E3051F80F0@DM5PR0201MB3623.namprd02.prod.outlook.com>
+References: <A7E1158244C52C428F0B61BDC9CF760C016D83B340@ex-mbx-prd02.gci.com>
+	<DM5PR0201MB3623D60EE643F36F30B2EA16F8350@DM5PR0201MB3623.namprd02.prod.outlook.com>
+	<A7E1158244C52C428F0B61BDC9CF760C016D84D493@ex-mbx-prd02.gci.com>
+	<DM5PR0201MB36238C158A91D9C0159E3051F80F0@DM5PR0201MB3623.namprd02.prod.outlook.com>
+Message-ID: <A7E1158244C52C428F0B61BDC9CF760C016D8963DE@ex-mbx-prd02.gci.com>
+
+Hi Ying,
+
+Here is a Bono debug log when I call to a UE (Arris eDVA) on 6505550745, that had previously successfully registered on Bono using TCP (debug for the eDVA registration is later in this email).  The call is from a Polycom phone (6505550244) which is able to register with Sprout, via Perimeta, using TCP and process calls in and out just fine.  It looks like the problem may be related to flow identifiers?..
+
+Thanks,
+
+Roger
+
+10-01-2018 00:19:47.197 UTC Verbose pjsip:    tcplis:5058 TCP listener 10.237.20.101:5058: got incoming TCP connection from 10.237.20.101:41794, sock=148
+10-01-2018 00:19:47.197 UTC Verbose pjsip: tcps0x7fce4c04 tcp->base.local_name: 10.237.20.101
+10-01-2018 00:19:47.197 UTC Verbose pjsip: tcps0x7fce4c04 TCP server transport created
+10-01-2018 00:19:47.209 UTC Debug pjsip: sip_endpoint.c Processing incoming message: Request msg INVITE/cseq=1 (rdata0x7fce4c04dbb0)
+10-01-2018 00:19:47.209 UTC Verbose common_sip_processing.cpp:120: RX 1935 bytes Request msg INVITE/cseq=1 (rdata0x7fce4c04dbb0) from TCP 10.237.20.101:41794:
+--start msg--
+
+INVITE sip:6505550745 at 10.237.15.136:5060 SIP/2.0
+Via: SIP/2.0/TCP 10.237.20.101:5052;rport;branch=z9hG4bKPjYlejyyw2Iudw7cLpj5Wx7er-aLZTrPqb
+Record-Route: <sip:scscf.cw-aio:5054;transport=TCP;lr;billing-role=charge-term>
+Record-Route: <sip:scscf.cw-aio:5054;transport=TCP;lr;billing-role=charge-orig>
+Via: SIP/2.0/TCP 10.237.20.169:5060;received=10.237.20.169;branch=z9hG4bK+c2079ea24ef0f7e166c95868e1f7dd1b1+sip+1+a64eda09
+From: "6505550244" <sip:6505550244 at example.com>;tag=10.237.20.169+1+e0d6135d+ae1afdbc
+To: <sip:6505550745 at example.com;user=phone>
+CSeq: 1 INVITE
+Expires: 180
+Call-Info: <sip:10.237.20.169:5060>;method="NOTIFY;Event=telephone-event;Duration=2000"
+Supported: replaces, 100rel
+Contact: <sip:7730e4e25f10d1ff1b65630d0331d5d4 at 10.237.20.169:5060>
+Call-ID: 0gQAAC8WAAACBAAALxYAAMSSEHniN/BoUERYATz/XBzU8BWSrlgVeMtsssyfhvsQNr49KiblXsz9CklxuACUpA-- at 10.237.20.169
+Allow: INVITE, ACK, BYE, CANCEL, OPTIONS, INFO, MESSAGE, SUBSCRIBE, NOTIFY, PRACK, UPDATE, REFER
+User-Agent: Polycom/5.4.1.14510 PolycomVVX-VVX_500-UA/5.4.1.14510
+Accept-Language: en
+Allow-Events: conference,talk,hold
+Max-Forwards: 56
+Accept: application/sdp, application/dtmf-relay
+Session-Expires: 600
+P-Served-User: <sip:6505550745 at example.com>;sescase=term;regstate=reg
+P-Called-Party-ID: <sip:6505550745 at example.com>
+Route: <sip:Ewp5c57Gte at 10.237.20.101:5058;transport=TCP;lr;ob>
+Content-Type: application/sdp
+Content-Length:   495
+
+v=0
+o=- 121157390865197 121157390865197 IN IP4 10.237.20.170
+s=-
+c=IN IP4 10.237.20.170
+t=0 0
+a=sendrecv
+m=audio 17784 RTP/AVP 9 102 0 8 18 127
+a=rtpmap:9 G722/8000
+a=rtpmap:102 G7221/16000
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:18 G729/8000
+a=rtpmap:127 telephone-event/8000
+a=fmtp:102 bitrate=32000
+a=fmtp:18 annexb=no
+m=video 17786 RTP/AVP 109 34
+a=rtpmap:109 H264/90000
+a=rtpmap:34 H263/90000
+a=fmtp:109 profile-level-id=42800d
+a=fmtp:34 CIF=1;QCIF=1;SQCIF=1
+
+--end msg--
+10-01-2018 00:19:47.211 UTC Debug pjutils.cpp:1689: Logging SAS Call-ID marker, Call-ID 0gQAAC8WAAACBAAALxYAAMSSEHniN/BoUERYATz/XBzU8BWSrlgVeMtsssyfhvsQNr49KiblXsz9CklxuACUpA-- at 10.237.20.169
+10-01-2018 00:19:47.212 UTC Debug thread_dispatcher.cpp:264: Queuing cloned received message 0x7fce4c0857f8 for worker threads
+10-01-2018 00:19:47.212 UTC Debug thread_dispatcher.cpp:150: Worker thread dequeue message 0x7fce4c0857f8
+10-01-2018 00:19:47.212 UTC Debug pjsip: sip_endpoint.c Distributing rdata to modules: Request msg INVITE/cseq=1 (rdata0x7fce4c0857f8)
+10-01-2018 00:19:47.212 UTC Debug uri_classifier.cpp:174: home domain: false, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+10-01-2018 00:19:47.212 UTC Debug uri_classifier.cpp:204: Classified URI as 5
+10-01-2018 00:19:47.212 UTC Debug bono.cpp:278: Proxy RX request
+10-01-2018 00:19:47.212 UTC Debug pjutils.cpp:699: Cloned Request msg INVITE/cseq=1 (rdata0x7fce4c0857f8) to tdta0x7fce440008c0
+10-01-2018 00:19:47.213 UTC Debug bono.cpp:813: Request received on trusted port 5058
+10-01-2018 00:19:47.213 UTC Debug bono.cpp:1057: Perform access proxy routing for INVITE request
+10-01-2018 00:19:47.213 UTC Debug uri_classifier.cpp:174: home domain: false, local_to_node: true, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+10-01-2018 00:19:47.213 UTC Debug uri_classifier.cpp:204: Classified URI as 3
+10-01-2018 00:19:47.213 UTC Debug pjutils.cpp:509: Found Route header, URI = sip:Ewp5c57Gte at 10.237.20.101:5058;transport=TCP;lr;ob
+10-01-2018 00:19:47.213 UTC Debug pjutils.cpp:513: Route header is local
+10-01-2018 00:19:47.213 UTC Debug bono.cpp:1342: Message received on trusted port
+10-01-2018 00:19:47.213 UTC Debug uri_classifier.cpp:174: home domain: false, local_to_node: true, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+10-01-2018 00:19:47.213 UTC Debug uri_classifier.cpp:204: Classified URI as 3
+10-01-2018 00:19:47.213 UTC Debug pjutils.cpp:509: Found Route header, URI = sip:Ewp5c57Gte at 10.237.20.101:5058;transport=TCP;lr;ob
+10-01-2018 00:19:47.213 UTC Debug pjutils.cpp:513: Route header is local
+10-01-2018 00:19:47.213 UTC Debug bono.cpp:1353: Flow identifier in Route header = Ewp5c57Gte
+10-01-2018 00:19:47.213 UTC Debug flowtable.cpp:164: Find flow for flow token Ewp5c57Gte
+10-01-2018 00:19:47.213 UTC Error bono.cpp:1364: Route header flow identifier failed to correlate
+10-01-2018 00:19:47.213 UTC Debug acr.cpp:49: Created ACR (0x7fce44003200)
+10-01-2018 00:19:47.213 UTC Info bono.cpp:771: Reject INVITE request with 430 status code
+10-01-2018 00:19:47.213 UTC Debug pjsip:       endpoint Response msg 430/INVITE/cseq=1 (tdta0x7fce4401e470) created
+10-01-2018 00:19:47.213 UTC Verbose common_sip_processing.cpp:136: TX 761 bytes Response msg 430/INVITE/cseq=1 (tdta0x7fce4401e470) to TCP 10.237.20.101:41794:
+--start msg--
+
+SIP/2.0 430 Flow failed
+Via: SIP/2.0/TCP 10.237.20.101:5052;rport=41794;received=10.237.20.101;branch=z9hG4bKPjYlejyyw2Iudw7cLpj5Wx7er-aLZTrPqb
+Via: SIP/2.0/TCP 10.237.20.169:5060;received=10.237.20.169;branch=z9hG4bK+c2079ea24ef0f7e166c95868e1f7dd1b1+sip+1+a64eda09
+Record-Route: <sip:scscf.cw-aio:5054;transport=TCP;lr;billing-role=charge-term>
+Record-Route: <sip:scscf.cw-aio:5054;transport=TCP;lr;billing-role=charge-orig>
+Call-ID: 0gQAAC8WAAACBAAALxYAAMSSEHniN/BoUERYATz/XBzU8BWSrlgVeMtsssyfhvsQNr49KiblXsz9CklxuACUpA-- at 10.237.20.169
+From: "6505550244" <sip:6505550244 at example.com>;tag=10.237.20.169+1+e0d6135d+ae1afdbc
+To: <sip:6505550745 at example.com;user=phone>;tag=z9hG4bKPjYlejyyw2Iudw7cLpj5Wx7er-aLZTrPqb
+CSeq: 1 INVITE
+Content-Length:  0
+
+
+--end msg--
+10-01-2018 00:19:47.213 UTC Debug pjsip: tdta0x7fce4401 Destroying txdata Response msg 430/INVITE/cseq=1 (tdta0x7fce4401e470)
+10-01-2018 00:19:47.213 UTC Debug acr.cpp:83: Sending Null ACR (0x7fce44003200)
+10-01-2018 00:19:47.213 UTC Debug acr.cpp:54: Destroyed ACR (0x7fce44003200)
+10-01-2018 00:19:47.213 UTC Debug pjsip: tdta0x7fce4400 Destroying txdata Request msg INVITE/cseq=1 (tdta0x7fce440008c0)
+10-01-2018 00:19:47.213 UTC Debug thread_dispatcher.cpp:200: Worker thread completed processing message 0x7fce4c0857f8
+10-01-2018 00:19:47.213 UTC Debug thread_dispatcher.cpp:206: Request latency = 473us
+10-01-2018 00:19:47.213 UTC Debug pjsip: sip_endpoint.c Processing incoming message: Request msg ACK/cseq=1 (rdata0x7fce4c04dbb0)
+10-01-2018 00:19:47.213 UTC Verbose common_sip_processing.cpp:120: RX 547 bytes Request msg ACK/cseq=1 (rdata0x7fce4c04dbb0) from TCP 10.237.20.101:41794:
+--start msg--
+
+ACK sip:6505550745 at 10.237.15.136:5060 SIP/2.0
+Via: SIP/2.0/TCP 10.237.20.101:5052;rport;branch=z9hG4bKPjYlejyyw2Iudw7cLpj5Wx7er-aLZTrPqb
+Max-Forwards: 70
+From: "6505550244" <sip:6505550244 at example.com>;tag=10.237.20.169+1+e0d6135d+ae1afdbc
+To: <sip:6505550745 at example.com;user=phone>;tag=z9hG4bKPjYlejyyw2Iudw7cLpj5Wx7er-aLZTrPqb
+Call-ID: 0gQAAC8WAAACBAAALxYAAMSSEHniN/BoUERYATz/XBzU8BWSrlgVeMtsssyfhvsQNr49KiblXsz9CklxuACUpA-- at 10.237.20.169
+CSeq: 1 ACK
+Route: <sip:Ewp5c57Gte at 10.237.20.101:5058;transport=TCP;lr;ob>
+Content-Length:  0
+
+
+--end msg--
+10-01-2018 00:19:47.213 UTC Debug pjutils.cpp:1689: Logging SAS Call-ID marker, Call-ID 0gQAAC8WAAACBAAALxYAAMSSEHniN/BoUERYATz/XBzU8BWSrlgVeMtsssyfhvsQNr49KiblXsz9CklxuACUpA-- at 10.237.20.169
+10-01-2018 00:19:47.214 UTC Debug thread_dispatcher.cpp:264: Queuing cloned received message 0x7fce4c0857f8 for worker threads
+10-01-2018 00:19:47.214 UTC Debug thread_dispatcher.cpp:150: Worker thread dequeue message 0x7fce4c0857f8
+10-01-2018 00:19:47.214 UTC Debug pjsip: sip_endpoint.c Distributing rdata to modules: Request msg ACK/cseq=1 (rdata0x7fce4c0857f8)
+10-01-2018 00:19:47.214 UTC Debug uri_classifier.cpp:174: home domain: false, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+10-01-2018 00:19:47.214 UTC Debug uri_classifier.cpp:204: Classified URI as 5
+10-01-2018 00:19:47.214 UTC Debug bono.cpp:278: Proxy RX request
+10-01-2018 00:19:47.214 UTC Debug pjutils.cpp:699: Cloned Request msg ACK/cseq=1 (rdata0x7fce4c0857f8) to tdta0x7fce440008c0
+10-01-2018 00:19:47.214 UTC Debug bono.cpp:813: Request received on trusted port 5058
+10-01-2018 00:19:47.214 UTC Debug bono.cpp:1057: Perform access proxy routing for ACK request
+10-01-2018 00:19:47.214 UTC Debug uri_classifier.cpp:174: home domain: false, local_to_node: true, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+10-01-2018 00:19:47.214 UTC Debug uri_classifier.cpp:204: Classified URI as 3
+10-01-2018 00:19:47.214 UTC Debug pjutils.cpp:509: Found Route header, URI = sip:Ewp5c57Gte at 10.237.20.101:5058;transport=TCP;lr;ob
+10-01-2018 00:19:47.214 UTC Debug pjutils.cpp:513: Route header is local
+10-01-2018 00:19:47.214 UTC Debug bono.cpp:1342: Message received on trusted port
+10-01-2018 00:19:47.214 UTC Debug uri_classifier.cpp:174: home domain: false, local_to_node: true, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+10-01-2018 00:19:47.214 UTC Debug uri_classifier.cpp:204: Classified URI as 3
+10-01-2018 00:19:47.214 UTC Debug pjutils.cpp:509: Found Route header, URI = sip:Ewp5c57Gte at 10.237.20.101:5058;transport=TCP;lr;ob
+10-01-2018 00:19:47.214 UTC Debug pjutils.cpp:513: Route header is local
+10-01-2018 00:19:47.214 UTC Debug bono.cpp:1353: Flow identifier in Route header = Ewp5c57Gte
+10-01-2018 00:19:47.214 UTC Debug flowtable.cpp:164: Find flow for flow token Ewp5c57Gte
+10-01-2018 00:19:47.214 UTC Error bono.cpp:1364: Route header flow identifier failed to correlate
+10-01-2018 00:19:47.214 UTC Debug acr.cpp:49: Created ACR (0x7fce44003200)
+10-01-2018 00:19:47.214 UTC Debug acr.cpp:83: Sending Null ACR (0x7fce44003200)
+10-01-2018 00:19:47.214 UTC Debug acr.cpp:54: Destroyed ACR (0x7fce44003200)
+10-01-2018 00:19:47.214 UTC Debug pjsip: tdta0x7fce4400 Destroying txdata Request msg ACK/cseq=1 (tdta0x7fce440008c0)
+10-01-2018 00:19:47.214 UTC Debug thread_dispatcher.cpp:200: Worker thread completed processing message 0x7fce4c0857f8
+10-01-2018 00:19:47.214 UTC Debug thread_dispatcher.cpp:206: Request latency = 252us
+
+
+#####################################################  6505550745 eDVA Registration:
+
+10-01-2018 00:54:54.773 UTC Verbose pjsip:    tcplis:5060 TCP listener cw-aio:5060: got incoming TCP connection from 10.237.15.136:56181, sock=148
+10-01-2018 00:54:54.773 UTC Verbose pjsip: tcps0x7fce4c04 tcp->base.local_name: cw-aio
+10-01-2018 00:54:54.773 UTC Verbose pjsip: tcps0x7fce4c04 TCP server transport created
+10-01-2018 00:54:54.792 UTC Debug pjsip: sip_endpoint.c Processing incoming message: Request msg REGISTER/cseq=4795 (rdata0x7fce4c04dbb0)
+10-01-2018 00:54:54.792 UTC Verbose common_sip_processing.cpp:120: RX 940 bytes Request msg REGISTER/cseq=4795 (rdata0x7fce4c04dbb0) from TCP 10.237.15.136:56181:
+--start msg--
+
+REGISTER sip:example.com SIP/2.0
+From: <sip:6505550745 at example.com:5060>;tag=4700b0-aed0f88-13c4-50029-5a4f67eb-5b9a9b7b-5a4f67eb
+To: <sip:6505550745 at example.com:5060>
+Call-ID: 478378-aed0f88-13c4-50029-5a4f67eb-5adeba0d-5a4f67eb
+CSeq: 4795 REGISTER
+Via: SIP/2.0/TCP 10.237.15.136:5060;branch=z9hG4bK-5a54e5ae-dba1326c-2e0a9c34
+Max-Forwards: 70
+Supported: timer,replaces,join,tdialog,100rel,histinfo,path
+User-Agent: ARRIS-TM822G release v.9.1.103S5P.SIP.PC20 SN/001DD5F31A69
+Authorization: Digest username="6505550745 at example.com",realm="example.com",nonce="49b9d32a13b232a8",uri="sip:example.com",response="8502f7d7c5f914debddda6688f537791",algorithm=MD5,cnonce="dba1326c",opaque="387fe3b42288cf0c",qop=auth,nc=00000002
+Contact: <sip:6505550745 at 10.237.15.136:5060>;expires=3600
+Allow: INVITE,ACK,BYE,CANCEL,NOTIFY,PRACK,UPDATE,OPTIONS
+Allow-Events: vq-rtcpxr
+Route: <sip:10.237.20.101;transport=udp;lr>
+Content-Length: 0
+
+
+--end msg--
+10-01-2018 00:54:54.792 UTC Debug pjutils.cpp:1689: Logging SAS Call-ID marker, Call-ID 478378-aed0f88-13c4-50029-5a4f67eb-5adeba0d-5a4f67eb
+10-01-2018 00:54:54.792 UTC Debug thread_dispatcher.cpp:264: Queuing cloned received message 0x7fce4c00e4d8 for worker threads
+10-01-2018 00:54:54.792 UTC Debug thread_dispatcher.cpp:150: Worker thread dequeue message 0x7fce4c00e4d8
+10-01-2018 00:54:54.792 UTC Debug pjsip: sip_endpoint.c Distributing rdata to modules: Request msg REGISTER/cseq=4795 (rdata0x7fce4c00e4d8)
+10-01-2018 00:54:54.792 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+10-01-2018 00:54:54.792 UTC Debug uri_classifier.cpp:204: Classified URI as 4
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:278: Proxy RX request
+10-01-2018 00:54:54.792 UTC Debug pjutils.cpp:699: Cloned Request msg REGISTER/cseq=4795 (rdata0x7fce4c00e4d8) to tdta0x7fce440a7c80
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:817: Request received on non-trusted port 5060
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:1057: Perform access proxy routing for REGISTER request
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:1094: Message requires outbound support
+10-01-2018 00:54:54.792 UTC Debug flowtable.cpp:90: Find or create flow for transport tcps0x7fce4c04d878 (2), remote address 10.237.15.136:56181
+10-01-2018 00:54:54.792 UTC Debug flowtable.cpp:293: Added transport listener for flow 0x7fce4407fa00
+10-01-2018 00:54:54.792 UTC Debug flowtable.cpp:105: Added flow record 0x7fce4407fa00
+10-01-2018 00:54:54.792 UTC Debug flowtable.cpp:232: Reporting current flow count: 8
+10-01-2018 00:54:54.792 UTC Debug flowtable.cpp:599: Dialog count now 2 for flow
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:1106: Found or created flow data record, token = C7Cxpo5uTw
+10-01-2018 00:54:54.792 UTC Info pjutils.cpp:389: Adding integrity-protected=ip-assoc-pending indicator to message
+10-01-2018 00:54:54.792 UTC Debug flowtable.cpp:616: Dialog count now 1 for flow
+10-01-2018 00:54:54.792 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+10-01-2018 00:54:54.792 UTC Debug uri_classifier.cpp:204: Classified URI as 4
+10-01-2018 00:54:54.792 UTC Debug uri_classifier.cpp:174: home domain: false, local_to_node: true, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+10-01-2018 00:54:54.792 UTC Debug uri_classifier.cpp:204: Classified URI as 3
+10-01-2018 00:54:54.792 UTC Debug pjutils.cpp:509: Found Route header, URI = sip:10.237.20.101;transport=udp;lr
+10-01-2018 00:54:54.792 UTC Debug pjutils.cpp:513: Route header is local
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:1015: Mark originating
+10-01-2018 00:54:54.792 UTC Info bono.cpp:1036: Route request to upstream proxy sip:scscf.cw-aio:5052;transport=TCP;lr;orig
+10-01-2018 00:54:54.792 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+10-01-2018 00:54:54.792 UTC Debug uri_classifier.cpp:204: Classified URI as 4
+10-01-2018 00:54:54.792 UTC Debug uri_classifier.cpp:174: home domain: false, local_to_node: true, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+10-01-2018 00:54:54.792 UTC Debug uri_classifier.cpp:204: Classified URI as 3
+10-01-2018 00:54:54.792 UTC Debug pjutils.cpp:509: Found Route header, URI = sip:10.237.20.101;transport=udp;lr
+10-01-2018 00:54:54.792 UTC Debug pjutils.cpp:513: Route header is local
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:1604: Top Route header is local - erasing
+10-01-2018 00:54:54.792 UTC Debug acr.cpp:49: Created ACR (0x7fce4401b390)
+10-01-2018 00:54:54.792 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+10-01-2018 00:54:54.792 UTC Debug uri_classifier.cpp:204: Classified URI as 4
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:486: Trust mode INBOUND_EDGE_CLIENT(,-rsp,-pch), serving state None
+10-01-2018 00:54:54.792 UTC Debug pjsip: tsx0x7fce44024 Transaction created for Request msg REGISTER/cseq=4795 (rdata0x7fce4c00e4d8)
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:1786: UASTransaction constructor (0x7fce4407d180)
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:1787: ACR (0x7fce4401b390)
+10-01-2018 00:54:54.792 UTC Debug pjsip: tsx0x7fce44024 Incoming Request msg REGISTER/cseq=4795 (rdata0x7fce4c00e4d8) in state Null
+10-01-2018 00:54:54.792 UTC Debug pjsip: tsx0x7fce44024 State changed from Null to Trying, event=RX_MSG
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:390: tsx0x7fce44024398 - tu_on_tsx_state UAS, TSX_STATE RX_MSG state=Trying
+10-01-2018 00:54:54.792 UTC Debug pjsip:       endpoint Response msg 408/REGISTER/cseq=4795 (tdta0x7fce4408ac50) created
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:2418: Report SAS start marker - trail (18f)
+10-01-2018 00:54:54.792 UTC Debug trustboundary.cpp:69: Add P-Charging headers
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:2492: Allocating transaction and data for target 0
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:2749: Stripping loose routes from proxied message
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:2776: Adding a Route header to sip:scscf.cw-aio:5052;transport=TCP
+10-01-2018 00:54:54.792 UTC Debug pjsip: tsx0x7fce4402e Transaction created for Request msg REGISTER/cseq=4795 (tdta0x7fce4408bc60)
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:2519: Adding trail identifier 399 to UAC transaction
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:2538: Updating request URI and route for target 0
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:2844: Transport tcpc0x7fce440be038 (TCP to 10.237.20.101:5052) pre-selected for transaction
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:2862: Sending request for sip:example.com
+10-01-2018 00:54:54.792 UTC Debug pjsip: tsx0x7fce4402e Sending Request msg REGISTER/cseq=4795 (tdta0x7fce4408bc60) in state Null
+10-01-2018 00:54:54.792 UTC Debug pjsip:       endpoint Request msg REGISTER/cseq=4795 (tdta0x7fce4408bc60): skipping target resolution because address is already set
+10-01-2018 00:54:54.792 UTC Verbose common_sip_processing.cpp:136: TX 1212 bytes Request msg REGISTER/cseq=4795 (tdta0x7fce4408bc60) to TCP 10.237.20.101:5052:
+--start msg--
+
+REGISTER sip:example.com SIP/2.0
+Via: SIP/2.0/TCP 10.237.20.101:5058;rport;branch=z9hG4bKPjTbbb6-01piEBH6KU6-Rx.LNn0Cf7kXLY
+Path: <sip:C7Cxpo5uTw at 10.237.20.101:5058;transport=TCP;lr;ob>
+From: <sip:6505550745 at example.com>;tag=4700b0-aed0f88-13c4-50029-5a4f67eb-5b9a9b7b-5a4f67eb
+To: <sip:6505550745 at example.com>
+Call-ID: 478378-aed0f88-13c4-50029-5a4f67eb-5adeba0d-5a4f67eb
+CSeq: 4795 REGISTER
+Via: SIP/2.0/TCP 10.237.15.136:5060;received=10.237.15.136;branch=z9hG4bK-5a54e5ae-dba1326c-2e0a9c34
+Max-Forwards: 70
+Supported: timer, replaces, join, tdialog, 100rel, histinfo, path
+User-Agent: ARRIS-TM822G release v.9.1.103S5P.SIP.PC20 SN/001DD5F31A69
+Authorization: Digest response="8502f7d7c5f914debddda6688f537791", username="6505550745 at example.com", realm="example.com", nonce="49b9d32a13b232a8", uri="sip:example.com", algorithm=MD5, cnonce="dba1326c", opaque="387fe3b42288cf0c", qop=auth, nc=00000002,integrity-protected=ip-assoc-pending
+Contact: <sip:6505550745 at 10.237.15.136:5060>;expires=3600
+Allow: INVITE, ACK, BYE, CANCEL, NOTIFY, PRACK, UPDATE, OPTIONS
+Allow-Events: vq-rtcpxr
+P-Visited-Network-ID: example.com
+Route: <sip:scscf.cw-aio:5052;transport=TCP;lr;orig>
+Content-Length:  0
+
+
+--end msg--
+10-01-2018 00:54:54.792 UTC Debug pjsip: tsx0x7fce4402e State changed from Null to Calling, event=TX_MSG
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:390: tsx0x7fce4402ec78 - tu_on_tsx_state UAC, TSX_STATE TX_MSG state=Calling
+10-01-2018 00:54:54.792 UTC Debug bono.cpp:2962: tsx0x7fce4402ec78 - uac_data = 0x7fce44027750, uas_data = 0x7fce4407d180
+10-01-2018 00:54:54.793 UTC Debug thread_dispatcher.cpp:200: Worker thread completed processing message 0x7fce4c00e4d8
+10-01-2018 00:54:54.793 UTC Debug thread_dispatcher.cpp:206: Request latency = 1707us
+10-01-2018 00:54:54.796 UTC Debug pjsip: sip_endpoint.c Processing incoming message: Response msg 401/REGISTER/cseq=4795 (rdata0x7fce440be370)
+10-01-2018 00:54:54.796 UTC Verbose common_sip_processing.cpp:120: RX 662 bytes Response msg 401/REGISTER/cseq=4795 (rdata0x7fce440be370) from TCP 10.237.20.101:5052:
+--start msg--
+
+SIP/2.0 401 Unauthorized
+Via: SIP/2.0/TCP 10.237.20.101:5058;rport=52579;received=10.237.20.101;branch=z9hG4bKPjTbbb6-01piEBH6KU6-Rx.LNn0Cf7kXLY
+Via: SIP/2.0/TCP 10.237.15.136:5060;received=10.237.15.136;branch=z9hG4bK-5a54e5ae-dba1326c-2e0a9c34
+Call-ID: 478378-aed0f88-13c4-50029-5a4f67eb-5adeba0d-5a4f67eb
+From: <sip:6505550745 at example.com>;tag=4700b0-aed0f88-13c4-50029-5a4f67eb-5b9a9b7b-5a4f67eb
+To: <sip:6505550745 at example.com>;tag=z9hG4bKPjTbbb6-01piEBH6KU6-Rx.LNn0Cf7kXLY
+CSeq: 4795 REGISTER
+WWW-Authenticate: Digest  realm="example.com",nonce="2071839808682f68",opaque="06ededd86b7d8555",stale=true,algorithm=MD5,qop="auth"
+Content-Length:  0
+
+
+--end msg--
+10-01-2018 00:54:54.797 UTC Debug thread_dispatcher.cpp:264: Queuing cloned received message 0x7fce4c00e4d8 for worker threads
+10-01-2018 00:54:54.797 UTC Debug thread_dispatcher.cpp:150: Worker thread dequeue message 0x7fce4c00e4d8
+10-01-2018 00:54:54.797 UTC Debug pjsip: sip_endpoint.c Distributing rdata to modules: Response msg 401/REGISTER/cseq=4795 (rdata0x7fce4c00e4d8)
+10-01-2018 00:54:54.797 UTC Debug pjsip: tsx0x7fce4402e Incoming Response msg 401/REGISTER/cseq=4795 (rdata0x7fce4c00e4d8) in state Calling
+10-01-2018 00:54:54.797 UTC Debug pjsip: tsx0x7fce4402e State changed from Calling to Completed, event=RX_MSG
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:390: tsx0x7fce4402ec78 - tu_on_tsx_state UAC, TSX_STATE RX_MSG state=Completed
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:2962: tsx0x7fce4402ec78 - uac_data = 0x7fce44027750, uas_data = 0x7fce4407d180
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:3001: tsx0x7fce4402ec78 - RX_MSG on active UAC transaction
+10-01-2018 00:54:54.797 UTC Debug trustboundary.cpp:57: Strip trusted headers
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:2194: tsx0x7fce4402ec78 - Final response, so disconnect UAS and UAC transactions
+10-01-2018 00:54:54.797 UTC Debug pjsip: tdta0x7fce4408 Destroying txdata Response msg 408/REGISTER/cseq=4795 (tdta0x7fce4408ac50)
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:2629: Dissociate UAC transaction 0x7fce44027750 (0)
+10-01-2018 00:54:54.797 UTC Debug pjsip: tsx0x7fce44024 Sending Response msg 401/REGISTER/cseq=4795 (tdta0x7fce4411f4c0) in state Trying
+10-01-2018 00:54:54.797 UTC Verbose common_sip_processing.cpp:136: TX 541 bytes Response msg 401/REGISTER/cseq=4795 (tdta0x7fce4411f4c0) to TCP 10.237.15.136:56181:
+--start msg--
+
+SIP/2.0 401 Unauthorized
+Via: SIP/2.0/TCP 10.237.15.136:5060;received=10.237.15.136;branch=z9hG4bK-5a54e5ae-dba1326c-2e0a9c34
+Call-ID: 478378-aed0f88-13c4-50029-5a4f67eb-5adeba0d-5a4f67eb
+From: <sip:6505550745 at example.com>;tag=4700b0-aed0f88-13c4-50029-5a4f67eb-5b9a9b7b-5a4f67eb
+To: <sip:6505550745 at example.com>;tag=z9hG4bKPjTbbb6-01piEBH6KU6-Rx.LNn0Cf7kXLY
+CSeq: 4795 REGISTER
+WWW-Authenticate: Digest  realm="example.com",nonce="2071839808682f68",opaque="06ededd86b7d8555",stale=true,algorithm=MD5,qop="auth"
+Content-Length:  0
+
+
+--end msg--
+10-01-2018 00:54:54.797 UTC Debug pjsip: tsx0x7fce44024 State changed from Trying to Completed, event=TX_MSG
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:390: tsx0x7fce44024398 - tu_on_tsx_state UAS, TSX_STATE TX_MSG state=Completed
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:817: Request received on non-trusted port 5060
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:2427: Report SAS end marker - trail (18f)
+10-01-2018 00:54:54.797 UTC Debug thread_dispatcher.cpp:200: Worker thread completed processing message 0x7fce4c00e4d8
+10-01-2018 00:54:54.797 UTC Debug thread_dispatcher.cpp:206: Request latency = 293us
+10-01-2018 00:54:54.797 UTC Info load_monitor.cpp:232: Accepted 100.000000% of requests, latency error = -0.986240, overload responses = 0
+10-01-2018 00:54:54.797 UTC Status load_monitor.cpp:285: Maximum incoming request rate/second unchanged - only handled 20 requests in last 29624ms, minimum threshold for a change is 1481.199951
+10-01-2018 00:54:54.797 UTC Debug pjsip: tsx0x7fce44024 Timeout timer event
+10-01-2018 00:54:54.797 UTC Debug pjsip: tsx0x7fce44024 State changed from Completed to Terminated, event=TIMER
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:390: tsx0x7fce44024398 - tu_on_tsx_state UAS, TSX_STATE TIMER state=Terminated
+10-01-2018 00:54:54.797 UTC Debug pjsip: tsx0x7fce4402e Timeout timer event
+10-01-2018 00:54:54.797 UTC Debug pjsip: tsx0x7fce4402e State changed from Completed to Terminated, event=TIMER
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:390: tsx0x7fce4402ec78 - tu_on_tsx_state UAC, TSX_STATE TIMER state=Terminated
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:2962: tsx0x7fce4402ec78 - uac_data = 0x7fce44027750, uas_data = (nil)
+10-01-2018 00:54:54.797 UTC Debug pjsip: tsx0x7fce44024 Timeout timer event
+10-01-2018 00:54:54.797 UTC Debug pjsip: tsx0x7fce44024 State changed from Terminated to Destroyed, event=TIMER
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:390: tsx0x7fce44024398 - tu_on_tsx_state UAS, TSX_STATE TIMER state=Destroyed
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:2276: tsx0x7fce44024398 - UAS tsx destroyed
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:1831: UASTransaction destructor (0x7fce4407d180)
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:1851: Disconnect UAC transactions from UAS transaction
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:1897: Upstream ACR = 0x7fce4401b390, Downstream ACR = 0x7fce4401b390
+10-01-2018 00:54:54.797 UTC Debug acr.cpp:83: Sending Null ACR (0x7fce4401b390)
+10-01-2018 00:54:54.797 UTC Debug acr.cpp:54: Destroyed ACR (0x7fce4401b390)
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:1922: Free original request (0x7fce440a7d28)
+10-01-2018 00:54:54.797 UTC Debug pjsip: tdta0x7fce440a Destroying txdata Request msg REGISTER/cseq=4795 (tdta0x7fce440a7c80)
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:1938: UASTransaction destructor completed
+10-01-2018 00:54:54.797 UTC Debug pjsip: tdta0x7fce4411 Destroying txdata Response msg 401/REGISTER/cseq=4795 (tdta0x7fce4411f4c0)
+10-01-2018 00:54:54.797 UTC Debug pjsip: tsx0x7fce4402e Timeout timer event
+10-01-2018 00:54:54.797 UTC Debug pjsip: tsx0x7fce4402e State changed from Terminated to Destroyed, event=TIMER
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:390: tsx0x7fce4402ec78 - tu_on_tsx_state UAC, TSX_STATE TIMER state=Destroyed
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:2962: tsx0x7fce4402ec78 - uac_data = 0x7fce44027750, uas_data = (nil)
+10-01-2018 00:54:54.797 UTC Debug bono.cpp:3049: tsx0x7fce4402ec78 - UAC tsx destroyed
+10-01-2018 00:54:54.797 UTC Debug pjsip: tdta0x7fce4408 Destroying txdata Request msg REGISTER/cseq=4795 (tdta0x7fce4408bc60)
+10-01-2018 00:54:54.797 UTC Debug pjsip: tsx0x7fce44024 Transaction destroyed!
+10-01-2018 00:54:54.797 UTC Debug pjsip: tsx0x7fce4402e Transaction destroyed!
+10-01-2018 00:54:54.834 UTC Verbose pjsip: tcps0x7fce4c04 TCP connection closed
+10-01-2018 00:54:54.834 UTC Debug flowtable.cpp:652: Transport state changed for flow 0x7fce4407fa00, state = 1
+10-01-2018 00:54:54.834 UTC Debug flowtable.cpp:205: Remove flow 0x7fce4407fa00
+10-01-2018 00:54:54.834 UTC Debug flowtable.cpp:232: Reporting current flow count: 7
+10-01-2018 00:54:54.834 UTC Debug flowtable.cpp:197: Checked quiescing state: flow_map is not empty, is_quiescing() result is false, _qm (QuiescingManager reference) is not NULL
+10-01-2018 00:54:54.834 UTC Status connection_tracker.cpp:92: Connection 0x7fce4c04d878 has been destroyed
+10-01-2018 00:54:54.834 UTC Verbose pjsip: tcps0x7fce4c04 TCP transport destroyed with reason 70016: End of file (PJ_EEOF)
+10-01-2018 00:54:54.839 UTC Verbose pjsip:    tcplis:5060 TCP listener cw-aio:5060: got incoming TCP connection from 10.237.15.136:43591, sock=148
+10-01-2018 00:54:54.839 UTC Verbose pjsip: tcps0x7fce4c04 tcp->base.local_name: cw-aio
+10-01-2018 00:54:54.839 UTC Verbose pjsip: tcps0x7fce4c04 TCP server transport created
+10-01-2018 00:54:54.858 UTC Debug pjsip: sip_endpoint.c Processing incoming message: Request msg REGISTER/cseq=4796 (rdata0x7fce4c04dbb0)
+10-01-2018 00:54:54.858 UTC Verbose common_sip_processing.cpp:120: RX 940 bytes Request msg REGISTER/cseq=4796 (rdata0x7fce4c04dbb0) from TCP 10.237.15.136:43591:
+--start msg--
+
+REGISTER sip:example.com SIP/2.0
+From: <sip:6505550745 at example.com:5060>;tag=4700b0-aed0f88-13c4-50029-5a4f67eb-5b9a9b7b-5a4f67eb
+To: <sip:6505550745 at example.com:5060>
+Call-ID: 478378-aed0f88-13c4-50029-5a4f67eb-5adeba0d-5a4f67eb
+CSeq: 4796 REGISTER
+Via: SIP/2.0/TCP 10.237.15.136:5060;branch=z9hG4bK-5a54e5ae-dba132a8-5fa06c1b
+Max-Forwards: 70
+Supported: timer,replaces,join,tdialog,100rel,histinfo,path
+User-Agent: ARRIS-TM822G release v.9.1.103S5P.SIP.PC20 SN/001DD5F31A69
+Authorization: Digest username="6505550745 at example.com",realm="example.com",nonce="2071839808682f68",uri="sip:example.com",response="2d39890db7a7ca9a5bf46c817b9e9515",algorithm=MD5,cnonce="dba132a8",opaque="06ededd86b7d8555",qop=auth,nc=00000001
+Contact: <sip:6505550745 at 10.237.15.136:5060>;expires=3600
+Allow: INVITE,ACK,BYE,CANCEL,NOTIFY,PRACK,UPDATE,OPTIONS
+Allow-Events: vq-rtcpxr
+Route: <sip:10.237.20.101;transport=udp;lr>
+Content-Length: 0
+
+
+--end msg--
+10-01-2018 00:54:54.858 UTC Debug pjutils.cpp:1689: Logging SAS Call-ID marker, Call-ID 478378-aed0f88-13c4-50029-5a4f67eb-5adeba0d-5a4f67eb
+10-01-2018 00:54:54.858 UTC Debug thread_dispatcher.cpp:264: Queuing cloned received message 0x7fce4c00e4d8 for worker threads
+10-01-2018 00:54:54.858 UTC Debug thread_dispatcher.cpp:150: Worker thread dequeue message 0x7fce4c00e4d8
+10-01-2018 00:54:54.859 UTC Debug pjsip: sip_endpoint.c Distributing rdata to modules: Request msg REGISTER/cseq=4796 (rdata0x7fce4c00e4d8)
+10-01-2018 00:54:54.859 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+10-01-2018 00:54:54.859 UTC Debug uri_classifier.cpp:204: Classified URI as 4
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:278: Proxy RX request
+10-01-2018 00:54:54.859 UTC Debug pjutils.cpp:699: Cloned Request msg REGISTER/cseq=4796 (rdata0x7fce4c00e4d8) to tdta0x7fce440a7c80
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:817: Request received on non-trusted port 5060
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:1057: Perform access proxy routing for REGISTER request
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:1094: Message requires outbound support
+10-01-2018 00:54:54.859 UTC Debug flowtable.cpp:90: Find or create flow for transport tcps0x7fce4c04d878 (2), remote address 10.237.15.136:43591
+10-01-2018 00:54:54.859 UTC Debug flowtable.cpp:293: Added transport listener for flow 0x7fce4407fa00
+10-01-2018 00:54:54.859 UTC Debug flowtable.cpp:105: Added flow record 0x7fce4407fa00
+10-01-2018 00:54:54.859 UTC Debug flowtable.cpp:232: Reporting current flow count: 8
+10-01-2018 00:54:54.859 UTC Debug flowtable.cpp:599: Dialog count now 2 for flow
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:1106: Found or created flow data record, token = MESu0exECw
+10-01-2018 00:54:54.859 UTC Info pjutils.cpp:389: Adding integrity-protected=ip-assoc-pending indicator to message
+10-01-2018 00:54:54.859 UTC Debug flowtable.cpp:616: Dialog count now 1 for flow
+10-01-2018 00:54:54.859 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+10-01-2018 00:54:54.859 UTC Debug uri_classifier.cpp:204: Classified URI as 4
+10-01-2018 00:54:54.859 UTC Debug uri_classifier.cpp:174: home domain: false, local_to_node: true, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+10-01-2018 00:54:54.859 UTC Debug uri_classifier.cpp:204: Classified URI as 3
+10-01-2018 00:54:54.859 UTC Debug pjutils.cpp:509: Found Route header, URI = sip:10.237.20.101;transport=udp;lr
+10-01-2018 00:54:54.859 UTC Debug pjutils.cpp:513: Route header is local
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:1015: Mark originating
+10-01-2018 00:54:54.859 UTC Info bono.cpp:1036: Route request to upstream proxy sip:scscf.cw-aio:5052;transport=TCP;lr;orig
+10-01-2018 00:54:54.859 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+10-01-2018 00:54:54.859 UTC Debug uri_classifier.cpp:204: Classified URI as 4
+10-01-2018 00:54:54.859 UTC Debug uri_classifier.cpp:174: home domain: false, local_to_node: true, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+10-01-2018 00:54:54.859 UTC Debug uri_classifier.cpp:204: Classified URI as 3
+10-01-2018 00:54:54.859 UTC Debug pjutils.cpp:509: Found Route header, URI = sip:10.237.20.101;transport=udp;lr
+10-01-2018 00:54:54.859 UTC Debug pjutils.cpp:513: Route header is local
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:1604: Top Route header is local - erasing
+10-01-2018 00:54:54.859 UTC Debug acr.cpp:49: Created ACR (0x7fce440c1940)
+10-01-2018 00:54:54.859 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+10-01-2018 00:54:54.859 UTC Debug uri_classifier.cpp:204: Classified URI as 4
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:486: Trust mode INBOUND_EDGE_CLIENT(,-rsp,-pch), serving state None
+10-01-2018 00:54:54.859 UTC Debug pjsip: tsx0x7fce44024 Transaction created for Request msg REGISTER/cseq=4796 (rdata0x7fce4c00e4d8)
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:1786: UASTransaction constructor (0x7fce440a5b10)
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:1787: ACR (0x7fce440c1940)
+10-01-2018 00:54:54.859 UTC Debug pjsip: tsx0x7fce44024 Incoming Request msg REGISTER/cseq=4796 (rdata0x7fce4c00e4d8) in state Null
+10-01-2018 00:54:54.859 UTC Debug pjsip: tsx0x7fce44024 State changed from Null to Trying, event=RX_MSG
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:390: tsx0x7fce44024398 - tu_on_tsx_state UAS, TSX_STATE RX_MSG state=Trying
+10-01-2018 00:54:54.859 UTC Debug pjsip:       endpoint Response msg 408/REGISTER/cseq=4796 (tdta0x7fce4408ac50) created
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:2418: Report SAS start marker - trail (190)
+10-01-2018 00:54:54.859 UTC Debug trustboundary.cpp:69: Add P-Charging headers
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:2492: Allocating transaction and data for target 0
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:2749: Stripping loose routes from proxied message
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:2776: Adding a Route header to sip:scscf.cw-aio:5052;transport=TCP
+10-01-2018 00:54:54.859 UTC Debug pjsip: tsx0x7fce4402e Transaction created for Request msg REGISTER/cseq=4796 (tdta0x7fce4408bc60)
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:2519: Adding trail identifier 400 to UAC transaction
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:2538: Updating request URI and route for target 0
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:2844: Transport tcpc0x7fce4404dcd8 (TCP to 10.237.20.101:5052) pre-selected for transaction
+10-01-2018 00:54:54.859 UTC Debug bono.cpp:2862: Sending request for sip:example.com
+10-01-2018 00:54:54.859 UTC Debug pjsip: tsx0x7fce4402e Sending Request msg REGISTER/cseq=4796 (tdta0x7fce4408bc60) in state Null
+10-01-2018 00:54:54.859 UTC Debug pjsip:       endpoint Request msg REGISTER/cseq=4796 (tdta0x7fce4408bc60): skipping target resolution because address is already set
+10-01-2018 00:54:54.859 UTC Verbose common_sip_processing.cpp:136: TX 1212 bytes Request msg REGISTER/cseq=4796 (tdta0x7fce4408bc60) to TCP 10.237.20.101:5052:
+--start msg--
+
+REGISTER sip:example.com SIP/2.0
+Via: SIP/2.0/TCP 10.237.20.101:5058;rport;branch=z9hG4bKPjZ2eku.5sxqgTo-pGiuT2TflIFSWJRn0Z
+Path: <sip:MESu0exECw at 10.237.20.101:5058;transport=TCP;lr;ob>
+From: <sip:6505550745 at example.com>;tag=4700b0-aed0f88-13c4-50029-5a4f67eb-5b9a9b7b-5a4f67eb
+To: <sip:6505550745 at example.com>
+Call-ID: 478378-aed0f88-13c4-50029-5a4f67eb-5adeba0d-5a4f67eb
+CSeq: 4796 REGISTER
+Via: SIP/2.0/TCP 10.237.15.136:5060;received=10.237.15.136;branch=z9hG4bK-5a54e5ae-dba132a8-5fa06c1b
+Max-Forwards: 70
+Supported: timer, replaces, join, tdialog, 100rel, histinfo, path
+User-Agent: ARRIS-TM822G release v.9.1.103S5P.SIP.PC20 SN/001DD5F31A69
+Authorization: Digest response="2d39890db7a7ca9a5bf46c817b9e9515", username="6505550745 at example.com", realm="example.com", nonce="2071839808682f68", uri="sip:example.com", algorithm=MD5, cnonce="dba132a8", opaque="06ededd86b7d8555", qop=auth, nc=00000001,integrity-protected=ip-assoc-pending
+Contact: <sip:6505550745 at 10.237.15.136:5060>;expires=3600
+Allow: INVITE, ACK, BYE, CANCEL, NOTIFY, PRACK, UPDATE, OPTIONS
+Allow-Events: vq-rtcpxr
+P-Visited-Network-ID: example.com
+Route: <sip:scscf.cw-aio:5052;transport=TCP;lr;orig>
+Content-Length:  0
+
+
+--end msg--
+10-01-2018 00:54:54.860 UTC Debug pjsip: tsx0x7fce4402e State changed from Null to Calling, event=TX_MSG
+10-01-2018 00:54:54.860 UTC Debug bono.cpp:390: tsx0x7fce4402ec78 - tu_on_tsx_state UAC, TSX_STATE TX_MSG state=Calling
+10-01-2018 00:54:54.860 UTC Debug bono.cpp:2962: tsx0x7fce4402ec78 - uac_data = 0x7fce44027750, uas_data = 0x7fce440a5b10
+10-01-2018 00:54:54.860 UTC Debug thread_dispatcher.cpp:200: Worker thread completed processing message 0x7fce4c00e4d8
+10-01-2018 00:54:54.860 UTC Debug thread_dispatcher.cpp:206: Request latency = 1967us
+10-01-2018 00:54:54.863 UTC Debug pjsip: sip_endpoint.c Processing incoming message: Response msg 200/REGISTER/cseq=4796 (rdata0x7fce4404e010)
+10-01-2018 00:54:54.863 UTC Verbose common_sip_processing.cpp:120: RX 789 bytes Response msg 200/REGISTER/cseq=4796 (rdata0x7fce4404e010) from TCP 10.237.20.101:5052:
+--start msg--
+
+SIP/2.0 200 OK
+Service-Route: <sip:scscf.cw-aio:5054;transport=TCP;lr;orig>
+Via: SIP/2.0/TCP 10.237.20.101:5058;rport=46663;received=10.237.20.101;branch=z9hG4bKPjZ2eku.5sxqgTo-pGiuT2TflIFSWJRn0Z
+Via: SIP/2.0/TCP 10.237.15.136:5060;received=10.237.15.136;branch=z9hG4bK-5a54e5ae-dba132a8-5fa06c1b
+Call-ID: 478378-aed0f88-13c4-50029-5a4f67eb-5adeba0d-5a4f67eb
+From: <sip:6505550745 at example.com>;tag=4700b0-aed0f88-13c4-50029-5a4f67eb-5b9a9b7b-5a4f67eb
+To: <sip:6505550745 at example.com>;tag=z9hG4bKPjZ2eku.5sxqgTo-pGiuT2TflIFSWJRn0Z
+CSeq: 4796 REGISTER
+Supported: outbound
+Contact: <sip:6505550745 at 10.237.15.136:5060>;expires=300
+Require: outbound
+Path: <sip:MESu0exECw at 10.237.20.101:5058;transport=TCP;lr;ob>
+P-Associated-URI: <sip:6505550745 at example.com>
+Content-Length:  0
+
+
+--end msg--
+10-01-2018 00:54:54.863 UTC Debug thread_dispatcher.cpp:264: Queuing cloned received message 0x7fce4c00e4d8 for worker threads
+10-01-2018 00:54:54.863 UTC Debug thread_dispatcher.cpp:150: Worker thread dequeue message 0x7fce4c00e4d8
+10-01-2018 00:54:54.863 UTC Debug pjsip: sip_endpoint.c Distributing rdata to modules: Response msg 200/REGISTER/cseq=4796 (rdata0x7fce4c00e4d8)
+10-01-2018 00:54:54.863 UTC Debug pjsip: tsx0x7fce4402e Incoming Response msg 200/REGISTER/cseq=4796 (rdata0x7fce4c00e4d8) in state Calling
+10-01-2018 00:54:54.863 UTC Debug pjsip: tsx0x7fce4402e State changed from Calling to Completed, event=RX_MSG
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:390: tsx0x7fce4402ec78 - tu_on_tsx_state UAC, TSX_STATE RX_MSG state=Completed
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:2962: tsx0x7fce4402ec78 - uac_data = 0x7fce44027750, uas_data = 0x7fce440a5b10
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:3001: tsx0x7fce4402ec78 - RX_MSG on active UAC transaction
+10-01-2018 00:54:54.863 UTC Debug flowtable.cpp:164: Find flow for flow token MESu0exECw
+10-01-2018 00:54:54.863 UTC Debug flowtable.cpp:599: Dialog count now 2 for flow
+10-01-2018 00:54:54.863 UTC Debug flowtable.cpp:177: Found flow record 0x7fce4407fa00
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:1694: Maximum contact expiry is 300
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:1720: Found P-Associated-URI header
+10-01-2018 00:54:54.863 UTC Debug flowtable.cpp:413: Setting identity sip:6505550745 at example.com on flow 0x7fce4407fa00, expires = 300
+10-01-2018 00:54:54.863 UTC Debug flowtable.cpp:616: Dialog count now 1 for flow sip:6505550745 at example.com
+10-01-2018 00:54:54.863 UTC Debug trustboundary.cpp:57: Strip trusted headers
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:2194: tsx0x7fce4402ec78 - Final response, so disconnect UAS and UAC transactions
+10-01-2018 00:54:54.863 UTC Debug pjsip: tdta0x7fce4408 Destroying txdata Response msg 408/REGISTER/cseq=4796 (tdta0x7fce4408ac50)
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:2629: Dissociate UAC transaction 0x7fce44027750 (0)
+10-01-2018 00:54:54.863 UTC Debug pjsip: tsx0x7fce44024 Sending Response msg 200/REGISTER/cseq=4796 (tdta0x7fce4411f4c0) in state Trying
+10-01-2018 00:54:54.863 UTC Verbose common_sip_processing.cpp:136: TX 668 bytes Response msg 200/REGISTER/cseq=4796 (tdta0x7fce4411f4c0) to TCP 10.237.15.136:43591:
+--start msg--
+
+SIP/2.0 200 OK
+Service-Route: <sip:scscf.cw-aio:5054;transport=TCP;lr;orig>
+Via: SIP/2.0/TCP 10.237.15.136:5060;received=10.237.15.136;branch=z9hG4bK-5a54e5ae-dba132a8-5fa06c1b
+Call-ID: 478378-aed0f88-13c4-50029-5a4f67eb-5adeba0d-5a4f67eb
+From: <sip:6505550745 at example.com>;tag=4700b0-aed0f88-13c4-50029-5a4f67eb-5b9a9b7b-5a4f67eb
+To: <sip:6505550745 at example.com>;tag=z9hG4bKPjZ2eku.5sxqgTo-pGiuT2TflIFSWJRn0Z
+CSeq: 4796 REGISTER
+Supported: outbound
+Contact: <sip:6505550745 at 10.237.15.136:5060>;expires=300
+Require: outbound
+Path: <sip:MESu0exECw at 10.237.20.101:5058;transport=TCP;lr;ob>
+P-Associated-URI: <sip:6505550745 at example.com>
+Content-Length:  0
+
+
+--end msg--
+10-01-2018 00:54:54.863 UTC Debug pjsip: tsx0x7fce44024 State changed from Trying to Completed, event=TX_MSG
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:390: tsx0x7fce44024398 - tu_on_tsx_state UAS, TSX_STATE TX_MSG state=Completed
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:817: Request received on non-trusted port 5060
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:2427: Report SAS end marker - trail (190)
+10-01-2018 00:54:54.863 UTC Debug thread_dispatcher.cpp:200: Worker thread completed processing message 0x7fce4c00e4d8
+10-01-2018 00:54:54.863 UTC Debug thread_dispatcher.cpp:206: Request latency = 311us
+10-01-2018 00:54:54.863 UTC Debug pjsip: tsx0x7fce4402e Timeout timer event
+10-01-2018 00:54:54.863 UTC Debug pjsip: tsx0x7fce4402e State changed from Completed to Terminated, event=TIMER
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:390: tsx0x7fce4402ec78 - tu_on_tsx_state UAC, TSX_STATE TIMER state=Terminated
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:2962: tsx0x7fce4402ec78 - uac_data = 0x7fce44027750, uas_data = (nil)
+10-01-2018 00:54:54.863 UTC Debug pjsip: tsx0x7fce44024 Timeout timer event
+10-01-2018 00:54:54.863 UTC Debug pjsip: tsx0x7fce44024 State changed from Completed to Terminated, event=TIMER
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:390: tsx0x7fce44024398 - tu_on_tsx_state UAS, TSX_STATE TIMER state=Terminated
+10-01-2018 00:54:54.863 UTC Debug pjsip: tsx0x7fce4402e Timeout timer event
+10-01-2018 00:54:54.863 UTC Debug pjsip: tsx0x7fce4402e State changed from Terminated to Destroyed, event=TIMER
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:390: tsx0x7fce4402ec78 - tu_on_tsx_state UAC, TSX_STATE TIMER state=Destroyed
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:2962: tsx0x7fce4402ec78 - uac_data = 0x7fce44027750, uas_data = (nil)
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:3049: tsx0x7fce4402ec78 - UAC tsx destroyed
+10-01-2018 00:54:54.863 UTC Debug pjsip: tdta0x7fce4408 Destroying txdata Request msg REGISTER/cseq=4796 (tdta0x7fce4408bc60)
+10-01-2018 00:54:54.863 UTC Debug pjsip: tsx0x7fce44024 Timeout timer event
+10-01-2018 00:54:54.863 UTC Debug pjsip: tsx0x7fce44024 State changed from Terminated to Destroyed, event=TIMER
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:390: tsx0x7fce44024398 - tu_on_tsx_state UAS, TSX_STATE TIMER state=Destroyed
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:2276: tsx0x7fce44024398 - UAS tsx destroyed
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:1831: UASTransaction destructor (0x7fce440a5b10)
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:1851: Disconnect UAC transactions from UAS transaction
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:1897: Upstream ACR = 0x7fce440c1940, Downstream ACR = 0x7fce440c1940
+10-01-2018 00:54:54.863 UTC Debug acr.cpp:83: Sending Null ACR (0x7fce440c1940)
+10-01-2018 00:54:54.863 UTC Debug acr.cpp:54: Destroyed ACR (0x7fce440c1940)
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:1922: Free original request (0x7fce440a7d28)
+10-01-2018 00:54:54.863 UTC Debug pjsip: tdta0x7fce440a Destroying txdata Request msg REGISTER/cseq=4796 (tdta0x7fce440a7c80)
+10-01-2018 00:54:54.863 UTC Debug bono.cpp:1938: UASTransaction destructor completed
+10-01-2018 00:54:54.863 UTC Debug pjsip: tdta0x7fce4411 Destroying txdata Response msg 200/REGISTER/cseq=4796 (tdta0x7fce4411f4c0)
+10-01-2018 00:54:54.863 UTC Debug pjsip: tsx0x7fce44024 Transaction destroyed!
+10-01-2018 00:54:54.863 UTC Debug pjsip: tsx0x7fce4402e Transaction destroyed!
+10-01-2018 00:54:54.885 UTC Verbose pjsip: tcps0x7fce4c04 TCP connection closed
+10-01-2018 00:54:54.885 UTC Debug flowtable.cpp:652: Transport state changed for flow 0x7fce4407fa00, state = 1
+10-01-2018 00:54:54.885 UTC Debug flowtable.cpp:205: Remove flow 0x7fce4407fa00
+10-01-2018 00:54:54.885 UTC Debug flowtable.cpp:232: Reporting current flow count: 7
+10-01-2018 00:54:54.885 UTC Debug flowtable.cpp:197: Checked quiescing state: flow_map is not empty, is_quiescing() result is false, _qm (QuiescingManager reference) is not NULL
+10-01-2018 00:54:54.885 UTC Status connection_tracker.cpp:92: Connection 0x7fce4c04d878 has been destroyed
+10-01-2018 00:54:54.885 UTC Verbose pjsip: tcps0x7fce4c04 TCP transport destroyed with reason 70016: End of file (PJ_EEOF)
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Ying Huang
+Sent: Tuesday, December 19, 2017 9:01 AM
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Bono Send Invite using TCP, Header Reduction
+
+[External Email]
+Hi Roger,
+
+Apparently there is some protocol specifying that when the message is too large, the network should use TCP instead of UDP, so let?s focus on debugging the TCP. I have always registered my client to use TCP and expect it to work.
+
+Just to clarify, the logging you sent is from Bono node? Would you turn on debug logging and send a more detailed log? Also if you can do a tcpdump on Bono it will be helpful as well.
+
+Thanks!
+Ying
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Roger Case
+Sent: 15 December 2017 00:59
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] Bono Send Invite using TCP, Header Reduction
+
+Hi Ying,
+
+Indeed I can successfully register my UE using TCP, but when I send an Invite from the UE it is met with 403 Forbidden.  UDP registration/Invite from UE works fine, but an Invite to UE is too big.
+Where can I find the meaning of various log messages, such as:
+
+15-12-2017 00:38:09.962 UTC Error pjsip: tcpc0x7f095455 TCP connect() error: Connection refused [code=120111]
+And
+15-12-2017 00:46:27.070 UTC Status sip_connection_pool.cpp:447: Recycle TCP connection slot 9
+And
+15-12-2017 00:46:49.225 UTC Status alarm.cpp:62: sprout issued 1004.1 alarm
+15-12-2017 00:46:49.225 UTC Status alarm.cpp:62: sprout issued 1001.1 alarm
+15-12-2017 00:46:49.225 UTC Status alarm.cpp:62: sprout issued 1002.1 alarm
+
+Thanks!
+
+Roger
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Ying Huang
+Sent: Wednesday, December 13, 2017 9:46 AM
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] Bono Send Invite using TCP, Header Reduction
+
+[External Email]
+Hi Roger,
+
+Bono would be forwarding the message as how the message is. So if the client registered as TCP, Bono would be forwarding TCP messages.
+
+As for topology hiding, no Bono doesn?t do it.
+
+Thanks,
+Ying
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Roger Case
+Sent: 08 December 2017 20:14
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Bono Send Invite using TCP, Header Reduction
+
+Dear Clearwater,
+
+The PacketCable 2.0 eDVA UE endpoints I am using will not send responses to Invites if the response is greater than 1300 bytes, and it wants to respond using UDP.  Is there a way to get Bono to send the Invite to the UE using TCP?  These devices should then respond using TCP.
+
+Also, the Bono P-CSCF includes all Record Route and Via headers for the call.  Is there a way to reduce the number of headers sent to the UE, making the Invite smaller?  Can Bono do a bit of topology hiding, to accomplish this?
+
+Thanks very much.
+
+Roger Case
+GCI Alaska
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180110/311333c9/attachment.html>
+
+From case at gci.com  Thu Jan 11 16:48:26 2018
+From: case at gci.com (Roger Case)
+Date: Thu, 11 Jan 2018 21:48:26 +0000
+Subject: [Project Clearwater] Bono Send Invite using TCP,
+ Header Reduction
+References: <A7E1158244C52C428F0B61BDC9CF760C016D83B340@ex-mbx-prd02.gci.com>
+	<DM5PR0201MB3623D60EE643F36F30B2EA16F8350@DM5PR0201MB3623.namprd02.prod.outlook.com>
+	<A7E1158244C52C428F0B61BDC9CF760C016D84D493@ex-mbx-prd02.gci.com>
+	<DM5PR0201MB36238C158A91D9C0159E3051F80F0@DM5PR0201MB3623.namprd02.prod.outlook.com>
+Message-ID: <A7E1158244C52C428F0B61BDC9CF760C016D89D171@ex-mbx-prd02.gci.com>
+
+Hi Ying,
+
+And here is the debug log when the UE (Arris eDVA) on 6505550745 attempts an outgoing call.  Registration debug follows below.   Thanks!  Roger
+
+11-01-2018 21:16:01.038 UTC Verbose pjsip:    tcplis:5060 TCP listener cw-aio:5060: got incoming TCP connection from 10.237.15.136:58560, sock=148
+11-01-2018 21:16:01.038 UTC Verbose pjsip: tcps0x7f36e010 tcp->base.local_name: cw-aio
+11-01-2018 21:16:01.038 UTC Verbose pjsip: tcps0x7f36e010 TCP server transport created
+11-01-2018 21:16:01.055 UTC Debug pjsip: sip_endpoint.c Processing incoming message: Request msg INVITE/cseq=1 (rdata0x7f36e0105c00)
+11-01-2018 21:16:01.055 UTC Verbose common_sip_processing.cpp:120: RX 1168 bytes Request msg INVITE/cseq=1 (rdata0x7f36e0105c00) from TCP 10.237.15.136:58560:
+--start msg--
+
+INVITE sip:19077452121 at example.com;user=phone SIP/2.0
+From: <sip:6505550745 at example.com:5060>;tag=472618-aed0f88-13c4-50029-5a575562-15aaac23-5a575562
+To: <sip:19077452121 at example.com;user=phone>
+Call-ID: 475b38-aed0f88-13c4-50029-5a575562-fdab92d-5a575562
+CSeq: 1 INVITE
+Via: SIP/2.0/TCP 10.237.15.136:5060;branch=z9hG4bK-5a575562-e525889c-1f65b70
+P-Preferred-Identity: <sip:6505550745 at example.com;user=phone>
+Max-Forwards: 70
+Supported: timer,replaces,join,tdialog,100rel,histinfo,path
+User-Agent: ARRIS-TM822G release v.9.1.103S5P.SIP.PC20 SN/001DD5F31A69
+Contact: <sip:6505550745 at 10.237.15.136:5060;user=phone>
+Session-Expires: 1800;refresher=uac
+Min-SE: 90
+Allow: INVITE,ACK,BYE,CANCEL,NOTIFY,PRACK,UPDATE,OPTIONS
+Route: <sip:10.237.20.101:5060>
+Route: <sip:scscf.cw-aio:5054;transport=TCP;lr;orig>
+Content-Type: application/sdp
+Content-Length: 294
+
+v=0
+o=- 103984729 103984729 IN IP4 10.237.15.136
+s=-
+c=IN IP4 10.237.15.136
+t=0 0
+m=audio 52646 RTP/AVP 9 0 8 101
+b=AS:80
+b=TIAS:64000
+a=ptime:20
+a=sendrecv
+a=rtpmap:101 telephone-event/16000
+a=fmtp:101 0-15
+a=maxprate:50
+a=rtcp-xr:voip-metrics
+a=sqn:0
+a=cdsc:1 image udptl t38
+
+--end msg--
+11-01-2018 21:16:01.055 UTC Debug pjutils.cpp:1689: Logging SAS Call-ID marker, Call-ID 475b38-aed0f88-13c4-50029-5a575562-fdab92d-5a575562
+11-01-2018 21:16:01.055 UTC Debug thread_dispatcher.cpp:264: Queuing cloned received message 0x7f36e0109118 for worker threads
+11-01-2018 21:16:01.055 UTC Debug thread_dispatcher.cpp:150: Worker thread dequeue message 0x7f36e0109118
+11-01-2018 21:16:01.055 UTC Debug pjsip: sip_endpoint.c Distributing rdata to modules: Request msg INVITE/cseq=1 (rdata0x7f36e0109118)
+11-01-2018 21:16:01.055 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:16:01.055 UTC Debug uri_classifier.cpp:204: Classified URI as 2
+11-01-2018 21:16:01.055 UTC Debug bono.cpp:278: Proxy RX request
+11-01-2018 21:16:01.055 UTC Debug pjutils.cpp:699: Cloned Request msg INVITE/cseq=1 (rdata0x7f36e0109118) to tdta0x7f36d801f520
+11-01-2018 21:16:01.055 UTC Debug bono.cpp:817: Request received on non-trusted port 5060
+11-01-2018 21:16:01.055 UTC Debug bono.cpp:1057: Perform access proxy routing for INVITE request
+11-01-2018 21:16:01.055 UTC Debug uri_classifier.cpp:174: home domain: false, local_to_node: true, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:16:01.055 UTC Debug uri_classifier.cpp:204: Classified URI as 3
+11-01-2018 21:16:01.055 UTC Debug pjutils.cpp:509: Found Route header, URI = sip:10.237.20.101:5060
+11-01-2018 21:16:01.055 UTC Debug pjutils.cpp:513: Route header is local
+11-01-2018 21:16:01.055 UTC Debug uri_classifier.cpp:174: home domain: false, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:16:01.055 UTC Debug uri_classifier.cpp:204: Classified URI as 5
+11-01-2018 21:16:01.055 UTC Debug pjutils.cpp:509: Found Route header, URI = sip:scscf.cw-aio:5054;transport=TCP;lr;orig
+11-01-2018 21:16:01.055 UTC Debug bono.cpp:1194: Message received on non-trusted port 5060
+11-01-2018 21:16:01.055 UTC Debug flowtable.cpp:136: Find flow for transport tcps0x7f36e01058c8 (2), remote address 10.237.15.136:58560
+11-01-2018 21:16:01.055 UTC Info bono.cpp:1384: Rejecting request from untrusted source
+11-01-2018 21:16:01.055 UTC Debug acr.cpp:49: Created ACR (0x7f36d8006b30)
+11-01-2018 21:16:01.055 UTC Info bono.cpp:771: Reject INVITE request with 403 status code
+11-01-2018 21:16:01.056 UTC Debug pjsip:       endpoint Response msg 403/INVITE/cseq=1 (tdta0x7f36d8006cb0) created
+11-01-2018 21:16:01.056 UTC Verbose common_sip_processing.cpp:136: TX 401 bytes Response msg 403/INVITE/cseq=1 (tdta0x7f36d8006cb0) to TCP 10.237.15.136:58560:
+--start msg--
+
+SIP/2.0 403 Forbidden
+Via: SIP/2.0/TCP 10.237.15.136:5060;received=10.237.15.136;branch=z9hG4bK-5a575562-e525889c-1f65b70
+Call-ID: 475b38-aed0f88-13c4-50029-5a575562-fdab92d-5a575562
+From: <sip:6505550745 at example.com>;tag=472618-aed0f88-13c4-50029-5a575562-15aaac23-5a575562
+To: <sip:19077452121 at example.com;user=phone>;tag=z9hG4bK-5a575562-e525889c-1f65b70
+CSeq: 1 INVITE
+Content-Length:  0
+
+
+--end msg--
+11-01-2018 21:16:01.056 UTC Debug pjsip: tdta0x7f36d800 Destroying txdata Response msg 403/INVITE/cseq=1 (tdta0x7f36d8006cb0)
+11-01-2018 21:16:01.056 UTC Debug acr.cpp:83: Sending Null ACR (0x7f36d8006b30)
+11-01-2018 21:16:01.056 UTC Debug acr.cpp:54: Destroyed ACR (0x7f36d8006b30)
+11-01-2018 21:16:01.056 UTC Debug pjsip: tdta0x7f36d801 Destroying txdata Request msg INVITE/cseq=1 (tdta0x7f36d801f520)
+11-01-2018 21:16:01.056 UTC Debug thread_dispatcher.cpp:200: Worker thread completed processing message 0x7f36e0109118
+11-01-2018 21:16:01.056 UTC Debug thread_dispatcher.cpp:206: Request latency = 567us
+11-01-2018 21:16:01.095 UTC Debug pjsip: sip_endpoint.c Processing incoming message: Request msg ACK/cseq=1 (rdata0x7f36e0105c00)
+11-01-2018 21:16:01.095 UTC Verbose common_sip_processing.cpp:120: RX 555 bytes Request msg ACK/cseq=1 (rdata0x7f36e0105c00) from TCP 10.237.15.136:58560:
+--start msg--
+
+ACK sip:19077452121 at example.com;user=phone SIP/2.0
+From: <sip:6505550745 at example.com:5060>;tag=472618-aed0f88-13c4-50029-5a575562-15aaac23-5a575562
+To: <sip:19077452121 at example.com;user=phone>;tag=z9hG4bK-5a575562-e525889c-1f65b70
+Call-ID: 475b38-aed0f88-13c4-50029-5a575562-fdab92d-5a575562
+CSeq: 1 ACK
+Via: SIP/2.0/TCP 10.237.15.136:5060;branch=z9hG4bK-5a575562-e525889c-1f65b70
+Max-Forwards: 70
+User-Agent: ARRIS-TM822G release v.9.1.103S5P.SIP.PC20 SN/001DD5F31A69
+Contact: <sip:6505550745 at 10.237.15.136:5060;user=phone>
+Content-Length: 0
+
+
+--end msg--
+11-01-2018 21:16:01.095 UTC Debug pjutils.cpp:1689: Logging SAS Call-ID marker, Call-ID 475b38-aed0f88-13c4-50029-5a575562-fdab92d-5a575562
+11-01-2018 21:16:01.095 UTC Debug thread_dispatcher.cpp:264: Queuing cloned received message 0x7f36e0108168 for worker threads
+11-01-2018 21:16:01.095 UTC Debug thread_dispatcher.cpp:150: Worker thread dequeue message 0x7f36e0108168
+11-01-2018 21:16:01.095 UTC Debug pjsip: sip_endpoint.c Distributing rdata to modules: Request msg ACK/cseq=1 (rdata0x7f36e0108168)
+11-01-2018 21:16:01.095 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:16:01.095 UTC Debug uri_classifier.cpp:204: Classified URI as 2
+11-01-2018 21:16:01.095 UTC Debug bono.cpp:278: Proxy RX request
+11-01-2018 21:16:01.095 UTC Debug pjutils.cpp:699: Cloned Request msg ACK/cseq=1 (rdata0x7f36e0108168) to tdta0x7f36d801f520
+11-01-2018 21:16:01.095 UTC Debug bono.cpp:817: Request received on non-trusted port 5060
+11-01-2018 21:16:01.095 UTC Debug bono.cpp:1057: Perform access proxy routing for ACK request
+11-01-2018 21:16:01.095 UTC Debug bono.cpp:1194: Message received on non-trusted port 5060
+11-01-2018 21:16:01.095 UTC Debug flowtable.cpp:136: Find flow for transport tcps0x7f36e01058c8 (2), remote address 10.237.15.136:58560
+11-01-2018 21:16:01.095 UTC Info bono.cpp:1384: Rejecting request from untrusted source
+11-01-2018 21:16:01.095 UTC Debug acr.cpp:49: Created ACR (0x7f36d8006b30)
+11-01-2018 21:16:01.096 UTC Debug acr.cpp:83: Sending Null ACR (0x7f36d8006b30)
+11-01-2018 21:16:01.096 UTC Debug acr.cpp:54: Destroyed ACR (0x7f36d8006b30)
+11-01-2018 21:16:01.096 UTC Debug pjsip: tdta0x7f36d801 Destroying txdata Request msg ACK/cseq=1 (tdta0x7f36d801f520)
+11-01-2018 21:16:01.096 UTC Debug thread_dispatcher.cpp:200: Worker thread completed processing message 0x7f36e0108168
+11-01-2018 21:16:01.096 UTC Debug thread_dispatcher.cpp:206: Request latency = 394us
+11-01-2018 21:16:01.106 UTC Verbose pjsip: tcps0x7f36e010 TCP connection closed
+11-01-2018 21:16:01.107 UTC Status connection_tracker.cpp:92: Connection 0x7f36e01058c8 has been destroyed
+11-01-2018 21:16:01.107 UTC Verbose pjsip: tcps0x7f36e010 TCP transport destroyed with reason 70016: End of file (PJ_EEOF)
+11-01-2018 21:16:01.458 UTC Verbose pjsip: tcps0x7f36e01e TCP connection closed
+11-01-2018 21:16:01.458 UTC Status connection_tracker.cpp:92: Connection 0x7f36e01e4ed8 has been destroyed
+11-01-2018 21:16:01.458 UTC Verbose pjsip: tcps0x7f36e01e TCP transport destroyed with reason 70016: End of file (PJ_EEOF)
+
+
+##############################  Registration of 6505550745:
+
+11-01-2018 21:28:27.761 UTC Debug pjsip: sip_endpoint.c Processing incoming message: Request msg REGISTER/cseq=1726 (rdata0x7f36e0105c00)
+11-01-2018 21:28:27.761 UTC Verbose common_sip_processing.cpp:120: RX 938 bytes Request msg REGISTER/cseq=1726 (rdata0x7f36e0105c00) from TCP 10.237.15.136:36754:
+--start msg--
+
+REGISTER sip:example.com SIP/2.0
+From: <sip:6505550745 at example.com:5060>;tag=470ef0-aed0f88-13c4-50029-5a555eb9-40adda66-5a555eb9
+To: <sip:6505550745 at example.com:5060>
+Call-ID: 478378-aed0f88-13c4-50029-5a555eb9-3667940-5a555eb9
+CSeq: 1726 REGISTER
+Via: SIP/2.0/TCP 10.237.15.136:5060;branch=z9hG4bK-5a57584d-e530ed72-6696d8d
+Max-Forwards: 70
+Supported: timer,replaces,join,tdialog,100rel,histinfo,path
+User-Agent: ARRIS-TM822G release v.9.1.103S5P.SIP.PC20 SN/001DD5F31A69
+Authorization: Digest username="6505550745 at example.com<mailto:6505550745 at example.com>",realm="example.com",nonce="7aed3cde60bca4f0",uri="sip:example.com",response="402b48d7a9645a922aca71ac2ca09e7d",algorithm=MD5,cnonce="e530ed72",opaque="6d7a8a5f509faace",qop=auth,nc=00000001
+Contact: <sip:6505550745 at 10.237.15.136:5060>;expires=3600
+Allow: INVITE,ACK,BYE,CANCEL,NOTIFY,PRACK,UPDATE,OPTIONS
+Allow-Events: vq-rtcpxr
+Route: <sip:10.237.20.101;transport=udp;lr>
+Content-Length: 0
+
+
+--end msg--
+11-01-2018 21:28:27.761 UTC Debug pjutils.cpp:1689: Logging SAS Call-ID marker, Call-ID 478378-aed0f88-13c4-50029-5a555eb9-3667940-5a555eb9
+11-01-2018 21:28:27.761 UTC Debug thread_dispatcher.cpp:264: Queuing cloned received message 0x7f36e0024638 for worker threads
+11-01-2018 21:28:27.761 UTC Debug thread_dispatcher.cpp:150: Worker thread dequeue message 0x7f36e0024638
+11-01-2018 21:28:27.761 UTC Debug pjsip: sip_endpoint.c Distributing rdata to modules: Request msg REGISTER/cseq=1726 (rdata0x7f36e0024638)
+11-01-2018 21:28:27.761 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:28:27.761 UTC Debug uri_classifier.cpp:204: Classified URI as 4
+11-01-2018 21:28:27.761 UTC Debug bono.cpp:278: Proxy RX request
+11-01-2018 21:28:27.762 UTC Debug pjutils.cpp:699: Cloned Request msg REGISTER/cseq=1726 (rdata0x7f36e0024638) to tdta0x7f36d803b360
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:817: Request received on non-trusted port 5060
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:1057: Perform access proxy routing for REGISTER request
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:1094: Message requires outbound support
+11-01-2018 21:28:27.762 UTC Debug flowtable.cpp:90: Find or create flow for transport tcps0x7f36e01058c8 (2), remote address 10.237.15.136:36754
+11-01-2018 21:28:27.762 UTC Debug flowtable.cpp:293: Added transport listener for flow 0x7f36d803c990
+11-01-2018 21:28:27.762 UTC Debug flowtable.cpp:105: Added flow record 0x7f36d803c990
+11-01-2018 21:28:27.762 UTC Debug flowtable.cpp:232: Reporting current flow count: 7
+11-01-2018 21:28:27.762 UTC Debug flowtable.cpp:599: Dialog count now 2 for flow
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:1106: Found or created flow data record, token = 3ptyUGaJM/
+11-01-2018 21:28:27.762 UTC Info pjutils.cpp:389: Adding integrity-protected=ip-assoc-pending indicator to message
+11-01-2018 21:28:27.762 UTC Debug flowtable.cpp:616: Dialog count now 1 for flow
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:204: Classified URI as 4
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:174: home domain: false, local_to_node: true, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:204: Classified URI as 3
+11-01-2018 21:28:27.762 UTC Debug pjutils.cpp:509: Found Route header, URI = sip:10.237.20.101;transport=udp;lr
+11-01-2018 21:28:27.762 UTC Debug pjutils.cpp:513: Route header is local
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:1015: Mark originating
+11-01-2018 21:28:27.762 UTC Info bono.cpp:1036: Route request to upstream proxy sip:scscf.cw-aio:5052;transport=TCP;lr;orig
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:204: Classified URI as 4
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:174: home domain: false, local_to_node: true, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:204: Classified URI as 3
+11-01-2018 21:28:27.762 UTC Debug pjutils.cpp:509: Found Route header, URI = sip:10.237.20.101;transport=udp;lr
+11-01-2018 21:28:27.762 UTC Debug pjutils.cpp:513: Route header is local
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:1604: Top Route header is local - erasing
+11-01-2018 21:28:27.762 UTC Debug acr.cpp:49: Created ACR (0x7f36d8006bd0)
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:204: Classified URI as 4
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:486: Trust mode INBOUND_EDGE_CLIENT(,-rsp,-pch), serving state None
+11-01-2018 21:28:27.762 UTC Debug pjsip: tsx0x7f36d8089 Transaction created for Request msg REGISTER/cseq=1726 (rdata0x7f36e0024638)
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:1786: UASTransaction constructor (0x7f36d8042e20)
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:1787: ACR (0x7f36d8006bd0)
+11-01-2018 21:28:27.762 UTC Debug pjsip: tsx0x7f36d8089 Incoming Request msg REGISTER/cseq=1726 (rdata0x7f36e0024638) in state Null
+11-01-2018 21:28:27.762 UTC Debug pjsip: tsx0x7f36d8089 State changed from Null to Trying, event=RX_MSG
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:390: tsx0x7f36d8089098 - tu_on_tsx_state UAS, TSX_STATE RX_MSG state=Trying
+11-01-2018 21:28:27.762 UTC Debug pjsip:       endpoint Response msg 408/REGISTER/cseq=1726 (tdta0x7f36d809e880) created
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:2418: Report SAS start marker - trail (b6)
+11-01-2018 21:28:27.762 UTC Debug trustboundary.cpp:69: Add P-Charging headers
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:2492: Allocating transaction and data for target 0
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:2749: Stripping loose routes from proxied message
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:2776: Adding a Route header to sip:scscf.cw-aio:5052;transport=TCP
+11-01-2018 21:28:27.762 UTC Debug pjsip: tsx0x7f36d8037 Transaction created for Request msg REGISTER/cseq=1726 (tdta0x7f36d8027870)
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:2519: Adding trail identifier 182 to UAC transaction
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:2538: Updating request URI and route for target 0
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:2844: Transport tcpc0x7f36d809d098 (TCP to 10.237.20.101:5052) pre-selected for transaction
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:2862: Sending request for sip:example.com
+11-01-2018 21:28:27.762 UTC Debug pjsip: tsx0x7f36d8037 Sending Request msg REGISTER/cseq=1726 (tdta0x7f36d8027870) in state Null
+11-01-2018 21:28:27.762 UTC Debug pjsip:       endpoint Request msg REGISTER/cseq=1726 (tdta0x7f36d8027870): skipping target resolution because address is already set
+11-01-2018 21:28:27.762 UTC Verbose common_sip_processing.cpp:136: TX 1210 bytes Request msg REGISTER/cseq=1726 (tdta0x7f36d8027870) to TCP 10.237.20.101:5052:
+--start msg--
+
+REGISTER sip:example.com SIP/2.0
+Via: SIP/2.0/TCP 10.237.20.101:5058;rport;branch=z9hG4bKPjY-uiB2yim8VSRPwMd7oV-5M7Zdr4xerU
+Path: <sip:3ptyUGaJM/@10.237.20.101:5058;transport=TCP;lr;ob>
+From: <sip:6505550745 at example.com>;tag=470ef0-aed0f88-13c4-50029-5a555eb9-40adda66-5a555eb9
+To: <sip:6505550745 at example.com>
+Call-ID: 478378-aed0f88-13c4-50029-5a555eb9-3667940-5a555eb9
+CSeq: 1726 REGISTER
+Via: SIP/2.0/TCP 10.237.15.136:5060;received=10.237.15.136;branch=z9hG4bK-5a57584d-e530ed72-6696d8d
+Max-Forwards: 70
+Supported: timer, replaces, join, tdialog, 100rel, histinfo, path
+User-Agent: ARRIS-TM822G release v.9.1.103S5P.SIP.PC20 SN/001DD5F31A69
+Authorization: Digest response="402b48d7a9645a922aca71ac2ca09e7d", username="6505550745 at example.com<mailto:6505550745 at example.com>", realm="example.com", nonce="7aed3cde60bca4f0", uri="sip:example.com", algorithm=MD5, cnonce="e530ed72", opaque="6d7a8a5f509faace", qop=auth, nc=00000001,integrity-protected=ip-assoc-pending
+Contact: <sip:6505550745 at 10.237.15.136:5060>;expires=3600
+Allow: INVITE, ACK, BYE, CANCEL, NOTIFY, PRACK, UPDATE, OPTIONS
+Allow-Events: vq-rtcpxr
+P-Visited-Network-ID: example.com
+Route: <sip:scscf.cw-aio:5052;transport=TCP;lr;orig>
+Content-Length:  0
+
+
+--end msg--
+11-01-2018 21:28:27.764 UTC Debug pjsip: tsx0x7f36d8037 State changed from Null to Calling, event=TX_MSG
+11-01-2018 21:28:27.764 UTC Debug bono.cpp:390: tsx0x7f36d8037de8 - tu_on_tsx_state UAC, TSX_STATE TX_MSG state=Calling
+11-01-2018 21:28:27.764 UTC Debug bono.cpp:2962: tsx0x7f36d8037de8 - uac_data = 0x7f36d803cd20, uas_data = 0x7f36d8042e20
+11-01-2018 21:28:27.764 UTC Debug thread_dispatcher.cpp:200: Worker thread completed processing message 0x7f36e0024638
+11-01-2018 21:28:27.764 UTC Debug thread_dispatcher.cpp:206: Request latency = 2476us
+11-01-2018 21:28:27.768 UTC Debug pjsip: sip_endpoint.c Processing incoming message: Response msg 200/REGISTER/cseq=1726 (rdata0x7f36d809d3d0)
+11-01-2018 21:28:27.768 UTC Verbose common_sip_processing.cpp:120: RX 787 bytes Response msg 200/REGISTER/cseq=1726 (rdata0x7f36d809d3d0) from TCP 10.237.20.101:5052:
+--start msg--
+
+SIP/2.0 200 OK
+Service-Route: <sip:scscf.cw-aio:5054;transport=TCP;lr;orig>
+Via: SIP/2.0/TCP 10.237.20.101:5058;rport=59420;received=10.237.20.101;branch=z9hG4bKPjY-uiB2yim8VSRPwMd7oV-5M7Zdr4xerU
+Via: SIP/2.0/TCP 10.237.15.136:5060;received=10.237.15.136;branch=z9hG4bK-5a57584d-e530ed72-6696d8d
+Call-ID: 478378-aed0f88-13c4-50029-5a555eb9-3667940-5a555eb9
+From: <sip:6505550745 at example.com>;tag=470ef0-aed0f88-13c4-50029-5a555eb9-40adda66-5a555eb9
+To: <sip:6505550745 at example.com>;tag=z9hG4bKPjY-uiB2yim8VSRPwMd7oV-5M7Zdr4xerU
+CSeq: 1726 REGISTER
+Supported: outbound
+Contact: <sip:6505550745 at 10.237.15.136:5060>;expires=300
+Require: outbound
+Path: <sip:3ptyUGaJM/@10.237.20.101:5058;transport=TCP;lr;ob>
+P-Associated-URI: <sip:6505550745 at example.com>
+Content-Length:  0
+
+
+--end msg--
+11-01-2018 21:28:27.768 UTC Debug thread_dispatcher.cpp:264: Queuing cloned received message 0x7f36e0024638 for worker threads
+11-01-2018 21:28:27.768 UTC Debug thread_dispatcher.cpp:150: Worker thread dequeue message 0x7f36e0024638
+11-01-2018 21:28:27.768 UTC Debug pjsip: sip_endpoint.c Distributing rdata to modules: Response msg 200/REGISTER/cseq=1726 (rdata0x7f36e0024638)
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8037 Incoming Response msg 200/REGISTER/cseq=1726 (rdata0x7f36e0024638) in state Calling
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8037 State changed from Calling to Completed, event=RX_MSG
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:390: tsx0x7f36d8037de8 - tu_on_tsx_state UAC, TSX_STATE RX_MSG state=Completed
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:2962: tsx0x7f36d8037de8 - uac_data = 0x7f36d803cd20, uas_data = 0x7f36d8042e20
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:3001: tsx0x7f36d8037de8 - RX_MSG on active UAC transaction
+11-01-2018 21:28:27.768 UTC Debug flowtable.cpp:164: Find flow for flow token 3ptyUGaJM/
+11-01-2018 21:28:27.768 UTC Debug flowtable.cpp:599: Dialog count now 2 for flow
+11-01-2018 21:28:27.768 UTC Debug flowtable.cpp:177: Found flow record 0x7f36d803c990
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:1694: Maximum contact expiry is 300
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:1720: Found P-Associated-URI header
+11-01-2018 21:28:27.768 UTC Debug flowtable.cpp:413: Setting identity sip:6505550745 at example.com on flow 0x7f36d803c990, expires = 300
+11-01-2018 21:28:27.768 UTC Debug flowtable.cpp:616: Dialog count now 1 for flow sip:6505550745 at example.com
+11-01-2018 21:28:27.768 UTC Debug trustboundary.cpp:57: Strip trusted headers
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:2194: tsx0x7f36d8037de8 - Final response, so disconnect UAS and UAC transactions
+11-01-2018 21:28:27.768 UTC Debug pjsip: tdta0x7f36d809 Destroying txdata Response msg 408/REGISTER/cseq=1726 (tdta0x7f36d809e880)
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:2629: Dissociate UAC transaction 0x7f36d803cd20 (0)
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8089 Sending Response msg 200/REGISTER/cseq=1726 (tdta0x7f36d80296a0) in state Trying
+11-01-2018 21:28:27.768 UTC Verbose common_sip_processing.cpp:136: TX 666 bytes Response msg 200/REGISTER/cseq=1726 (tdta0x7f36d80296a0) to TCP 10.237.15.136:36754:
+--start msg--
+
+SIP/2.0 200 OK
+Service-Route: <sip:scscf.cw-aio:5054;transport=TCP;lr;orig>
+Via: SIP/2.0/TCP 10.237.15.136:5060;received=10.237.15.136;branch=z9hG4bK-5a57584d-e530ed72-6696d8d
+Call-ID: 478378-aed0f88-13c4-50029-5a555eb9-3667940-5a555eb9
+From: <sip:6505550745 at example.com>;tag=470ef0-aed0f88-13c4-50029-5a555eb9-40adda66-5a555eb9
+To: <sip:6505550745 at example.com>;tag=z9hG4bKPjY-uiB2yim8VSRPwMd7oV-5M7Zdr4xerU
+CSeq: 1726 REGISTER
+Supported: outbound
+Contact: <sip:6505550745 at 10.237.15.136:5060>;expires=300
+Require: outbound
+Path: <sip:3ptyUGaJM/@10.237.20.101:5058;transport=TCP;lr;ob>
+P-Associated-URI: <sip:6505550745 at example.com>
+Content-Length:  0
+
+
+--end msg--
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8089 State changed from Trying to Completed, event=TX_MSG
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:390: tsx0x7f36d8089098 - tu_on_tsx_state UAS, TSX_STATE TX_MSG state=Completed
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:817: Request received on non-trusted port 5060
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:2427: Report SAS end marker - trail (b6)
+11-01-2018 21:28:27.768 UTC Debug thread_dispatcher.cpp:200: Worker thread completed processing message 0x7f36e0024638
+11-01-2018 21:28:27.768 UTC Debug thread_dispatcher.cpp:206: Request latency = 281us
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8037 Timeout timer event
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8037 State changed from Completed to Terminated, event=TIMER
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:390: tsx0x7f36d8037de8 - tu_on_tsx_state UAC, TSX_STATE TIMER state=Terminated
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:2962: tsx0x7f36d8037de8 - uac_data = 0x7f36d803cd20, uas_data = (nil)
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8089 Timeout timer event
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8089 State changed from Completed to Terminated, event=TIMER
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:390: tsx0x7f36d8089098 - tu_on_tsx_state UAS, TSX_STATE TIMER state=Terminated
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8037 Timeout timer event
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8037 State changed from Terminated to Destroyed, event=TIMER
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:390: tsx0x7f36d8037de8 - tu_on_tsx_state UAC, TSX_STATE TIMER state=Destroyed
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:2962: tsx0x7f36d8037de8 - uac_data = 0x7f36d803cd20, uas_data = (nil)
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:3049: tsx0x7f36d8037de8 - UAC tsx destroyed
+11-01-2018 21:28:27.768 UTC Debug pjsip: tdta0x7f36d802 Destroying txdata Request msg REGISTER/cseq=1726 (tdta0x7f36d8027870)
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8089 Timeout timer event
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8089 State changed from Terminated to Destroyed, event=TIMER
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:390: tsx0x7f36d8089098 - tu_on_tsx_state UAS, TSX_STATE TIMER state=Destroyed
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:2276: tsx0x7f36d8089098 - UAS tsx destroyed
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:1831: UASTransaction destructor (0x7f36d8042e20)
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:1851: Disconnect UAC transactions from UAS transaction
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:1897: Upstream ACR = 0x7f36d8006bd0, Downstream ACR = 0x7f36d8006bd0
+11-01-2018 21:28:27.768 UTC Debug acr.cpp:83: Sending Null ACR (0x7f36d8006bd0)
+11-01-2018 21:28:27.768 UTC Debug acr.cpp:54: Destroyed ACR (0x7f36d8006bd0)
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:1922: Free original request (0x7f36d803b408)
+11-01-2018 21:28:27.768 UTC Debug pjsip: tdta0x7f36d803 Destroying txdata Request msg REGISTER/cseq=1726 (tdta0x7f36d803b360)
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:1938: UASTransaction destructor completed
+11-01-2018 21:28:27.768 UTC Debug pjsip: tdta0x7f36d802 Destroying txdata Response msg 200/REGISTER/cseq=1726 (tdta0x7f36d80296a0)
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8089 Transaction destroyed!
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8037 Transaction destroyed!
+11-01-2018 21:28:27.792 UTC Verbose pjsip: tcps0x7f36e010 TCP connection closed
+11-01-2018 21:28:27.792 UTC Debug flowtable.cpp:652: Transport state changed for flow 0x7f36d803c990, state = 1
+11-01-2018 21:28:27.792 UTC Debug flowtable.cpp:205: Remove flow 0x7f36d803c990
+11-01-2018 21:28:27.792 UTC Debug flowtable.cpp:232: Reporting current flow count: 6
+11-01-2018 21:28:27.792 UTC Debug flowtable.cpp:197: Checked quiescing state: flow_map is not empty, is_quiescing() result is false, _qm (QuiescingManager reference) is not NULL
+11-01-2018 21:28:27.793 UTC Status connection_tracker.cpp:92: Connection 0x7f36e01058c8 has been destroyed
+11-01-2018 21:28:27.793 UTC Verbose pjsip: tcps0x7f36e010 TCP transport destroyed with reason 70016: End of file (PJ_EEOF)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180111/59fdf054/attachment.html>
+
+From Graeme.Robertson at metaswitch.com  Thu Jan 18 14:04:39 2018
+From: Graeme.Robertson at metaswitch.com (Graeme Robertson)
+Date: Thu, 18 Jan 2018 19:04:39 +0000
+Subject: [Project Clearwater] Bono Send Invite using TCP,
+ Header Reduction
+In-Reply-To: <A7E1158244C52C428F0B61BDC9CF760C016D89D171@ex-mbx-prd02.gci.com>
+References: <A7E1158244C52C428F0B61BDC9CF760C016D83B340@ex-mbx-prd02.gci.com>
+	<DM5PR0201MB3623D60EE643F36F30B2EA16F8350@DM5PR0201MB3623.namprd02.prod.outlook.com>
+	<A7E1158244C52C428F0B61BDC9CF760C016D84D493@ex-mbx-prd02.gci.com>
+	<DM5PR0201MB36238C158A91D9C0159E3051F80F0@DM5PR0201MB3623.namprd02.prod.outlook.com>
+	<A7E1158244C52C428F0B61BDC9CF760C016D89D171@ex-mbx-prd02.gci.com>
+Message-ID: <CY4PR02MB333491D67E4487D173781133E3E80@CY4PR02MB3334.namprd02.prod.outlook.com>
+
+Hi Roger,
+
+In the flows below, your client registered from 10.237.15.136:36754, but sent the INVITE from 10.237.15.136:58560. Bono tracks its connections in a ?flowtable?, but it doesn?t know anything about 10.237.15.136:58560, and so it rejects the INVITE with a 403. Similarly, when your client was being called, Bono found a flow token in the Route header but couldn?t match it to anything in its flowtable, presumably because your client had torn down its TCP connection. In short, I?m afraid Bono relies on your clients maintaining their TCP connection after registering. Perimeta, which is a more fully featured P-CSCF, does better here (although it?s worth noting that if for example your client is behind a NAT then there?s not much the P-CSCF can do if the client tears down its TCP connection!).
+
+Thanks!
+Graeme
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Roger Case
+Sent: 11 January 2018 21:48
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Bono Send Invite using TCP, Header Reduction
+
+Hi Ying,
+
+And here is the debug log when the UE (Arris eDVA) on 6505550745 attempts an outgoing call.  Registration debug follows below.   Thanks!  Roger
+
+11-01-2018 21:16:01.038 UTC Verbose pjsip:    tcplis:5060 TCP listener cw-aio:5060: got incoming TCP connection from 10.237.15.136:58560, sock=148
+11-01-2018 21:16:01.038 UTC Verbose pjsip: tcps0x7f36e010 tcp->base.local_name: cw-aio
+11-01-2018 21:16:01.038 UTC Verbose pjsip: tcps0x7f36e010 TCP server transport created
+11-01-2018 21:16:01.055 UTC Debug pjsip: sip_endpoint.c Processing incoming message: Request msg INVITE/cseq=1 (rdata0x7f36e0105c00)
+11-01-2018 21:16:01.055 UTC Verbose common_sip_processing.cpp:120: RX 1168 bytes Request msg INVITE/cseq=1 (rdata0x7f36e0105c00) from TCP 10.237.15.136:58560:
+--start msg--
+
+INVITE sip:19077452121 at example.com;user=phone SIP/2.0
+From: <sip:6505550745 at example.com:5060>;tag=472618-aed0f88-13c4-50029-5a575562-15aaac23-5a575562
+To: <sip:19077452121 at example.com;user=phone>
+Call-ID: 475b38-aed0f88-13c4-50029-5a575562-fdab92d-5a575562
+CSeq: 1 INVITE
+Via: SIP/2.0/TCP 10.237.15.136:5060;branch=z9hG4bK-5a575562-e525889c-1f65b70
+P-Preferred-Identity: <sip:6505550745 at example.com;user=phone>
+Max-Forwards: 70
+Supported: timer,replaces,join,tdialog,100rel,histinfo,path
+User-Agent: ARRIS-TM822G release v.9.1.103S5P.SIP.PC20 SN/001DD5F31A69
+Contact: <sip:6505550745 at 10.237.15.136:5060;user=phone>
+Session-Expires: 1800;refresher=uac
+Min-SE: 90
+Allow: INVITE,ACK,BYE,CANCEL,NOTIFY,PRACK,UPDATE,OPTIONS
+Route: <sip:10.237.20.101:5060>
+Route: <sip:scscf.cw-aio:5054;transport=TCP;lr;orig>
+Content-Type: application/sdp
+Content-Length: 294
+
+v=0
+o=- 103984729 103984729 IN IP4 10.237.15.136
+s=-
+c=IN IP4 10.237.15.136
+t=0 0
+m=audio 52646 RTP/AVP 9 0 8 101
+b=AS:80
+b=TIAS:64000
+a=ptime:20
+a=sendrecv
+a=rtpmap:101 telephone-event/16000
+a=fmtp:101 0-15
+a=maxprate:50
+a=rtcp-xr:voip-metrics
+a=sqn:0
+a=cdsc:1 image udptl t38
+
+--end msg--
+11-01-2018 21:16:01.055 UTC Debug pjutils.cpp:1689: Logging SAS Call-ID marker, Call-ID 475b38-aed0f88-13c4-50029-5a575562-fdab92d-5a575562
+11-01-2018 21:16:01.055 UTC Debug thread_dispatcher.cpp:264: Queuing cloned received message 0x7f36e0109118 for worker threads
+11-01-2018 21:16:01.055 UTC Debug thread_dispatcher.cpp:150: Worker thread dequeue message 0x7f36e0109118
+11-01-2018 21:16:01.055 UTC Debug pjsip: sip_endpoint.c Distributing rdata to modules: Request msg INVITE/cseq=1 (rdata0x7f36e0109118)
+11-01-2018 21:16:01.055 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:16:01.055 UTC Debug uri_classifier.cpp:204: Classified URI as 2
+11-01-2018 21:16:01.055 UTC Debug bono.cpp:278: Proxy RX request
+11-01-2018 21:16:01.055 UTC Debug pjutils.cpp:699: Cloned Request msg INVITE/cseq=1 (rdata0x7f36e0109118) to tdta0x7f36d801f520
+11-01-2018 21:16:01.055 UTC Debug bono.cpp:817: Request received on non-trusted port 5060
+11-01-2018 21:16:01.055 UTC Debug bono.cpp:1057: Perform access proxy routing for INVITE request
+11-01-2018 21:16:01.055 UTC Debug uri_classifier.cpp:174: home domain: false, local_to_node: true, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:16:01.055 UTC Debug uri_classifier.cpp:204: Classified URI as 3
+11-01-2018 21:16:01.055 UTC Debug pjutils.cpp:509: Found Route header, URI = sip:10.237.20.101:5060
+11-01-2018 21:16:01.055 UTC Debug pjutils.cpp:513: Route header is local
+11-01-2018 21:16:01.055 UTC Debug uri_classifier.cpp:174: home domain: false, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:16:01.055 UTC Debug uri_classifier.cpp:204: Classified URI as 5
+11-01-2018 21:16:01.055 UTC Debug pjutils.cpp:509: Found Route header, URI = sip:scscf.cw-aio:5054;transport=TCP;lr;orig
+11-01-2018 21:16:01.055 UTC Debug bono.cpp:1194: Message received on non-trusted port 5060
+11-01-2018 21:16:01.055 UTC Debug flowtable.cpp:136: Find flow for transport tcps0x7f36e01058c8 (2), remote address 10.237.15.136:58560
+11-01-2018 21:16:01.055 UTC Info bono.cpp:1384: Rejecting request from untrusted source
+11-01-2018 21:16:01.055 UTC Debug acr.cpp:49: Created ACR (0x7f36d8006b30)
+11-01-2018 21:16:01.055 UTC Info bono.cpp:771: Reject INVITE request with 403 status code
+11-01-2018 21:16:01.056 UTC Debug pjsip:       endpoint Response msg 403/INVITE/cseq=1 (tdta0x7f36d8006cb0) created
+11-01-2018 21:16:01.056 UTC Verbose common_sip_processing.cpp:136: TX 401 bytes Response msg 403/INVITE/cseq=1 (tdta0x7f36d8006cb0) to TCP 10.237.15.136:58560:
+--start msg--
+
+SIP/2.0 403 Forbidden
+Via: SIP/2.0/TCP 10.237.15.136:5060;received=10.237.15.136;branch=z9hG4bK-5a575562-e525889c-1f65b70
+Call-ID: 475b38-aed0f88-13c4-50029-5a575562-fdab92d-5a575562
+From: <sip:6505550745 at example.com>;tag=472618-aed0f88-13c4-50029-5a575562-15aaac23-5a575562
+To: <sip:19077452121 at example.com;user=phone>;tag=z9hG4bK-5a575562-e525889c-1f65b70
+CSeq: 1 INVITE
+Content-Length:  0
+
+
+--end msg--
+11-01-2018 21:16:01.056 UTC Debug pjsip: tdta0x7f36d800 Destroying txdata Response msg 403/INVITE/cseq=1 (tdta0x7f36d8006cb0)
+11-01-2018 21:16:01.056 UTC Debug acr.cpp:83: Sending Null ACR (0x7f36d8006b30)
+11-01-2018 21:16:01.056 UTC Debug acr.cpp:54: Destroyed ACR (0x7f36d8006b30)
+11-01-2018 21:16:01.056 UTC Debug pjsip: tdta0x7f36d801 Destroying txdata Request msg INVITE/cseq=1 (tdta0x7f36d801f520)
+11-01-2018 21:16:01.056 UTC Debug thread_dispatcher.cpp:200: Worker thread completed processing message 0x7f36e0109118
+11-01-2018 21:16:01.056 UTC Debug thread_dispatcher.cpp:206: Request latency = 567us
+11-01-2018 21:16:01.095 UTC Debug pjsip: sip_endpoint.c Processing incoming message: Request msg ACK/cseq=1 (rdata0x7f36e0105c00)
+11-01-2018 21:16:01.095 UTC Verbose common_sip_processing.cpp:120: RX 555 bytes Request msg ACK/cseq=1 (rdata0x7f36e0105c00) from TCP 10.237.15.136:58560:
+--start msg--
+
+ACK sip:19077452121 at example.com;user=phone SIP/2.0
+From: <sip:6505550745 at example.com:5060>;tag=472618-aed0f88-13c4-50029-5a575562-15aaac23-5a575562
+To: <sip:19077452121 at example.com;user=phone>;tag=z9hG4bK-5a575562-e525889c-1f65b70
+Call-ID: 475b38-aed0f88-13c4-50029-5a575562-fdab92d-5a575562
+CSeq: 1 ACK
+Via: SIP/2.0/TCP 10.237.15.136:5060;branch=z9hG4bK-5a575562-e525889c-1f65b70
+Max-Forwards: 70
+User-Agent: ARRIS-TM822G release v.9.1.103S5P.SIP.PC20 SN/001DD5F31A69
+Contact: <sip:6505550745 at 10.237.15.136:5060;user=phone>
+Content-Length: 0
+
+
+--end msg--
+11-01-2018 21:16:01.095 UTC Debug pjutils.cpp:1689: Logging SAS Call-ID marker, Call-ID 475b38-aed0f88-13c4-50029-5a575562-fdab92d-5a575562
+11-01-2018 21:16:01.095 UTC Debug thread_dispatcher.cpp:264: Queuing cloned received message 0x7f36e0108168 for worker threads
+11-01-2018 21:16:01.095 UTC Debug thread_dispatcher.cpp:150: Worker thread dequeue message 0x7f36e0108168
+11-01-2018 21:16:01.095 UTC Debug pjsip: sip_endpoint.c Distributing rdata to modules: Request msg ACK/cseq=1 (rdata0x7f36e0108168)
+11-01-2018 21:16:01.095 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:16:01.095 UTC Debug uri_classifier.cpp:204: Classified URI as 2
+11-01-2018 21:16:01.095 UTC Debug bono.cpp:278: Proxy RX request
+11-01-2018 21:16:01.095 UTC Debug pjutils.cpp:699: Cloned Request msg ACK/cseq=1 (rdata0x7f36e0108168) to tdta0x7f36d801f520
+11-01-2018 21:16:01.095 UTC Debug bono.cpp:817: Request received on non-trusted port 5060
+11-01-2018 21:16:01.095 UTC Debug bono.cpp:1057: Perform access proxy routing for ACK request
+11-01-2018 21:16:01.095 UTC Debug bono.cpp:1194: Message received on non-trusted port 5060
+11-01-2018 21:16:01.095 UTC Debug flowtable.cpp:136: Find flow for transport tcps0x7f36e01058c8 (2), remote address 10.237.15.136:58560
+11-01-2018 21:16:01.095 UTC Info bono.cpp:1384: Rejecting request from untrusted source
+11-01-2018 21:16:01.095 UTC Debug acr.cpp:49: Created ACR (0x7f36d8006b30)
+11-01-2018 21:16:01.096 UTC Debug acr.cpp:83: Sending Null ACR (0x7f36d8006b30)
+11-01-2018 21:16:01.096 UTC Debug acr.cpp:54: Destroyed ACR (0x7f36d8006b30)
+11-01-2018 21:16:01.096 UTC Debug pjsip: tdta0x7f36d801 Destroying txdata Request msg ACK/cseq=1 (tdta0x7f36d801f520)
+11-01-2018 21:16:01.096 UTC Debug thread_dispatcher.cpp:200: Worker thread completed processing message 0x7f36e0108168
+11-01-2018 21:16:01.096 UTC Debug thread_dispatcher.cpp:206: Request latency = 394us
+11-01-2018 21:16:01.106 UTC Verbose pjsip: tcps0x7f36e010 TCP connection closed
+11-01-2018 21:16:01.107 UTC Status connection_tracker.cpp:92: Connection 0x7f36e01058c8 has been destroyed
+11-01-2018 21:16:01.107 UTC Verbose pjsip: tcps0x7f36e010 TCP transport destroyed with reason 70016: End of file (PJ_EEOF)
+11-01-2018 21:16:01.458 UTC Verbose pjsip: tcps0x7f36e01e TCP connection closed
+11-01-2018 21:16:01.458 UTC Status connection_tracker.cpp:92: Connection 0x7f36e01e4ed8 has been destroyed
+11-01-2018 21:16:01.458 UTC Verbose pjsip: tcps0x7f36e01e TCP transport destroyed with reason 70016: End of file (PJ_EEOF)
+
+
+##############################  Registration of 6505550745:
+
+11-01-2018 21:28:27.761 UTC Debug pjsip: sip_endpoint.c Processing incoming message: Request msg REGISTER/cseq=1726 (rdata0x7f36e0105c00)
+11-01-2018 21:28:27.761 UTC Verbose common_sip_processing.cpp:120: RX 938 bytes Request msg REGISTER/cseq=1726 (rdata0x7f36e0105c00) from TCP 10.237.15.136:36754:
+--start msg--
+
+REGISTER sip:example.com SIP/2.0
+From: <sip:6505550745 at example.com:5060>;tag=470ef0-aed0f88-13c4-50029-5a555eb9-40adda66-5a555eb9
+To: <sip:6505550745 at example.com:5060>
+Call-ID: 478378-aed0f88-13c4-50029-5a555eb9-3667940-5a555eb9
+CSeq: 1726 REGISTER
+Via: SIP/2.0/TCP 10.237.15.136:5060;branch=z9hG4bK-5a57584d-e530ed72-6696d8d
+Max-Forwards: 70
+Supported: timer,replaces,join,tdialog,100rel,histinfo,path
+User-Agent: ARRIS-TM822G release v.9.1.103S5P.SIP.PC20 SN/001DD5F31A69
+Authorization: Digest username="6505550745 at example.com<mailto:6505550745 at example.com>",realm="example.com",nonce="7aed3cde60bca4f0",uri="sip:example.com",response="402b48d7a9645a922aca71ac2ca09e7d",algorithm=MD5,cnonce="e530ed72",opaque="6d7a8a5f509faace",qop=auth,nc=00000001
+Contact: <sip:6505550745 at 10.237.15.136:5060>;expires=3600
+Allow: INVITE,ACK,BYE,CANCEL,NOTIFY,PRACK,UPDATE,OPTIONS
+Allow-Events: vq-rtcpxr
+Route: <sip:10.237.20.101;transport=udp;lr>
+Content-Length: 0
+
+
+--end msg--
+11-01-2018 21:28:27.761 UTC Debug pjutils.cpp:1689: Logging SAS Call-ID marker, Call-ID 478378-aed0f88-13c4-50029-5a555eb9-3667940-5a555eb9
+11-01-2018 21:28:27.761 UTC Debug thread_dispatcher.cpp:264: Queuing cloned received message 0x7f36e0024638 for worker threads
+11-01-2018 21:28:27.761 UTC Debug thread_dispatcher.cpp:150: Worker thread dequeue message 0x7f36e0024638
+11-01-2018 21:28:27.761 UTC Debug pjsip: sip_endpoint.c Distributing rdata to modules: Request msg REGISTER/cseq=1726 (rdata0x7f36e0024638)
+11-01-2018 21:28:27.761 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:28:27.761 UTC Debug uri_classifier.cpp:204: Classified URI as 4
+11-01-2018 21:28:27.761 UTC Debug bono.cpp:278: Proxy RX request
+11-01-2018 21:28:27.762 UTC Debug pjutils.cpp:699: Cloned Request msg REGISTER/cseq=1726 (rdata0x7f36e0024638) to tdta0x7f36d803b360
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:817: Request received on non-trusted port 5060
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:1057: Perform access proxy routing for REGISTER request
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:1094: Message requires outbound support
+11-01-2018 21:28:27.762 UTC Debug flowtable.cpp:90: Find or create flow for transport tcps0x7f36e01058c8 (2), remote address 10.237.15.136:36754
+11-01-2018 21:28:27.762 UTC Debug flowtable.cpp:293: Added transport listener for flow 0x7f36d803c990
+11-01-2018 21:28:27.762 UTC Debug flowtable.cpp:105: Added flow record 0x7f36d803c990
+11-01-2018 21:28:27.762 UTC Debug flowtable.cpp:232: Reporting current flow count: 7
+11-01-2018 21:28:27.762 UTC Debug flowtable.cpp:599: Dialog count now 2 for flow
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:1106: Found or created flow data record, token = 3ptyUGaJM/
+11-01-2018 21:28:27.762 UTC Info pjutils.cpp:389: Adding integrity-protected=ip-assoc-pending indicator to message
+11-01-2018 21:28:27.762 UTC Debug flowtable.cpp:616: Dialog count now 1 for flow
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:204: Classified URI as 4
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:174: home domain: false, local_to_node: true, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:204: Classified URI as 3
+11-01-2018 21:28:27.762 UTC Debug pjutils.cpp:509: Found Route header, URI = sip:10.237.20.101;transport=udp;lr
+11-01-2018 21:28:27.762 UTC Debug pjutils.cpp:513: Route header is local
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:1015: Mark originating
+11-01-2018 21:28:27.762 UTC Info bono.cpp:1036: Route request to upstream proxy sip:scscf.cw-aio:5052;transport=TCP;lr;orig
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:204: Classified URI as 4
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:174: home domain: false, local_to_node: true, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:204: Classified URI as 3
+11-01-2018 21:28:27.762 UTC Debug pjutils.cpp:509: Found Route header, URI = sip:10.237.20.101;transport=udp;lr
+11-01-2018 21:28:27.762 UTC Debug pjutils.cpp:513: Route header is local
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:1604: Top Route header is local - erasing
+11-01-2018 21:28:27.762 UTC Debug acr.cpp:49: Created ACR (0x7f36d8006bd0)
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:174: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+11-01-2018 21:28:27.762 UTC Debug uri_classifier.cpp:204: Classified URI as 4
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:486: Trust mode INBOUND_EDGE_CLIENT(,-rsp,-pch), serving state None
+11-01-2018 21:28:27.762 UTC Debug pjsip: tsx0x7f36d8089 Transaction created for Request msg REGISTER/cseq=1726 (rdata0x7f36e0024638)
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:1786: UASTransaction constructor (0x7f36d8042e20)
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:1787: ACR (0x7f36d8006bd0)
+11-01-2018 21:28:27.762 UTC Debug pjsip: tsx0x7f36d8089 Incoming Request msg REGISTER/cseq=1726 (rdata0x7f36e0024638) in state Null
+11-01-2018 21:28:27.762 UTC Debug pjsip: tsx0x7f36d8089 State changed from Null to Trying, event=RX_MSG
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:390: tsx0x7f36d8089098 - tu_on_tsx_state UAS, TSX_STATE RX_MSG state=Trying
+11-01-2018 21:28:27.762 UTC Debug pjsip:       endpoint Response msg 408/REGISTER/cseq=1726 (tdta0x7f36d809e880) created
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:2418: Report SAS start marker - trail (b6)
+11-01-2018 21:28:27.762 UTC Debug trustboundary.cpp:69: Add P-Charging headers
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:2492: Allocating transaction and data for target 0
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:2749: Stripping loose routes from proxied message
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:2776: Adding a Route header to sip:scscf.cw-aio:5052;transport=TCP
+11-01-2018 21:28:27.762 UTC Debug pjsip: tsx0x7f36d8037 Transaction created for Request msg REGISTER/cseq=1726 (tdta0x7f36d8027870)
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:2519: Adding trail identifier 182 to UAC transaction
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:2538: Updating request URI and route for target 0
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:2844: Transport tcpc0x7f36d809d098 (TCP to 10.237.20.101:5052) pre-selected for transaction
+11-01-2018 21:28:27.762 UTC Debug bono.cpp:2862: Sending request for sip:example.com
+11-01-2018 21:28:27.762 UTC Debug pjsip: tsx0x7f36d8037 Sending Request msg REGISTER/cseq=1726 (tdta0x7f36d8027870) in state Null
+11-01-2018 21:28:27.762 UTC Debug pjsip:       endpoint Request msg REGISTER/cseq=1726 (tdta0x7f36d8027870): skipping target resolution because address is already set
+11-01-2018 21:28:27.762 UTC Verbose common_sip_processing.cpp:136: TX 1210 bytes Request msg REGISTER/cseq=1726 (tdta0x7f36d8027870) to TCP 10.237.20.101:5052:
+--start msg--
+
+REGISTER sip:example.com SIP/2.0
+Via: SIP/2.0/TCP 10.237.20.101:5058;rport;branch=z9hG4bKPjY-uiB2yim8VSRPwMd7oV-5M7Zdr4xerU
+Path: <sip:3ptyUGaJM/@10.237.20.101:5058;transport=TCP;lr;ob>
+From: <sip:6505550745 at example.com>;tag=470ef0-aed0f88-13c4-50029-5a555eb9-40adda66-5a555eb9
+To: <sip:6505550745 at example.com>
+Call-ID: 478378-aed0f88-13c4-50029-5a555eb9-3667940-5a555eb9
+CSeq: 1726 REGISTER
+Via: SIP/2.0/TCP 10.237.15.136:5060;received=10.237.15.136;branch=z9hG4bK-5a57584d-e530ed72-6696d8d
+Max-Forwards: 70
+Supported: timer, replaces, join, tdialog, 100rel, histinfo, path
+User-Agent: ARRIS-TM822G release v.9.1.103S5P.SIP.PC20 SN/001DD5F31A69
+Authorization: Digest response="402b48d7a9645a922aca71ac2ca09e7d", username="6505550745 at example.com<mailto:6505550745 at example.com>", realm="example.com", nonce="7aed3cde60bca4f0", uri="sip:example.com", algorithm=MD5, cnonce="e530ed72", opaque="6d7a8a5f509faace", qop=auth, nc=00000001,integrity-protected=ip-assoc-pending
+Contact: <sip:6505550745 at 10.237.15.136:5060>;expires=3600
+Allow: INVITE, ACK, BYE, CANCEL, NOTIFY, PRACK, UPDATE, OPTIONS
+Allow-Events: vq-rtcpxr
+P-Visited-Network-ID: example.com
+Route: <sip:scscf.cw-aio:5052;transport=TCP;lr;orig>
+Content-Length:  0
+
+
+--end msg--
+11-01-2018 21:28:27.764 UTC Debug pjsip: tsx0x7f36d8037 State changed from Null to Calling, event=TX_MSG
+11-01-2018 21:28:27.764 UTC Debug bono.cpp:390: tsx0x7f36d8037de8 - tu_on_tsx_state UAC, TSX_STATE TX_MSG state=Calling
+11-01-2018 21:28:27.764 UTC Debug bono.cpp:2962: tsx0x7f36d8037de8 - uac_data = 0x7f36d803cd20, uas_data = 0x7f36d8042e20
+11-01-2018 21:28:27.764 UTC Debug thread_dispatcher.cpp:200: Worker thread completed processing message 0x7f36e0024638
+11-01-2018 21:28:27.764 UTC Debug thread_dispatcher.cpp:206: Request latency = 2476us
+11-01-2018 21:28:27.768 UTC Debug pjsip: sip_endpoint.c Processing incoming message: Response msg 200/REGISTER/cseq=1726 (rdata0x7f36d809d3d0)
+11-01-2018 21:28:27.768 UTC Verbose common_sip_processing.cpp:120: RX 787 bytes Response msg 200/REGISTER/cseq=1726 (rdata0x7f36d809d3d0) from TCP 10.237.20.101:5052:
+--start msg--
+
+SIP/2.0 200 OK
+Service-Route: <sip:scscf.cw-aio:5054;transport=TCP;lr;orig>
+Via: SIP/2.0/TCP 10.237.20.101:5058;rport=59420;received=10.237.20.101;branch=z9hG4bKPjY-uiB2yim8VSRPwMd7oV-5M7Zdr4xerU
+Via: SIP/2.0/TCP 10.237.15.136:5060;received=10.237.15.136;branch=z9hG4bK-5a57584d-e530ed72-6696d8d
+Call-ID: 478378-aed0f88-13c4-50029-5a555eb9-3667940-5a555eb9
+From: <sip:6505550745 at example.com>;tag=470ef0-aed0f88-13c4-50029-5a555eb9-40adda66-5a555eb9
+To: <sip:6505550745 at example.com>;tag=z9hG4bKPjY-uiB2yim8VSRPwMd7oV-5M7Zdr4xerU
+CSeq: 1726 REGISTER
+Supported: outbound
+Contact: <sip:6505550745 at 10.237.15.136:5060>;expires=300
+Require: outbound
+Path: <sip:3ptyUGaJM/@10.237.20.101:5058;transport=TCP;lr;ob>
+P-Associated-URI: <sip:6505550745 at example.com>
+Content-Length:  0
+
+
+--end msg--
+11-01-2018 21:28:27.768 UTC Debug thread_dispatcher.cpp:264: Queuing cloned received message 0x7f36e0024638 for worker threads
+11-01-2018 21:28:27.768 UTC Debug thread_dispatcher.cpp:150: Worker thread dequeue message 0x7f36e0024638
+11-01-2018 21:28:27.768 UTC Debug pjsip: sip_endpoint.c Distributing rdata to modules: Response msg 200/REGISTER/cseq=1726 (rdata0x7f36e0024638)
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8037 Incoming Response msg 200/REGISTER/cseq=1726 (rdata0x7f36e0024638) in state Calling
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8037 State changed from Calling to Completed, event=RX_MSG
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:390: tsx0x7f36d8037de8 - tu_on_tsx_state UAC, TSX_STATE RX_MSG state=Completed
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:2962: tsx0x7f36d8037de8 - uac_data = 0x7f36d803cd20, uas_data = 0x7f36d8042e20
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:3001: tsx0x7f36d8037de8 - RX_MSG on active UAC transaction
+11-01-2018 21:28:27.768 UTC Debug flowtable.cpp:164: Find flow for flow token 3ptyUGaJM/
+11-01-2018 21:28:27.768 UTC Debug flowtable.cpp:599: Dialog count now 2 for flow
+11-01-2018 21:28:27.768 UTC Debug flowtable.cpp:177: Found flow record 0x7f36d803c990
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:1694: Maximum contact expiry is 300
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:1720: Found P-Associated-URI header
+11-01-2018 21:28:27.768 UTC Debug flowtable.cpp:413: Setting identity sip:6505550745 at example.com on flow 0x7f36d803c990, expires = 300
+11-01-2018 21:28:27.768 UTC Debug flowtable.cpp:616: Dialog count now 1 for flow sip:6505550745 at example.com
+11-01-2018 21:28:27.768 UTC Debug trustboundary.cpp:57: Strip trusted headers
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:2194: tsx0x7f36d8037de8 - Final response, so disconnect UAS and UAC transactions
+11-01-2018 21:28:27.768 UTC Debug pjsip: tdta0x7f36d809 Destroying txdata Response msg 408/REGISTER/cseq=1726 (tdta0x7f36d809e880)
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:2629: Dissociate UAC transaction 0x7f36d803cd20 (0)
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8089 Sending Response msg 200/REGISTER/cseq=1726 (tdta0x7f36d80296a0) in state Trying
+11-01-2018 21:28:27.768 UTC Verbose common_sip_processing.cpp:136: TX 666 bytes Response msg 200/REGISTER/cseq=1726 (tdta0x7f36d80296a0) to TCP 10.237.15.136:36754:
+--start msg--
+
+SIP/2.0 200 OK
+Service-Route: <sip:scscf.cw-aio:5054;transport=TCP;lr;orig>
+Via: SIP/2.0/TCP 10.237.15.136:5060;received=10.237.15.136;branch=z9hG4bK-5a57584d-e530ed72-6696d8d
+Call-ID: 478378-aed0f88-13c4-50029-5a555eb9-3667940-5a555eb9
+From: <sip:6505550745 at example.com>;tag=470ef0-aed0f88-13c4-50029-5a555eb9-40adda66-5a555eb9
+To: <sip:6505550745 at example.com>;tag=z9hG4bKPjY-uiB2yim8VSRPwMd7oV-5M7Zdr4xerU
+CSeq: 1726 REGISTER
+Supported: outbound
+Contact: <sip:6505550745 at 10.237.15.136:5060>;expires=300
+Require: outbound
+Path: <sip:3ptyUGaJM/@10.237.20.101:5058;transport=TCP;lr;ob>
+P-Associated-URI: <sip:6505550745 at example.com>
+Content-Length:  0
+
+
+--end msg--
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8089 State changed from Trying to Completed, event=TX_MSG
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:390: tsx0x7f36d8089098 - tu_on_tsx_state UAS, TSX_STATE TX_MSG state=Completed
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:817: Request received on non-trusted port 5060
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:2427: Report SAS end marker - trail (b6)
+11-01-2018 21:28:27.768 UTC Debug thread_dispatcher.cpp:200: Worker thread completed processing message 0x7f36e0024638
+11-01-2018 21:28:27.768 UTC Debug thread_dispatcher.cpp:206: Request latency = 281us
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8037 Timeout timer event
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8037 State changed from Completed to Terminated, event=TIMER
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:390: tsx0x7f36d8037de8 - tu_on_tsx_state UAC, TSX_STATE TIMER state=Terminated
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:2962: tsx0x7f36d8037de8 - uac_data = 0x7f36d803cd20, uas_data = (nil)
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8089 Timeout timer event
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8089 State changed from Completed to Terminated, event=TIMER
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:390: tsx0x7f36d8089098 - tu_on_tsx_state UAS, TSX_STATE TIMER state=Terminated
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8037 Timeout timer event
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8037 State changed from Terminated to Destroyed, event=TIMER
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:390: tsx0x7f36d8037de8 - tu_on_tsx_state UAC, TSX_STATE TIMER state=Destroyed
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:2962: tsx0x7f36d8037de8 - uac_data = 0x7f36d803cd20, uas_data = (nil)
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:3049: tsx0x7f36d8037de8 - UAC tsx destroyed
+11-01-2018 21:28:27.768 UTC Debug pjsip: tdta0x7f36d802 Destroying txdata Request msg REGISTER/cseq=1726 (tdta0x7f36d8027870)
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8089 Timeout timer event
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8089 State changed from Terminated to Destroyed, event=TIMER
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:390: tsx0x7f36d8089098 - tu_on_tsx_state UAS, TSX_STATE TIMER state=Destroyed
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:2276: tsx0x7f36d8089098 - UAS tsx destroyed
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:1831: UASTransaction destructor (0x7f36d8042e20)
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:1851: Disconnect UAC transactions from UAS transaction
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:1897: Upstream ACR = 0x7f36d8006bd0, Downstream ACR = 0x7f36d8006bd0
+11-01-2018 21:28:27.768 UTC Debug acr.cpp:83: Sending Null ACR (0x7f36d8006bd0)
+11-01-2018 21:28:27.768 UTC Debug acr.cpp:54: Destroyed ACR (0x7f36d8006bd0)
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:1922: Free original request (0x7f36d803b408)
+11-01-2018 21:28:27.768 UTC Debug pjsip: tdta0x7f36d803 Destroying txdata Request msg REGISTER/cseq=1726 (tdta0x7f36d803b360)
+11-01-2018 21:28:27.768 UTC Debug bono.cpp:1938: UASTransaction destructor completed
+11-01-2018 21:28:27.768 UTC Debug pjsip: tdta0x7f36d802 Destroying txdata Response msg 200/REGISTER/cseq=1726 (tdta0x7f36d80296a0)
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8089 Transaction destroyed!
+11-01-2018 21:28:27.768 UTC Debug pjsip: tsx0x7f36d8037 Transaction destroyed!
+11-01-2018 21:28:27.792 UTC Verbose pjsip: tcps0x7f36e010 TCP connection closed
+11-01-2018 21:28:27.792 UTC Debug flowtable.cpp:652: Transport state changed for flow 0x7f36d803c990, state = 1
+11-01-2018 21:28:27.792 UTC Debug flowtable.cpp:205: Remove flow 0x7f36d803c990
+11-01-2018 21:28:27.792 UTC Debug flowtable.cpp:232: Reporting current flow count: 6
+11-01-2018 21:28:27.792 UTC Debug flowtable.cpp:197: Checked quiescing state: flow_map is not empty, is_quiescing() result is false, _qm (QuiescingManager reference) is not NULL
+11-01-2018 21:28:27.793 UTC Status connection_tracker.cpp:92: Connection 0x7f36e01058c8 has been destroyed
+11-01-2018 21:28:27.793 UTC Verbose pjsip: tcps0x7f36e010 TCP transport destroyed with reason 70016: End of file (PJ_EEOF)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180118/e7eacb79/attachment.html>
+
+From besmir.tola at ntnu.no  Mon Jan 29 07:41:44 2018
+From: besmir.tola at ntnu.no (Besmir Tola)
+Date: Mon, 29 Jan 2018 12:41:44 +0000
+Subject: [Project Clearwater] Some assistance on running SIPp stress tests
+Message-ID: <A68218B0-BFB5-4B5C-9C76-71C0ABF8487E@ntnu.no>
+
+Hi community,
+
+I am doing some research on NFV and I have been ?playing? around with Clearwater for various deployment types, in particular using docker containers.
+I have been able to  successfully deploy and test (live-tests) the IMS using 2 of the three ways of deploying it (as indicated by the guidelines on Github regarding AIO installations) , i.e., Compose and Manual turn up.
+
+In this case I wanted to perform some stress testing on the deployment.
+From the Docs (http://clearwater.readthedocs.io/en/latest/Clearwater_stress_testing.html), I see that the typical way is to deploy a stress node similar to the one of the other typical nodes (i.e., sprout, bono, etc) when the installation is manual. In this case it should have the appropriate sip-stress debian pkgs on it.
+
+However, it seems that the stress tests have been set up/or possible for either an automated (using chef) or a manual installation. Is this correct ?
+
+Has anyone performed SIPp stress tests on the deployments I mentioned above (or similar (like swarm, kubernetes), i.e., using containers) ?
+
+If yes , can you please share some insights (or refer to others works) on the procedure so that I can perform similar tests ?
+
+I would really appreciate every kind of help.
+
+Thank you in advance.
+
+Besmir
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180129/46326da0/attachment.html>
+
+From bryan.sullivan at research.att.com  Mon Jan 29 18:06:11 2018
+From: bryan.sullivan at research.att.com (SULLIVAN, BRYAN L (BRYAN L))
+Date: Mon, 29 Jan 2018 23:06:11 +0000
+Subject: [Project Clearwater] Issues with clearwater-docker homestead and
+ homestead-prov under Kubernetes
+In-Reply-To: <0AC42601A48A7A489171288539CB602D0282CD47@NJMTEXG3.research.att.com>
+References: <0AC42601A48A7A489171288539CB602D0282CD47@NJMTEXG3.research.att.com>
+Message-ID: <0AC42601A48A7A489171288539CB602D0282CE5A@NJMTEXG3.research.att.com>
+
+Hi all,
+
+I was having issues getting subscribed to this list, so I filed a bug report on the clearwater-docker issues list: https://github.com/Metaswitch/clearwater-docker/issues/86
+The issues relate to instability with the homestead and homestead-prov containers, as noted in the report.
+
+The scripts I use to build/deploy clearwater-docker are part a patch to the OPNFV Models project at https://gerrit.opnfv.org/gerrit/#/c/51329/
+Currently this script uses kubectl to deploy these containers, but I will migrate to using Cloudify-kubernetes asap. I just want to be sure that the deployment works with the basic tools before I move to using a TOSCA-based blueprint set for clearwater via Cloudify, and eventually ONAP.
+
+Any advice on the issues is appreciated.
+
+Thanks,
+Bryan Sullivan | AT&T
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180129/a5e06a97/attachment.html>
+
+From bessi.tola at gmail.com  Fri Jan 26 08:59:50 2018
+From: bessi.tola at gmail.com (besmir)
+Date: Fri, 26 Jan 2018 14:59:50 +0100
+Subject: [Project Clearwater] Some assistance on running SIPp stress tests.
+Message-ID: <561F84CA-867F-46CD-93B5-1F7E9F8F4612@gmail.com>
+
+Hi community, 
+
+ 
+
+I am doing some research on NFV and I have been ?playing? around with Clearwater for various deployment types, in particular using docker containers. 
+
+I have been able to  successfully deploy and test (live-tests) the IMS using 2 of the three ways of deploying it (as indicated by the guidelines on Github regarding AIO installations) , i.e., Compose and Manual turn up. 
+
+ 
+
+In this case I wanted to perform some stress testing on the deployment. 
+
+>From the Docs (http://clearwater.readthedocs.io/en/latest/Clearwater_stress_testing.html), I see that the typical way is to deploy a stress node similar to the one of the other typical nodes (i.e., sprout, bono, etc) when the installation is manual. In this case it should have the appropriate sip-stress debian pkgs on it. 
+
+ 
+
+However, it seems that the stress tests have been set up/or possible for either an automated (using chef) or a manual installation. Is this correct ? 
+
+ 
+
+Has anyone performed SIPp stress tests on the deployments I mentioned above (or similar (like swarm, kubernetes), i.e., using containers) ? 
+
+ 
+
+If yes , can you please share some insights (refer to others works) on the procedure so that I can perform similar tests ?
+
+ 
+
+I would really appreciate every kind of help. 
+
+ 
+
+Thank you in advance. 
+
+ 
+
+Besmir
+
+ 
+
+ 
+
+ 
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180126/8c3c54d9/attachment.html>
+
+From wangwulin at hotmail.com  Sat Jan 27 02:01:37 2018
+From: wangwulin at hotmail.com (wang wulin)
+Date: Sat, 27 Jan 2018 07:01:37 +0000
+Subject: [Project Clearwater] [Clearwater] Bono rejecting request from
+ untrusted source
+Message-ID: <KL1PR0301MB21204561389DC5872B1FA5BAB9E70@KL1PR0301MB2120.apcprd03.prod.outlook.com>
+
+
+<http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/2013-November/001081.html>
+Hi,
+
+I deployed clearwater vIMS by cloudify, when I tried to do performance testing via SIPp, it failed at the first step of registering a user, with error "403 Forbidden".
+
+The IP of bono VM which plays a tole of proxy is 192.168.33.215, and SIPp is installed on another host  (192.168.30.2), which could ping 192.168.33.215.
+
+
+1) the content of register.csv file:
+SEQUENTIAL
+6505550888;[authentication username=6505550888 at clearwater.opnf<mailto:6505550888 at clearwater.opnf>v password=Nf1234567];
+
+2) The register.xml: http://paste.openstack.org/raw/654705/
+
+3) Command:  ./sipp 192.168.33.215:5060  -inf register.csv -i 192.168.30.2 -p 10001 -sf register.xml -m 1000 -trace_err
+
+4) Here is the result:
+[cid:792fc0ae-02ce-4fe5-8f6f-db2c9de36744]
+
+
+5) I checked the log /var/log/bono/bono_current.log on bono VM: http://paste.openstack.org/raw/654720/
+Which complained:
+27-01-2018 06:28:18.235 UTC Error httpclient.cpp:712: cURL failure with cURL error code 6 (see man 3 libcurl-errors) and HTTP error code 404
+...
+27-01-2018 06:28:21.076 UTC Info bono.cpp:1386: Rejecting request from untrusted source
+
+
+Could someone give any help?
+
+
+Thanks,
+Linda Wang
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180127/560690dd/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: pastedImage.png
+Type: image/png
+Size: 54772 bytes
+Desc: pastedImage.png
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180127/560690dd/attachment.png>
+
+From bryan.sullivan at research.att.com  Mon Jan 29 17:38:13 2018
+From: bryan.sullivan at research.att.com (SULLIVAN, BRYAN L (BRYAN L))
+Date: Mon, 29 Jan 2018 22:38:13 +0000
+Subject: [Project Clearwater] Issues with clearwater-docker homestead and
+ homestead-prov under Kubernetes
+Message-ID: <0AC42601A48A7A489171288539CB602D0282CD47@NJMTEXG3.research.att.com>
+
+Hi all,
+
+I was having issues getting subscribed to this list, so I filed a bug report on the clearwater-docker issues list: https://github.com/Metaswitch/clearwater-docker/issues/86
+The issues relate to instability with the homestead and homestead-prov containers, as noted in the report.
+
+The scripts I use to build/deploy clearwater-docker are part a patch to the OPNFV Models project at https://gerrit.opnfv.org/gerrit/#/c/51329/
+Currently this script uses kubectl to deploy these containers, but I will migrate to using Cloudify-kubernetes asap. I just want to be sure that the deployment works with the basic tools before I move to using a TOSCA-based blueprint set for clearwater via Cloudify, and eventually ONAP.
+
+Any advice on the issues is appreciated.
+
+Thanks,
+Bryan Sullivan | AT&T
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180129/ca35cca3/attachment.html>
+
+From bryan.sullivan at research.att.com  Tue Jan 30 09:15:32 2018
+From: bryan.sullivan at research.att.com (SULLIVAN, BRYAN L (BRYAN L))
+Date: Tue, 30 Jan 2018 14:15:32 +0000
+Subject: [Project Clearwater] [Clearwater] Bono rejecting request from
+ untrusted source
+In-Reply-To: <KL1PR0301MB21204561389DC5872B1FA5BAB9E70@KL1PR0301MB2120.apcprd03.prod.outlook.com>
+References: <KL1PR0301MB21204561389DC5872B1FA5BAB9E70@KL1PR0301MB2120.apcprd03.prod.outlook.com>
+Message-ID: <0AC42601A48A7A489171288539CB602D0282D76A@NJMTEXG3.research.att.com>
+
+Linda,
+
+One thing I do not see in the REGISTER in the log is an Authorization header. That could be one issue.
+
+Thanks,
+Bryan Sullivan | AT&T
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of wang wulin
+Sent: Friday, January 26, 2018 11:02 PM
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] [Clearwater] Bono rejecting request from untrusted source
+
+
+
+Hi,
+
+I deployed clearwater vIMS by cloudify, when I tried to do performance testing via SIPp, it failed at the first step of registering a user, with error "403 Forbidden".
+
+The IP of bono VM which plays a tole of proxy is 192.168.33.215, and SIPp is installed on another host  (192.168.30.2), which could ping 192.168.33.215.
+
+
+1) the content of register.csv file:
+SEQUENTIAL
+6505550888;[authentication username=6505550888 at clearwater.opnf<mailto:6505550888 at clearwater.opnf>v password=Nf1234567];
+
+2) The register.xml: http://paste.openstack.org/raw/654705/<https://urldefense.proofpoint.com/v2/url?u=http-3A__paste.openstack.org_raw_654705_&d=DwMFoQ&c=LFYZ-o9_HUMeMTSQicvjIg&r=ML-JPRZQOfToJjMwlJLPlcWimAEwMA5DZGNIrk-cgy0&m=T-VsszvZt79hBgM-yJPD0m2WwcC4KvhEfYZPoGE2WwU&s=e-uR22rFj3A7Dfd7CvW6uyhvp4DOBUAvoJJRQ9KTNZ4&e=>
+
+3) Command:  ./sipp 192.168.33.215:5060  -inf register.csv -i 192.168.30.2 -p 10001 -sf register.xml -m 1000 -trace_err
+
+4) Here is the result:
+[cid:image001.png at 01D39991.B74ED1A0]
+
+
+5) I checked the log /var/log/bono/bono_current.log on bono VM: http://paste.openstack.org/raw/654720/<https://urldefense.proofpoint.com/v2/url?u=http-3A__paste.openstack.org_raw_654720_&d=DwMFoQ&c=LFYZ-o9_HUMeMTSQicvjIg&r=ML-JPRZQOfToJjMwlJLPlcWimAEwMA5DZGNIrk-cgy0&m=T-VsszvZt79hBgM-yJPD0m2WwcC4KvhEfYZPoGE2WwU&s=pvVkerStbuiOU3hm4R4wP4YVDjTzSQP3657m67u5vws&e=>
+Which complained:
+27-01-2018 06:28:18.235 UTC Error httpclient.cpp:712: cURL failure with cURL error code 6 (see man 3 libcurl-errors) and HTTP error code 404
+...
+27-01-2018 06:28:21.076 UTC Info bono.cpp:1386: Rejecting request from untrusted source
+
+
+Could someone give any help?
+
+
+Thanks,
+Linda Wang
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180130/bf540c85/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 54772 bytes
+Desc: image001.png
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180130/bf540c85/attachment.png>
+
+From bryan.sullivan at research.att.com  Wed Jan 31 08:49:14 2018
+From: bryan.sullivan at research.att.com (SULLIVAN, BRYAN L (BRYAN L))
+Date: Wed, 31 Jan 2018 13:49:14 +0000
+Subject: [Project Clearwater] Issues building clearwater-live-test docker
+ image
+Message-ID: <0AC42601A48A7A489171288539CB602D0282F443@NJMTEXG3.research.att.com>
+
+Hi all,
+
+I'm trying to build the docker image for https://github.com/Metaswitch/clearwater-live-test, as described: "Simply run docker build -t clearwater/live-test . from within the clearwater-live-test/ directory." But this fails with the following error, on both the master and stable branches:
+
+Step 7/7 : RUN bundle install
+ ---> Running in bf3e22215485
+Fetching gem metadata from https://rubygems.org/.........
+Fetching https://github.com/bossmc/joker.git
+Cloning into bare repository '/var/lib/gems/1.9.1/cache/bundler/git/joker-62a31cfee6b11382ddb10da61fc120a882d5c721'...
+Cloning into '/var/lib/gems/1.9.1/bundler/gems/joker-97ac2b5738b4'...
+done.
+Could not find quaff-0.7.4 in any of the sources
+The command '/bin/sh -c bundle install' returned a non-zero code: 7
+
+Has anyone here encountered and overcome that error, or have any other advice?
+
+Thanks,
+Bryan Sullivan | AT&T
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180131/976497d5/attachment.html>
+
+From bryan.sullivan at research.att.com  Wed Jan 31 09:06:12 2018
+From: bryan.sullivan at research.att.com (SULLIVAN, BRYAN L (BRYAN L))
+Date: Wed, 31 Jan 2018 14:06:12 +0000
+Subject: [Project Clearwater] Issues with clearwater-docker homestead
+ and homestead-prov under Kubernetes
+In-Reply-To: <0AC42601A48A7A489171288539CB602D0282CE5A@NJMTEXG3.research.att.com>
+References: <0AC42601A48A7A489171288539CB602D0282CD47@NJMTEXG3.research.att.com>
+	<0AC42601A48A7A489171288539CB602D0282CE5A@NJMTEXG3.research.att.com>
+Message-ID: <0AC42601A48A7A489171288539CB602D0282F542@NJMTEXG3.research.att.com>
+
+An update: I closed the issue below as I found a bug in the script I was using to build the images, and was tagging the wrong image. I fixed it and rebuilt with the stable branch, and all is working. I am seeing one restart of homestead and homestead-prov containers, but they stabilize after that.
+
+Thanks,
+Bryan Sullivan | AT&T
+
+From: SULLIVAN, BRYAN L (BRYAN L)
+Sent: Monday, January 29, 2018 3:06 PM
+To: Clearwater at lists.projectclearwater.org
+Subject: Issues with clearwater-docker homestead and homestead-prov under Kubernetes
+
+Hi all,
+
+I was having issues getting subscribed to this list, so I filed a bug report on the clearwater-docker issues list: https://github.com/Metaswitch/clearwater-docker/issues/86
+The issues relate to instability with the homestead and homestead-prov containers, as noted in the report.
+
+The scripts I use to build/deploy clearwater-docker are part a patch to the OPNFV Models project at https://gerrit.opnfv.org/gerrit/#/c/51329/
+Currently this script uses kubectl to deploy these containers, but I will migrate to using Cloudify-kubernetes asap. I just want to be sure that the deployment works with the basic tools before I move to using a TOSCA-based blueprint set for clearwater via Cloudify, and eventually ONAP.
+
+Any advice on the issues is appreciated.
+
+Thanks,
+Bryan Sullivan | AT&T
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180131/3f646b37/attachment.html>
+
+From Ying.Huang at metaswitch.com  Wed Jan 31 09:21:21 2018
+From: Ying.Huang at metaswitch.com (Ying Huang)
+Date: Wed, 31 Jan 2018 14:21:21 +0000
+Subject: [Project Clearwater] Issues with clearwater-docker homestead
+ and homestead-prov under Kubernetes
+In-Reply-To: <0AC42601A48A7A489171288539CB602D0282F542@NJMTEXG3.research.att.com>
+References: <0AC42601A48A7A489171288539CB602D0282CD47@NJMTEXG3.research.att.com>
+	<0AC42601A48A7A489171288539CB602D0282CE5A@NJMTEXG3.research.att.com>
+	<0AC42601A48A7A489171288539CB602D0282F542@NJMTEXG3.research.att.com>
+Message-ID: <BN6PR02MB2802380158342FF202B0D1A9F8FB0@BN6PR02MB2802.namprd02.prod.outlook.com>
+
+Good to hear!
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of SULLIVAN, BRYAN L (BRYAN L)
+Sent: 31 January 2018 14:06
+To: 'Clearwater at lists.projectclearwater.org' <Clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] Issues with clearwater-docker homestead and homestead-prov under Kubernetes
+
+An update: I closed the issue below as I found a bug in the script I was using to build the images, and was tagging the wrong image. I fixed it and rebuilt with the stable branch, and all is working. I am seeing one restart of homestead and homestead-prov containers, but they stabilize after that.
+
+Thanks,
+Bryan Sullivan | AT&T
+
+From: SULLIVAN, BRYAN L (BRYAN L)
+Sent: Monday, January 29, 2018 3:06 PM
+To: Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+Subject: Issues with clearwater-docker homestead and homestead-prov under Kubernetes
+
+Hi all,
+
+I was having issues getting subscribed to this list, so I filed a bug report on the clearwater-docker issues list: https://github.com/Metaswitch/clearwater-docker/issues/86
+The issues relate to instability with the homestead and homestead-prov containers, as noted in the report.
+
+The scripts I use to build/deploy clearwater-docker are part a patch to the OPNFV Models project at https://gerrit.opnfv.org/gerrit/#/c/51329/
+Currently this script uses kubectl to deploy these containers, but I will migrate to using Cloudify-kubernetes asap. I just want to be sure that the deployment works with the basic tools before I move to using a TOSCA-based blueprint set for clearwater via Cloudify, and eventually ONAP.
+
+Any advice on the issues is appreciated.
+
+Thanks,
+Bryan Sullivan | AT&T
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180131/243138d5/attachment.html>
+
+From richard.whitehouse at projectclearwater.org  Wed Jan 31 12:23:59 2018
+From: richard.whitehouse at projectclearwater.org (Richard Whitehouse (projectclearwater.org))
+Date: Wed, 31 Jan 2018 17:23:59 +0000
+Subject: [Project Clearwater] Issues building clearwater-live-test
+ docker image
+In-Reply-To: <0AC42601A48A7A489171288539CB602D0282F443@NJMTEXG3.research.att.com>
+References: <0AC42601A48A7A489171288539CB602D0282F443@NJMTEXG3.research.att.com>
+Message-ID: <BN6PR02MB3362C2F264ACF21D443A4DCFF0FB0@BN6PR02MB3362.namprd02.prod.outlook.com>
+
+Bryan,
+
+Does your checkout of clearwater-live-test include the quaff submodule? This should have happened if you passed --recursive on your git clone command.
+
+You can check that it does by checking whether there any files in clearwater-live-test/quaff
+
+If there aren't, from the clearwater-live-test directory, you'll need to run "git submodule update --init --recursive" to get the checked in version of the quaff submodule before attempting to build the docker image of clearwater-live-test.
+
+
+Richard
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of SULLIVAN, BRYAN L (BRYAN L)
+Sent: 31 January 2018 13:49
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Issues building clearwater-live-test docker image
+
+Hi all,
+
+I'm trying to build the docker image for https://github.com/Metaswitch/clearwater-live-test, as described: "Simply run docker build -t clearwater/live-test . from within the clearwater-live-test/ directory." But this fails with the following error, on both the master and stable branches:
+
+Step 7/7 : RUN bundle install
+ ---> Running in bf3e22215485
+Fetching gem metadata from https://rubygems.org/.........
+Fetching https://github.com/bossmc/joker.git
+Cloning into bare repository '/var/lib/gems/1.9.1/cache/bundler/git/joker-62a31cfee6b11382ddb10da61fc120a882d5c721'...
+Cloning into '/var/lib/gems/1.9.1/bundler/gems/joker-97ac2b5738b4'...
+done.
+Could not find quaff-0.7.4 in any of the sources
+The command '/bin/sh -c bundle install' returned a non-zero code: 7
+
+Has anyone here encountered and overcome that error, or have any other advice?
+
+Thanks,
+Bryan Sullivan | AT&T
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180131/1ea0f1c2/attachment.html>
+
+From bryan.sullivan at research.att.com  Wed Jan 31 12:26:54 2018
+From: bryan.sullivan at research.att.com (SULLIVAN, BRYAN L (BRYAN L))
+Date: Wed, 31 Jan 2018 17:26:54 +0000
+Subject: [Project Clearwater] Issues building clearwater-live-test
+ docker image
+In-Reply-To: <BN6PR02MB3362C2F264ACF21D443A4DCFF0FB0@BN6PR02MB3362.namprd02.prod.outlook.com>
+References: <0AC42601A48A7A489171288539CB602D0282F443@NJMTEXG3.research.att.com>
+	<BN6PR02MB3362C2F264ACF21D443A4DCFF0FB0@BN6PR02MB3362.namprd02.prod.outlook.com>
+Message-ID: <0AC42601A48A7A489171288539CB602D0282FC08@NJMTEXG3.research.att.com>
+
+Ah, no. I'll try that.
+It's the little bugs that get you.
+
+Thanks,
+Bryan Sullivan | AT&T
+
+From: Richard Whitehouse (projectclearwater.org) [mailto:richard.whitehouse at projectclearwater.org]
+Sent: Wednesday, January 31, 2018 9:24 AM
+To: clearwater at lists.projectclearwater.org; SULLIVAN, BRYAN L (BRYAN L) <bryan.sullivan at research.att.com>
+Subject: RE: Issues building clearwater-live-test docker image
+
+Bryan,
+
+Does your checkout of clearwater-live-test include the quaff submodule? This should have happened if you passed --recursive on your git clone command.
+
+You can check that it does by checking whether there any files in clearwater-live-test/quaff
+
+If there aren't, from the clearwater-live-test directory, you'll need to run "git submodule update --init --recursive" to get the checked in version of the quaff submodule before attempting to build the docker image of clearwater-live-test.
+
+
+Richard
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of SULLIVAN, BRYAN L (BRYAN L)
+Sent: 31 January 2018 13:49
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Issues building clearwater-live-test docker image
+
+Hi all,
+
+I'm trying to build the docker image for https://github.com/Metaswitch/clearwater-live-test<https://urldefense.proofpoint.com/v2/url?u=https-3A__github.com_Metaswitch_clearwater-2Dlive-2Dtest&d=DwMFAg&c=LFYZ-o9_HUMeMTSQicvjIg&r=ML-JPRZQOfToJjMwlJLPlcWimAEwMA5DZGNIrk-cgy0&m=w0_fNZ4juM7vhKIPjygfzMTDo0SqpmjBSv4MCwIZji0&s=UxE6Lkl6jO7eggPzPZ6FKMB29tIf10iPwIsoSiMU1GQ&e=>, as described: "Simply run docker build -t clearwater/live-test . from within the clearwater-live-test/ directory." But this fails with the following error, on both the master and stable branches:
+
+Step 7/7 : RUN bundle install
+ ---> Running in bf3e22215485
+Fetching gem metadata from https://rubygems.org/<https://urldefense.proofpoint.com/v2/url?u=https-3A__rubygems.org_&d=DwMFAg&c=LFYZ-o9_HUMeMTSQicvjIg&r=ML-JPRZQOfToJjMwlJLPlcWimAEwMA5DZGNIrk-cgy0&m=w0_fNZ4juM7vhKIPjygfzMTDo0SqpmjBSv4MCwIZji0&s=Ly1jXsHEmpI5AUkQUFMJBS0Rwz4f4zuolHcXlClnu18&e=>.........
+Fetching https://github.com/bossmc/joker.git<https://urldefense.proofpoint.com/v2/url?u=https-3A__github.com_bossmc_joker.git&d=DwMFAg&c=LFYZ-o9_HUMeMTSQicvjIg&r=ML-JPRZQOfToJjMwlJLPlcWimAEwMA5DZGNIrk-cgy0&m=w0_fNZ4juM7vhKIPjygfzMTDo0SqpmjBSv4MCwIZji0&s=GcsavjU2zy7_e9jrVzt4Nmy-g2jUi8FqXUZ0cRuypRc&e=>
+Cloning into bare repository '/var/lib/gems/1.9.1/cache/bundler/git/joker-62a31cfee6b11382ddb10da61fc120a882d5c721'...
+Cloning into '/var/lib/gems/1.9.1/bundler/gems/joker-97ac2b5738b4'...
+done.
+Could not find quaff-0.7.4 in any of the sources
+The command '/bin/sh -c bundle install' returned a non-zero code: 7
+
+Has anyone here encountered and overcome that error, or have any other advice?
+
+Thanks,
+Bryan Sullivan | AT&T
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180131/223e97cb/attachment.html>
+
+From anthonynlee at gmail.com  Wed Jan 31 11:16:40 2018
+From: anthonynlee at gmail.com (Anthony Lee)
+Date: Wed, 31 Jan 2018 11:16:40 -0500
+Subject: [Project Clearwater] Why Clearwater send two register request to my
+ ApplicationServer?
+Message-ID: <CA+pBo5F47-TVSx5padHK763eDJKFw=i4UDU+2dppmmv8aqFWhQ@mail.gmail.com>
+
+I defined my application server's IP address in IFC for specific user in
+Clearwater.
+The application server is running in a Docker container.
+The IP address in IFC is something like "192.168.43.94".
+The internal IP address of the Docker container is "172.17.0.2".
+
+>From the wireshark Clearwater sends two Register request to Application
+server:
+One to 192.168.43.94 and another one to 172.17.0.2.
+
+Why it does this? From where it knows 172.17.0.2?
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180131/7b6f32a3/attachment.html>
+

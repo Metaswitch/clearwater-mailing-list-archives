@@ -1,0 +1,572 @@
+From alijavai.1996 at gmail.com  Sat Nov  3 12:47:57 2018
+From: alijavai.1996 at gmail.com (Ali Javadi)
+Date: Sat, 3 Nov 2018 20:17:57 +0330
+Subject: [Project Clearwater] poll_homer failure
+In-Reply-To: <BYAPR02MB424786F3805FAE34B43A45D48FFD0@BYAPR02MB4247.namprd02.prod.outlook.com>
+References: <BYAPR02MB424786F3805FAE34B43A45D48FFD0@BYAPR02MB4247.namprd02.prod.outlook.com>
+Message-ID: <CABwk_JL3Ey50zxL4-9FwmrLvO2aF0=hjzqTXhrW_m8YdT_wwEA@mail.gmail.com>
+
+Hi
+I attached the content of sites-available
+
+
+On Mon, Oct 15, 2018 at 5:04 PM Mark Perryman <Mark.Perryman at metaswitch.com>
+wrote:
+
+> Hi Ali,
+>
+>
+>
+> It sounds like the Nginx config has not been set up correctly.  Could you
+> let me know the contents of /etc/nginx/sites-available/ on the homer node.
+>
+>
+>
+> Thanks,
+>
+>
+>
+> Mark Perryman.
+>
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181103/5e89ffcd/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: sites-available.zip
+Type: application/zip
+Size: 1353 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181103/5e89ffcd/attachment.zip>
+
+From Mark.Perryman at metaswitch.com  Thu Nov 15 11:33:17 2018
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Thu, 15 Nov 2018 16:33:17 +0000
+Subject: [Project Clearwater] poll_homer failure
+In-Reply-To: <CABwk_JL3Ey50zxL4-9FwmrLvO2aF0=hjzqTXhrW_m8YdT_wwEA@mail.gmail.com>
+References: <BYAPR02MB424786F3805FAE34B43A45D48FFD0@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CABwk_JL3Ey50zxL4-9FwmrLvO2aF0=hjzqTXhrW_m8YdT_wwEA@mail.gmail.com>
+Message-ID: <BYAPR02MB4247D82C9000063B3E15E42D8FDC0@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+Thanks, I can?t see anything wrong there.  Could you please also send the full output of the monit summary command.  Also the output of ps aux and a zip of the /var/log directory.
+
+Thank you,
+Mark Perryman
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of Ali Javadi
+Sent: 03 November 2018 16:48
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] poll_homer failure
+
+Hi
+I attached the content of sites-available
+
+
+On Mon, Oct 15, 2018 at 5:04 PM Mark Perryman <Mark.Perryman at metaswitch.com<mailto:Mark.Perryman at metaswitch.com>> wrote:
+Hi Ali,
+
+It sounds like the Nginx config has not been set up correctly.  Could you let me know the contents of /etc/nginx/sites-available/ on the homer node.
+
+Thanks,
+
+Mark Perryman.
+_______________________________________________
+
+Hi Everybody
+I've installed cw on 7 vm. when I run 'monit status' or 'monit summary', ellis, bono, sprout and vellum are healthy but in homer node I see : pool_homer failure. by running 'sh pool_homer.sh', I get the message: HTTP failed to http://127.0.0.1:7888/ping. although, I checked the firewall allows this port. how can I solve this problem? I have the same problem in homestead_process & poll_homestead-prov
+
+with Regards
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181115/eaf81f53/attachment.html>
+
+From gabrielorozco20 at unicauca.edu.co  Mon Nov 19 17:58:39 2018
+From: gabrielorozco20 at unicauca.edu.co (GABRIEL DAVID OROZCO URRUTIA)
+Date: Mon, 19 Nov 2018 17:58:39 -0500
+Subject: [Project Clearwater] Running I-CSCF and S-CSCF in different
+ machines/containers
+Message-ID: <CAGy+FH+Lv-41Ckou9C6GVF6Pct9Ka7d=+a6sgCTiCJfEnx7tqA@mail.gmail.com>
+
+Hello
+
+We're trying to understand how sprout does all the S-CSCF and I-CSCF
+functions.
+I saw that Sprout have two Network alias icscf.sprout and scscf.sprout.
+There's any possibility to run the S-CSCF and I-CSCF in different Virtual
+Machines or Containers?
+
+Thanks for the help!
+
+Gabriel Orozco
+
+-- 
+
+
+*Hacia una
+Universidad comprometida con la Paz Territorial*
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181119/e29b11a7/attachment.html>
+
+From Mark.Perryman at metaswitch.com  Mon Nov 26 09:23:54 2018
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Mon, 26 Nov 2018 14:23:54 +0000
+Subject: [Project Clearwater] Running I-CSCF and S-CSCF in different
+ machines/containers
+Message-ID: <BYAPR02MB42476593BCF2F9F8B0409F9F8FD70@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+> We're trying to understand how sprout does all the S-CSCF and I-CSCF functions.
+
+> I saw that Sprout have two Network alias icscf.sprout and scscf.sprout. There's any possibility to run the S-CSCF and I-CSCF in different Virtual Machines or Containers?
+
+Separating the I-CSCF and S-CSCF functions between multiple sprout nodes should be possible, with appropriate DNS settings for the icscf.sprout and scscf.sprout although external_icscf_uri will need to be set otherwise the S-CSCF to I-CSCF hop will just happen locally.
+
+However, it isn't a normal configuration, so I would be interested in whether you encounter any issues.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181126/1c2fe20c/attachment.html>
+
+From mayurkoshal at gmail.com  Wed Nov 28 11:58:22 2018
+From: mayurkoshal at gmail.com (Mayur Koshal)
+Date: Wed, 28 Nov 2018 22:28:22 +0530
+Subject: [Project Clearwater] SIP call failing with 408 Request timed out.
+Message-ID: <CAAEbxXVna8N5E1KfpBWBqvJg0ajGjnXT-PberNp=RW7NyXE6EA@mail.gmail.com>
+
+Hi,
+
+I have done  manual installation of Clearwater vIMS  of all the nodes on
+Openstack Ocata (devstack) .  I have configured all the nodes in a private
+network.
+
+I have provisioned 10 numbers in Ellis starting from  6505550000.
+
+*I am able to successfully register users on softphones Zoiper as well as
+Jitsi. *
+
+*But when i try to make a call from one user to another  it gives an error
+message: Call failure : SIP 408 -Request timeout *
+
+
+*Request your help to figure out where it is going wrong .....*
+
+
+My Zoiper configurations are :
+
+Username : 6505550006
+domain : ims.hom
+password :*****
+Auth username : 6505550006 at ims.hom
+Outbound proxy : 172.24.4.11 Bono IP :5060
+MWI -- disabled
+Transport - tcp
+Use rport - checked
+STUN - not using
+
+Similarly I have registered another user 6505550005 at ims.hom.
+
+
+my home domain in /etc/clearwater/shared config is ims.hom.
+local config of bono contains the hostname as bono ip.
+
+
+I have set the log level to 5 but could not make out much as I am not
+getting any error message in the logs of all the nodes as well as the
+syslog or monit logs.
+
+Some noticeable logs from Bono and sprout below :
+
+*Bono Node -- syslog*
+
+Nov 28 11:16:09 bono issue-alarm: zmq_msg_recv: Invalid argument
+Nov 28 11:16:09 bono issue-alarm: message repeated 3 times: [ zmq_msg_recv:
+Invalid argument]
+Nov 28 11:16:11 bono config-manager[13653]: dropped request: 'issue-alarm
+config-manager 8500.1'
+Nov 28 11:16:19 bono issue-alarm: zmq_msg_recv: Invalid argument
+Nov 28 11:16:19 bono issue-alarm: message repeated 3 times: [ zmq_msg_recv:
+Invalid argument]
+Nov 28 11:16:22 bono bono[27913]: <analytics> 2018-11-28T11:16:22.410+00:00
+Call-Disconnected: CALL_ID=ZDBiMWZhNWE2ZGY2YjIzMDRjZTZhYmIwY2Y1ZGQ2NjM.
+REASON=401
+Nov 28 11:16:22 bono bono[27913]: <analytics> 2018-11-28T11:16:22.786+00:00
+Call-Disconnected: CALL_ID=c7ac9b71e654bfcd44e33941d6006bc3 at 0:0:0:0:0:0:0:0
+REASON=408
+Nov 28 11:16:28 bono bono[27913]: <analytics> 2018-11-28T11:16:28.460+00:00
+Call-Disconnected: CALL_ID=dee3256df4301e17c7600bb52d71fb08 at 0:0:0:0:0:0:0:0
+REASON=408
+Nov 28 11:16:29 bono issue-alarm: zmq_msg_recv: Invalid argument
+Nov 28 11:16:29 bono issue-alarm: message repeated 3 times: [ zmq_msg_recv:
+Invalid argument]
+Nov 28 11:16:34 bono bono[27913]: <analytics> 2018-11-28T11:16:34.443+00:00
+Call-Disconnected: CALL_ID=ZTcxMGY2ZWM5N2FjM2ViOTZhMjA0Mzk0NzEwY2M2MTM.
+REASON=401
+Nov 28 11:16:35 bono queue-manager[13538]: dropped request: 'issue-alarm
+queue-manager 9001.1'
+Nov 28 11:16:37 bono queue-manager[13538]: dropped request: 'issue-alarm
+queue-manager 9002.1'
+Nov 28 11:16:39 bono issue-alarm: zmq_msg_recv: Invalid argument
+Nov 28 11:16:39 bono issue-alarm: message repeated 3 times: [ zmq_msg_recv:
+Invalid argument]
+Nov 28 11:16:41 bono config-manager[13653]: dropped request: 'issue-alarm
+config-manager 8500.1'
+Nov 28 11:16:47 bono bono[27913]: <analytics> 2018-11-28T11:16:47.786+00:00
+Call-Disconnected: CALL_ID=df3848fdc02e7f129051f5f766ad303a at 0:0:0:0:0:0:0:0
+REASON=408
+Nov 28 11:16:49 bono issue-alarm: zmq_msg_recv: Invalid argument
+Nov 28 11:16:49 bono issue-alarm: message repeated 3 times: [ zmq_msg_recv:
+Invalid argument]
+Nov 28 11:16:53 bono bono[27913]: <analytics> 2018-11-28T11:16:53.465+00:00
+Call-Disconnected: CALL_ID=c98ce23b310df66264e25322dc987121 at 0:0:0:0:0:0:0:0
+REASON=408
+Nov 28 11:16:59 bono issue-alarm: zmq_msg_recv: Invalid argument
+Nov 28 11:16:59 bono issue-alarm: message repeated 3 times: [ zmq_msg_recv:
+Invalid argument]
+Nov 28 11:17:01 bono CRON[25278]: (root) CMD (/usr/sbin/iotop -b -o -t -n 1
+-k >> /var/log/iotop.log 2>&1)
+Nov 28 11:17:01 bono CRON[25279]: (root) CMD (/usr/lib/sysstat/sadc 1 1
+/var/log/sysstat/clearwater-sa`date +%d` > /dev/null 2>&1)
+Nov 28 11:17:01 bono CRON[25280]: (root) CMD (   cd / && run-parts --report
+/etc/cron.hourly)
+Nov 28 11:17:05 bono queue-manager[13538]: dropped request: 'issue-alarm
+queue-manager 9001.1'
+Nov 28 11:17:07 bono queue-manager[13538]: dropped request: 'issue-alarm
+queue-manager 9002.1'
+Nov 28 11:17:09 bono issue-alarm: zmq_msg_recv: Invalid argument
+Nov 28 11:17:09 bono issue-alarm: message repeated 3 times: [ zmq_msg_recv:
+Invalid argument]
+Nov 28 11:17:11 bono config-manager[13653]: dropped request: 'issue-alarm
+config-manager 8500.1'
+*Nov 28 11:17:12 bono bono[27913]: <analytics>
+2018-11-28T11:17:12.787+00:00 Call-Disconnected:
+CALL_ID=6150cea252d458e388043380bbc46e3f at 0:0:0:0:0:0:0:0 REASON=408*
+*Nov 28 11:17:18 bono bono[27913]: <analytics>
+2018-11-28T11:17:18.465+00:00 Call-Disconnected:
+CALL_ID=e737a61c0d0d9fc67ec952f6e2501bed at 0:0:0:0:0:0:0:0 REASON=408*
+*Nov 28 11:17:19 bono issue-alarm: zmq_msg_recv: Invalid argument*
+-----------------------------------------------------------------------------------------
+*Bono logs * -
+*********
+1-2018 11:14:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout issued
+1012.3 alarm
+28-11-2018 11:14:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout
+issued 1013.3 alarm
+28-11-2018 11:14:47.512 UTC [7f5c9affd700] Status
+sip_connection_pool.cpp:428: Recycle TCP connection slot 5
+28-11-2018 11:14:48.790 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:15:03.800 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:15:06.514 UTC [7f5c9affd700] Status
+sip_connection_pool.cpp:428: Recycle TCP connection slot 37
+28-11-2018 11:15:07.515 UTC [7f5c9affd700] Status
+sip_connection_pool.cpp:428: Recycle TCP connection slot 43
+28-11-2018 11:15:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:244: Reraising
+all alarms with a known state
+28-11-2018 11:15:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout
+issued 1012.3 alarm
+28-11-2018 11:15:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout
+issued 1013.3 alarm
+28-11-2018 11:15:18.815 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:15:33.825 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:15:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:244: Reraising
+all alarms with a known state
+28-11-2018 11:15:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout
+issued 1012.3 alarm
+28-11-2018 11:15:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout
+issued 1013.3 alarm
+28-11-2018 11:15:48.840 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:16:03.854 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:16:09.522 UTC [7f5c9affd700] Status
+sip_connection_pool.cpp:428: Recycle TCP connection slot 0
+28-11-2018 11:16:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:244: Reraising
+all alarms with a known state
+28-11-2018 11:16:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout
+issued 1012.3 alarm
+28-11-2018 11:16:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout
+issued 1013.3 alarm
+28-11-2018 11:16:13.523 UTC [7f5c9affd700] Status
+sip_connection_pool.cpp:428: Recycle TCP connection slot 49
+28-11-2018 11:16:18.868 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:16:33.883 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:16:41.526 UTC [7f5c9affd700] Status
+sip_connection_pool.cpp:428: Recycle TCP connection slot 4
+28-11-2018 11:16:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:244: Reraising
+all alarms with a known state
+28-11-2018 11:16:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout
+issued 1012.3 alarm
+28-11-2018 11:16:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout
+issued 1013.3 alarm
+28-11-2018 11:16:44.527 UTC [7f5c9affd700] Status
+sip_connection_pool.cpp:428: Recycle TCP connection slot 7
+28-11-2018 11:16:47.527 UTC [7f5c9affd700] Status
+sip_connection_pool.cpp:428: Recycle TCP connection slot 16
+28-11-2018 11:16:48.898 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:16:53.456 UTC [7f5c997fa700] Warning
+dnscachedresolver.cpp:698: Failed to retrieve record for
+_sip._tcp.scscf.sprout.ims.hom: Domain name not found
+28-11-2018 11:17:03.530 UTC [7f5c9affd700] Status
+sip_connection_pool.cpp:428: Recycle TCP connection slot 46
+28-11-2018 11:17:03.910 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:17:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:244: Reraising
+all alarms with a known ------------------
+
+-----------------------------------------------------------------------------------------------------------------------------
+*Sprout --*
+**********
+*analytics.log*
+
+2018-11-28T11:11:52.884+00:00 Registration: USER_URI=sip:6505550005 at ims.hom
+BINDING_ID=sip:6505550005 at 172.24.4.1:51030;transport=TCP;rinstance=871c7de37ebab0b2
+CONTACT_URI=sip:6505550005 at 172.24.4.1:51030;transport=TCP;rinstance=871c7de37ebab0b2
+EXPIRES=300
+2018-11-28T11:12:04.910+00:00 Registration: USER_URI=sip:6505550006 at ims.hom
+BINDING_ID=sip:6505550006 at 172.24.4.1:32094;transport=TCP;rinstance=5d8742e5a588c1d6
+CONTACT_URI=sip:6505550006 at 172.24.4.1:32094;transport=TCP;rinstance=5d8742e5a588c1d6
+EXPIRES=300
+2018-11-28T11:13:44.146+00:00 Registration: USER_URI=sip:6505550002 at ims.hom
+BINDING_ID=sip:6505550002 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+CONTACT_URI=sip:6505550002 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+EXPIRES=0
+2018-11-28T11:14:08.915+00:00 Registration: USER_URI=sip:6505550006 at ims.hom
+BINDING_ID=sip:6505550006 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+CONTACT_URI=sip:6505550006 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+EXPIRES=0
+2018-11-28T11:16:22.926+00:00 Registration: USER_URI=sip:6505550005 at ims.hom
+BINDING_ID=sip:6505550005 at 172.24.4.1:51030;transport=TCP;rinstance=871c7de37ebab0b2
+CONTACT_URI=sip:6505550005 at 172.24.4.1:51030;transport=TCP;rinstance=871c7de37ebab0b2
+EXPIRES=300
+2018-11-28T11:16:34.965+00:00 Registration: USER_URI=sip:6505550006 at ims.hom
+BINDING_ID=sip:6505550006 at 172.24.4.1:32094;transport=TCP;rinstance=5d8742e5a588c1d6
+CONTACT_URI=sip:6505550006 at 172.24.4.1:32094;transport=TCP;rinstance=5d8742e5a588c1d6
+EXPIRES=300
+2018-11-28T11:17:44.188+00:00 Registration: USER_URI=sip:6505550002 at ims.hom
+BINDING_ID=sip:6505550002 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+CONTACT_URI=sip:6505550002 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+EXPIRES=300
+2018-11-28T11:18:08.334+00:00 Registration: USER_URI=sip:6505550006 at ims.hom
+BINDING_ID=sip:6505550006 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+CONTACT_URI=sip:6505550006 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+EXPIRES=300
+2018-11-28T11:20:52.962+00:00 Registration: USER_URI=sip:6505550005 at ims.hom
+BINDING_ID=sip:6505550005 at 172.24.4.1:51030;transport=TCP;rinstance=871c7de37ebab0b2
+CONTACT_URI=sip:6505550005 at 172.24.4.1:51030;transport=TCP;rinstance=871c7de37ebab0b2
+EXPIRES=300
+2018-11-28T11:21:05.010+00:00 Registration: USER_URI=sip:6505550006 at ims.hom
+BINDING_ID=sip:6505550006 at 172.24.4.1:32094;transport=TCP;rinstance=5d8742e5a588c1d6
+CONTACT_URI=sip:6505550006 at 172.24.4.1:32094;transport=TCP;rinstance=5d8742e5a588c1d6
+EXPIRES=300
+2018-11-28T11:22:44.197+00:00 Registration: USER_URI=sip:6505550002 at ims.hom
+BINDING_ID=sip:6505550002 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+CONTACT_URI=sip:6505550002 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+EXPIRES=0
+~
+
+------------------------------------------------------------------------------------------------
+
+
+
+
+Regards
+Mayur
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181128/2b0dc215/attachment.html>
+
+From gabrielorozco20 at unicauca.edu.co  Thu Nov 29 16:57:18 2018
+From: gabrielorozco20 at unicauca.edu.co (GABRIEL DAVID OROZCO URRUTIA)
+Date: Thu, 29 Nov 2018 16:57:18 -0500
+Subject: [Project Clearwater] Running I-CSCF and S-CSCF in different
+ machines/containers
+In-Reply-To: <BYAPR02MB42476593BCF2F9F8B0409F9F8FD70@BYAPR02MB4247.namprd02.prod.outlook.com>
+References: <BYAPR02MB42476593BCF2F9F8B0409F9F8FD70@BYAPR02MB4247.namprd02.prod.outlook.com>
+Message-ID: <CAGy+FHLW60MX7ZDjO2MuvrLN9OV5FayYefzjt4OiqdQFRyn0kA@mail.gmail.com>
+
+Hi Mark
+
+We have done some advances in the deployment using virtual machines.
+
+The IP adrress are:
+ICSCF: 192.168.190.146
+SCSCF: 192.168.190.142
+
+These are the configuration files:
+DNS BIND9:
+
+;BIND data file for local loopback interface
+
+$TTL    604800
+@       IN      SOA     rtn.edu.co. root.rtn.edu.co. (
+                             2         ; Serial
+                        604800         ; Refresh
+                         86400         ; Retry
+                       2419200         ; Expire
+                        604800 )       ; Negative Cache TTL
+;
+@       IN      NS      rtn.edu.co.
+@       IN      A       192.168.190.96
+ellis    IN      A       192.168.190.140
+;sprout    IN      A       192.168.190.142
+homer    IN      A       192.168.190.143
+dime    IN      A       192.168.190.144
+vellum    IN      A       192.168.190.145
+bono    IN      A       192.168.190.141
+scscf.sprout           IN A     192.168.190.142
+icscf.sprout           IN A     192.168.190.146
+hs                     IN A     192.168.190.144
+ralf                   IN A     192.168.190.144
+
+
+; NAPTR and SRV records - these indicate TCP support only and then resolve
+; to port 5054 on the per-node records defined above.
+sprout                 IN NAPTR 1 1 "S" "SIP+D2T" "" _sip._tcp.sprout
+_sip._tcp.sprout       IN SRV   0 0 5054 sprout
+
+; NAPTR and SRV records for S-CSCF - these indicate TCP support only and
+; then resolve to port 5054 on the per-node records defined above.
+scscf.sprout           IN NAPTR 1 1 "S" "SIP+D2T" "" _sip._tcp.scscf.sprout
+_sip._tcp.scscf.sprout IN SRV   0 0 5054 sprout
+
+; NAPTR and SRV records for I-CSCF - these indicate TCP support only and
+; then resolve to port 5052 on the per-node records defined above.
+icscf.sprout           IN NAPTR 1 1 "S" "SIP+D2T" "" _sip._tcp.icscf.sprout
+_sip._tcp.icscf.sprout IN SRV   0 0 5052 sprout
+
+It's important to mention that sprout.rtn.edu.co is commented
+
+Shared_config
+
+#####################################################################
+# No Shared Config has been provided
+# Replace this file with the Shared Configuration for your deployment
+#####################################################################
+# Deployment definitions
+home_domain=rtn.edu.co
+sprout_hostname=sprout.rtn.edu.co
+sprout_registration_store=vellum.rtn.edu.co
+icscf=5052
+icscf_prefix=icscf
+icscf_uri=sip:icscf.sprout.rtn.edu.co
+scscf=5054
+scscf_prefix=scscf
+scscf_uri=sip:scscf.sprout.rtn.edu.co
+hs_hostname=hs.rtn.edu.co:8888
+hs_provisioning_hostname=hs.rtn.edu.co:8889
+homestead_impu_store=vellum.rtn.edu.co
+ralf_hostname=ralf.rtn.edu.co:10888
+ralf_session_store=vellum.rtn.edu.co
+xdms_hostname=homer.rtn.edu.co:7888
+chronos_hostname=vellum.rtn.edu.co
+cassandra_hostname=vellum.rtn.edu.co
+
+# Email server configuration
+smtp_smarthost=ieee.org
+smtp_username=gabo at ieee.org
+smtp_password=123456
+email_recovery_sender=gabo1 at ieee.org
+
+# Keys
+signup_key=123456
+turn_workaround=123456
+ellis_api_key=123456
+ellis_cookie_key=123456
+
+reg_max_expires=1800
+
+LOCAL_CONFIG in SCSCF
+
+local_ip=192.168.190.142
+public_ip=192.168.190.142
+public_hostname=scscf.sprout
+etcd_cluster="192.168.190.140,192.168.190.141,192.168.190.142,192.168.190.143,192.168.190.144,192.168.190.145,192.168.190.146"
+scscf_node_uri=sip:sccf.sprout.rtn.edu.co:5054
+
+
+We put the ICSCF IP ADDRESS (192.168.190.146) to all the local_config in
+the etc_cluster
+
+The SIPp Stress Test is working (/usr/share/clearwater/bin/run_stress
+rtn.edu.co 100 1)
+The ICSCF node is in charge of the registers and SCSCF is facing the Call
+Session Control. How it should be
+
+However, when we try to call using softphones, the registration process is
+working but the call process is not.
+
+We think that maybe is because the home-domain in Ellis (cw-ngv.com) is
+different from us (rtn.edu.co). The Sipptest uses the rtn.edu.co
+
+We try to change the home domain using the following steps:
+
+    change home_domain in /etc/clearwater/shared_config
+    sudo service clearwater-infraestructure restart
+    sudo monit restart all
+    and, inside ellis:
+
+sudo bash -c "export PATH=/usr/share/clearwater/ellis/env/bin:$PATH ;
+>               cd /usr/share/clearwater/ellis/src/metaswitch/ellis/tools/ ;
+>               python create_numbers.py --start 6505550000 --count 1000"
+But the home-domain in ellis is not changing
+
+What should we do?
+
+Gabriel David Orozco
+Presidente Rama estudiantil IEEE Universidad del Cauca
+(57) 3004351630
+<http://ieee.unicauca.edu.co/>
+
+
+El lun., 26 nov. 2018 a las 9:24, Mark Perryman (<
+Mark.Perryman at metaswitch.com>) escribi?:
+
+> > We're trying to understand how sprout does all the S-CSCF and I-CSCF
+> functions.
+>
+>
+>
+> > I saw that Sprout have two Network alias icscf.sprout and scscf.sprout.
+> There's any possibility to run the S-CSCF and I-CSCF in different Virtual
+> Machines or Containers?
+>
+>
+>
+> Separating the I-CSCF and S-CSCF functions between multiple sprout nodes
+> should be possible, with appropriate DNS settings for the icscf.sprout
+> and scscf.sprout although external_icscf_uri will need to be set
+> otherwise the S-CSCF to I-CSCF hop will just happen locally.
+>
+>
+>
+> However, it isn?t a normal configuration, so I would be interested in
+> whether you encounter any issues.
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+
+-- 
+
+
+*Hacia una
+Universidad comprometida con la Paz Territorial*
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181129/30332894/attachment.html>
+

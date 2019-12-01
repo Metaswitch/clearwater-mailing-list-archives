@@ -1,0 +1,1846 @@
+From Mark.Perryman at metaswitch.com  Tue Jul  3 10:14:14 2018
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Tue, 3 Jul 2018 14:14:14 +0000
+Subject: [Project Clearwater] Delete pool of numbers provisioned in Ellis
+Message-ID: <BYAPR02MB42470B9ECA4277D36DDDF2408F420@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+Hi,
+
+You can delete numbers from Homestead-prov using the tools described here: https://clearwater.readthedocs.io/en/stable/Provisioning_Subscribers.html.  You could use a loop in your shell to delete a range of numbers.
+
+Mark Perryman.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180703/63f4b99b/attachment.html>
+
+From Mark.Perryman at metaswitch.com  Tue Jul  3 11:45:42 2018
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Tue, 3 Jul 2018 15:45:42 +0000
+Subject: [Project Clearwater] iFC match on SessionDescription
+Message-ID: <BYAPR02MB4247653CB7F6657FC88DF7EA8F420@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+Hi Alan,
+
+As you note, Project Clearwater does not currently consider multipart body for iFC matches.  We would be happy to accept a fix (subject to signing the Contributors agreement).
+
+Thanks,
+
+Mark Perryman
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180703/5beed5c6/attachment.html>
+
+From navdeep.uniyal at bristol.ac.uk  Thu Jul  5 12:08:57 2018
+From: navdeep.uniyal at bristol.ac.uk (Navdeep Uniyal)
+Date: Thu, 5 Jul 2018 16:08:57 +0000
+Subject: [Project Clearwater] Clearwater ims Voice not working
+Message-ID: <DB5PR06MB1559E738A864729935BEB8B2DE400@DB5PR06MB1559.eurprd06.prod.outlook.com>
+
+Dear All,
+
+I have setup the clearwater IMS using the docker repository: https://github.com/Metaswitch/clearwater-docker
+
+I am using X-Lite SIP Client for my testing. I am able to chat with the other user. However, I am facing issue while calling the other user.
+The call is going on fine and the other user is able to see it. The issue is- on answering the call, no one is able to hear each other's voice.
+
+My setup is on a KVM virtual machine (Openstack) which is on a private network with the two end users. All the ports are enabled on the VM security.
+
+Please help how can I troubleshoot the issue.
+
+
+Kind Regards,
+Navdeep
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180705/006f0848/attachment.html>
+
+From rajapaue at yahoo.com  Sat Jul  7 06:00:08 2018
+From: rajapaue at yahoo.com (rajapaue at yahoo.com)
+Date: Sat, 7 Jul 2018 10:00:08 +0000 (UTC)
+Subject: [Project Clearwater] zone creation and DNS settings
+References: <1017535689.512511.1530957608022.ref@mail.yahoo.com>
+Message-ID: <1017535689.512511.1530957608022@mail.yahoo.com>
+
+Hi,
+I've been working with clearwater on AWS. But I have now moved to my own server and I have installed it manually. Thus It has not been clear for me how I should create a zone for my configuration. Does it have to be a public zone or if it can be private how should I create it??Also for creating the DNS records it is a bit ambiguous for me could you please give me some source to get info about this. Thanks
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180707/06fb6b41/attachment.html>
+
+From navdeep.uniyal at bristol.ac.uk  Mon Jul  9 12:55:25 2018
+From: navdeep.uniyal at bristol.ac.uk (Navdeep Uniyal)
+Date: Mon, 9 Jul 2018 16:55:25 +0000
+Subject: [Project Clearwater] Clearwater ims Voice not working
+In-Reply-To: <DB5PR06MB1559E738A864729935BEB8B2DE400@DB5PR06MB1559.eurprd06.prod.outlook.com>
+References: <DB5PR06MB1559E738A864729935BEB8B2DE400@DB5PR06MB1559.eurprd06.prod.outlook.com>
+Message-ID: <DB5PR06MB15593DA3F847A1EE343ABDCBDE440@DB5PR06MB1559.eurprd06.prod.outlook.com>
+
+Dear All,
+
+While trying to debug the below mentioned issue, I found following errors in the SIP Client:
+
+2018-07-09 17:51:01.777 | ERROR | 90534 ERROR     ; (16:51: 1:777 | 1896)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:02.585 | ERROR | 90534 ERROR     ; (16:51: 2:585 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:05.813 | ERROR | 90534 ERROR     ; (16:51: 5:813 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:06.043 | ERROR | 90534 ERROR     ; (16:51: 6: 43 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:06.161 | ERROR | 90534 ERROR     ; (16:51: 6:160 |    2)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:06.244 | ERROR | 90534 ERROR     ; (16:51: 6:244 |   84)        VOICE:    1    99;      8396; GetSpeechOutputLevelFullRange() failed to locate channel (error=8002) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:06.304 | ERROR | 90534 ERROR     ; (16:51: 6:304 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:09.232 | ERROR | 90534 ERROR     ; (16:51: 9:232 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:12.420 | ERROR | 90534 ERROR     ; (16:51:12:420 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:15.767 | ERROR | 90534 ERROR     ; (16:51:15:767 |    1)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:19.150 | ERROR | 90534 ERROR     ; (16:51:19:150 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:22.399 | ERROR | 90534 ERROR     ; (16:51:22:399 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:25.751 | ERROR | 90534 ERROR     ; (16:51:25:751 |    1)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:28.984 | ERROR | 90534 ERROR     ; (16:51:28:984 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:31.164 | ERROR | 90534 ERROR     ; (16:51:31:164 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:34.495 | ERROR | 90534 ERROR     ; (16:51:34:495 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:37.733 | ERROR | 90534 ERROR     ; (16:51:37:732 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:40.285 | ERROR | 90534 ERROR     ; (16:51:40:285 |    4)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:40.493 | ERROR | 90534 ERROR     ; (16:51:40:493 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+
+
+Could someone please advise me what could be the possible reason for the issue.
+
+
+Kind Regards,
+Navdeep
+
+From: Navdeep Uniyal
+Sent: 05 July 2018 17:09
+To: clearwater at lists.projectclearwater.org
+Subject: Clearwater ims Voice not working
+
+Dear All,
+
+I have setup the clearwater IMS using the docker repository: https://github.com/Metaswitch/clearwater-docker
+
+I am using X-Lite SIP Client for my testing. I am able to chat with the other user. However, I am facing issue while calling the other user.
+The call is going on fine and the other user is able to see it. The issue is- on answering the call, no one is able to hear each other's voice.
+
+My setup is on a KVM virtual machine (Openstack) which is on a private network with the two end users. All the ports are enabled on the VM security.
+
+Please help how can I troubleshoot the issue.
+
+
+Kind Regards,
+Navdeep
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180709/b9028219/attachment.html>
+
+From amirhatami1000 at gmail.com  Tue Jul 10 06:26:58 2018
+From: amirhatami1000 at gmail.com (Amir Moahammad Hatami)
+Date: Tue, 10 Jul 2018 14:56:58 +0430
+Subject: [Project Clearwater] Not joining an unhealthy cluster
+Message-ID: <CAEtN4MDE-jn2a5K3y3mT1AN3qTW=+YKhaFBP8gCxkGxLRABr6w@mail.gmail.com>
+
+Hi,
+
+I have installed clearwater on 6 VMs using KVM. I have faced problems
+creating a new user in ellis (the server could not be updated). So I
+checked the monit status and I figured out that in all nodes some process
+related to etcd cluster are failing.
+
+I tried to stop and start the service but it says
+"Not joining an unhealthy cluster"
+
+I also tried clearwater-etcdctl cluster-health
+
+But it says for all nodes that
+cluster may be unhealthy: failed to list members
+Error:  client: etcd cluster is unavailable or misconfigured; error #0:
+client: endpoint http://192.168.122.230:4000 exceeded header timeout
+
+error #0: client: endpoint http://192.168.122.230:4000 exceeded header
+timeout
+
+or for some of them
+
+cluster may be unhealthy: failed to list members
+Error:  client: etcd cluster is unavailable or misconfigured; error #0:
+dial tcp 192.168.122.90:4000: getsockopt: connection refused
+
+error #0: dial tcp 192.168.122.90:4000: getsockopt: connection refused
+
+This is also my local config for one of my nodes.
+
+local_ip=192.168.122.90
+public_ip=192.168.122.90
+public_hostname=192.168.122.90
+etcd_cluster="192.168.122.117,192.168.122.229,192.168.122.90,192.168.122.64,192.168.122.230,192.168.122.114"
+
+The order for IP address may be different
+
+Kindly help me if you have any idea
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180710/ad898bf5/attachment.html>
+
+From Hariharan.Baskar at larsentoubro.com  Tue Jul 10 06:32:01 2018
+From: Hariharan.Baskar at larsentoubro.com (Hariharan Baskar)
+Date: Tue, 10 Jul 2018 10:32:01 +0000
+Subject: [Project Clearwater] Integration of PCRF with Clearwater
+Message-ID: <994aae4664374807a5a910a5f6962329@POCITMSXMB01.LntUniverse.com>
+
+Dear all,
+
+I have installed Clearwater IMS components on individual VMs manually and able to make an IMS call, registering 2 X-lite clients.
+Now I need to integrate this to LTE, integrating P-CSCF (bono) to PCRF component of LTE.
+I read from the Clearwater documents like Rx interface to bono is not available.
+Requesting someone to guide me on the same.
+
+Regards,
+Hariharan Baskar
+
+
+Larsen & Toubro Limited
+
+www.larsentoubro.com
+
+This Email may contain confidential or privileged information for the intended recipient (s). If you are not the intended recipient, please do not use or disseminate the information, notify the sender and delete it from your system.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180710/f6620429/attachment.html>
+
+From Hariharan.Baskar at larsentoubro.com  Tue Jul 10 06:42:04 2018
+From: Hariharan.Baskar at larsentoubro.com (Hariharan Baskar)
+Date: Tue, 10 Jul 2018 10:42:04 +0000
+Subject: [Project Clearwater]  Not joining an unhealthy cluster
+Message-ID: <83bb1cbed7c64469a8c58554414ec083@POCITMSXMB01.LntUniverse.com>
+
+You need to give the hostname of individual nodes in "public_hostname", in local_config.
+Secondly looks like your VMs are not connected to cluster. It may be due to issue in shared_config file. Please check that once.
+
+Regards,
+Hariharan Baskar
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of clearwater-request at lists.projectclearwater.org
+Sent: 10 July 2018 16:03
+To: clearwater at lists.projectclearwater.org
+Subject: Clearwater Digest, Vol 63, Issue 4
+
+Send Clearwater mailing list submissions to
+clearwater at lists.projectclearwater.org
+
+To subscribe or unsubscribe via the World Wide Web, visit
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+or, via email, send a message with subject or body 'help' to
+clearwater-request at lists.projectclearwater.org
+
+You can reach the person managing the list at
+clearwater-owner at lists.projectclearwater.org
+
+When replying, please edit your Subject line so it is more specific
+than "Re: Contents of Clearwater digest..."
+
+
+Today's Topics:
+
+   1. Re: Clearwater ims Voice not working (Navdeep Uniyal)
+   2. Not joining an unhealthy cluster (Amir Moahammad Hatami)
+   3. Integration of PCRF with Clearwater (Hariharan Baskar)
+
+
+----------------------------------------------------------------------
+
+Message: 1
+Date: Mon, 9 Jul 2018 16:55:25 +0000
+From: Navdeep Uniyal <navdeep.uniyal at bristol.ac.uk>
+To: "clearwater at lists.projectclearwater.org"
+<clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] Clearwater ims Voice not working
+Message-ID:
+<DB5PR06MB15593DA3F847A1EE343ABDCBDE440 at DB5PR06MB1559.eurprd06.prod.outlook.com>
+
+Content-Type: text/plain; charset="us-ascii"
+
+Dear All,
+
+While trying to debug the below mentioned issue, I found following errors in the SIP Client:
+
+2018-07-09 17:51:01.777 | ERROR | 90534 ERROR     ; (16:51: 1:777 | 1896)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:02.585 | ERROR | 90534 ERROR     ; (16:51: 2:585 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:05.813 | ERROR | 90534 ERROR     ; (16:51: 5:813 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:06.043 | ERROR | 90534 ERROR     ; (16:51: 6: 43 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:06.161 | ERROR | 90534 ERROR     ; (16:51: 6:160 |    2)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:06.244 | ERROR | 90534 ERROR     ; (16:51: 6:244 |   84)        VOICE:    1    99;      8396; GetSpeechOutputLevelFullRange() failed to locate channel (error=8002) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:06.304 | ERROR | 90534 ERROR     ; (16:51: 6:304 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:09.232 | ERROR | 90534 ERROR     ; (16:51: 9:232 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:12.420 | ERROR | 90534 ERROR     ; (16:51:12:420 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:15.767 | ERROR | 90534 ERROR     ; (16:51:15:767 |    1)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:19.150 | ERROR | 90534 ERROR     ; (16:51:19:150 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:22.399 | ERROR | 90534 ERROR     ; (16:51:22:399 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:25.751 | ERROR | 90534 ERROR     ; (16:51:25:751 |    1)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:28.984 | ERROR | 90534 ERROR     ; (16:51:28:984 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:31.164 | ERROR | 90534 ERROR     ; (16:51:31:164 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:34.495 | ERROR | 90534 ERROR     ; (16:51:34:495 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:37.733 | ERROR | 90534 ERROR     ; (16:51:37:732 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:40.285 | ERROR | 90534 ERROR     ; (16:51:40:285 |    4)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+2018-07-09 17:51:40.493 | ERROR | 90534 ERROR     ; (16:51:40:493 |    0)        VOICE:    1    99;      8396; GetRecCodec() failed to get received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+
+
+Could someone please advise me what could be the possible reason for the issue.
+
+
+Kind Regards,
+Navdeep
+
+From: Navdeep Uniyal
+Sent: 05 July 2018 17:09
+To: clearwater at lists.projectclearwater.org
+Subject: Clearwater ims Voice not working
+
+Dear All,
+
+I have setup the clearwater IMS using the docker repository: https://github.com/Metaswitch/clearwater-docker
+
+I am using X-Lite SIP Client for my testing. I am able to chat with the other user. However, I am facing issue while calling the other user.
+The call is going on fine and the other user is able to see it. The issue is- on answering the call, no one is able to hear each other's voice.
+
+My setup is on a KVM virtual machine (Openstack) which is on a private network with the two end users. All the ports are enabled on the VM security.
+
+Please help how can I troubleshoot the issue.
+
+
+Kind Regards,
+Navdeep
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180709/b9028219/attachment-0001.html>
+
+------------------------------
+
+Message: 2
+Date: Tue, 10 Jul 2018 14:56:58 +0430
+From: Amir Moahammad Hatami <amirhatami1000 at gmail.com>
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Not joining an unhealthy cluster
+Message-ID:
+<CAEtN4MDE-jn2a5K3y3mT1AN3qTW=+YKhaFBP8gCxkGxLRABr6w at mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+
+Hi,
+
+I have installed clearwater on 6 VMs using KVM. I have faced problems
+creating a new user in ellis (the server could not be updated). So I
+checked the monit status and I figured out that in all nodes some process
+related to etcd cluster are failing.
+
+I tried to stop and start the service but it says
+"Not joining an unhealthy cluster"
+
+I also tried clearwater-etcdctl cluster-health
+
+But it says for all nodes that
+cluster may be unhealthy: failed to list members
+Error:  client: etcd cluster is unavailable or misconfigured; error #0:
+client: endpoint http://192.168.122.230:4000 exceeded header timeout
+
+error #0: client: endpoint http://192.168.122.230:4000 exceeded header
+timeout
+
+or for some of them
+
+cluster may be unhealthy: failed to list members
+Error:  client: etcd cluster is unavailable or misconfigured; error #0:
+dial tcp 192.168.122.90:4000: getsockopt: connection refused
+
+error #0: dial tcp 192.168.122.90:4000: getsockopt: connection refused
+
+This is also my local config for one of my nodes.
+
+local_ip=192.168.122.90
+public_ip=192.168.122.90
+public_hostname=192.168.122.90
+etcd_cluster="192.168.122.117,192.168.122.229,192.168.122.90,192.168.122.64,192.168.122.230,192.168.122.114"
+
+The order for IP address may be different
+
+Kindly help me if you have any idea
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180710/ad898bf5/attachment-0001.html>
+
+------------------------------
+
+Message: 3
+Date: Tue, 10 Jul 2018 10:32:01 +0000
+From: Hariharan Baskar <Hariharan.Baskar at larsentoubro.com>
+To: "clearwater at lists.projectclearwater.org"
+<clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Integration of PCRF with Clearwater
+Message-ID:
+<994aae4664374807a5a910a5f6962329 at POCITMSXMB01.LntUniverse.com>
+Content-Type: text/plain; charset="us-ascii"
+
+Dear all,
+
+I have installed Clearwater IMS components on individual VMs manually and able to make an IMS call, registering 2 X-lite clients.
+Now I need to integrate this to LTE, integrating P-CSCF (bono) to PCRF component of LTE.
+I read from the Clearwater documents like Rx interface to bono is not available.
+Requesting someone to guide me on the same.
+
+Regards,
+Hariharan Baskar
+
+
+Larsen & Toubro Limited
+
+www.larsentoubro.com
+
+This Email may contain confidential or privileged information for the intended recipient (s). If you are not the intended recipient, please do not use or disseminate the information, notify the sender and delete it from your system.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180710/f6620429/attachment.html>
+
+------------------------------
+
+Subject: Digest Footer
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+
+------------------------------
+
+End of Clearwater Digest, Vol 63, Issue 4
+*****************************************
+Larsen & Toubro Limited
+
+www.larsentoubro.com
+
+This Email may contain confidential or privileged information for the intended recipient (s). If you are not the intended recipient, please do not use or disseminate the information, notify the sender and delete it from your system.
+
+
+
+From amirhatami1000 at gmail.com  Thu Jul 12 16:15:57 2018
+From: amirhatami1000 at gmail.com (Amir Moahammad Hatami)
+Date: Fri, 13 Jul 2018 00:45:57 +0430
+Subject: [Project Clearwater] Not joining an unhealthy cluster
+ (Hariharan Baskar)
+Message-ID: <CAEtN4MCW3KWsDC3KFOEobEJ8sEnUwzKuSWyMwmqvS8EgbxFgLA@mail.gmail.com>
+
+Thanks,
+
+I can see in the instructions for manual install the hostname can be the
+same as IP address and so there should be no problems.
+
+about shared config I saved the file when I installed the program first.
+But now I can not download or upload any thing to shared config and i
+cannot connect to the cluster.
+
+
+
+
+On Tue, Jul 10, 2018 at 8:30 PM, <
+clearwater-request at lists.projectclearwater.org> wrote:
+
+> Send Clearwater mailing list submissions to
+>         clearwater at lists.projectclearwater.org
+>
+> To subscribe or unsubscribe via the World Wide Web, visit
+>         http://lists.projectclearwater.org/mailman/
+> listinfo/clearwater_lists.projectclearwater.org
+>
+> or, via email, send a message with subject or body 'help' to
+>         clearwater-request at lists.projectclearwater.org
+>
+> You can reach the person managing the list at
+>         clearwater-owner at lists.projectclearwater.org
+>
+> When replying, please edit your Subject line so it is more specific
+> than "Re: Contents of Clearwater digest..."
+>
+>
+> Today's Topics:
+>
+>    1.  Not joining an unhealthy cluster (Hariharan Baskar)
+>
+>
+> ----------------------------------------------------------------------
+>
+> Message: 1
+> Date: Tue, 10 Jul 2018 10:42:04 +0000
+> From: Hariharan Baskar <Hariharan.Baskar at larsentoubro.com>
+> To: "clearwater at lists.projectclearwater.org"
+>         <clearwater at lists.projectclearwater.org>
+> Subject: [Project Clearwater]  Not joining an unhealthy cluster
+> Message-ID:
+>         <83bb1cbed7c64469a8c58554414ec083 at POCITMSXMB01.LntUniverse.com>
+> Content-Type: text/plain; charset="us-ascii"
+>
+> You need to give the hostname of individual nodes in "public_hostname", in
+> local_config.
+> Secondly looks like your VMs are not connected to cluster. It may be due
+> to issue in shared_config file. Please check that once.
+>
+> Regards,
+> Hariharan Baskar
+>
+> -----Original Message-----
+> From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> On Behalf Of clearwater-request at lists.projectclearwater.org
+> Sent: 10 July 2018 16:03
+> To: clearwater at lists.projectclearwater.org
+> Subject: Clearwater Digest, Vol 63, Issue 4
+>
+> Send Clearwater mailing list submissions to
+> clearwater at lists.projectclearwater.org
+>
+> To subscribe or unsubscribe via the World Wide Web, visit
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.
+> projectclearwater.org
+>
+> or, via email, send a message with subject or body 'help' to
+> clearwater-request at lists.projectclearwater.org
+>
+> You can reach the person managing the list at
+> clearwater-owner at lists.projectclearwater.org
+>
+> When replying, please edit your Subject line so it is more specific
+> than "Re: Contents of Clearwater digest..."
+>
+>
+> Today's Topics:
+>
+>    1. Re: Clearwater ims Voice not working (Navdeep Uniyal)
+>    2. Not joining an unhealthy cluster (Amir Moahammad Hatami)
+>    3. Integration of PCRF with Clearwater (Hariharan Baskar)
+>
+>
+> ----------------------------------------------------------------------
+>
+> Message: 1
+> Date: Mon, 9 Jul 2018 16:55:25 +0000
+> From: Navdeep Uniyal <navdeep.uniyal at bristol.ac.uk>
+> To: "clearwater at lists.projectclearwater.org"
+> <clearwater at lists.projectclearwater.org>
+> Subject: Re: [Project Clearwater] Clearwater ims Voice not working
+> Message-ID:
+> <DB5PR06MB15593DA3F847A1EE343ABDCBDE440 at DB5PR06MB1559.
+> eurprd06.prod.outlook.com>
+>
+> Content-Type: text/plain; charset="us-ascii"
+>
+> Dear All,
+>
+> While trying to debug the below mentioned issue, I found following errors
+> in the SIP Client:
+>
+> 2018-07-09 17:51:01.777 | ERROR | 90534 ERROR     ; (16:51: 1:777 | 1896)
+>       VOICE:    1    99;      8396; GetRecCodec() failed to get received
+> codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+> 2018-07-09 17:51:02.585 | ERROR | 90534 ERROR     ; (16:51: 2:585 |    0)
+>       VOICE:    1    99;      8396; GetRecCodec() failed to get received
+> codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+> 2018-07-09 17:51:05.813 | ERROR | 90534 ERROR     ; (16:51: 5:813 |    0)
+>       VOICE:    1    99;      8396; GetRecCodec() failed to get received
+> codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+> 2018-07-09 17:51:06.043 | ERROR | 90534 ERROR     ; (16:51: 6: 43 |    0)
+>       VOICE:    1    99;      8396; GetRecCodec() failed to get received
+> codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+> 2018-07-09 17:51:06.161 | ERROR | 90534 ERROR     ; (16:51: 6:160 |    2)
+>       VOICE:    1    99;      8396; GetRecCodec() failed to get received
+> codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+> 2018-07-09 17:51:06.244 | ERROR | 90534 ERROR     ; (16:51: 6:244 |   84)
+>       VOICE:    1    99;      8396; GetSpeechOutputLevelFullRange()
+> failed to locate channel (error=8002) | 4436 | CPCAPI2 |
+> MediaStackLog.cpp:63
+> 2018-07-09 17:51:06.304 | ERROR | 90534 ERROR     ; (16:51: 6:304 |    0)
+>       VOICE:    1    99;      8396; GetRecCodec() failed to get received
+> codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+> 2018-07-09 17:51:09.232 | ERROR | 90534 ERROR     ; (16:51: 9:232 |    0)
+>       VOICE:    1    99;      8396; GetRecCodec() failed to get received
+> codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+> 2018-07-09 17:51:12.420 | ERROR | 90534 ERROR     ; (16:51:12:420 |    0)
+>       VOICE:    1    99;      8396; GetRecCodec() failed to get received
+> codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+> 2018-07-09 17:51:15.767 | ERROR | 90534 ERROR     ; (16:51:15:767 |    1)
+>       VOICE:    1    99;      8396; GetRecCodec() failed to get received
+> codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+> 2018-07-09 17:51:19.150 | ERROR | 90534 ERROR     ; (16:51:19:150 |    0)
+>       VOICE:    1    99;      8396; GetRecCodec() failed to get received
+> codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+> 2018-07-09 17:51:22.399 | ERROR | 90534 ERROR     ; (16:51:22:399 |    0)
+>       VOICE:    1    99;      8396; GetRecCodec() failed to get received
+> codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+> 2018-07-09 17:51:25.751 | ERROR | 90534 ERROR     ; (16:51:25:751 |    1)
+>       VOICE:    1    99;      8396; GetRecCodec() failed to get received
+> codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+> 2018-07-09 17:51:28.984 | ERROR | 90534 ERROR     ; (16:51:28:984 |    0)
+>       VOICE:    1    99;      8396; GetRecCodec() failed to get received
+> codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+> 2018-07-09 17:51:31.164 | ERROR | 90534 ERROR     ; (16:51:31:164 |    0)
+>       VOICE:    1    99;      8396; GetRecCodec() failed to get received
+> codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+> 2018-07-09 17:51:34.495 | ERROR | 90534 ERROR     ; (16:51:34:495 |    0)
+>       VOICE:    1    99;      8396; GetRecCodec() failed to get received
+> codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+> 2018-07-09 17:51:37.733 | ERROR | 90534 ERROR     ; (16:51:37:732 |    0)
+>       VOICE:    1    99;      8396; GetRecCodec() failed to get received
+> codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+> 2018-07-09 17:51:40.285 | ERROR | 90534 ERROR     ; (16:51:40:285 |    4)
+>       VOICE:    1    99;      8396; GetRecCodec() failed to get received
+> codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+> 2018-07-09 17:51:40.493 | ERROR | 90534 ERROR     ; (16:51:40:493 |    0)
+>       VOICE:    1    99;      8396; GetRecCodec() failed to get received
+> codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>
+>
+> Could someone please advise me what could be the possible reason for the
+> issue.
+>
+>
+> Kind Regards,
+> Navdeep
+>
+> From: Navdeep Uniyal
+> Sent: 05 July 2018 17:09
+> To: clearwater at lists.projectclearwater.org
+> Subject: Clearwater ims Voice not working
+>
+> Dear All,
+>
+> I have setup the clearwater IMS using the docker repository:
+> https://github.com/Metaswitch/clearwater-docker
+>
+> I am using X-Lite SIP Client for my testing. I am able to chat with the
+> other user. However, I am facing issue while calling the other user.
+> The call is going on fine and the other user is able to see it. The issue
+> is- on answering the call, no one is able to hear each other's voice.
+>
+> My setup is on a KVM virtual machine (Openstack) which is on a private
+> network with the two end users. All the ports are enabled on the VM
+> security.
+>
+> Please help how can I troubleshoot the issue.
+>
+>
+> Kind Regards,
+> Navdeep
+>
+> -------------- next part --------------
+> An HTML attachment was scrubbed...
+> URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.
+> projectclearwater.org/attachments/20180709/b9028219/attachment-0001.html>
+>
+> ------------------------------
+>
+> Message: 2
+> Date: Tue, 10 Jul 2018 14:56:58 +0430
+> From: Amir Moahammad Hatami <amirhatami1000 at gmail.com>
+> To: clearwater at lists.projectclearwater.org
+> Subject: [Project Clearwater] Not joining an unhealthy cluster
+> Message-ID:
+> <CAEtN4MDE-jn2a5K3y3mT1AN3qTW=+YKhaFBP8gCxkGxLRABr6w at mail.gmail.com>
+> Content-Type: text/plain; charset="utf-8"
+>
+> Hi,
+>
+> I have installed clearwater on 6 VMs using KVM. I have faced problems
+> creating a new user in ellis (the server could not be updated). So I
+> checked the monit status and I figured out that in all nodes some process
+> related to etcd cluster are failing.
+>
+> I tried to stop and start the service but it says
+> "Not joining an unhealthy cluster"
+>
+> I also tried clearwater-etcdctl cluster-health
+>
+> But it says for all nodes that
+> cluster may be unhealthy: failed to list members
+> Error:  client: etcd cluster is unavailable or misconfigured; error #0:
+> client: endpoint http://192.168.122.230:4000 exceeded header timeout
+>
+> error #0: client: endpoint http://192.168.122.230:4000 exceeded header
+> timeout
+>
+> or for some of them
+>
+> cluster may be unhealthy: failed to list members
+> Error:  client: etcd cluster is unavailable or misconfigured; error #0:
+> dial tcp 192.168.122.90:4000: getsockopt: connection refused
+>
+> error #0: dial tcp 192.168.122.90:4000: getsockopt: connection refused
+>
+> This is also my local config for one of my nodes.
+>
+> local_ip=192.168.122.90
+> public_ip=192.168.122.90
+> public_hostname=192.168.122.90
+> etcd_cluster="192.168.122.117,192.168.122.229,192.168.122.
+> 90,192.168.122.64,192.168.122.230,192.168.122.114"
+>
+> The order for IP address may be different
+>
+> Kindly help me if you have any idea
+> -------------- next part --------------
+> An HTML attachment was scrubbed...
+> URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.
+> projectclearwater.org/attachments/20180710/ad898bf5/attachment-0001.html>
+>
+> ------------------------------
+>
+> Message: 3
+> Date: Tue, 10 Jul 2018 10:32:01 +0000
+> From: Hariharan Baskar <Hariharan.Baskar at larsentoubro.com>
+> To: "clearwater at lists.projectclearwater.org"
+> <clearwater at lists.projectclearwater.org>
+> Subject: [Project Clearwater] Integration of PCRF with Clearwater
+> Message-ID:
+> <994aae4664374807a5a910a5f6962329 at POCITMSXMB01.LntUniverse.com>
+> Content-Type: text/plain; charset="us-ascii"
+>
+> Dear all,
+>
+> I have installed Clearwater IMS components on individual VMs manually and
+> able to make an IMS call, registering 2 X-lite clients.
+> Now I need to integrate this to LTE, integrating P-CSCF (bono) to PCRF
+> component of LTE.
+> I read from the Clearwater documents like Rx interface to bono is not
+> available.
+> Requesting someone to guide me on the same.
+>
+> Regards,
+> Hariharan Baskar
+>
+>
+> Larsen & Toubro Limited
+>
+> www.larsentoubro.com
+>
+> This Email may contain confidential or privileged information for the
+> intended recipient (s). If you are not the intended recipient, please do
+> not use or disseminate the information, notify the sender and delete it
+> from your system.
+> -------------- next part --------------
+> An HTML attachment was scrubbed...
+> URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.
+> projectclearwater.org/attachments/20180710/f6620429/attachment.html>
+>
+> ------------------------------
+>
+> Subject: Digest Footer
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.
+> projectclearwater.org
+>
+>
+> ------------------------------
+>
+> End of Clearwater Digest, Vol 63, Issue 4
+> *****************************************
+> Larsen & Toubro Limited
+>
+> www.larsentoubro.com
+>
+> This Email may contain confidential or privileged information for the
+> intended recipient (s). If you are not the intended recipient, please do
+> not use or disseminate the information, notify the sender and delete it
+> from your system.
+>
+>
+>
+> ------------------------------
+>
+> Subject: Digest Footer
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.
+> projectclearwater.org
+>
+>
+> ------------------------------
+>
+> End of Clearwater Digest, Vol 63, Issue 5
+> *****************************************
+>
+
+
+
+-- 
+Amir Mohammad Hatami
+B.Sc in Electrical Engineering
+Sharif University of technology
+http://ee.sharif.ir/~hatami
+
+[image: Mailtrack]
+<https://mailtrack.io?utm_source=gmail&utm_medium=signature&utm_campaign=signaturevirality6&>
+Sender
+notified by
+Mailtrack
+<https://mailtrack.io?utm_source=gmail&utm_medium=signature&utm_campaign=signaturevirality6&>
+07/13/18,
+12:44:03 AM
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180713/a7cc11fd/attachment.html>
+
+From amirhatami1000 at gmail.com  Sat Jul 14 02:25:18 2018
+From: amirhatami1000 at gmail.com (Amir Moahammad Hatami)
+Date: Sat, 14 Jul 2018 10:55:18 +0430
+Subject: [Project Clearwater] Not joining an unhealthy cluster
+ (Hariharan Baskar)
+In-Reply-To: <CAEtN4MCW3KWsDC3KFOEobEJ8sEnUwzKuSWyMwmqvS8EgbxFgLA@mail.gmail.com>
+References: <CAEtN4MCW3KWsDC3KFOEobEJ8sEnUwzKuSWyMwmqvS8EgbxFgLA@mail.gmail.com>
+Message-ID: <CAEtN4MCwiiSrGjZsp6+JQVOCh6VLv+FnJ5RDXYbVwLOVA0dctg@mail.gmail.com>
+
+any idea on the problem of the cluster. Kindly let me know
+
+
+On Fri, Jul 13, 2018 at 12:45 AM, Amir Moahammad Hatami <
+amirhatami1000 at gmail.com> wrote:
+
+> Thanks,
+>
+> I can see in the instructions for manual install the hostname can be the
+> same as IP address and so there should be no problems.
+>
+> about shared config I saved the file when I installed the program first.
+> But now I can not download or upload any thing to shared config and i
+> cannot connect to the cluster.
+>
+>
+>
+>
+> On Tue, Jul 10, 2018 at 8:30 PM, <clearwater-request at lists.
+> projectclearwater.org> wrote:
+>
+>> Send Clearwater mailing list submissions to
+>>         clearwater at lists.projectclearwater.org
+>>
+>> To subscribe or unsubscribe via the World Wide Web, visit
+>>         http://lists.projectclearwater.org/mailman/listinfo/
+>> clearwater_lists.projectclearwater.org
+>>
+>> or, via email, send a message with subject or body 'help' to
+>>         clearwater-request at lists.projectclearwater.org
+>>
+>> You can reach the person managing the list at
+>>         clearwater-owner at lists.projectclearwater.org
+>>
+>> When replying, please edit your Subject line so it is more specific
+>> than "Re: Contents of Clearwater digest..."
+>>
+>>
+>> Today's Topics:
+>>
+>>    1.  Not joining an unhealthy cluster (Hariharan Baskar)
+>>
+>>
+>> ----------------------------------------------------------------------
+>>
+>> Message: 1
+>> Date: Tue, 10 Jul 2018 10:42:04 +0000
+>> From: Hariharan Baskar <Hariharan.Baskar at larsentoubro.com>
+>> To: "clearwater at lists.projectclearwater.org"
+>>         <clearwater at lists.projectclearwater.org>
+>> Subject: [Project Clearwater]  Not joining an unhealthy cluster
+>> Message-ID:
+>>         <83bb1cbed7c64469a8c58554414ec083 at POCITMSXMB01.LntUniverse.com>
+>> Content-Type: text/plain; charset="us-ascii"
+>>
+>> You need to give the hostname of individual nodes in "public_hostname",
+>> in local_config.
+>> Secondly looks like your VMs are not connected to cluster. It may be due
+>> to issue in shared_config file. Please check that once.
+>>
+>> Regards,
+>> Hariharan Baskar
+>>
+>> -----Original Message-----
+>> From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+>> On Behalf Of clearwater-request at lists.projectclearwater.org
+>> Sent: 10 July 2018 16:03
+>> To: clearwater at lists.projectclearwater.org
+>> Subject: Clearwater Digest, Vol 63, Issue 4
+>>
+>> Send Clearwater mailing list submissions to
+>> clearwater at lists.projectclearwater.org
+>>
+>> To subscribe or unsubscribe via the World Wide Web, visit
+>> http://lists.projectclearwater.org/mailman/listinfo/
+>> clearwater_lists.projectclearwater.org
+>>
+>> or, via email, send a message with subject or body 'help' to
+>> clearwater-request at lists.projectclearwater.org
+>>
+>> You can reach the person managing the list at
+>> clearwater-owner at lists.projectclearwater.org
+>>
+>> When replying, please edit your Subject line so it is more specific
+>> than "Re: Contents of Clearwater digest..."
+>>
+>>
+>> Today's Topics:
+>>
+>>    1. Re: Clearwater ims Voice not working (Navdeep Uniyal)
+>>    2. Not joining an unhealthy cluster (Amir Moahammad Hatami)
+>>    3. Integration of PCRF with Clearwater (Hariharan Baskar)
+>>
+>>
+>> ----------------------------------------------------------------------
+>>
+>> Message: 1
+>> Date: Mon, 9 Jul 2018 16:55:25 +0000
+>> From: Navdeep Uniyal <navdeep.uniyal at bristol.ac.uk>
+>> To: "clearwater at lists.projectclearwater.org"
+>> <clearwater at lists.projectclearwater.org>
+>> Subject: Re: [Project Clearwater] Clearwater ims Voice not working
+>> Message-ID:
+>> <DB5PR06MB15593DA3F847A1EE343ABDCBDE440 at DB5PR06MB1559.eurprd
+>> 06.prod.outlook.com>
+>>
+>> Content-Type: text/plain; charset="us-ascii"
+>>
+>> Dear All,
+>>
+>> While trying to debug the below mentioned issue, I found following errors
+>> in the SIP Client:
+>>
+>> 2018-07-09 17:51:01.777 | ERROR | 90534 ERROR     ; (16:51: 1:777 |
+>> 1896)        VOICE:    1    99;      8396; GetRecCodec() failed to get
+>> received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>> 2018-07-09 17:51:02.585 | ERROR | 90534 ERROR     ; (16:51: 2:585 |
+>> 0)        VOICE:    1    99;      8396; GetRecCodec() failed to get
+>> received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>> 2018-07-09 17:51:05.813 | ERROR | 90534 ERROR     ; (16:51: 5:813 |
+>> 0)        VOICE:    1    99;      8396; GetRecCodec() failed to get
+>> received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>> 2018-07-09 17:51:06.043 | ERROR | 90534 ERROR     ; (16:51: 6: 43 |
+>> 0)        VOICE:    1    99;      8396; GetRecCodec() failed to get
+>> received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>> 2018-07-09 17:51:06.161 | ERROR | 90534 ERROR     ; (16:51: 6:160 |
+>> 2)        VOICE:    1    99;      8396; GetRecCodec() failed to get
+>> received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>> 2018-07-09 17:51:06.244 | ERROR | 90534 ERROR     ; (16:51: 6:244 |
+>>  84)        VOICE:    1    99;      8396; GetSpeechOutputLevelFullRange()
+>> failed to locate channel (error=8002) | 4436 | CPCAPI2 |
+>> MediaStackLog.cpp:63
+>> 2018-07-09 17:51:06.304 | ERROR | 90534 ERROR     ; (16:51: 6:304 |
+>> 0)        VOICE:    1    99;      8396; GetRecCodec() failed to get
+>> received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>> 2018-07-09 17:51:09.232 | ERROR | 90534 ERROR     ; (16:51: 9:232 |
+>> 0)        VOICE:    1    99;      8396; GetRecCodec() failed to get
+>> received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>> 2018-07-09 17:51:12.420 | ERROR | 90534 ERROR     ; (16:51:12:420 |
+>> 0)        VOICE:    1    99;      8396; GetRecCodec() failed to get
+>> received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>> 2018-07-09 17:51:15.767 | ERROR | 90534 ERROR     ; (16:51:15:767 |
+>> 1)        VOICE:    1    99;      8396; GetRecCodec() failed to get
+>> received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>> 2018-07-09 17:51:19.150 | ERROR | 90534 ERROR     ; (16:51:19:150 |
+>> 0)        VOICE:    1    99;      8396; GetRecCodec() failed to get
+>> received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>> 2018-07-09 17:51:22.399 | ERROR | 90534 ERROR     ; (16:51:22:399 |
+>> 0)        VOICE:    1    99;      8396; GetRecCodec() failed to get
+>> received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>> 2018-07-09 17:51:25.751 | ERROR | 90534 ERROR     ; (16:51:25:751 |
+>> 1)        VOICE:    1    99;      8396; GetRecCodec() failed to get
+>> received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>> 2018-07-09 17:51:28.984 | ERROR | 90534 ERROR     ; (16:51:28:984 |
+>> 0)        VOICE:    1    99;      8396; GetRecCodec() failed to get
+>> received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>> 2018-07-09 17:51:31.164 | ERROR | 90534 ERROR     ; (16:51:31:164 |
+>> 0)        VOICE:    1    99;      8396; GetRecCodec() failed to get
+>> received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>> 2018-07-09 17:51:34.495 | ERROR | 90534 ERROR     ; (16:51:34:495 |
+>> 0)        VOICE:    1    99;      8396; GetRecCodec() failed to get
+>> received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>> 2018-07-09 17:51:37.733 | ERROR | 90534 ERROR     ; (16:51:37:732 |
+>> 0)        VOICE:    1    99;      8396; GetRecCodec() failed to get
+>> received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>> 2018-07-09 17:51:40.285 | ERROR | 90534 ERROR     ; (16:51:40:285 |
+>> 4)        VOICE:    1    99;      8396; GetRecCodec() failed to get
+>> received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>> 2018-07-09 17:51:40.493 | ERROR | 90534 ERROR     ; (16:51:40:493 |
+>> 0)        VOICE:    1    99;      8396; GetRecCodec() failed to get
+>> received codec (error=8111) | 4436 | CPCAPI2 | MediaStackLog.cpp:63
+>>
+>>
+>> Could someone please advise me what could be the possible reason for the
+>> issue.
+>>
+>>
+>> Kind Regards,
+>> Navdeep
+>>
+>> From: Navdeep Uniyal
+>> Sent: 05 July 2018 17:09
+>> To: clearwater at lists.projectclearwater.org
+>> Subject: Clearwater ims Voice not working
+>>
+>> Dear All,
+>>
+>> I have setup the clearwater IMS using the docker repository:
+>> https://github.com/Metaswitch/clearwater-docker
+>>
+>> I am using X-Lite SIP Client for my testing. I am able to chat with the
+>> other user. However, I am facing issue while calling the other user.
+>> The call is going on fine and the other user is able to see it. The issue
+>> is- on answering the call, no one is able to hear each other's voice.
+>>
+>> My setup is on a KVM virtual machine (Openstack) which is on a private
+>> network with the two end users. All the ports are enabled on the VM
+>> security.
+>>
+>> Please help how can I troubleshoot the issue.
+>>
+>>
+>> Kind Regards,
+>> Navdeep
+>>
+>> -------------- next part --------------
+>> An HTML attachment was scrubbed...
+>> URL: <http://lists.projectclearwater.org/pipermail/clearwater_
+>> lists.projectclearwater.org/attachments/20180709/b9028219/at
+>> tachment-0001.html>
+>>
+>> ------------------------------
+>>
+>> Message: 2
+>> Date: Tue, 10 Jul 2018 14:56:58 +0430
+>> From: Amir Moahammad Hatami <amirhatami1000 at gmail.com>
+>> To: clearwater at lists.projectclearwater.org
+>> Subject: [Project Clearwater] Not joining an unhealthy cluster
+>> Message-ID:
+>> <CAEtN4MDE-jn2a5K3y3mT1AN3qTW=+YKhaFBP8gCxkGxLRABr6w at mail.gmail.com>
+>> Content-Type: text/plain; charset="utf-8"
+>>
+>> Hi,
+>>
+>> I have installed clearwater on 6 VMs using KVM. I have faced problems
+>> creating a new user in ellis (the server could not be updated). So I
+>> checked the monit status and I figured out that in all nodes some process
+>> related to etcd cluster are failing.
+>>
+>> I tried to stop and start the service but it says
+>> "Not joining an unhealthy cluster"
+>>
+>> I also tried clearwater-etcdctl cluster-health
+>>
+>> But it says for all nodes that
+>> cluster may be unhealthy: failed to list members
+>> Error:  client: etcd cluster is unavailable or misconfigured; error #0:
+>> client: endpoint http://192.168.122.230:4000 exceeded header timeout
+>>
+>> error #0: client: endpoint http://192.168.122.230:4000 exceeded header
+>> timeout
+>>
+>> or for some of them
+>>
+>> cluster may be unhealthy: failed to list members
+>> Error:  client: etcd cluster is unavailable or misconfigured; error #0:
+>> dial tcp 192.168.122.90:4000: getsockopt: connection refused
+>>
+>> error #0: dial tcp 192.168.122.90:4000: getsockopt: connection refused
+>>
+>> This is also my local config for one of my nodes.
+>>
+>> local_ip=192.168.122.90
+>> public_ip=192.168.122.90
+>> public_hostname=192.168.122.90
+>> etcd_cluster="192.168.122.117,192.168.122.229,192.168.122.90
+>> ,192.168.122.64,192.168.122.230,192.168.122.114"
+>>
+>> The order for IP address may be different
+>>
+>> Kindly help me if you have any idea
+>> -------------- next part --------------
+>> An HTML attachment was scrubbed...
+>> URL: <http://lists.projectclearwater.org/pipermail/clearwater_
+>> lists.projectclearwater.org/attachments/20180710/ad898bf5/at
+>> tachment-0001.html>
+>>
+>> ------------------------------
+>>
+>> Message: 3
+>> Date: Tue, 10 Jul 2018 10:32:01 +0000
+>> From: Hariharan Baskar <Hariharan.Baskar at larsentoubro.com>
+>> To: "clearwater at lists.projectclearwater.org"
+>> <clearwater at lists.projectclearwater.org>
+>> Subject: [Project Clearwater] Integration of PCRF with Clearwater
+>> Message-ID:
+>> <994aae4664374807a5a910a5f6962329 at POCITMSXMB01.LntUniverse.com>
+>> Content-Type: text/plain; charset="us-ascii"
+>>
+>> Dear all,
+>>
+>> I have installed Clearwater IMS components on individual VMs manually and
+>> able to make an IMS call, registering 2 X-lite clients.
+>> Now I need to integrate this to LTE, integrating P-CSCF (bono) to PCRF
+>> component of LTE.
+>> I read from the Clearwater documents like Rx interface to bono is not
+>> available.
+>> Requesting someone to guide me on the same.
+>>
+>> Regards,
+>> Hariharan Baskar
+>>
+>>
+>> Larsen & Toubro Limited
+>>
+>> www.larsentoubro.com
+>>
+>> This Email may contain confidential or privileged information for the
+>> intended recipient (s). If you are not the intended recipient, please do
+>> not use or disseminate the information, notify the sender and delete it
+>> from your system.
+>> -------------- next part --------------
+>> An HTML attachment was scrubbed...
+>> URL: <http://lists.projectclearwater.org/pipermail/clearwater_
+>> lists.projectclearwater.org/attachments/20180710/f6620429/attachment.html
+>> >
+>>
+>> ------------------------------
+>>
+>> Subject: Digest Footer
+>>
+>> _______________________________________________
+>> Clearwater mailing list
+>> Clearwater at lists.projectclearwater.org
+>> http://lists.projectclearwater.org/mailman/listinfo/
+>> clearwater_lists.projectclearwater.org
+>>
+>>
+>> ------------------------------
+>>
+>> End of Clearwater Digest, Vol 63, Issue 4
+>> *****************************************
+>> Larsen & Toubro Limited
+>>
+>> www.larsentoubro.com
+>>
+>> This Email may contain confidential or privileged information for the
+>> intended recipient (s). If you are not the intended recipient, please do
+>> not use or disseminate the information, notify the sender and delete it
+>> from your system.
+>>
+>>
+>>
+>> ------------------------------
+>>
+>> Subject: Digest Footer
+>>
+>> _______________________________________________
+>> Clearwater mailing list
+>> Clearwater at lists.projectclearwater.org
+>> http://lists.projectclearwater.org/mailman/listinfo/
+>> clearwater_lists.projectclearwater.org
+>>
+>>
+>> ------------------------------
+>>
+>> End of Clearwater Digest, Vol 63, Issue 5
+>> *****************************************
+>>
+>
+>
+>
+> --
+> Amir Mohammad Hatami
+> B.Sc in Electrical Engineering
+> Sharif University of technology
+> http://ee.sharif.ir/~hatami
+>
+> [image: Mailtrack]
+> <https://mailtrack.io?utm_source=gmail&utm_medium=signature&utm_campaign=signaturevirality6&> Sender
+> notified by
+> Mailtrack
+> <https://mailtrack.io?utm_source=gmail&utm_medium=signature&utm_campaign=signaturevirality6&> 07/13/18,
+> 12:44:03 AM
+>
+
+
+
+-- 
+Amir Mohammad Hatami
+B.Sc in Electrical Engineering
+Sharif University of technology
+http://ee.sharif.ir/~hatami
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180714/1eef9b88/attachment.html>
+
+From amirhatami1000 at gmail.com  Sun Jul 15 11:02:46 2018
+From: amirhatami1000 at gmail.com (Amir Moahammad Hatami)
+Date: Sun, 15 Jul 2018 19:32:46 +0430
+Subject: [Project Clearwater] Getting 503 instead of 183 logs included
+Message-ID: <CAEtN4MB6JfObgWs2pm+iSDbWCFkx=q1kcg=EqdDn7hP9_=mocQ@mail.gmail.com>
+
+I try to do an stress test on a manually installed version. However users
+are successfully registered but the call is aborted with the following
+error.
+
+sipp: The following events occured:
+2018-07-16      12:48:02.879689 1531729082.879689: Aborting call on
+unexpected message for Call-Id '1-29085 at 127.0.1.1': while expecting '183'
+(index 2), received 'SIP/2.0 503 Service Unavailable
+
+Via: SIP/2.0/TCP 127.0.1.1:17027
+;received=192.168.122.251;branch=z9hG4bK-29085-1-0
+Record-Route:
+<sip:scscf.sprout.example.amir;transport=TCP;lr;billing-role=charge-term>
+Record-Route:
+<sip:scscf.sprout.example.amir;transport=TCP;lr;billing-role=charge-orig>
+Call-ID: 1-29085 at 127.0.1.1
+From: <sip:2010000088 at example.amir>;tag=29085SIPpTag001
+To: <sip:2010000041 at example.amir
+>;tag=z9hG4bKPjkqlLv4G9J3y5Ay7UJ-yjI1FVg2jNqOe6
+CSeq: 1 INVITE
+P-Charging-Vector:
+icid-value="29085SIPpTag001";orig-ioi=example.amir;term-ioi=example.amir
+P-Charging-Function-Addresses: ccf=0.0.0.0
+Content-Length:  0
+
+I set the log level to 4 in sprout and a part of this is included.
+looks like pjsip finds a connection problem.
+
+16-07-2018 08:18:03.618 UTC [7f9af379e700] Verbose sproutletproxy.cpp:2284:
+scscf-proxy-0x7f9b24172ba0 pass initial request Request msg INVITE/cseq=1
+(tdta0x7f9b24174170) to Sproutlet
+16-07-2018 08:18:03.618 UTC [7f9af379e700] Info scscfsproutlet.cpp:442:
+S-CSCF received initial request
+16-07-2018 08:18:03.618 UTC [7f9af379e700] Info scscfsproutlet.cpp:973:
+Original dialog for odi_b31nIgVSUL found: AsChain-term[0x7f9b2415da20]:2/1
+16-07-2018 08:18:03.618 UTC [7f9af379e700] Verbose
+static_dns_cache.cpp:327: No matching CNAME record found in static cache
+16-07-2018 08:18:03.618 UTC [7f9af379e700] Verbose
+dnscachedresolver.cpp:314: Check cache for hs.example.amir type 1
+16-07-2018 08:18:03.619 UTC [7f9af379e700] Info scscfsproutlet.cpp:606:
+Found served user, so apply services
+16-07-2018 08:18:03.619 UTC [7f9af379e700] Info scscfsproutlet.cpp:1550:
+Completed applying terminating services
+16-07-2018 08:18:03.619 UTC [7f9af379e700] Info scscfsproutlet.cpp:1776:
+Route request to registered UE bindings
+16-07-2018 08:18:03.619 UTC [7f9af379e700] Info scscfsproutlet.cpp:244:
+Look up bindings for sip:2010000041 at example.amir in subscriber manager
+16-07-2018 08:18:03.619 UTC [7f9af379e700] Verbose
+static_dns_cache.cpp:327: No matching CNAME record found in static cache
+16-07-2018 08:18:03.619 UTC [7f9af379e700] Verbose
+dnscachedresolver.cpp:314: Check cache for vellum.example.amir type 1
+16-07-2018 08:18:03.620 UTC [7f9af379e700] Verbose sproutletproxy.cpp:1995:
+scscf-proxy-0x7f9b24172ba0 sending Request msg INVITE/cseq=1
+(tdta0x7f9b24174170) on fork 0
+16-07-2018 08:18:03.620 UTC [7f9af379e700] Info pjutils.cpp:1001: Resolved
+destination URI sip:127.0.1.1:5082;transport=tcp;lr
+16-07-2018 08:18:03.620 UTC [7f9af379e700] Verbose pjsip: tcpc0x7f9b2418
+tcp->base.local_name: 192.168.122.59
+16-07-2018 08:18:03.620 UTC [7f9af379e700] Verbose pjsip: tcpc0x7f9b2418
+TCP client transport created
+16-07-2018 08:18:03.620 UTC [7f9af379e700] Verbose pjsip: tcpc0x7f9b2418
+TCP transport 192.168.122.59:5052 is connecting to 127.0.1.1:5082...
+16-07-2018 08:18:03.620 UTC [7f9af379e700] Verbose
+common_sip_processing.cpp:103: TX 3166 bytes Request msg INVITE/cseq=1
+(tdta0x7f9b24174170) to TCP 127.0.1.1:5082:
+--start msg--
+
+INVITE sip:2010000041 at 127.0.1.1:26268 SIP/2.0
+Record-Route:
+<sip:scscf.sprout.example.amir;transport=TCP;lr;billing-role=charge-term>
+Record-Route:
+<sip:scscf.sprout.example.amir;transport=TCP;lr;billing-role=charge-orig>
+Via: SIP/2.0/TCP
+192.168.122.59:5052;rport;branch=z9hG4bKPjAPniom2E9LBwFkQV5tQmnAjbbNSEYjFq
+
+Via: SIP/2.0/TCP
+mmtel.sprout.example.amir;branch=z9hG4bKPjkqlLv4G9J3y5Ay7UJ-yjI1FVg2jNqOe6
+Via: SIP/2.0/TCP
+scscf.sprout.example.amir;branch=z9hG4bKPjA3-iG2tALLWhnc7.DVbVgxGicTIAmADn
+Via: SIP/2.0/TCP
+icscf.sprout.example.amir;branch=z9hG4bKPjhA8NyujPVgl2qMEADF4S7T87NEY-YWPL
+Via: SIP/2.0/TCP
+scscf.sprout.example.amir;branch=z9hG4bKPjdHHGQkTLRkC0a3IhU2xcw6THXK6b3VjE
+Via: SIP/2.0/TCP
+mmtel.sprout.example.amir;branch=z9hG4bKPj4GDzedM6HbxvCs4LztENsDY3gJ0XbBxx
+Via: SIP/2.0/TCP
+scscf.sprout.example.amir;branch=z9hG4bKPjYSOuqmNTNkKa3oOf25TBkxrKnSUgUqvw
+Via: SIP/2.0/TCP
+127.0.1.1:17027;received=192.168.122.251;branch=z9hG4bK-29085-1-0
+
+From: <sip:2010000088 at example.amir>;tag=29085SIPpTag001
+To: <sip:2010000041 at example.amir>
+CSeq: 1 INVITE
+Expires: 180
+Call-Info: <sip:127.0.1.1:17027>;method="NOTIFY;Event=telephone-event;Duration=2000"
+
+P-Charging-Function-Addresses: ccf=0.0.0.0
+Supported: timer, precondition, sec-agree, histinfo, 100rel
+P-Charging-Vector:
+icid-value="29085SIPpTag001";orig-ioi=example.amir;term-ioi=example.amir
+Contact: <sip:2010000088 at 127.0.1.1:17027>;+g.3gpp.icsi-ref="urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel";video;+sip.instance="<urn:gsma:imei:35283606-360704-0>"
+
+P-Early-Media: supported
+Allow: INVITE, ACK, OPTIONS, CANCEL, BYE, UPDATE, INFO, REFER, NOTIFY,
+MESSAGE, PRACK
+P-Asserted-Identity: <sip:2010000088 at example.amir>
+Security-Verify:
+ipsec-3gpp;q=0.1;alg=hmac-md5-96;mod=trans;ealg=aes-cbc;spi-c=265324728;spi-s=83307704;port-c=16381;port-s=5061
+
+User-Agent: AAAAA IMS 4.0.0
+Accept-Contact:
+*;+g.3gpp.icsi-ref="urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel"
+Session-Expires: 600;refresher=uac
+Call-ID: 1-29085 at 127.0.1.1
+Max-Forwards: 62
+P-Visited-Network-ID: example.amir
+X-Dummy-Header: abcd
+Accept: application/sdp, application/dtmf-relay
+P-Served-User: <sip:2010000041 at example.amir>;sescase=term;regstate=reg
+P-Called-Party-ID: <sip:2010000041 at example.amir>
+Route: <sip:127.0.1.1:5082;transport=tcp;lr>
+Content-Type: application/sdp
+Content-Length:   823
+
+v=0
+o=AAAAAA-IMS-UE 18567144687033 18567144687033 IN IP4 127.0.1.1
+s=-
+c=IN IP4 127.0.1.1
+t=0 0
+m=audio 16404 RTP/AVP 116 107 118 96 0 8 111 110
+b=AS:38
+b=RS:375
+b=RR:1125
+a=inactive
+a=rtpmap:116 AMR-WB/16000/1
+a=rtpmap:107 AMR-WB/16000/1
+a=rtpmap:118 AMR/8000/1
+a=rtpmap:96 AMR/8000/1
+a=rtpmap:111 telephone-event/16000
+a=rtpmap:110 telephone-event/8000
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=fmtp:116 mode-change-capability=2; max-red=220
+a=fmtp:107 octet-align=1;mode-change-capability=2; max-red=220
+a=fmtp:118 mode-change-capability=2; max-red=220
+a=fmtp:96 octet-align=1;mode-change-capability=2; max-red=220
+a=fmtp:111 0-15
+a=fmtp:110 0-15
+a=curr:qos local none
+a=curr:qos remote none
+a=des:qos mandatory local sendrecv
+a=des:qos optional remote sendrecv
+a=maxptime:240
+a=ptime:20
+
+--end msg--
+16-07-2018 08:18:03.630 UTC [7f9aa8708700] Info pjsip: tcpc0x7f9b2418 TCP
+connect() error: Connection refused [code=120111]
+16-07-2018 08:18:03.630 UTC [7f9aa8708700] Info pjsip: tcpc0x7f9b2418
+Unable to connect to 127.0.1.1:5082
+16-07-2018 08:18:03.630 UTC [7f9aa8708700] Info pjsip: tsx0x7f9b2418d
+Failed to send Request msg INVITE/cseq=1 (tdta0x7f9b24174170)! err=120111
+(Connection refused)
+16-07-2018 08:18:03.630 UTC [7f9aa8708700] Verbose pjsip: tcpc0x7f9b2418
+TCP transport destroyed with reason 120111: Connection refused
+16-07-2018 08:18:03.630 UTC [7f9aecf91700] Verbose sproutletproxy.cpp:1007:
+Notifying upstream sproutlet scscf-proxy of client failure: TRANSPORT_ERROR
+16-07-2018 08:18:03.630 UTC [7f9aecf91700] Verbose sproutletproxy.cpp:2392:
+scscf-proxy-0x7f9b24172ba0 received error TRANSPORT_ERROR on fork 0, state
+= Calling
+16-07-2018 08:18:03.630 UTC [7f9aecf91700] Info pjutils.cpp:1809: Cloning
+header! 140304302170008
+16-07-2018 08:18:03.630 UTC [7f9aecf91700] Info pjutils.cpp:1809: Cloning
+header! 140304302169072
+16-07-2018 08:18:03.630 UTC [7f9aecf91700] Info scscfsproutlet.cpp:699:
+S-CSCF received response
+16-07-2018 08:18:03.630 UTC [7f9aecf91700] Verbose sproutletproxy.cpp:2031:
+scscf-proxy-0x7f9b24172ba0 sending Response msg 503/INVITE/cseq=1
+(tdta0x7f9b3c0250b0)
+16-07-2018 08:18:03.630 UTC [7f9aecf91700] Verbose sproutletproxy.cpp:2825:
+Routing Response msg 503/INVITE/cseq=1 (tdta0x7f9b3c0250b0) (1101 bytes) to
+upstream sproutlet mmtel:
+--start msg--
+
+SIP/2.0 503 Service Unavailable
+Via: SIP/2.0/TCP
+scscf.sprout.example.amir;branch=z9hG4bKPjA3-iG2tALLWhnc7.DVbVgxGicTIAmADn
+Via: SIP/2.0/TCP
+icscf.sprout.example.amir;branch=z9hG4bKPjhA8NyujPVgl2qMEADF4S7T87NEY-YWPL
+Via: SIP/2.0/TCP
+scscf.sprout.example.amir;branch=z9hG4bKPjdHHGQkTLRkC0a3IhU2xcw6THXK6b3VjE
+Via: SIP/2.0/TCP
+mmtel.sprout.example.amir;branch=z9hG4bKPj4GDzedM6HbxvCs4LztENsDY3gJ0XbBxx
+Via: SIP/2.0/TCP
+scscf.sprout.example.amir;branch=z9hG4bKPjYSOuqmNTNkKa3oOf25TBkxrKnSUgUqvw
+Via: SIP/2.0/TCP
+127.0.1.1:17027;received=192.168.122.251;branch=z9hG4bK-29085-1-0
+
+Record-Route:
+<sip:scscf.sprout.example.amir;transport=TCP;lr;billing-role=charge-term>
+Record-Route:
+<sip:scscf.sprout.example.amir;transport=TCP;lr;billing-role=charge-orig>
+Call-ID: 1-29085 at 127.0.1.1
+From: <sip:2010000088 at example.amir>;tag=29085SIPpTag001
+To: <sip:2010000041 at example.amir>;tag=z9hG4bKPjkqlLv4G9J3y5Ay7UJ-yjI1FVg2jNqOe6
+
+CSeq: 1 INVITE
+P-Charging-Vector:
+icid-value="29085SIPpTag001";orig-ioi=example.amir;term-ioi=example.amir
+P-Charging-Function-Addresses: ccf=0.0.0.0
+Content-Length:  0
+
+
+--end msg--
+16-07-2018 08:18:03.630 UTC [7f9aecf91700] Verbose sproutletproxy.cpp:2341:
+mmtel-0x7f9b2415d900 received final response Response msg 503/INVITE/cseq=1
+(tdta0x7f9b3c0250b0) on fork 0, state = Terminated
+16-07-2018 08:18:03.630 UTC [7f9aecf91700] Verbose sproutletproxy.cpp:2031:
+mmtel-0x7f9b2415d900 sending Response msg 503/INVITE/cseq=1
+(tdta0x7f9b3c0250b0)
+16-07-2018 08:18:03.630 UTC [7f9aecf91700] Verbose sproutletproxy.cpp:2825:
+Routing Response msg 503/INVITE/cseq=1 (tdta0x7f9b3c0250b0) (1008 bytes) to
+upstream sproutlet scscf-proxy:
+--start msg--
+
+SIP/2.0 503 Service Unavailable
+Via: SIP/2.0/TCP
+icscf.sprout.example.amir;branch=z9hG4bKPjhA8NyujPVgl2qMEADF4S7T87NEY-YWPL
+Via: SIP/2.0/TCP
+scscf.sprout.example.amir;branch=z9hG4bKPjdHHGQkTLRkC0a3IhU2xcw6THXK6b3VjE
+Via: SIP/2.0/TCP
+mmtel.sprout.example.amir;branch=z9hG4bKPj4GDzedM6HbxvCs4LztENsDY3gJ0XbBxx
+Via: SIP/2.0/TCP
+scscf.sprout.example.amir;branch=z9hG4bKPjYSOuqmNTNkKa3oOf25TBkxrKnSUgUqvw
+Via: SIP/2.0/TCP
+127.0.1.1:17027;received=192.168.122.251;branch=z9hG4bK-29085-1-0
+
+Record-Route:
+<sip:scscf.sprout.example.amir;transport=TCP;lr;billing-role=charge-term>
+Record-Route:
+<sip:scscf.sprout.example.amir;transport=TCP;lr;billing-role=charge-orig>
+Call-ID: 1-29085 at 127.0.1.1
+From: <sip:2010000088 at example.amir>;tag=29085SIPpTag001
+To: <sip:2010000041 at example.amir>;tag=z9hG4bKPjkqlLv4G9J3y5Ay7UJ-yjI1FVg2jNqOe6
+
+CSeq: 1 INVITE
+P-Charging-Vector:
+icid-value="29085SIPpTag001";orig-ioi=example.amir;term-ioi=example.amir
+P-Charging-Function-Addresses: ccf=0.0.0.0
+Content-Length:  0
+
+
+--end msg--
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180715/44377ccd/attachment.html>
+
+From Benjamin.Laing at metaswitch.com  Mon Jul 16 10:21:43 2018
+From: Benjamin.Laing at metaswitch.com (Benjamin Laing)
+Date: Mon, 16 Jul 2018 14:21:43 +0000
+Subject: [Project Clearwater] Clearwater ims Voice not working
+Message-ID: <BYAPR02MB43745FCD1D1B628B56F8AAF3F15D0@BYAPR02MB4374.namprd02.prod.outlook.com>
+
+Hi Navdeep,
+
+An option here would be to use Zopier as your SIP client for testing. You can find instructions on how to do this in the Project Clearwater docs -  https://clearwater.readthedocs.io/en/stable/Configuring_Zoiper_Android_iOS_Client.html#using-zoiper-with-clearwater.
+
+If you want to keep trying with X-Lite SIP client, then the logs suggest a codec error - you should ensure that all codecs except uLaw and aLaw are disabled.
+
+All the best,
+
+Ben
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180716/71b4a219/attachment.html>
+
+From amirhatami1000 at gmail.com  Mon Jul 16 10:33:03 2018
+From: amirhatami1000 at gmail.com (Amir Moahammad Hatami)
+Date: Mon, 16 Jul 2018 19:03:03 +0430
+Subject: [Project Clearwater] Sprout send ivite requests to 127.0.1.1
+ instead of sipp IP.
+Message-ID: <CAEtN4MCd9rymaM_d26uT8Li6rqSeRo9LEfVOXeJTrtPFat5CDQ@mail.gmail.com>
+
+Hi,
+
+I know I am asking so many questions. But I would really appreciate, if you
+could take a look to details and answer. I got stock with this.
+
+I am trying to do a stress test. The registration is successful and there
+is no problem. But the call requests are rejected with 503 (service
+unavailable) instead of 183 (session progress).  There is also another
+error in the sipp error log which says.
+
+*Unable to bind main socket, errno = 98 (Address already in use).*
+
+I also checked the sprout log and I it says
+
+
+*tcpc0x7f9b2445 TCP connect() error: Connection refused [code=120111] *
+*Info pjsip: tcpc0x7f9b2445 Unable to connect to 127.0.1.1:5082
+<http://127.0.1.1:5082>*
+
+I don't know the reason why there is IP 127.0.1.1  because I also checked
+with logs from my AWS deployment. and all messages are directly sent to
+SIPp private IP.
+
+Let me note I checked the listening ports in SIPp and sprout and it was
+free in both of them.
+
+Kindly let me know if you have any idea
+
+Thanks.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180716/bcc58268/attachment.html>
+
+From Benjamin.Laing at metaswitch.com  Mon Jul 16 10:49:17 2018
+From: Benjamin.Laing at metaswitch.com (Benjamin Laing)
+Date: Mon, 16 Jul 2018 14:49:17 +0000
+Subject: [Project Clearwater] zone creation and DNS settings
+Message-ID: <BYAPR02MB43742ADC57C3B49F8FEEBA95F15D0@BYAPR02MB4374.namprd02.prod.outlook.com>
+
+Hi Rajapaue,
+
+Clearwater does require a DNS server such as PowerDNS. Bono and Ellis (and Memento if you have that installed - https://github.com/Metaswitch/memento/blob/dev/docs/memento_overview.md) need to have publicly visible IP addresses. The other addresses need only be resolvable within the core of your network, so you could chose to forgo network separation. You can find instructions at https://clearwater.readthedocs.io/en/stable/Clearwater_DNS_Usage.html?highlight=dns
+
+All the best,
+
+Ben
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180716/d5bae8f5/attachment.html>
+
+From Benjamin.Laing at metaswitch.com  Tue Jul 17 05:07:06 2018
+From: Benjamin.Laing at metaswitch.com (Benjamin Laing)
+Date: Tue, 17 Jul 2018 09:07:06 +0000
+Subject: [Project Clearwater] Integration of PCRF with Clearwater
+Message-ID: <BYAPR02MB43745376A9CB275BDE140DE0F15C0@BYAPR02MB4374.namprd02.prod.outlook.com>
+
+Hello Hariharan,
+
+
+Bono, which is part of our open source solution Project Clearwater, does not support an external PCRF. Metaswitch offers a P-CSCF which does support using an external PCRF, this is called Perimeta and you can read more about it here: https://www.metaswitch.com/perimeta-session-border-controller-sbc.
+
+Thanks,
+
+Ben
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180717/bf74af40/attachment.html>
+
+From Benjamin.Laing at metaswitch.com  Tue Jul 17 05:55:21 2018
+From: Benjamin.Laing at metaswitch.com (Benjamin Laing)
+Date: Tue, 17 Jul 2018 09:55:21 +0000
+Subject: [Project Clearwater] Clearwater vIMS with ONAP Beijing
+Message-ID: <BYAPR02MB437407F9AD1CDD36FD3F55C8F15C0@BYAPR02MB4374.namprd02.prod.outlook.com>
+
+Hi Brian,
+
+Thanks for your interest Project Clearwater.
+
+Does the /etc/clearwater/shared_config file exist on your Homestead node? Does it exist on the Ellis node? If the shared_config file does exist, can you run 'sudo service clearwater-infrastructure restart'? Could you forward the shared_config?
+
+For your Homer node, do the log files in /var/log/homer contain any errors that help explain why it isn't starting? What happens if you run "sudo service homer restart" manually - does that print any errors?
+
+Thanks,
+
+Ben
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180717/ebdcf22e/attachment.html>
+
+From Benjamin.Laing at metaswitch.com  Tue Jul 17 06:22:44 2018
+From: Benjamin.Laing at metaswitch.com (Benjamin Laing)
+Date: Tue, 17 Jul 2018 10:22:44 +0000
+Subject: [Project Clearwater] Sprout send ivite requests to 127.0.1.1
+ instead of sipp IP.
+Message-ID: <BYAPR02MB43742E433EFB560D95BAD18DF15C0@BYAPR02MB4374.namprd02.prod.outlook.com>
+
+Hi Amir,
+
+Thanks for your interest in Clearwater.
+
+You have a previous question on creating a user through Ellis - is this now resolved?
+
+With regards the stress test, are you running on an All-in-One or 6 VM deployment? Have you been able to successfully register and call with SIP clients (X-Lite say)? Also have you provisioned the subs required for stress tests as per http://clearwater.readthedocs.io/en/stable/Clearwater_stress_testing.html#deploying-a-stress-node ?
+
+Thanks,
+
+Ben
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180717/a1a3d745/attachment.html>
+
+From amirhatami1000 at gmail.com  Tue Jul 17 09:32:06 2018
+From: amirhatami1000 at gmail.com (Amir Moahammad Hatami)
+Date: Tue, 17 Jul 2018 18:02:06 +0430
+Subject: [Project Clearwater] Sprout send ivite requests to 127.0.1.1
+ instead of sipp IP.
+Message-ID: <CAEtN4MC+DqHpG0gS5JG86eqZKLL1HVbaKLiyoEp-5S_14iccvQ@mail.gmail.com>
+
+Hi,
+
+Thank you for your reply. I had a question regarding registration in ellis
+that I debugged and I realized that the cluster is not working. However I
+have to reinstall the Clearwater and the cluster worked fine. But the main
+issue about registration in the ellis still is an issue.
+
+So, My deployment is 6 VMs and I tried to do stress tests while I have
+still ellis issue. I faced this problem that I mentioned. Let me know if
+you want to have any logs from any module
+
+Thank you again
+
+Amir
+
+On Tue, Jul 17, 2018 at 2:53 PM, <
+clearwater-request at lists.projectclearwater.org> wrote:
+
+> Send Clearwater mailing list submissions to
+>         clearwater at lists.projectclearwater.org
+>
+> To subscribe or unsubscribe via the World Wide Web, visit
+>         http://lists.projectclearwater.org/mailman/
+> listinfo/clearwater_lists.projectclearwater.org
+>
+> or, via email, send a message with subject or body 'help' to
+>         clearwater-request at lists.projectclearwater.org
+>
+> You can reach the person managing the list at
+>         clearwater-owner at lists.projectclearwater.org
+>
+> When replying, please edit your Subject line so it is more specific
+> than "Re: Contents of Clearwater digest..."
+>
+>
+> Today's Topics:
+>
+>    1. Re: Integration of PCRF with Clearwater (Benjamin Laing)
+>    2. Re: Clearwater vIMS with ONAP Beijing (Benjamin Laing)
+>    3. Re: Sprout send ivite requests to 127.0.1.1 instead of sipp
+>       IP. (Benjamin Laing)
+>
+>
+> ----------------------------------------------------------------------
+>
+> Message: 1
+> Date: Tue, 17 Jul 2018 09:07:06 +0000
+> From: Benjamin Laing <Benjamin.Laing at metaswitch.com>
+> To: "clearwater at lists.projectclearwater.org"
+>         <clearwater at lists.projectclearwater.org>
+> Subject: Re: [Project Clearwater] Integration of PCRF with Clearwater
+> Message-ID:
+>         <BYAPR02MB43745376A9CB275BDE140DE0F15C0 at BYAPR02MB4374.
+> namprd02.prod.outlook.com>
+>
+> Content-Type: text/plain; charset="us-ascii"
+>
+> Hello Hariharan,
+>
+>
+> Bono, which is part of our open source solution Project Clearwater, does
+> not support an external PCRF. Metaswitch offers a P-CSCF which does support
+> using an external PCRF, this is called Perimeta and you can read more about
+> it here: https://www.metaswitch.com/perimeta-session-border-controller-sbc
+> .
+>
+> Thanks,
+>
+> Ben
+>
+> -------------- next part --------------
+> An HTML attachment was scrubbed...
+> URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.
+> projectclearwater.org/attachments/20180717/bf74af40/attachment-0001.html>
+>
+> ------------------------------
+>
+> Message: 2
+> Date: Tue, 17 Jul 2018 09:55:21 +0000
+> From: Benjamin Laing <Benjamin.Laing at metaswitch.com>
+> To: "clearwater at lists.projectclearwater.org"
+>         <clearwater at lists.projectclearwater.org>
+> Subject: Re: [Project Clearwater] Clearwater vIMS with ONAP Beijing
+> Message-ID:
+>         <BYAPR02MB437407F9AD1CDD36FD3F55C8F15C0 at BYAPR02MB4374.
+> namprd02.prod.outlook.com>
+>
+> Content-Type: text/plain; charset="us-ascii"
+>
+> Hi Brian,
+>
+> Thanks for your interest Project Clearwater.
+>
+> Does the /etc/clearwater/shared_config file exist on your Homestead node?
+> Does it exist on the Ellis node? If the shared_config file does exist, can
+> you run 'sudo service clearwater-infrastructure restart'? Could you forward
+> the shared_config?
+>
+> For your Homer node, do the log files in /var/log/homer contain any errors
+> that help explain why it isn't starting? What happens if you run "sudo
+> service homer restart" manually - does that print any errors?
+>
+> Thanks,
+>
+> Ben
+> -------------- next part --------------
+> An HTML attachment was scrubbed...
+> URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.
+> projectclearwater.org/attachments/20180717/ebdcf22e/attachment-0001.html>
+>
+> ------------------------------
+>
+> Message: 3
+> Date: Tue, 17 Jul 2018 10:22:44 +0000
+> From: Benjamin Laing <Benjamin.Laing at metaswitch.com>
+> To: "clearwater at lists.projectclearwater.org"
+>         <clearwater at lists.projectclearwater.org>
+> Subject: Re: [Project Clearwater] Sprout send ivite requests to
+>         127.0.1.1 instead of sipp IP.
+> Message-ID:
+>         <BYAPR02MB43742E433EFB560D95BAD18DF15C0 at BYAPR02MB4374.
+> namprd02.prod.outlook.com>
+>
+> Content-Type: text/plain; charset="us-ascii"
+>
+> Hi Amir,
+>
+> Thanks for your interest in Clearwater.
+>
+> You have a previous question on creating a user through Ellis - is this
+> now resolved?
+>
+> With regards the stress test, are you running on an All-in-One or 6 VM
+> deployment? Have you been able to successfully register and call with SIP
+> clients (X-Lite say)? Also have you provisioned the subs required for
+> stress tests as per http://clearwater.readthedocs.io/en/stable/Clearwater_
+> stress_testing.html#deploying-a-stress-node ?
+>
+> Thanks,
+>
+> Ben
+> -------------- next part --------------
+> An HTML attachment was scrubbed...
+> URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.
+> projectclearwater.org/attachments/20180717/a1a3d745/attachment.html>
+>
+> ------------------------------
+>
+> Subject: Digest Footer
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.
+> projectclearwater.org
+>
+>
+> ------------------------------
+>
+> End of Clearwater Digest, Vol 63, Issue 10
+> ******************************************
+>
+
+
+
+-- 
+Amir Mohammad Hatami
+B.Sc in Electrical Engineering
+Sharif University of technology
+http://ee.sharif.ir/~hatami
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180717/e5dda0b9/attachment.html>
+
+From Benjamin.Laing at metaswitch.com  Mon Jul 23 06:13:31 2018
+From: Benjamin.Laing at metaswitch.com (Benjamin Laing)
+Date: Mon, 23 Jul 2018 10:13:31 +0000
+Subject: [Project Clearwater] Sprout send ivite requests to 127.0.1.1
+ instead of sipp IP.
+Message-ID: <BYAPR02MB4374047416F697ADCA99F2C1F1560@BYAPR02MB4374.namprd02.prod.outlook.com>
+
+Hi Amir,
+
+I'm glad to hear you resolved the cluster problems.
+
+It looks like PJSIP isn't able to open a TCP connection. There are a whole bunch of potential reasons for that:
+
+  *   a firewall blocking requests from Sprout to the endpoint
+  *   an issue with security groups
+  *   Sprout and the test tool running on different networks.
+
+
+Could you confirm that your network is set up as per http://clearwater.readthedocs.io/en/stable/Clearwater_IP_Port_Usage.html ?
+
+
+
+Many thanks,
+
+
+
+Ben
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180723/41e3baa4/attachment.html>
+
+From arvindas at hpe.com  Tue Jul 24 11:20:16 2018
+From: arvindas at hpe.com (Shirabur, Aravind Ashok (CMS))
+Date: Tue, 24 Jul 2018 15:20:16 +0000
+Subject: [Project Clearwater] Back-to-Back Registration Agent
+Message-ID: <TU4PR8401MB1005601836FED99EFBA3C090DC550@TU4PR8401MB1005.NAMPRD84.PROD.OUTLOOK.COM>
+
+Hi,
+
+We would like to insert 'Back-to-Back Registration Agent' component between the P-CSCF and I-CSCF, How do we configure the P-CSCF to route the traffic to our Back-to-Back Registration Agent ?
+
+Thanks
+Aravind
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180724/846bb0a4/attachment.html>
+
+From minetomario at gmail.com  Thu Jul 26 14:21:44 2018
+From: minetomario at gmail.com (Mario MINETO)
+Date: Thu, 26 Jul 2018 18:21:44 +0000
+Subject: [Project Clearwater] issues with sipml5 connection to clearwater
+Message-ID: <CANbvGq-5wSYC8LXVK42+nx+pVqC2YqnMySD5EkLrjBfnnhW3Mg@mail.gmail.com>
+
+Hello,
+
+I am a student in research masters at the university cheick antar diop
+dakar. I am currently working on a project requiring the installation of
+clearwater. I installed the platform on a 14.04 64 bit ubuntu server
+virtual machine as shown in the manual.
+
+After installation, I created customers in ellis and tested customer
+registration from Boghe, Jitsi and X-lite. This test worked.
+
+I then wanted to try the connection with Sipml5 for the webrtc. This time I
+could not connect. Yet I filled all the required fields with the correct
+format. The client tries to connect then disconnects after a while without
+being able to connect.
+
+While cosultant the logs of Bono, I note that it displays a PJSIP error:
+Assert failed
+In the browser console, I also have the error: TRansport Error
+
+I searched the internet without success. I tried everything and there I am
+almost hopeless.
+
+I therefore ask you to help me find a solution to this problem. I have to
+solve it to finish my thesis.
+
+Attached you will find screenshots of Bono, the SIPML5 configuration and
+the console of my browser.
+Thanks in advance and sorry for my basic english.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180726/f6b7ee94/attachment.html>
+

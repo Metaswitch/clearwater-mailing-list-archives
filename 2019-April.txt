@@ -1,0 +1,531 @@
+From Mark.Perryman at metaswitch.com  Tue Apr  2 06:11:25 2019
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Tue, 2 Apr 2019 10:11:25 +0000
+Subject: [Project Clearwater] correct OID for Cacti
+In-Reply-To: <CADbuDzz5i7KcR=F_HLY+K3fp1vUvYs=isho0kjmk8111Agn_vA@mail.gmail.com>
+References: <CADbuDzxVtxcCt+Z+85igBMJFTTnibk7=ffVOKjFYjKLAYbzS1g@mail.gmail.com>
+	<BYAPR02MB42476AFB95E96EFA4286F7D68F400@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CADbuDzyKWjhZU7YerDb2fyh7LOMi75U-xxTE_4Ex=1TaAnwA4w@mail.gmail.com>
+	<BYAPR02MB4247E8D57F85D2A8AAA86E5D8F400@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CADbuDzz5i7KcR=F_HLY+K3fp1vUvYs=isho0kjmk8111Agn_vA@mail.gmail.com>
+Message-ID: <BYAPR02MB4247F64EEC2B978BAF3863628F560@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+Matvey,
+
+That OID looks to be ending with an IP address.
+
+e.g.
+sproutConnectedHomesteadsEntry OBJECT-TYPE
+    SYNTAX SproutConnectedHomesteadsEntry
+    MAX-ACCESS not-accessible
+    STATUS current
+    DESCRIPTION "Statistics for a single connected upstream Homestead"
+    INDEX { sproutHomesteadInetAddrType,
+            sproutHomesteadInetAddr      }
+::= { sproutConnectedHomesteadsTable 1 }
+
+The .4 is the Address type (IPv4), and then the next four octets make up the address.
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of matvey bossis
+Sent: 25 March 2019 12:33
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] correct OID for Cacti
+
+
+NOTE: Message is from an external sender
+
+So maybe someone has an up-to-date monitoring setup and willing to share?
+
+BTW, looks like "Chronos" metrics were removed from Sprout. Perhaps completely renamed? Or irrelevant?
+
+Didn't figure out yet, what is the best way to graph the additional Sprout metrics, not present in the template. So maybe someone has a setup, or screenshots...
+
+What about SNMP for SIPp? The Cacti template uses zero-mq, and nothing interesting in SNMP there. Should it work? Or zero-mq only?
+
+Mark, maybe you know: some of the OIDs, which were changed in the above commit, seem to need an additional ".4.110.111.100.101" suffix. Does it have something to do with the commit? Or where could it come from? (For example: .1.2.826.0.1.1578918.9.3.1.1.3.2.4.110.111.100.101. Those which didn't change, don't need this suffix.)
+
+Thanks
+
+On Tue, 19 Mar 2019 at 17:10, Mark Perryman <Mark.Perryman at metaswitch.com<mailto:Mark.Perryman at metaswitch.com>> wrote:
+Yes.
+
+It looks like the OIDs were changed here: https://github.com/Metaswitch/clearwater-snmp-handlers/pull/168/files
+
+Hope that helps,
+
+Mark.
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>> On Behalf Of matvey bossis
+Sent: 19 March 2019 15:04
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] correct OID for Cacti
+
+
+NOTE: Message is from an external sender
+
+Thanks,
+so for example:
+> snmpwalk -v2c -c clearwater 192.168.37.17:25565<http://192.168.37.17:25565> 1.2.826.0.1.1578918.9.3.1.1.3
+produces:
+PROJECT-CLEARWATER-MIB::sproutLatencyAverage.scopePrevious5SecondPeriod."node" = Gauge32: 148
+PROJECT-CLEARWATER-MIB::sproutLatencyAverage.scopeCurrent5MinutePeriod."node" = Gauge32: 161
+PROJECT-CLEARWATER-MIB::sproutLatencyAverage.scopePrevious5MinutePeriod."node" = Gauge32: 139
+Am I right to infer, that the .3 in the end, replaces the deprecated .2 (or .2.1) in the end ?
+(And that the .2 was a single metric, while the new one comes in 3 aggregations?)
+
+The above seems to be translated from:
+.1.2.826.0.1.1578918.9.3.1.1.3.1.4.110.111.100.101 = Gauge32: 148
+.1.2.826.0.1.1578918.9.3.1.1.3.2.4.110.111.100.101 = Gauge32: 161
+.1.2.826.0.1.1578918.9.3.1.1.3.3.4.110.111.100.101 = Gauge32: 139
+
+So the logic to change the OIDs of the metrics must have been, that they are not 100% backwards compatible?
+
+On Tue, 19 Mar 2019 at 15:13, Mark Perryman <Mark.Perryman at metaswitch.com<mailto:Mark.Perryman at metaswitch.com>> wrote:
+Thanks, yes it appears the Cacti templates haven?t been kept up to date.
+
+Instructions for using the correct MIB is at:  https://clearwater.readthedocs.io/en/stable/Clearwater_SNMP_Statistics.html
+
+If you do create an up to date cacti template, please submit a Pull Request with it (you would need to sign our contributors agreement).
+
+Thanks,
+
+Mark Perryman.
+
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>> On Behalf Of matvey bossis
+Sent: 18 March 2019 13:00
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] correct OID for Cacti
+
+
+NOTE: Message is from an external sender
+
+My OIDs seem to be different from the ones in the Cacti templates, for Bono, Sprout etc. Am I doing something wrong?
+
+Does anyone have the correct templates? Maybe a screenshot of your Cacti graphs, please?
+
+Thank you
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190402/6a0573a4/attachment.html>
+
+From bosism at gmail.com  Tue Apr  2 09:39:56 2019
+From: bosism at gmail.com (matvey bossis)
+Date: Tue, 2 Apr 2019 16:39:56 +0300
+Subject: [Project Clearwater] correct OID for Cacti
+In-Reply-To: <BYAPR02MB4247F64EEC2B978BAF3863628F560@BYAPR02MB4247.namprd02.prod.outlook.com>
+References: <CADbuDzxVtxcCt+Z+85igBMJFTTnibk7=ffVOKjFYjKLAYbzS1g@mail.gmail.com>
+	<BYAPR02MB42476AFB95E96EFA4286F7D68F400@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CADbuDzyKWjhZU7YerDb2fyh7LOMi75U-xxTE_4Ex=1TaAnwA4w@mail.gmail.com>
+	<BYAPR02MB4247E8D57F85D2A8AAA86E5D8F400@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CADbuDzz5i7KcR=F_HLY+K3fp1vUvYs=isho0kjmk8111Agn_vA@mail.gmail.com>
+	<BYAPR02MB4247F64EEC2B978BAF3863628F560@BYAPR02MB4247.namprd02.prod.outlook.com>
+Message-ID: <CADbuDzzDeWVs0pAXxKzYYVhwnP2zoOGqGrDmZZJ5QADKagwFCQ@mail.gmail.com>
+
+Thanks, Mark, makes sense. I don't have anything with this IP address
+actually, but I get the idea.
+Does this mean, however, that I can not  permanently fix the cacti
+templates, because this suffix will be different for another Clearwater
+deployment?
+
+Another issue: I couldn't get any call stats via SNMP from the SIPp node.
+Does it offer anything via SNMP?
+And via 0MQ? I tried the "*cw_stat
+<https://github.com/Metaswitch/cpp-common/tree/master/scripts/stats>*"
+script, but no luck so far. Does SIPp even offer "call_stats" via 0MQ? (The
+page has no mention of call_stats.)
+
+The 0MQ port 6666 in the SIPp cacti template suggests it's a Sprout stats.
+But does it make sense? Not sure Sprout offers anything via 0MQ either.
+(Should I start a new thread on this?)
+
+
+
+On Tue, 2 Apr 2019 at 13:12, Mark Perryman <Mark.Perryman at metaswitch.com>
+wrote:
+
+> Matvey,
+>
+>
+> That OID looks to be ending with an IP address.
+>
+>
+>
+> e.g.
+>
+> sproutConnectedHomesteadsEntry OBJECT-TYPE
+>
+>     SYNTAX SproutConnectedHomesteadsEntry
+>
+>     MAX-ACCESS not-accessible
+>
+>     STATUS current
+>
+>     DESCRIPTION "Statistics for a single connected upstream Homestead"
+>
+>     INDEX { sproutHomesteadInetAddrType,
+>
+>             sproutHomesteadInetAddr      }
+>
+> ::= { sproutConnectedHomesteadsTable 1 }
+>
+>
+>
+> The .4 is the Address type (IPv4), and then the next four octets make up
+> the address.
+>
+>
+>
+> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+> Behalf Of *matvey bossis
+> *Sent:* 25 March 2019 12:33
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Project Clearwater] correct OID for Cacti
+>
+>
+>
+> NOTE: Message is from an external sender
+>
+> So maybe someone has an up-to-date monitoring setup and willing to share?
+>
+>
+>
+> BTW, looks like "Chronos" metrics were removed from Sprout. Perhaps
+> completely renamed? Or irrelevant?
+>
+>
+>
+> Didn't figure out yet, what is the best way to graph the additional Sprout
+> metrics, not present in the template. So maybe someone has a setup, or
+> screenshots...
+>
+>
+>
+> What about SNMP for SIPp? The Cacti template uses zero-mq, and nothing
+> interesting in SNMP there. Should it work? Or zero-mq only?
+>
+>
+>
+> Mark, maybe you know: some of the OIDs, which were changed in the above
+> commit, seem to need an additional ".4.110.111.100.101" suffix. Does it
+> have something to do with the commit? Or where could it come from? (For
+> example: .1.2.826.0.1.1578918.9.3.1.1.3.2*.4.110.111.100.101*. Those
+> which didn't change, don't need this suffix.)
+>
+>
+>
+> Thanks
+>
+>
+>
+> On Tue, 19 Mar 2019 at 17:10, Mark Perryman <Mark.Perryman at metaswitch.com>
+> wrote:
+>
+> Yes.
+>
+>
+>
+> It looks like the OIDs were changed here:
+> https://github.com/Metaswitch/clearwater-snmp-handlers/pull/168/files
+>
+>
+>
+> Hope that helps,
+>
+>
+>
+> Mark.
+>
+>
+>
+> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+> Behalf Of *matvey bossis
+> *Sent:* 19 March 2019 15:04
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Project Clearwater] correct OID for Cacti
+>
+>
+>
+> NOTE: Message is from an external sender
+>
+> Thanks,
+>
+> so for example:
+>
+> > *snmpwalk -v2c -c clearwater 192.168.37.17:25565
+> <http://192.168.37.17:25565> 1.2.826.0.1.1578918.9.3.1.1**.3*
+>
+> produces:
+>
+> PROJECT-CLEARWATER-MIB::sproutLatencyAverage.scopePrevious5SecondPeriod."node"
+> = Gauge32: 148
+> PROJECT-CLEARWATER-MIB::sproutLatencyAverage.scopeCurrent5MinutePeriod."node"
+> = Gauge32: 161
+> PROJECT-CLEARWATER-MIB::sproutLatencyAverage.scopePrevious5MinutePeriod."node"
+> = Gauge32: 139
+>
+> Am I right to infer, that the *.3* in the end, replaces the deprecated
+> *.2* (or .2.1) in the end ?
+>
+> (And that the .2 was a single metric, while the new one comes in 3
+> aggregations?)
+>
+>
+>
+> The above seems to be translated from:
+>
+> *.1.2.826.0.1.1578918.9.3.1.1.3*.1.4.110.111.100.101 = Gauge32: 148
+> *.1.2.826.0.1.1578918.9.3.1.1.3*.2.4.110.111.100.101 = Gauge32: 161
+> *.1.2.826.0.1.1578918.9.3.1.1.3*.3.4.110.111.100.101 = Gauge32: 139
+>
+>
+>
+> So the logic to change the OIDs of the metrics must have been, that they
+> are not 100% backwards compatible?
+>
+>
+>
+> On Tue, 19 Mar 2019 at 15:13, Mark Perryman <Mark.Perryman at metaswitch.com>
+> wrote:
+>
+> Thanks, yes it appears the Cacti templates haven?t been kept up to date.
+>
+>
+>
+> Instructions for using the correct MIB is at:
+> https://clearwater.readthedocs.io/en/stable/Clearwater_SNMP_Statistics.html
+>
+>
+>
+> If you do create an up to date cacti template, please submit a Pull
+> Request with it (you would need to sign our contributors agreement).
+>
+>
+>
+> Thanks,
+>
+>
+>
+> Mark Perryman.
+>
+>
+>
+>
+>
+> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+> Behalf Of *matvey bossis
+> *Sent:* 18 March 2019 13:00
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Project Clearwater] correct OID for Cacti
+>
+>
+>
+> NOTE: Message is from an external sender
+>
+> My OIDs seem to be different from the ones in the Cacti templates, for
+> Bono, Sprout etc. Am I doing something wrong?
+>
+>
+>
+> Does anyone have the correct templates? Maybe a screenshot of your Cacti
+> graphs, please?
+>
+>
+>
+> Thank you
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190402/e2545bc4/attachment.html>
+
+From daniele.zuddas at usi.ch  Wed Apr 24 13:15:04 2019
+From: daniele.zuddas at usi.ch (Daniele Zuddas)
+Date: Wed, 24 Apr 2019 17:15:04 +0000
+Subject: [Project Clearwater] Clearwater openstack heat installation not
+ working
+References: <226DBA6E-5F52-4293-8D7C-B11D24E8ADEE@usi.ch>
+Message-ID: <78FD7F90-0978-41C2-AABA-F6C8401E5A08@usi.ch>
+
+Hello,
+
+I am trying to deploy Clearwater on openstack using the heat templates in https://github.com/Metaswitch/clearwater-heat.
+
+I followed the guidelines and created a stack giving to both public_mgmt_net_id and public_sig_net_id the id of the external network of my openstack installation. The command executes correctly and Clearwater is deployed. However, I am not able to correctly run the live tests in https://github.com/Metaswitch/clearwater-live-test. When I run them most of them fail and I cannot figure out why. The installation seems ok, all nodes can ping each other and if I run ?sudo monit summary? all the nodes seem ok.
+
+As an example of the errors I am getting, test Basic Call - Mainline (TCP) fails in the following way:
+Basic Call - Mainline (TCP) - (6505551643, 6505550739) Failed
+Endpoint threw exception:
+ - Expected 180, got 503 (call ID b769833afd25631806d564af6c59c2d8)
+   - /home/ubuntu/clearwater-live-test/quaff/lib/call.rb:223:in `recv_response'
+   - /home/ubuntu/clearwater-live-test/lib/tests/basic-call.rb:38:in `block (2 levels) in <top (required)>'
+
+Test Filtering - Accept-Contact no match (TCP) fails in this way:
+Filtering - Accept-Contact no match (TCP) - Failed
+  RuntimeError thrown:
+   - Account creation failed with HTTP code 502, body {"status": 502, "message": "Bad Gateway", "reason": "Upstream request failed", "detail": {"Upstream error": "502", "Upstream URL": "http://homer-0.faked.dz:7888/org.etsi.ngn.simservs/users/sip%3A6505551397%40faked.dz/simservs.xml"}, "error": true}
+
+Can you help me? I am out of ideas on how to solve this.
+
+Thank you,
+Daniele
+
+
+From Anne.Boffey at metaswitch.com  Thu Apr 25 04:30:49 2019
+From: Anne.Boffey at metaswitch.com (Anne Boffey)
+Date: Thu, 25 Apr 2019 08:30:49 +0000
+Subject: [Project Clearwater] Clearwater openstack heat installation not
+ working
+Message-ID: <DM6PR02MB54340D97686A3374D6E71381813D0@DM6PR02MB5434.namprd02.prod.outlook.com>
+
+Hi Daniele,
+
+I don't know the answer to your question without investigating further.
+
+Unfortunately my team are busy for the next couple of week trying to meet a release deadline, so will not be able to look at this until this is complete.
+Maybe someone else on the mailing list will be able to help in the meantime.
+
+As soon as our release is delivered, I will get a member of my team to investigate.
+
+Regards
+
+Anne
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190425/ce0868ed/attachment.html>
+
+From daniele.zuddas at usi.ch  Thu Apr 25 04:41:50 2019
+From: daniele.zuddas at usi.ch (Daniele Zuddas)
+Date: Thu, 25 Apr 2019 08:41:50 +0000
+Subject: [Project Clearwater] Clearwater openstack heat installation not
+ working
+In-Reply-To: <DM6PR02MB54340D97686A3374D6E71381813D0@DM6PR02MB5434.namprd02.prod.outlook.com>
+References: <DM6PR02MB54340D97686A3374D6E71381813D0@DM6PR02MB5434.namprd02.prod.outlook.com>
+Message-ID: <0DAF5051-0F60-45BB-9F62-C10C3C30A275@usi.ch>
+
+Thanks for your answer.
+
+In the meantime I can just ask you a simple question to understand better:
+I am not using any CCF, and I can see some errors related to that in Ralf logs. Can that be the reason of my problems? In that case, how do I configure my installation to reflect the fact that I don?t need Ralf (https://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html says that if I don?t have CCF I don?t need Ralf).
+
+Thank you,
+Daniele
+
+On 25 Apr 2019, at 10:30, Anne Boffey <Anne.Boffey at metaswitch.com<mailto:Anne.Boffey at metaswitch.com>> wrote:
+
+Hi Daniele,
+
+I don?t know the answer to your question without investigating further.
+
+Unfortunately my team are busy for the next couple of week trying to meet a release deadline, so will not be able to look at this until this is complete.
+Maybe someone else on the mailing list will be able to help in the meantime.
+
+As soon as our release is delivered, I will get a member of my team to investigate.
+
+Regards
+
+Anne
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+
+From trey.ormsbee at interoptechnologies.com  Thu Apr 25 13:19:47 2019
+From: trey.ormsbee at interoptechnologies.com (Trey Ormsbee)
+Date: Thu, 25 Apr 2019 12:19:47 -0500
+Subject: [Project Clearwater] Ubuntu 14.04 EOL - Any updates coming?
+Message-ID: <011150ab-826c-91c6-47f2-ffe1a3e160f4@interoptechnologies.com>
+
+The last release is only for ubuntu 14.04,? which is now EOL is there 
+any progress for updated packages for ubuntu 16 or 18?
+
+Thanks,
+
+Trey
+
+-- 
+	<http://www.interoptechnologies.com>
+<http://www.facebook.com/pages/Interop-Technologies/166558410115178><https://twitter.com/#!/InteropTechnolo><http://www.linkedin.com/company/interop-technologies><http://www.youtube.com/user/InteropTechnologies/> 
+	*Trey Ormsbee *
+Infrastructure Engineer 	
+*T:* +1 972-753-1847 (Desk) *T:* +1 239-425-3010 (NOC Main)
+Confidentiality Notice: The information in this e-mail and in any 
+attachment may contain information which is legally privileged. It is 
+intended only for the attention and use of the named recipient. If you 
+are not the intended recipient, you are not authorized to retain, 
+disclose, copy or distribute the message and/or any of its attachments. 
+If you received this e-mail in error, please notify me and delete this 
+message. Thank you.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190425/b403cc3e/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: jbhnjfnhmiiemnbc.gif
+Type: image/gif
+Size: 64 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190425/b403cc3e/attachment.gif>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: mhfchgjmnaddadio.png
+Type: image/png
+Size: 4917 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190425/b403cc3e/attachment.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: ibgpaakpnejenhjo.png
+Type: image/png
+Size: 306 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190425/b403cc3e/attachment-0001.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: jcfbekklklbcineh.png
+Type: image/png
+Size: 435 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190425/b403cc3e/attachment-0002.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: bkmgeahadcbknkcf.png
+Type: image/png
+Size: 408 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190425/b403cc3e/attachment-0003.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: hehhacjmijoohbjf.png
+Type: image/png
+Size: 651 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190425/b403cc3e/attachment-0004.png>
+

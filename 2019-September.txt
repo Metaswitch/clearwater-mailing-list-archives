@@ -1,0 +1,78 @@
+From hamidmsadeghii87113080 at gmail.com  Mon Sep  2 08:00:19 2019
+From: hamidmsadeghii87113080 at gmail.com (=?UTF-8?B?2K3ZhduM2K8g2YXYrdmF2K/Ytdin2K/ZgtuM?=)
+Date: Mon, 2 Sep 2019 16:30:19 +0430
+Subject: [Project Clearwater] openairinterface5G integration with clearwater
+Message-ID: <CAK1oYfRwCLKCJ0ftOfAAkh0DF5eCLKU9uM_QKo6WBNVgUO3KOw@mail.gmail.com>
+
+Hi ...
+Help me About VoLTE Using openairinterface5G + IMS(clearwater)
+Is there a Version of the openairinterface5G  Thats Link with clearwater ?
+Best Regards ...
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190902/96a28e07/attachment.html>
+
+From isaac.pateau.1 at etsmtl.net  Tue Sep  3 11:19:12 2019
+From: isaac.pateau.1 at etsmtl.net (Pateau, Isaac)
+Date: Tue, 3 Sep 2019 11:19:12 -0400
+Subject: [Project Clearwater] Error when creating a user - Ellis
+In-Reply-To: <CAPht7n7bG7RpyD69RRnEf+Sw5hA_2dt+OESXPTZScutVLRYSWA@mail.gmail.com>
+References: <CAPht7n7bG7RpyD69RRnEf+Sw5hA_2dt+OESXPTZScutVLRYSWA@mail.gmail.com>
+Message-ID: <CAPht7n64bay=SWOJssORLKskHZcHWqS7EjYiK4C_vm9-9635Fg@mail.gmail.com>
+
+Hello guys!
+
+I managed to workaround this issue, but I don't believe it should be the
+best solution since it involves a manual modification.
+
+Basically, the fix involves adding the full FQDN for Homestead and Homer
+directly on the /etc/hosts file inside Ellis's pod. It looks like Ellis
+have some trouble making REST calls and thus the error are shown inside the
+web console itself. The solution itself isn't the best because in the event
+of scaling Ellis or it being recreated, the fix still needs to be applied.
+
+I won't go further as it fixed the issue on my end. I'm leaving this here
+as a way for others to go around the issue if they got stuck like I was.
+
+Regards,
+Isaac
+
+Le mer. 12 juin 2019 ? 02:04, Pateau, Isaac <isaac.pateau.1 at etsmtl.net> a
+?crit :
+
+> Hello everyone!
+>
+> I am currently an intern at NTT and I have been trying to get a Clearwater
+> cluster working on Kubernetes using the Clearwater-Docker repo from GitHub.
+> With some workarounds from these two archived messages below, I have been
+> able to get all my pods running:
+>
+>
+> http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/2018-May/003980.html
+>
+> https://github.com/Metaswitch/clearwater-docker/issues/81#issuecomment-345677402
+>
+> However, I do currently have an issue similar to the one found below:
+>
+>
+> http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/2013-July/000919.html
+>
+> Ellis is indeed able to ping Homestead, but I still am not able to create
+> a user. (Having the "Failed to update server" issue) Phone numbers were
+> also created correctly.
+>
+> What is different though is that the configuration in
+> /etc/clearwater/shared_config seems to have the correct DNS entries and
+> using the a curl to the hs_provisionning pod returns me a "OK" response. I
+> also am able to do an ICMP ping from the Ellis pod to all the other ones
+> without any problem.
+>
+> I am open to any suggestions that you might have.
+>
+> Regards,
+> Isaac
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190903/a1502b20/attachment.html>
+

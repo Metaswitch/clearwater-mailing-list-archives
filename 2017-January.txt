@@ -1,0 +1,3598 @@
+From alienpenguin at gmail.com  Tue Jan  3 03:58:41 2017
+From: alienpenguin at gmail.com (Francesco Lamonica)
+Date: Tue, 3 Jan 2017 09:58:41 +0100
+Subject: [Project Clearwater] REGISTER on a private network with aio
+	SandSlash
+Message-ID: <CAOkLYJPn2osRjsgtyNcUA0jtw_7e+zyMA2aWMAEXYmBjk5SRjg@mail.gmail.com>
+
+Hi all,
+i am experimenting with CW Sandslash release.
+I am trying to register a SIP UA but the only thing i get back from CW is a
+100 Trying.
+I tried with zoiper and the registration is successful, however examining
+the register request the only thing that seems to be different is the fact
+that zoiper uses STUN and has a VIA and CONTACT header using the public IP
+of my company, however i don't see how this could be related, after all the
+aio VM is hosted on the same machine (private network 192.168.x.y/24) where
+i launch the SIP UA.
+Is there something that needs the STUN modified headers or there must be
+something else in REGISTER request that i have not seen yet?
+
+Sorry for the dumb question but i am just starting with IMS / Clearwater,
+
+regards
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170103/666590e9/attachment.html>
+
+From Jace.Liang at itri.org.tw  Tue Jan  3 04:20:20 2017
+From: Jace.Liang at itri.org.tw (Jace.Liang at itri.org.tw)
+Date: Tue, 3 Jan 2017 09:20:20 +0000
+Subject: [Project Clearwater] Clearwater video call will be hang up
+ after 30	secondes
+In-Reply-To: <tencent_13A2A8B87ED3E92D7829BA4C@qq.com>
+References: <tencent_13A2A8B87ED3E92D7829BA4C@qq.com>
+Message-ID: <743b466c864f47f2808572912042b6a7@EXMB03.ITRI.DS>
+
+Make sure your public_hostname in local.config of bono node is correct.
+And the client is able to connect to bono by this public_hostname.
+You can edit this value by bono?s public ip.
+
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of ?????
+Sent: Tuesday, December 27, 2016 9:38 AM
+To: clearwater <clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Clearwater video call will be hang up after 30 secondes
+
+We try Clearwater video call with X-lite, but we found video call will be hang up after 30 secondes .
+Is there any param to controll ?
+Thanks .
+
+
+--
+???????????????????????????????????????????? This email may contain confidential information. Please do not use or disclose it in any way and delete it if you are not the intended recipient.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170103/e4fd1703/attachment.html>
+
+From gilles.lecorgne at orange.com  Mon Jan  2 11:18:37 2017
+From: gilles.lecorgne at orange.com (gilles.lecorgne at orange.com)
+Date: Mon, 2 Jan 2017 16:18:37 +0000
+Subject: [Project Clearwater]  initial registration is not challenged
+Message-ID: <21712_1483373920_586A7D60_21712_544_1_3D8CCA413E49D6439A7E95F805D77A4C21FB53E5@OPEXCLILM43.corporate.adroot.infra.ftgroup>
+
+Hello,
+
+I already exchanged with the list about the issue that I encountered about authentication of registration. I have 1 bono node and 2 sprout nodes in my installation.
+The scenario that I test is the following one:
+
+-       Step 1: Initial registration of a client
+
+-       Step 2: De-registration of the client
+
+-       Step 3: Initial registration of the client
+
+In the step1, the registration is well challenged (Digest authentication); but in the step3 the registration is not challenged.
+
+I attached the wireshark trace, the logs and configuration of the bono and sprout nodes.
+
+Thank you for your support,
+
+Best regards,
+
+Gilles
+
+_________________________________________________________________________________________________________________________
+
+Ce message et ses pieces jointes peuvent contenir des informations confidentielles ou privilegiees et ne doivent donc
+pas etre diffuses, exploites ou copies sans autorisation. Si vous avez recu ce message par erreur, veuillez le signaler
+a l'expediteur et le detruire ainsi que les pieces jointes. Les messages electroniques etant susceptibles d'alteration,
+Orange decline toute responsabilite si ce message a ete altere, deforme ou falsifie. Merci.
+
+This message and its attachments may contain confidential or privileged information that may be protected by law;
+they should not be distributed, used or copied without authorisation.
+If you have received this email in error, please notify the sender and delete this message and its attachments.
+As emails may be altered, Orange is not liable for messages that have been modified, changed or falsified.
+Thank you.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170102/55cf302c/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: initial_registration_without_challenge_02012017.zip
+Type: application/x-zip-compressed
+Size: 1430721 bytes
+Desc: initial_registration_without_challenge_02012017.zip
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170102/55cf302c/attachment.bin>
+
+From alienpenguin at gmail.com  Tue Jan  3 09:12:40 2017
+From: alienpenguin at gmail.com (Francesco Lamonica)
+Date: Tue, 3 Jan 2017 15:12:40 +0100
+Subject: [Project Clearwater] REGISTER on a private network with aio
+	SandSlash
+In-Reply-To: <CAOkLYJPn2osRjsgtyNcUA0jtw_7e+zyMA2aWMAEXYmBjk5SRjg@mail.gmail.com>
+References: <CAOkLYJPn2osRjsgtyNcUA0jtw_7e+zyMA2aWMAEXYmBjk5SRjg@mail.gmail.com>
+Message-ID: <CAOkLYJMP_TV8h8MUNpPH9U2ZhvPJXH7aa9_732yCfmQtnMgzTA@mail.gmail.com>
+
+I have a couple of additions to my previous email
+1) i noticed that i had to add the UDP port forwarding on the OVF vbox
+image (only tcp was configured),  should docs and/or vm image be updated?
+2) The Zoiper client that successfully connected was running in another
+vbox NATTED VM, if i change the Zoiper's VM netowrking to bridged to my
+local network Zoiper cannot register either.
+3) i noticed that bono seems to handle the registers for
+650555XXYY at example.com to external domain example.com (93.184.216.34) when
+the machins hosting the SIP UA is not VBOX NATed
+Is there some fiddling to be done with DNS?
+
+again sorry if these are dumb / basic questions but i am just starting up
+with CW.
+
+best regard and thanks in advance.
+
+On Tue, Jan 3, 2017 at 9:58 AM, Francesco Lamonica <alienpenguin at gmail.com>
+wrote:
+
+> Hi all,
+> i am experimenting with CW Sandslash release.
+> I am trying to register a SIP UA but the only thing i get back from CW is
+> a 100 Trying.
+> I tried with zoiper and the registration is successful, however examining
+> the register request the only thing that seems to be different is the fact
+> that zoiper uses STUN and has a VIA and CONTACT header using the public IP
+> of my company, however i don't see how this could be related, after all the
+> aio VM is hosted on the same machine (private network 192.168.x.y/24) where
+> i launch the SIP UA.
+> Is there something that needs the STUN modified headers or there must be
+> something else in REGISTER request that i have not seen yet?
+>
+> Sorry for the dumb question but i am just starting with IMS / Clearwater,
+>
+> regards
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170103/56f3b069/attachment.html>
+
+From alienpenguin at gmail.com  Tue Jan  3 09:17:49 2017
+From: alienpenguin at gmail.com (Francesco Lamonica)
+Date: Tue, 3 Jan 2017 15:17:49 +0100
+Subject: [Project Clearwater] storing Private identities in aio sandslash
+Message-ID: <CAOkLYJMY9_4qZgTaHkYXma_PkzFZkrnFY2+Mts3qhpO_XJJKrA@mail.gmail.com>
+
+Hi all,
+i have created an user and two private identities on a CW aio (OVF)
+but if the vm is restarted those identities are gone. is that intended
+behaviour?
+is there a way to keep that data?
+
+regards
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170103/74a9c384/attachment.html>
+
+From chugmahesh at gmail.com  Wed Jan  4 01:01:38 2017
+From: chugmahesh at gmail.com (Mahesh Kumar)
+Date: Wed, 4 Jan 2017 11:31:38 +0530
+Subject: [Project Clearwater] Error stack.cpp:325: Failed to start UDP
+ transport for port 172 (Permission denied)
+Message-ID: <CAMMvCG_UGdph7UUMeK23QBTEDbFjsYPBh+rf0RSirDdaMF1M-g@mail.gmail.com>
+
+ Hello Team,
+
+I'm trying to deploy Clearwater on an Open-stack environment. I'm encountering
+an issue on the sprout node.
+
+!!!!!!!!!!monit status!!!!!!!!!!!!!!!
+
+[sprout]ubuntu at sprout-f5806:/var/log/sprout$ sudo monit summary
+Monit 5.18.1 uptime: 1d 0h 7m
+ Service Name                     Status                      Type
+ node-sprout-f5806.clearwater...  Running                     System
+ sprout_process                   Execution failed | Does...  Process
+ ntp_process                      Running                     Process
+ nginx_process                    Running                     Process
+ clearwater_queue_manager_pro...  Running                     Process
+ etcd_process                     Running                     Process
+ clearwater_diags_monitor_pro...  Running                     Process
+ clearwater_config_manager        Running                     Process
+ clearwater_cluster_manager       Running                     Process
+ sprout_uptime                    Not monitored               Program
+ poll_sprout_sip                  Not monitored               Program
+ poll_sprout_http                 Not monitored               Program
+ nginx_ping                       Status ok                   Program
+ nginx_uptime                     Status ok                   Program
+ monit_uptime                     Status ok                   Program
+ clearwater_queue_manager_uptime  Status ok                   Program
+ etcd_uptime                      Status ok                   Program
+ poll_etcd_cluster                Status failed               Program
+ poll_etcd                        Status ok                   Program
+!!!!!!!!!!error logs!!!!!!!!!!!!!!!!
+
+04-01-2017 04:56:56.776 UTC Error stack.cpp:325: Failed to start UDP
+transport for port 172 (Permission denied)
+04-01-2017 04:56:56.776 UTC Error pjsip: Assert failed: stack.cpp:767
+status == 0
+04-01-2017 04:56:56.776 UTC Error main.cpp:1771: Error initializing
+stack Permission denied
+04-01-2017 04:57:39.187 UTC Status utils.cpp:631: Log level set to 2
+04-01-2017 04:57:39.187 UTC Status main.cpp:1420: Access logging
+enabled to /var/log/sprout
+04-01-2017 04:57:39.188 UTC Warning signalhandler.h:115: SIGNAL already hooked
+04-01-2017 04:57:39.188 UTC Warning main.cpp:1465: SAS server option
+was invalid or not configured - SAS is disabled
+04-01-2017 04:57:39.188 UTC Status snmp_agent.cpp:117: AgentX agent initialised
+04-01-2017 04:57:39.190 UTC Status load_monitor.cpp:105: Constructing
+LoadMonitor
+04-01-2017 04:57:39.190 UTC Status load_monitor.cpp:106:    Target
+latency (usecs)   : 100000
+04-01-2017 04:57:39.190 UTC Status load_monitor.cpp:107:    Max bucket
+size          : 1000
+04-01-2017 04:57:39.190 UTC Status load_monitor.cpp:108:    Initial
+token fill rate/s: 250.000000
+04-01-2017 04:57:39.190 UTC Status load_monitor.cpp:109:    Min token
+fill rate/s    : 10.000000
+04-01-2017 04:57:39.190 UTC Status dnscachedresolver.cpp:150: Creating
+Cached Resolver using servers:
+04-01-2017 04:57:39.191 UTC Status dnscachedresolver.cpp:160:     172.16.0.94
+04-01-2017 04:57:39.191 UTC Status sipresolver.cpp:60: Created SIP resolver
+
+!!!!!!!!!!!!!!!clearwater-version!!!!!!!!!!
+[sprout]ubuntu at sprout-f5806:/var/log/sprout$
+/usr/share/clearwater/bin/clearwater-version
+clearwater-cluster-manager               1.0-161212.142314
+clearwater-config-manager                1.0-161212.142314
+clearwater-diags-monitor                 1.0-161216.095808
+clearwater-etcd                          1.0-161212.142314
+clearwater-infrastructure                1.0-161216.095808
+clearwater-log-cleanup                   1.0-161216.095808
+clearwater-management                    1.0-161212.142314
+clearwater-monit                         5.18-161212.145429
+clearwater-nginx                         1.0-161215.173010
+clearwater-queue-manager                 1.0-161212.142314
+clearwater-socket-factory                1.0-161216.095808
+clearwater-tcp-scalability               1.0-161216.095808
+sprout                                   1.0-161216.102753
+sprout-base                              1.0-161216.102753
+sprout-bgcf                              1.0-161216.102753
+sprout-icscf                             1.0-161216.102753
+sprout-mmtel-as                          1.0-161216.102753
+sprout-scscf                             1.0-161216.102753
+
+
+Looking at the log, I see the error below. It seems it is trying to configure
+port 172; it's not clear to me why it is trying to use this low port number. Do
+you have any suggestions? Please you can find more details on the log provided
+in attachment.
+
+Thanks in advance,
+
+Regards,
+Mahesh Kumar
+TATA Consultancy Service
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170104/a007deaa/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Wed Jan  4 09:39:43 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Wed, 4 Jan 2017 14:39:43 +0000
+Subject: [Project Clearwater] Error stack.cpp:325: Failed to start UDP
+ transport for port 172 (Permission denied)
+In-Reply-To: <CAMMvCG_UGdph7UUMeK23QBTEDbFjsYPBh+rf0RSirDdaMF1M-g@mail.gmail.com>
+References: <CAMMvCG_UGdph7UUMeK23QBTEDbFjsYPBh+rf0RSirDdaMF1M-g@mail.gmail.com>
+Message-ID: <SN1PR02MB1664371EDCA5796927A26AE08F610@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+This is probably caused by a bug in Sprout, tracked under https://github.com/Metaswitch/sprout/issues/1656, which can cause Sprout to attempt to use the wrong port.
+
+The workaround for this is to remove the ?chronos_hostname? option from the shared_config. Instructions on how to edit shared config can be found here: http://clearwater.readthedocs.io/en/latest/Modifying_Clearwater_settings.html
+
+We expect that this bug will be fixed in the next release, due next week.
+
+Regards,
+
+Seb.
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Mahesh Kumar
+Sent: 04 January 2017 06:02
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Error stack.cpp:325: Failed to start UDP transport for port 172 (Permission denied)
+
+[          ]
+Hello Team,
+
+I'm trying to deploy Clearwater on an Open-stack environment. I'm encountering
+
+an issue on the sprout node.
+
+!!!!!!!!!!monit status!!!!!!!!!!!!!!!
+
+[sprout]ubuntu at sprout-f5806:/var/log/sprout$ sudo monit summary
+Monit 5.18.1 uptime: 1d 0h 7m
+ Service Name                     Status                      Type
+ node-sprout-f5806.clearwater...  Running                     System
+ sprout_process                   Execution failed | Does...  Process
+ ntp_process                      Running                     Process
+ nginx_process                    Running                     Process
+ clearwater_queue_manager_pro...  Running                     Process
+ etcd_process                     Running                     Process
+ clearwater_diags_monitor_pro...  Running                     Process
+ clearwater_config_manager        Running                     Process
+ clearwater_cluster_manager       Running                     Process
+ sprout_uptime                    Not monitored               Program
+ poll_sprout_sip                  Not monitored               Program
+ poll_sprout_http                 Not monitored               Program
+ nginx_ping                       Status ok                   Program
+ nginx_uptime                     Status ok                   Program
+ monit_uptime                     Status ok                   Program
+ clearwater_queue_manager_uptime  Status ok                   Program
+ etcd_uptime                      Status ok                   Program
+ poll_etcd_cluster                Status failed               Program
+ poll_etcd                        Status ok                   Program
+!!!!!!!!!!error logs!!!!!!!!!!!!!!!!
+
+04-01-2017 04:56:56.776 UTC Error stack.cpp:325: Failed to start UDP transport for port 172 (Permission denied)
+04-01-2017 04:56:56.776 UTC Error pjsip: Assert failed: stack.cpp:767 status == 0
+04-01-2017 04:56:56.776 UTC Error main.cpp:1771: Error initializing stack Permission denied
+04-01-2017 04:57:39.187 UTC Status utils.cpp:631: Log level set to 2
+04-01-2017 04:57:39.187 UTC Status main.cpp:1420: Access logging enabled to /var/log/sprout
+04-01-2017 04:57:39.188 UTC Warning signalhandler.h:115: SIGNAL already hooked
+04-01-2017 04:57:39.188 UTC Warning main.cpp:1465: SAS server option was invalid or not configured - SAS is disabled
+04-01-2017 04:57:39.188 UTC Status snmp_agent.cpp:117: AgentX agent initialised
+04-01-2017 04:57:39.190 UTC Status load_monitor.cpp:105: Constructing LoadMonitor
+04-01-2017 04:57:39.190 UTC Status load_monitor.cpp:106:    Target latency (usecs)   : 100000
+04-01-2017 04:57:39.190 UTC Status load_monitor.cpp:107:    Max bucket size          : 1000
+04-01-2017 04:57:39.190 UTC Status load_monitor.cpp:108:    Initial token fill rate/s: 250.000000
+04-01-2017 04:57:39.190 UTC Status load_monitor.cpp:109:    Min token fill rate/s    : 10.000000
+04-01-2017 04:57:39.190 UTC Status dnscachedresolver.cpp:150: Creating Cached Resolver using servers:
+04-01-2017 04:57:39.191 UTC Status dnscachedresolver.cpp:160:     172.16.0.94
+04-01-2017 04:57:39.191 UTC Status sipresolver.cpp:60: Created SIP resolver
+
+!!!!!!!!!!!!!!!clearwater-version!!!!!!!!!!
+[sprout]ubuntu at sprout-f5806:/var/log/sprout$ /usr/share/clearwater/bin/clearwater-version
+clearwater-cluster-manager               1.0-161212.142314
+clearwater-config-manager                1.0-161212.142314
+clearwater-diags-monitor                 1.0-161216.095808
+clearwater-etcd                          1.0-161212.142314
+clearwater-infrastructure                1.0-161216.095808
+clearwater-log-cleanup                   1.0-161216.095808
+clearwater-management                    1.0-161212.142314
+clearwater-monit                         5.18-161212.145429
+clearwater-nginx                         1.0-161215.173010
+clearwater-queue-manager                 1.0-161212.142314
+clearwater-socket-factory                1.0-161216.095808
+clearwater-tcp-scalability               1.0-161216.095808
+sprout                                   1.0-161216.102753
+sprout-base                              1.0-161216.102753
+sprout-bgcf                              1.0-161216.102753
+sprout-icscf                             1.0-161216.102753
+sprout-mmtel-as                          1.0-161216.102753
+sprout-scscf                             1.0-161216.102753
+
+
+Looking at the log, I see the error below. It seems it is trying to configure
+
+port 172; it's not clear to me why it is trying to use this low port number. Do
+
+you have any suggestions? Please you can find more details on the log provided
+
+in attachment.
+
+
+
+Thanks in advance,
+
+Regards,
+Mahesh Kumar
+TATA Consultancy Service
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170104/b90ee4f7/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Wed Jan  4 09:42:45 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Wed, 4 Jan 2017 14:42:45 +0000
+Subject: [Project Clearwater] Error stack.cpp:325: Failed to start UDP
+ transport for port 172 (Permission denied)
+In-Reply-To: <HK2PR04MB0931C60A84B4CD51BA8E0F4A9F930@HK2PR04MB0931.apcprd04.prod.outlook.com>
+References: <mailman.231.1482246497.69206.clearwater_lists.projectclearwater.org@lists.projectclearwater.org>
+	<HK2PR04MB0931C60A84B4CD51BA8E0F4A9F930@HK2PR04MB0931.apcprd04.prod.outlook.com>
+Message-ID: <SN1PR02MB166459918B2ABAACB83645AB8F610@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+As mentioned in response to another report of the same problem, this is probably caused by a bug in Sprout, tracked under https://github.com/Metaswitch/sprout/issues/1656, which can cause Sprout to attempt to use the wrong port.
+
+The workaround for this is to remove the "chronos_hostname" option from the shared_config. Instructions on how to edit shared config can be found here: http://clearwater.readthedocs.io/en/latest/Modifying_Clearwater_settings.html
+
+We expect that this bug will be fixed in the next release, due next week.
+
+Regards,
+
+Seb.
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Silvestro Ciampoli
+Sent: 21 December 2016 11:22
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Error stack.cpp:325: Failed to start UDP transport for port 172 (Permission denied)
+
+
+
+
+Hi Ellie,
+
+
+
+below the output of the clearwater-version command. Please consider that I'm deploying Clearwater by Cloudify. The deployment seems to be completed but checking the status I see the error on Sprout node.
+
+
+
+Thank you for your support.
+
+
+
+BR,
+
+Silvestro
+
+
+
+-------
+
+
+[sprout]ubuntu at sprout-1z1voi:~$ /usr/share/clearwater/bin/clearwater-version
+clearwater-cluster-manager               1.0-161202.152523
+clearwater-config-manager                1.0-161202.152523
+clearwater-diags-monitor                 1.0-161202.130810
+clearwater-etcd                          1.0-161202.152523
+clearwater-infrastructure                1.0-161202.130810
+clearwater-log-cleanup                   1.0-161202.130810
+clearwater-management                    1.0-161202.152523
+clearwater-monit                         5.18-161123.110109
+clearwater-nginx                         1.0-161109.130509
+clearwater-queue-manager                 1.0-161202.152523
+clearwater-socket-factory                1.0-161202.130810
+clearwater-tcp-scalability               1.0-161202.130810
+sprout                                   1.0-161202.163421
+sprout-base                              1.0-161202.163421
+sprout-bgcf                              1.0-161202.163421
+sprout-icscf                             1.0-161202.163421
+sprout-mmtel-as                          1.0-161202.163421
+sprout-scscf                             1.0-161202.163421
+
+
+
+----------------------------------------------------------------------
+
+Message: 1
+Date: Tue, 20 Dec 2016 10:57:59 +0000
+From: "Eleanor Merry (projectclearwater.org)"
+        <eleanor at projectclearwater.org<mailto:eleanor at projectclearwater.org>>
+To: "clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>"
+        <clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>>
+Subject: Re: [Project Clearwater] Error stack.cpp:325: Failed to start
+        UDP transport for port 172 (Permission denied)
+Message-ID:
+        <BL2PR02MB2084783467FFAC04B5833F499B900 at BL2PR02MB2084.namprd02.prod.outlook.com<mailto:BL2PR02MB2084783467FFAC04B5833F499B900 at BL2PR02MB2084.namprd02.prod.outlook.com>>
+
+Content-Type: text/plain; charset="us-ascii"
+
+Hi Silvestro,
+
+What version of Clearwater are you using? I'm wondering if you've got different versions of the base Sprout component and the Sproutlets, and this is causing the error. What's the output of running '/usr/share/clearwater/bin/clearwater-version'?
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Silvestro Ciampoli
+Sent: 20 December 2016 10:34
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Error stack.cpp:325: Failed to start UDP transport for port 172 (Permission denied)
+
+
+
+
+Hi,
+
+
+
+I'm trying to deploy Clearwater on an Openstack environment. I'm encountering an issue on the sprout node.
+
+
+[sprout]ubuntu at sprout-1z1voi:~$ sudo monit summary
+Monit 5.18.1 uptime: 18h 18m
+ Service Name                     Status                      Type
+ node-sprout-1z1voi.clearwate...  Running                     System
+ sprout_process                   Execution failed | Does...  Process
+ ntp_process                      Running                     Process
+ nginx_process                    Running                     Process
+ clearwater_queue_manager_pro...  Running                     Process
+ etcd_process                     Running                     Process
+ clearwater_diags_monitor_pro...  Running                     Process
+ clearwater_config_manager        Running                     Process
+ clearwater_cluster_manager       Running                     Process
+ sprout_uptime                    Not monitored               Program
+ poll_sprout_sip                  Not monitored               Program
+ poll_sprout_http                 Not monitored               Program
+ nginx_uptime                     Status ok                   Program
+ monit_uptime                     Status ok                   Program
+ clearwater_queue_manager_uptime  Status ok                   Program
+ etcd_uptime                      Status ok                   Program
+ poll_etcd_cluster                Status ok                   Program
+ poll_etcd                        Status ok                   Program
+
+
+Looking at the log, I see the error below. It seems it is trying to configure port 172; it's not clear to me why it is trying to use this low port number. Do you have any suggestions? Please you can find more details on the log provided in attachment.
+
+
+
+thanks in advance,
+
+Silvestro
+
+
+
+------------------------
+
+
+
+..
+
+..
+0-12-2016 10:09:57.235 UTC Debug pjsip: sip_endpoint.c Creating endpoint instance...
+20-12-2016 10:09:57.238 UTC Debug alarm.cpp:241: Started reraising alarms every 30 seconds
+20-12-2016 10:09:57.238 UTC Debug alarm.cpp:253: Reraising all alarms with a known state
+20-12-2016 10:09:57.255 UTC Verbose pjsip:          pjlib epoll I/O Queue created (0x7fb1594f34c0)
+20-12-2016 10:09:57.255 UTC Verbose pjsip: sip_endpoint.c Module "mod-msg-print" registered
+20-12-2016 10:09:57.255 UTC Debug pjsip: sip_transport. Transport manager created.
+20-12-2016 10:09:57.255 UTC Verbose pjsip: sip_endpoint.c Module "mod-tsx-layer" registered
+20-12-2016 10:09:57.255 UTC Verbose pjsip: sip_endpoint.c Module "mod-stateful-util" registered
+20-12-2016 10:09:57.255 UTC Verbose pjsip: sip_endpoint.c Module "mod-sprout-util" registered
+20-12-2016 10:09:57.255 UTC Error stack.cpp:325: Failed to start UDP transport for port 172 (Permission denied)
+20-12-2016 10:09:57.255 UTC Error pjsip: Assert failed: stack.cpp:767 status == 0
+20-12-2016 10:09:57.256 UTC Error main.cpp:1771: Error initializing stack Permission denied
+..
+..
+
+-----
+
+
+::DISCLAIMER::
+----------------------------------------------------------------------------------------------------------------------------------------------------
+The contents of this e-mail and any attachment(s) are confidential and intended for the named recipient(s) only.
+E-mail transmission is not guaranteed to be secure or error-free as information could be intercepted, corrupted,
+lost, destroyed, arrive late or incomplete, or may contain viruses in transmission. The e mail and its contents
+(with or without referred errors) shall therefore not attach any liability on the originator or HCL or its affiliates.
+Views or opinions, if any, presented in this email are solely those of the author and may not necessarily reflect the
+views or opinions of HCL or its affiliates. Any form of reproduction, dissemination, copying, disclosure, modification,
+distribution and / or publication of this message without the prior written consent of authorized representative of
+HCL is strictly prohibited. If you have received this email in error please delete it and notify the sender immediately.
+Before opening any email and/or attachments, please check them for viruses and other defects.
+----------------------------------------------------------------------------------------------------------------------------------------------------
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161220/c76ea3f6/attachment-0001.html>
+
+------------------------------
+
+Message: 2
+Date: Tue, 20 Dec 2016 15:07:26 +0000
+From: "Matt Williams (projectclearwater.org)"
+        <matt at projectclearwater.org<mailto:matt at projectclearwater.org>>
+To: "clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>"
+        <clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>>
+Subject: [Project Clearwater] Release note for Tauros
+Message-ID:
+        <CY4PR02MB2872CFB6EB47CDC20D8042E190900 at CY4PR02MB2872.namprd02.prod.outlook.com<mailto:CY4PR02MB2872CFB6EB47CDC20D8042E190900 at CY4PR02MB2872.namprd02.prod.outlook.com>>
+
+Content-Type: text/plain; charset="us-ascii"
+
+The release for Project Clearwater sprint "Tauros" has been cut.  The code for this release is tagged as release-113 in GitHub.
+
+This release includes the following bug fixes:
+
+
+*         REGISTER expires 0 gets 401 Unauthorized rather than deregistering (https://github.com/Metaswitch/sprout/issues/1640)
+
+*         AKAv2 authentication is not thread-safe (https://github.com/Metaswitch/sprout/issues/1600)
+
+*         Deregistration in GR deployment causes sprout to send 2 deregistration HTTP requests to homestead (https://github.com/Metaswitch/sprout/issues/1555)
+
+*         scary red cassandra logs when upgrading (https://github.com/Metaswitch/homestead/issues/396)
+
+*         Homestead returns inconsistent HTTP errors (500 and 503) for the same underlying error (THRIFT_EAGAIN) (https://github.com/Metaswitch/homestead/issues/389)
+
+*         SAS logs for Cassandra database failures are too low-level (https://github.com/Metaswitch/homestead/issues/388)
+
+*         Errors reported when upgrading the Clearwater packages (https://github.com/Metaswitch/homestead/issues/333)
+
+*         Homestead provides no useful indication why it fails for a MAA with an unsupported authentication scheme (https://github.com/Metaswitch/homestead/issues/308)
+
+*         Misleading SAS log when running non-FT deployment (https://github.com/Metaswitch/homestead/issues/293)
+
+*         Homestead-prov/Homer are spamming ping handler errors to syslog (https://github.com/Metaswitch/crest/issues/313)
+
+*         Log spam in Crest (https://github.com/Metaswitch/crest/issues/297)
+
+*         Crest based processes will sometimes not recovery properly if Cassandra fails (https://github.com/Metaswitch/crest/issues/283)
+
+*         SyntaxWarning Error when installing Homer/Homestead (https://github.com/Metaswitch/crest/issues/216)
+
+*         Running run-in-signaling-namespace not as sudo gives a misspelt error message (https://github.com/Metaswitch/clearwater-infrastructure/issues/398)
+
+*         config-manager crashes if /etc/clearwater/shared_config contains non-ASCII content (https://github.com/Metaswitch/clearwater-infrastructure/issues/344)
+
+*         Error log in syslog when cluster manager is restarted (https://github.com/Metaswitch/clearwater-etcd/issues/372)
+
+*         check_cluster_state shows the clusters in a different order when run several times (https://github.com/Metaswitch/clearwater-etcd/issues/365)
+
+*         In a 4-node deployment, etcd failed to start on one node and couldn't be trivially fixed (https://github.com/Metaswitch/clearwater-etcd/issues/359)
+
+*         Cluster manager logs repeated errors in normal operation (https://github.com/Metaswitch/clearwater-etcd/issues/324)
+
+*         Warning text when installing pyzmq (https://github.com/Metaswitch/clearwater-etcd/issues/258)
+
+*         Mark node failed hangs when run on one of several failed nodes (https://github.com/Metaswitch/clearwater-etcd/issues/250)
+
+To upgrade to this release, follow the instructions at http://docs.projectclearwater.org/en/stable/Upgrading_a_Clearwater_deployment.html.  If you are deploying an all-in-one node, the standard image (http://vm-images.cw-ngv.com/cw-aio.ova) has been updated for this release.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161220/7ecd4b57/attachment.html>
+
+------------------------------
+
+Subject: Digest Footer
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+
+------------------------------
+
+End of Clearwater Digest, Vol 44, Issue 11
+******************************************
+________________________________
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170104/90518a87/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Wed Jan  4 10:27:03 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Wed, 4 Jan 2017 15:27:03 +0000
+Subject: [Project Clearwater] REGISTER on a private network with
+	aio	SandSlash
+In-Reply-To: <CAOkLYJMP_TV8h8MUNpPH9U2ZhvPJXH7aa9_732yCfmQtnMgzTA@mail.gmail.com>
+References: <CAOkLYJPn2osRjsgtyNcUA0jtw_7e+zyMA2aWMAEXYmBjk5SRjg@mail.gmail.com>
+	<CAOkLYJMP_TV8h8MUNpPH9U2ZhvPJXH7aa9_732yCfmQtnMgzTA@mail.gmail.com>
+Message-ID: <SN1PR02MB166484AEF855CF4638870FD68F610@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+As you?ve noticed, VirtualBox uses NAT on the local IP address, which is probably why your client configured with STUN could connect correctly but the one without could not.
+
+For configuring SIP clients, have you looked at the instructions here: http://clearwater.readthedocs.io/en/latest/Making_your_first_call.html? They give you the config options that should allow the client to connect, including the fact that the options required for the default settings for the AIO node are using TCP as the transport and turning on STUN/TURN/ICE.
+
+As for your later 3 questions:
+
+
+1)      We?ll look into updating the docs or the VM image that we create to include the UDP port forwarding by default
+
+2)      As above, I suggest you look at the docs (http://clearwater.readthedocs.io/en/latest/Making_your_first_call.html) for help on how to configure a client. Since the AIO node is running behind a NAT in VirtualBox, you should ensure that STUN is set up as per those instructions.
+
+3)      I?m not sure exactly what you?re saying the problem is here ? could you try explaining with a little more info on what you?re attempting to do, and exactly what behaviour you?re seeing?
+
+Hope that helps,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Francesco Lamonica
+Sent: 03 January 2017 14:13
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] REGISTER on a private network with aio SandSlash
+
+I have a couple of additions to my previous email
+1) i noticed that i had to add the UDP port forwarding on the OVF vbox image (only tcp was configured),  should docs and/or vm image be updated?
+2) The Zoiper client that successfully connected was running in another vbox NATTED VM, if i change the Zoiper's VM netowrking to bridged to my local network Zoiper cannot register either.
+3) i noticed that bono seems to handle the registers for 650555XXYY at example.com<mailto:650555XXYY at example.com> to external domain example.com<http://example.com> (93.184.216.34) when the machins hosting the SIP UA is not VBOX NATed
+Is there some fiddling to be done with DNS?
+
+again sorry if these are dumb / basic questions but i am just starting up with CW.
+
+best regard and thanks in advance.
+
+On Tue, Jan 3, 2017 at 9:58 AM, Francesco Lamonica <alienpenguin at gmail.com<mailto:alienpenguin at gmail.com>> wrote:
+Hi all,
+i am experimenting with CW Sandslash release.
+I am trying to register a SIP UA but the only thing i get back from CW is a 100 Trying.
+I tried with zoiper and the registration is successful, however examining the register request the only thing that seems to be different is the fact that zoiper uses STUN and has a VIA and CONTACT header using the public IP of my company, however i don't see how this could be related, after all the aio VM is hosted on the same machine (private network 192.168.x.y/24) where i launch the SIP UA.
+Is there something that needs the STUN modified headers or there must be something else in REGISTER request that i have not seen yet?
+
+Sorry for the dumb question but i am just starting with IMS / Clearwater,
+
+regards
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170104/a46b47f0/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Wed Jan  4 10:53:20 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Wed, 4 Jan 2017 15:53:20 +0000
+Subject: [Project Clearwater] storing Private identities in aio sandslash
+In-Reply-To: <CAOkLYJMY9_4qZgTaHkYXma_PkzFZkrnFY2+Mts3qhpO_XJJKrA@mail.gmail.com>
+References: <CAOkLYJMY9_4qZgTaHkYXma_PkzFZkrnFY2+Mts3qhpO_XJJKrA@mail.gmail.com>
+Message-ID: <SN1PR02MB1664F20EF54DF585BE126F7A8F610@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+No, that is not expected behaviour ? the identities you created should have persisted over a restart.
+
+When you say that ?the identities are gone?, what exactly do you mean? Do you meant that SIP clients that you?ve registered to the node can no longer register after the restart has completed and the node is running again? Or do you mean that the identities no longer appear in the Ellis web UI? Or something else entirely?
+
+Thanks,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Francesco Lamonica
+Sent: 03 January 2017 14:18
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] storing Private identities in aio sandslash
+
+Hi all,
+i have created an user and two private identities on a CW aio (OVF)
+but if the vm is restarted those identities are gone. is that intended behaviour?
+is there a way to keep that data?
+
+regards
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170104/3ed6fa21/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Thu Jan  5 11:06:38 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Thu, 5 Jan 2017 16:06:38 +0000
+Subject: [Project Clearwater] initial registration is not challenged
+In-Reply-To: <21712_1483373920_586A7D60_21712_544_1_3D8CCA413E49D6439A7E95F805D77A4C21FB53E5@OPEXCLILM43.corporate.adroot.infra.ftgroup>
+References: <21712_1483373920_586A7D60_21712_544_1_3D8CCA413E49D6439A7E95F805D77A4C21FB53E5@OPEXCLILM43.corporate.adroot.infra.ftgroup>
+Message-ID: <SN1PR02MB16648542BAC1D08AEEAA62DF8F600@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+This is expected behaviour if your client's registration in Step 3 is from the same IP address and port when using UDP (which it is in this case). When successive messages are received from the same IP/port, only the first message is challenged.
+
+If your client was sending the REGISTER in step 3 from a new IP address/port, then it would be challenged. If it's a soft client, then you can probably verify this by shutting down and restarting the client between steps 2 and 3, and you should see that a new UDP port is selected, and hence a the REGISTER is challenged.
+
+There's no config option to disable this behaviour in Bono.
+
+Thanks,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of gilles.lecorgne at orange.com
+Sent: 02 January 2017 16:19
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] initial registration is not challenged
+
+Hello,
+
+I already exchanged with the list about the issue that I encountered about authentication of registration. I have 1 bono node and 2 sprout nodes in my installation.
+The scenario that I test is the following one:
+
+-       Step 1: Initial registration of a client
+
+-       Step 2: De-registration of the client
+
+-       Step 3: Initial registration of the client
+
+In the step1, the registration is well challenged (Digest authentication); but in the step3 the registration is not challenged.
+
+I attached the wireshark trace, the logs and configuration of the bono and sprout nodes.
+
+Thank you for your support,
+
+Best regards,
+
+Gilles
+
+_________________________________________________________________________________________________________________________
+
+
+
+Ce message et ses pieces jointes peuvent contenir des informations confidentielles ou privilegiees et ne doivent donc
+
+pas etre diffuses, exploites ou copies sans autorisation. Si vous avez recu ce message par erreur, veuillez le signaler
+
+a l'expediteur et le detruire ainsi que les pieces jointes. Les messages electroniques etant susceptibles d'alteration,
+
+Orange decline toute responsabilite si ce message a ete altere, deforme ou falsifie. Merci.
+
+
+
+This message and its attachments may contain confidential or privileged information that may be protected by law;
+
+they should not be distributed, used or copied without authorisation.
+
+If you have received this email in error, please notify the sender and delete this message and its attachments.
+
+As emails may be altered, Orange is not liable for messages that have been modified, changed or falsified.
+
+Thank you.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170105/0fc98d7c/attachment.html>
+
+From gilles.lecorgne at orange.com  Fri Jan  6 11:22:24 2017
+From: gilles.lecorgne at orange.com (gilles.lecorgne at orange.com)
+Date: Fri, 6 Jan 2017 16:22:24 +0000
+Subject: [Project Clearwater] initial registration is not challenged
+In-Reply-To: <SN1PR02MB16648542BAC1D08AEEAA62DF8F600@SN1PR02MB1664.namprd02.prod.outlook.com>
+References: <21712_1483373920_586A7D60_21712_544_1_3D8CCA413E49D6439A7E95F805D77A4C21FB53E5@OPEXCLILM43.corporate.adroot.infra.ftgroup>
+	<SN1PR02MB16648542BAC1D08AEEAA62DF8F600@SN1PR02MB1664.namprd02.prod.outlook.com>
+Message-ID: <23326_1483719745_586FC441_23326_10553_4_3D8CCA413E49D6439A7E95F805D77A4C21FC2342@OPEXCLILM43.corporate.adroot.infra.ftgroup>
+
+Hi Sebastien,
+
+Thank you for your response.
+
+Sorry, but the Step2 is a 'de-registration', so the client should be no more considered as registered in the IMS nodes; and then for the Step3, it must be a 'new' initial registration with again a challenge, even if it it is done from same device, IPaddress/port.
+
+Best regards,
+
+Gilles
+
+De : Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] De la part de Sebastian Rex
+Envoy? : jeudi 5 janvier 2017 17:07
+? : clearwater at lists.projectclearwater.org
+Objet : Re: [Project Clearwater] initial registration is not challenged
+
+Hi,
+
+This is expected behaviour if your client's registration in Step 3 is from the same IP address and port when using UDP (which it is in this case). When successive messages are received from the same IP/port, only the first message is challenged.
+
+If your client was sending the REGISTER in step 3 from a new IP address/port, then it would be challenged. If it's a soft client, then you can probably verify this by shutting down and restarting the client between steps 2 and 3, and you should see that a new UDP port is selected, and hence a the REGISTER is challenged.
+
+There's no config option to disable this behaviour in Bono.
+
+Thanks,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of gilles.lecorgne at orange.com<mailto:gilles.lecorgne at orange.com>
+Sent: 02 January 2017 16:19
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] initial registration is not challenged
+
+Hello,
+
+I already exchanged with the list about the issue that I encountered about authentication of registration. I have 1 bono node and 2 sprout nodes in my installation.
+The scenario that I test is the following one:
+
+-       Step 1: Initial registration of a client
+
+-       Step 2: De-registration of the client
+
+-       Step 3: Initial registration of the client
+
+In the step1, the registration is well challenged (Digest authentication); but in the step3 the registration is not challenged.
+
+I attached the wireshark trace, the logs and configuration of the bono and sprout nodes.
+
+Thank you for your support,
+
+Best regards,
+
+Gilles
+
+_________________________________________________________________________________________________________________________
+
+
+
+Ce message et ses pieces jointes peuvent contenir des informations confidentielles ou privilegiees et ne doivent donc
+
+pas etre diffuses, exploites ou copies sans autorisation. Si vous avez recu ce message par erreur, veuillez le signaler
+
+a l'expediteur et le detruire ainsi que les pieces jointes. Les messages electroniques etant susceptibles d'alteration,
+
+Orange decline toute responsabilite si ce message a ete altere, deforme ou falsifie. Merci.
+
+
+
+This message and its attachments may contain confidential or privileged information that may be protected by law;
+
+they should not be distributed, used or copied without authorisation.
+
+If you have received this email in error, please notify the sender and delete this message and its attachments.
+
+As emails may be altered, Orange is not liable for messages that have been modified, changed or falsified.
+
+Thank you.
+
+_________________________________________________________________________________________________________________________
+
+Ce message et ses pieces jointes peuvent contenir des informations confidentielles ou privilegiees et ne doivent donc
+pas etre diffuses, exploites ou copies sans autorisation. Si vous avez recu ce message par erreur, veuillez le signaler
+a l'expediteur et le detruire ainsi que les pieces jointes. Les messages electroniques etant susceptibles d'alteration,
+Orange decline toute responsabilite si ce message a ete altere, deforme ou falsifie. Merci.
+
+This message and its attachments may contain confidential or privileged information that may be protected by law;
+they should not be distributed, used or copied without authorisation.
+If you have received this email in error, please notify the sender and delete this message and its attachments.
+As emails may be altered, Orange is not liable for messages that have been modified, changed or falsified.
+Thank you.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170106/391c09af/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Fri Jan  6 12:27:55 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Fri, 6 Jan 2017 17:27:55 +0000
+Subject: [Project Clearwater] initial registration is not challenged
+In-Reply-To: <23326_1483719745_586FC441_23326_10553_4_3D8CCA413E49D6439A7E95F805D77A4C21FC2342@OPEXCLILM43.corporate.adroot.infra.ftgroup>
+References: <21712_1483373920_586A7D60_21712_544_1_3D8CCA413E49D6439A7E95F805D77A4C21FB53E5@OPEXCLILM43.corporate.adroot.infra.ftgroup>
+	<SN1PR02MB16648542BAC1D08AEEAA62DF8F600@SN1PR02MB1664.namprd02.prod.outlook.com>
+	<23326_1483719745_586FC441_23326_10553_4_3D8CCA413E49D6439A7E95F805D77A4C21FC2342@OPEXCLILM43.corporate.adroot.infra.ftgroup>
+Message-ID: <SN1PR02MB166459D7DEFFC39B541AD9C08F630@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+>From reading the TS 24.229 spec, I agree: the IP association should be removed upon deregistration. So I think this is a bug in bono.
+
+There's no still no way to configure this in bono, however, so I've raised an issue to track this: https://github.com/Metaswitch/sprout/issues/1670
+
+Thanks,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of gilles.lecorgne at orange.com
+Sent: 06 January 2017 16:22
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] initial registration is not challenged
+
+Hi Sebastien,
+
+Thank you for your response.
+
+Sorry, but the Step2 is a 'de-registration', so the client should be no more considered as registered in the IMS nodes; and then for the Step3, it must be a 'new' initial registration with again a challenge, even if it it is done from same device, IPaddress/port.
+
+Best regards,
+
+Gilles
+
+De : Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] De la part de Sebastian Rex
+Envoy? : jeudi 5 janvier 2017 17:07
+? : clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Objet : Re: [Project Clearwater] initial registration is not challenged
+
+Hi,
+
+This is expected behaviour if your client's registration in Step 3 is from the same IP address and port when using UDP (which it is in this case). When successive messages are received from the same IP/port, only the first message is challenged.
+
+If your client was sending the REGISTER in step 3 from a new IP address/port, then it would be challenged. If it's a soft client, then you can probably verify this by shutting down and restarting the client between steps 2 and 3, and you should see that a new UDP port is selected, and hence a the REGISTER is challenged.
+
+There's no config option to disable this behaviour in Bono.
+
+Thanks,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of gilles.lecorgne at orange.com<mailto:gilles.lecorgne at orange.com>
+Sent: 02 January 2017 16:19
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] initial registration is not challenged
+
+Hello,
+
+I already exchanged with the list about the issue that I encountered about authentication of registration. I have 1 bono node and 2 sprout nodes in my installation.
+The scenario that I test is the following one:
+
+-       Step 1: Initial registration of a client
+
+-       Step 2: De-registration of the client
+
+-       Step 3: Initial registration of the client
+
+In the step1, the registration is well challenged (Digest authentication); but in the step3 the registration is not challenged.
+
+I attached the wireshark trace, the logs and configuration of the bono and sprout nodes.
+
+Thank you for your support,
+
+Best regards,
+
+Gilles
+
+_________________________________________________________________________________________________________________________
+
+
+
+Ce message et ses pieces jointes peuvent contenir des informations confidentielles ou privilegiees et ne doivent donc
+
+pas etre diffuses, exploites ou copies sans autorisation. Si vous avez recu ce message par erreur, veuillez le signaler
+
+a l'expediteur et le detruire ainsi que les pieces jointes. Les messages electroniques etant susceptibles d'alteration,
+
+Orange decline toute responsabilite si ce message a ete altere, deforme ou falsifie. Merci.
+
+
+
+This message and its attachments may contain confidential or privileged information that may be protected by law;
+
+they should not be distributed, used or copied without authorisation.
+
+If you have received this email in error, please notify the sender and delete this message and its attachments.
+
+As emails may be altered, Orange is not liable for messages that have been modified, changed or falsified.
+
+Thank you.
+
+_________________________________________________________________________________________________________________________
+
+
+
+Ce message et ses pieces jointes peuvent contenir des informations confidentielles ou privilegiees et ne doivent donc
+
+pas etre diffuses, exploites ou copies sans autorisation. Si vous avez recu ce message par erreur, veuillez le signaler
+
+a l'expediteur et le detruire ainsi que les pieces jointes. Les messages electroniques etant susceptibles d'alteration,
+
+Orange decline toute responsabilite si ce message a ete altere, deforme ou falsifie. Merci.
+
+
+
+This message and its attachments may contain confidential or privileged information that may be protected by law;
+
+they should not be distributed, used or copied without authorisation.
+
+If you have received this email in error, please notify the sender and delete this message and its attachments.
+
+As emails may be altered, Orange is not liable for messages that have been modified, changed or falsified.
+
+Thank you.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170106/54f6be55/attachment.html>
+
+From stevena at opencloud.com  Fri Jan  6 16:04:26 2017
+From: stevena at opencloud.com (Steven Adams)
+Date: Fri, 6 Jan 2017 21:04:26 +0000
+Subject: [Project Clearwater] Sprout regularly crashes
+Message-ID: <CAFVTNVwxxybpG9xLDc6jqNpifix+Lb-S+6rqP4=W0a2B=d-iyA@mail.gmail.com>
+
+Started using Tauros recently and are noticing that sprout crashes a lot
+with this error:
+
+Signal 6 caught
+>
+> Basic stack dump:
+> /usr/share/clearwater/bin/sprout(_ZN6Logger9backtraceEPKc+0x6d)[0x51467d]
+> /usr/share/clearwater/bin/sprout(_ZN3Log9backtraceEPKcz+0x10d)[0x5d488d]
+> /usr/share/clearwater/bin/sprout(_Z14signal_handleri+0x2c)[0x63ce4c]
+> /lib/x86_64-linux-gnu/libc.so.6(+0x36cb0)[0x7fe1660a7cb0]
+> /lib/x86_64-linux-gnu/libpthread.so.0(sem_wait+0x2e)[0x7fe1673af66e]
+> /usr/share/clearwater/bin/sprout(main+0xb6fa)[0x5138ca]
+> /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf5)[0x7fe166092f45]
+> /usr/share/clearwater/bin/sprout[0x51451c]
+>
+> Advanced stack dump (requires gdb):
+> sh: 1: /usr/bin/gdb: not found
+>
+> gdb failed with return code 32512
+>
+
+Typically seems to happen after sprout has received an incoming 200 OK
+message.  Sprout does restart itself so it's not the end of the world but
+it doesn't bode well for stability.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170106/bdf88379/attachment.html>
+
+From tiago.alexandre.carvalho at celfocus.com  Mon Jan  9 13:40:59 2017
+From: tiago.alexandre.carvalho at celfocus.com (Tiago Alexandre Carvalho)
+Date: Mon, 9 Jan 2017 18:40:59 +0000
+Subject: [Project Clearwater] Wrong transport in Record-Route
+Message-ID: <486603a48bdb42eabf918b59f68d136c@SRV123419.novabase.intra>
+
+Hi
+
+Is there a way to change the S-CSCF Record-Route transport type from TCP to UDP?
+
+This is an issue for the Application Server when it tries to B2B a ACK request and the corresponding 200 OK has a Record-Route with TCP transport type. I can see the following lines in the Sprout debug at startup:
+
+09-01-2017 15:34:31.322 UTC Debug sproutletproxy.cpp:95: Record-Route URI = sip:icscf.sprout.mydomain.com:5052;transport=tcp
+09-01-2017 15:34:31.322 UTC Debug sproutletproxy.cpp:95: Record-Route URI = sip:scscf.sprout.mydomain.com:5054;transport=tcp
+09-01-2017 15:34:31.322 UTC Debug sproutletproxy.cpp:95: Record-Route URI = sip:bgcf.sprout.mydomain.com:5053;transport=tcp
+09-01-2017 15:34:31.322 UTC Debug sproutletproxy.cpp:95: Record-Route URI = sip:mmtel.sprout.mydomain.com:5055;transport=tcp
+
+Which do not change even if I follow all the required steps in "8.23.4 SIP-over-UDP configuration"
+
+Can you please advise?
+
+Thanks in advance.
+
+TIAGO CARVALHO
+UNIFIED COMMUNICATIONS - DEVELOPER
+Mobile: (+351) 914 850 549
+Email: tiago.alexandre.carvalho at celfocus.com<mailto:tiago.alexandre.carvalho at celfocus.com>
+[cid:image003.jpg at 01D257BC.AD634D00]
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170109/4b1e60cf/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image001.jpg
+Type: image/jpeg
+Size: 1502 bytes
+Desc: image001.jpg
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170109/4b1e60cf/attachment.jpg>
+
+From nguyenminhasp at gmail.com  Thu Jan 12 05:09:27 2017
+From: nguyenminhasp at gmail.com (minh nv)
+Date: Thu, 12 Jan 2017 17:09:27 +0700
+Subject: [Project Clearwater] about Aka implementation
+Message-ID: <CAAv6evzW=avD0LvSix-UdqDGfvF-jEJ=Xh1Ko_va+2sX_YSLpQ@mail.gmail.com>
+
+Dear ClearWater team !
+
+as this document :
+http://clearwater.readthedocs.io/en/stable/Clearwater_Configuration_Options_Reference.html?highlight=aka
+
+authentication - by default, Clearwater performs authentication challenges
+(SIP Digest or IMS AKA depending on HSS configuration).
+When this is set to ?Y?, it simply accepts all REGISTERs - obviously this
+is very insecure and should not be used in production.
+
+I have configured success clearwater with OpenIMS core ( use as external
+HSS )
+
+and my deployment registration seems working similar with :
+https://hongjoo71-e.blogspot.com/2015/07/e2e-volte-call-setup24-ims-registration.html
+( it work with AKA, right ?)
+
+my question is, how can I config clearwater working AKA with internal HSS,
+I haven't found any document about it,
+thanks and best regrards !
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170112/3b7b2cf0/attachment.html>
+
+From eleanor at projectclearwater.org  Thu Jan 12 06:17:28 2017
+From: eleanor at projectclearwater.org (Eleanor Merry (projectclearwater.org))
+Date: Thu, 12 Jan 2017 11:17:28 +0000
+Subject: [Project Clearwater] Release note for Umbreon
+Message-ID: <BL2PR02MB2084B7821DD637F06C44F10F9B790@BL2PR02MB2084.namprd02.prod.outlook.com>
+
+The release for Project Clearwater sprint "Umbreon" has been cut. The code for this release is tagged as release-114 in GitHub.
+
+In this release we've:
+
+*         Updated our API documentation for the new cached data API (at https://github.com/Metaswitch/sprout/blob/dev/docs/ManagementHttpAPI.md and https://github.com/Metaswitch/homestead/blob/dev/docs/ManagementHttpAPI.md)
+
+*         Improved the process for recovering the etcd cluster if it's lost quorum - the new, more reliable process is at http://clearwater.readthedocs.io/en/stable/Handling_Multiple_Failed_Nodes.html.
+
+This release also includes the following bug fixes:
+
+
+*         Shutting down one Sprout VM of a duplex pair causes calls to fail for 10 seconds (https://github.com/Metaswitch/sprout/issues/1657)
+
+*         Setting the Chronos hostname in shared config means that Sprout can't start (https://github.com/Metaswitch/sprout/issues/1656)
+
+*         REGISTER expires 0 gets 401 Unauthorized rather than deregistering (https://github.com/Metaswitch/sprout/issues/1640)
+
+*         'IMPI store operation SET failed' SAS log is unhelpful - it says "Reason: Error" (https://github.com/Metaswitch/sprout/issues/1601)
+
+*         nginx fails to start on Homestead nodes (https://github.com/Metaswitch/homestead/issues/416)
+
+*         Homestead doesn't attempt to reestablish its diameter connection to the HSS (https://github.com/Metaswitch/homestead/issues/407)
+
+*         HSS handover fails (https://github.com/Metaswitch/homestead/issues/404)
+
+*         cw-radius-auth introduces login lag (https://github.com/Metaswitch/clearwater-infrastructure/issues/407)
+
+*         Config files do not exist by default (https://github.com/Metaswitch/clearwater-etcd/issues/361)
+
+*         Force decommissioning an etcd cluster doesn't work like the docs suggest (https://github.com/Metaswitch/clearwater-etcd/issues/350)
+
+*         bono can't connect agentx master agent  (https://github.com/Metaswitch/clearwater-docker/issues/43)
+
+*         Sprout sometimes fails to establish a connection with SNMPd (https://github.com/Metaswitch/clearwater-net-snmp/issues/10)
+
+To upgrade to this release, follow the instructions at http://docs.projectclearwater.org/en/stable/Upgrading_a_Clearwater_deployment.html.  If you are deploying an all-in-one node, the standard image (http://vm-images.cw-ngv.com/cw-aio.ova) has been updated for this release.
+
+Ellie
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170112/7416f799/attachment.html>
+
+From jake at dccllc.net  Thu Jan 12 10:14:05 2017
+From: jake at dccllc.net (Jake Brown)
+Date: Thu, 12 Jan 2017 15:14:05 +0000
+Subject: [Project Clearwater] about Aka implementation
+In-Reply-To: <CAAv6evzW=avD0LvSix-UdqDGfvF-jEJ=Xh1Ko_va+2sX_YSLpQ@mail.gmail.com>
+References: <CAAv6evzW=avD0LvSix-UdqDGfvF-jEJ=Xh1Ko_va+2sX_YSLpQ@mail.gmail.com>
+Message-ID: <CY4PR18MB1336A8B8F934FCBBC547E7FFA9790@CY4PR18MB1336.namprd18.prod.outlook.com>
+
+Regarding IMS-AKA, this is not supported in bono.   This is necessary for making LTE handsets with IMS work properly.  To get this functionality, you need to purchase the Perimeta product from Metaswitch.
+
+Thanks
+
+Jake Brown
+Principal Engineer/Owner
+920-351-4054 x1001
+jake at dccllc.net<mailto:jake at dccllc.net>
+www.dccllc.net<http://www.dccllc.net/>
+
+[Signature-1]
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of minh nv
+Sent: Thursday, January 12, 2017 4:09 AM
+To: clearwater at lists.projectclearwater.org; minh nv <nguyenminhasp at gmail.com>
+Subject: [Project Clearwater] about Aka implementation
+
+Dear ClearWater team !
+
+as this document :
+http://clearwater.readthedocs.io/en/stable/Clearwater_Configuration_Options_Reference.html?highlight=aka
+
+authentication - by default, Clearwater performs authentication challenges (SIP Digest or IMS AKA depending on HSS configuration).
+When this is set to ?Y?, it simply accepts all REGISTERs - obviously this is very insecure and should not be used in production.
+
+I have configured success clearwater with OpenIMS core ( use as external HSS )
+
+and my deployment registration seems working similar with : https://hongjoo71-e.blogspot.com/2015/07/e2e-volte-call-setup24-ims-registration.html
+( it work with AKA, right ?)
+
+my question is, how can I config clearwater working AKA with internal HSS,
+I haven't found any document about it,
+thanks and best regrards !
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170112/de50bec8/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image003.jpg
+Type: image/jpeg
+Size: 2630 bytes
+Desc: image003.jpg
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170112/de50bec8/attachment.jpg>
+
+From Sebastian.Rex at metaswitch.com  Thu Jan 12 11:10:29 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Thu, 12 Jan 2017 16:10:29 +0000
+Subject: [Project Clearwater] Wrong transport in Record-Route
+In-Reply-To: <486603a48bdb42eabf918b59f68d136c@SRV123419.novabase.intra>
+References: <486603a48bdb42eabf918b59f68d136c@SRV123419.novabase.intra>
+Message-ID: <SN1PR02MB16643E3BCCF840150BDA50108F790@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+Sorry this isn't working for you.
+
+Just to confirm first - have you set the scscf_node_uri in local_config on all of your sprout nodes?
+
+I can see from the log lines you included that your running on an older version of clearwater. A lot of the code around this area has changed since the release you're on, so I'd suggest upgrading your clearwater deployment to the latest release (which is now release 114).
+
+Thanks,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Tiago Alexandre Carvalho
+Sent: 09 January 2017 18:41
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Wrong transport in Record-Route
+
+Hi
+
+Is there a way to change the S-CSCF Record-Route transport type from TCP to UDP?
+
+This is an issue for the Application Server when it tries to B2B a ACK request and the corresponding 200 OK has a Record-Route with TCP transport type. I can see the following lines in the Sprout debug at startup:
+
+09-01-2017 15:34:31.322 UTC Debug sproutletproxy.cpp:95: Record-Route URI = sip:icscf.sprout.mydomain.com:5052;transport=tcp
+09-01-2017 15:34:31.322 UTC Debug sproutletproxy.cpp:95: Record-Route URI = sip:scscf.sprout.mydomain.com:5054;transport=tcp
+09-01-2017 15:34:31.322 UTC Debug sproutletproxy.cpp:95: Record-Route URI = sip:bgcf.sprout.mydomain.com:5053;transport=tcp
+09-01-2017 15:34:31.322 UTC Debug sproutletproxy.cpp:95: Record-Route URI = sip:mmtel.sprout.mydomain.com:5055;transport=tcp
+
+Which do not change even if I follow all the required steps in "8.23.4 SIP-over-UDP configuration"
+
+Can you please advise?
+
+Thanks in advance.
+
+TIAGO CARVALHO
+UNIFIED COMMUNICATIONS - DEVELOPER
+Mobile: (+351) 914 850 549
+Email: tiago.alexandre.carvalho at celfocus.com<mailto:tiago.alexandre.carvalho at celfocus.com>
+[cid:image003.jpg at 01D257BC.AD634D00]
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170112/e33dcc56/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image001.jpg
+Type: image/jpeg
+Size: 1502 bytes
+Desc: image001.jpg
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170112/e33dcc56/attachment.jpg>
+
+From Sebastian.Rex at metaswitch.com  Thu Jan 12 12:32:16 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Thu, 12 Jan 2017 17:32:16 +0000
+Subject: [Project Clearwater] about Aka implementation
+In-Reply-To: <CAAv6evzW=avD0LvSix-UdqDGfvF-jEJ=Xh1Ko_va+2sX_YSLpQ@mail.gmail.com>
+References: <CAAv6evzW=avD0LvSix-UdqDGfvF-jEJ=Xh1Ko_va+2sX_YSLpQ@mail.gmail.com>
+Message-ID: <SN1PR02MB166490E0D9BF8C92FA6BDE8E8F790@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+Currently, it?s not possible to configure Clearwater to use AKA when you?re deploying without an external HSS. You can use AKA with an external HSS, but (as mentioned in another email) Bono doesn?t support AKA authentication.
+
+I?ll update the readthedocs pages to make them clearer on this.
+
+Regards,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of minh nv
+Sent: 12 January 2017 10:09
+To: clearwater at lists.projectclearwater.org; minh nv
+Subject: [Project Clearwater] about Aka implementation
+
+Dear ClearWater team !
+
+as this document :
+http://clearwater.readthedocs.io/en/stable/Clearwater_Configuration_Options_Reference.html?highlight=aka
+
+authentication - by default, Clearwater performs authentication challenges (SIP Digest or IMS AKA depending on HSS configuration).
+When this is set to ?Y?, it simply accepts all REGISTERs - obviously this is very insecure and should not be used in production.
+
+I have configured success clearwater with OpenIMS core ( use as external HSS )
+
+and my deployment registration seems working similar with : https://hongjoo71-e.blogspot.com/2015/07/e2e-volte-call-setup24-ims-registration.html
+( it work with AKA, right ?)
+
+my question is, how can I config clearwater working AKA with internal HSS,
+I haven't found any document about it,
+thanks and best regrards !
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170112/1dffc904/attachment.html>
+
+From alienpenguin at gmail.com  Fri Jan 13 05:38:58 2017
+From: alienpenguin at gmail.com (Francesco Lamonica)
+Date: Fri, 13 Jan 2017 11:38:58 +0100
+Subject: [Project Clearwater] REGISTER on a private network with aio
+	SandSlash
+In-Reply-To: <CAOkLYJMP_TV8h8MUNpPH9U2ZhvPJXH7aa9_732yCfmQtnMgzTA@mail.gmail.com>
+References: <CAOkLYJPn2osRjsgtyNcUA0jtw_7e+zyMA2aWMAEXYmBjk5SRjg@mail.gmail.com>
+	<CAOkLYJMP_TV8h8MUNpPH9U2ZhvPJXH7aa9_732yCfmQtnMgzTA@mail.gmail.com>
+Message-ID: <CAOkLYJNieXodgh6dKEuX5yr1o7DwGmresW+tN9QYYmpJA5wzWg@mail.gmail.com>
+
+ok, i found out the problem, my UA was adding user=phone to the From: and
+To: header, and that was triggering a different behaviour, what is the CW
+behaviour with that parameter set?
+
+On Tue, Jan 3, 2017 at 3:12 PM, Francesco Lamonica <alienpenguin at gmail.com>
+wrote:
+
+> I have a couple of additions to my previous email
+> 1) i noticed that i had to add the UDP port forwarding on the OVF vbox
+> image (only tcp was configured),  should docs and/or vm image be updated?
+> 2) The Zoiper client that successfully connected was running in another
+> vbox NATTED VM, if i change the Zoiper's VM netowrking to bridged to my
+> local network Zoiper cannot register either.
+> 3) i noticed that bono seems to handle the registers for
+> 650555XXYY at example.com to external domain example.com (93.184.216.34)
+> when the machins hosting the SIP UA is not VBOX NATed
+> Is there some fiddling to be done with DNS?
+>
+> again sorry if these are dumb / basic questions but i am just starting up
+> with CW.
+>
+> best regard and thanks in advance.
+>
+> On Tue, Jan 3, 2017 at 9:58 AM, Francesco Lamonica <alienpenguin at gmail.com
+> > wrote:
+>
+>> Hi all,
+>> i am experimenting with CW Sandslash release.
+>> I am trying to register a SIP UA but the only thing i get back from CW is
+>> a 100 Trying.
+>> I tried with zoiper and the registration is successful, however examining
+>> the register request the only thing that seems to be different is the fact
+>> that zoiper uses STUN and has a VIA and CONTACT header using the public IP
+>> of my company, however i don't see how this could be related, after all the
+>> aio VM is hosted on the same machine (private network 192.168.x.y/24) where
+>> i launch the SIP UA.
+>> Is there something that needs the STUN modified headers or there must be
+>> something else in REGISTER request that i have not seen yet?
+>>
+>> Sorry for the dumb question but i am just starting with IMS / Clearwater,
+>>
+>> regards
+>>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170113/0369f9c1/attachment.html>
+
+From karthik.b at tataelxsi.co.in  Tue Jan 17 02:32:12 2017
+From: karthik.b at tataelxsi.co.in (Karthik  Balasubramanian)
+Date: Tue, 17 Jan 2017 07:32:12 +0000
+Subject: [Project Clearwater] Regarding sprout-node installation time.
+Message-ID: <HK2PR0401MB1425481D9A2DCE52B588DB1DB07C0@HK2PR0401MB1425.apcprd04.prod.outlook.com>
+
+Dear all,
+
+
+We have been trying to add (scale up) a CW sprout-node in a Ubuntu VM and have estimated the time required to complete the installation process & and joining to the existing cluster to be 20 minutes. Is there any possibility of reducing the installation (scale up) time during scale up?.
+
+Is it possible to use pre-installed sprout-node as a snapshot VM and join it with existing clearwater cluster ?
+
+
+Best Regards
+Karthik Balasubramanian
+CTO Office  - SDN/NFV Technologies
+TATA ELXSI
+Tel +91 9042028695
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170117/2250a951/attachment.html>
+
+From alienpenguin at gmail.com  Tue Jan 17 08:34:39 2017
+From: alienpenguin at gmail.com (Francesco Lamonica)
+Date: Tue, 17 Jan 2017 14:34:39 +0100
+Subject: [Project Clearwater] Service-Route header and aio image
+Message-ID: <CAOkLYJMw1s02VG1Qq1JExsV-EiApUtEpTc3DaQE1Z1pxUfKm9g@mail.gmail.com>
+
+Hello all,
+i have a question about aio images,
+when i get a succesfull register from aio image in the 200 OK there is a
+Service-Route header,
+now, if i read rfc 3608 correctly that header might be used to handle any
+subsequent request from the UA. Is this correct? because a subsequent
+INVITE first tries to resolve DNS for scscf.cw-aio and that miserably fail.
+Is this correct behaviour? if so is there a way to configure what sprout
+gives back in the register response Service-Route header?
+
+thanks.
+
+P.S. if i add an entry to localhost in /etc/hosts for scscf.cw.aio and port
+forward 5054 to the virtualbox vm would it be enough?
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170117/843dd24c/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Tue Jan 17 10:51:16 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Tue, 17 Jan 2017 15:51:16 +0000
+Subject: [Project Clearwater] Regarding sprout-node installation time.
+In-Reply-To: <HK2PR0401MB1425481D9A2DCE52B588DB1DB07C0@HK2PR0401MB1425.apcprd04.prod.outlook.com>
+References: <HK2PR0401MB1425481D9A2DCE52B588DB1DB07C0@HK2PR0401MB1425.apcprd04.prod.outlook.com>
+Message-ID: <SN1PR02MB16642F8C87D00B8A7458CC618F7C0@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+Yes, it is possible to use a pre-installed sprout node snapshot, and that should speed up the scale-up time.
+
+You would need a "clean" sprout node snapshot, and would need a way to configure the local_config file on the new nodes. Once that's configured, the sprout node should join the cluster as normal.
+
+Regards,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Karthik Balasubramanian
+Sent: 17 January 2017 07:32
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Regarding sprout-node installation time.
+
+
+Dear all,
+
+
+
+We have been trying to add (scale up) a CW sprout-node in a Ubuntu VM and have estimated the time required to complete the installation process & and joining to the existing cluster to be 20 minutes. Is there any possibility of reducing the installation (scale up) time during scale up?.
+
+Is it possible to use pre-installed sprout-node as a snapshot VM and join it with existing clearwater cluster ?
+
+
+Best Regards
+Karthik Balasubramanian
+CTO Office  - SDN/NFV Technologies
+TATA ELXSI
+Tel +91 9042028695
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170117/05748fd1/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Tue Jan 17 11:42:01 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Tue, 17 Jan 2017 16:42:01 +0000
+Subject: [Project Clearwater] Service-Route header and aio image
+In-Reply-To: <CAOkLYJMw1s02VG1Qq1JExsV-EiApUtEpTc3DaQE1Z1pxUfKm9g@mail.gmail.com>
+References: <CAOkLYJMw1s02VG1Qq1JExsV-EiApUtEpTc3DaQE1Z1pxUfKm9g@mail.gmail.com>
+Message-ID: <SN1PR02MB16648B7A28D214A8363FE6108F7C0@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+I just want to check: when you say ?a subsequent INVITE first tries to resolve DNS for scscf.cw-aio?, do you mean that the SIP client you?re using tries to do this DNS lookup?
+
+If so, what SIP client are you using?
+
+As mentioned here: http://clearwater.readthedocs.io/en/latest/All_in_one_Images.html#capabilities-and-restrictions, as restriction of the AIO node (which doesn?t apply to a regular Clearwater deployment) is that you must have an outbound proxy configured. We expect that SIP clients will send *all* messages to the outbound proxy, irrespective of the contents of the Service-route header. The SIP clients mentioned here: http://clearwater.readthedocs.io/en/latest/Making_your_first_call.html should do so.
+
+So I suspect that either you?ve not got an outbound proxy set, or that your client is behaving differently to what we expect. If it?s the latter, I suggest you try using one of the clients listed on that page.
+
+Hope that helps,
+
+Seb.
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Francesco Lamonica
+Sent: 17 January 2017 13:35
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Service-Route header and aio image
+
+Hello all,
+i have a question about aio images,
+when i get a succesfull register from aio image in the 200 OK there is a Service-Route header,
+now, if i read rfc 3608 correctly that header might be used to handle any subsequent request from the UA. Is this correct? because a subsequent INVITE first tries to resolve DNS for scscf.cw-aio and that miserably fail.
+Is this correct behaviour? if so is there a way to configure what sprout gives back in the register response Service-Route header?
+
+thanks.
+
+P.S. if i add an entry to localhost in /etc/hosts for scscf.cw.aio and port forward 5054 to the virtualbox vm would it be enough?
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170117/ebadf694/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Tue Jan 17 11:43:44 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Tue, 17 Jan 2017 16:43:44 +0000
+Subject: [Project Clearwater] REGISTER on a private network with
+	aio	SandSlash
+In-Reply-To: <CAOkLYJNieXodgh6dKEuX5yr1o7DwGmresW+tN9QYYmpJA5wzWg@mail.gmail.com>
+References: <CAOkLYJPn2osRjsgtyNcUA0jtw_7e+zyMA2aWMAEXYmBjk5SRjg@mail.gmail.com>
+	<CAOkLYJMP_TV8h8MUNpPH9U2ZhvPJXH7aa9_732yCfmQtnMgzTA@mail.gmail.com>
+	<CAOkLYJNieXodgh6dKEuX5yr1o7DwGmresW+tN9QYYmpJA5wzWg@mail.gmail.com>
+Message-ID: <SN1PR02MB1664325739D134E21430726E8F7C0@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+Clearwater doesn?t ever look at the ?user=phone? parameter on a From: or To: URI. However, it does look at that parameter if it?s on the Request-URI. Am I correct in thinking that the ?user=phone? parameter also appears on the Request-URI?
+
+The user=phone parameter on a sip: Request-URI tells the S-CSCF to treat this sip: URI as actually representing a telephone number. So the S-CSCF treat the URI as if it were a tel: URI with the same user part.
+
+When the S-CSCF receives an originating INVITE (ie an INVITE that is sent by a local subscriber to start a call), its routing behaviour differs depending on the type of the request URI. If it?s a tel: URI or a sip: URI with a user=phone parameter, then it will perform an ENUM lookup to decide how to route the INVITE. Exactly what effect this has on the routing depends on your ENUM configuration.
+
+It sounds like your calls were working when the Request-URI didn?t have the ?user=phone? parameter. If that?s the case, then it indicates that your ENUM configuration is wrong, whereas, without the user=phone parameter, no ENUM lookup is performed.
+
+You can read more about ENUM here: http://clearwater.readthedocs.io/en/latest/ENUM.html
+
+Hope that helps,
+
+Seb
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Francesco Lamonica
+Sent: 13 January 2017 10:39
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] REGISTER on a private network with aio SandSlash
+
+ok, i found out the problem, my UA was adding user=phone to the From: and To: header, and that was triggering a different behaviour, what is the CW behaviour with that parameter set?
+
+On Tue, Jan 3, 2017 at 3:12 PM, Francesco Lamonica <alienpenguin at gmail.com<mailto:alienpenguin at gmail.com>> wrote:
+I have a couple of additions to my previous email
+1) i noticed that i had to add the UDP port forwarding on the OVF vbox image (only tcp was configured),  should docs and/or vm image be updated?
+2) The Zoiper client that successfully connected was running in another vbox NATTED VM, if i change the Zoiper's VM netowrking to bridged to my local network Zoiper cannot register either.
+3) i noticed that bono seems to handle the registers for 650555XXYY at example.com<mailto:650555XXYY at example.com> to external domain example.com<http://example.com> (93.184.216.34) when the machins hosting the SIP UA is not VBOX NATed
+Is there some fiddling to be done with DNS?
+
+again sorry if these are dumb / basic questions but i am just starting up with CW.
+
+best regard and thanks in advance.
+
+On Tue, Jan 3, 2017 at 9:58 AM, Francesco Lamonica <alienpenguin at gmail.com<mailto:alienpenguin at gmail.com>> wrote:
+Hi all,
+i am experimenting with CW Sandslash release.
+I am trying to register a SIP UA but the only thing i get back from CW is a 100 Trying.
+I tried with zoiper and the registration is successful, however examining the register request the only thing that seems to be different is the fact that zoiper uses STUN and has a VIA and CONTACT header using the public IP of my company, however i don't see how this could be related, after all the aio VM is hosted on the same machine (private network 192.168.x.y/24) where i launch the SIP UA.
+Is there something that needs the STUN modified headers or there must be something else in REGISTER request that i have not seen yet?
+
+Sorry for the dumb question but i am just starting with IMS / Clearwater,
+
+regards
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170117/9e012476/attachment.html>
+
+From Jace.Liang at itri.org.tw  Wed Jan 18 00:29:14 2017
+From: Jace.Liang at itri.org.tw (Jace.Liang at itri.org.tw)
+Date: Wed, 18 Jan 2017 05:29:14 +0000
+Subject: [Project Clearwater] Regarding sprout-node installation time.
+In-Reply-To: <SN1PR02MB16642F8C87D00B8A7458CC618F7C0@SN1PR02MB1664.namprd02.prod.outlook.com>
+References: <HK2PR0401MB1425481D9A2DCE52B588DB1DB07C0@HK2PR0401MB1425.apcprd04.prod.outlook.com>
+	<SN1PR02MB16642F8C87D00B8A7458CC618F7C0@SN1PR02MB1664.namprd02.prod.outlook.com>
+Message-ID: <d41c068a2c2349aabbdd1f13433b7333@EXMB03.ITRI.DS>
+
+Hi Seb,
+I?m interesting in this topic too,
+I would like to know what?s the meaning of ?clean? sprout you said before.
+Is It means I should install sprout packages without configure local_config, and take the snapshot for this VM?
+
+Would you give us more detail step to create a clean sprout node snapshot?
+Thank you.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Sebastian Rex
+Sent: Tuesday, January 17, 2017 11:51 PM
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Regarding sprout-node installation time.
+
+Hi,
+
+Yes, it is possible to use a pre-installed sprout node snapshot, and that should speed up the scale-up time.
+
+You would need a ?clean? sprout node snapshot, and would need a way to configure the local_config file on the new nodes. Once that?s configured, the sprout node should join the cluster as normal.
+
+Regards,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Karthik Balasubramanian
+Sent: 17 January 2017 07:32
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Regarding sprout-node installation time.
+
+
+Dear all,
+
+
+
+We have been trying to add (scale up) a CW sprout-node in a Ubuntu VM and have estimated the time required to complete the installation process & and joining to the existing cluster to be 20 minutes. Is there any possibility of reducing the installation (scale up) time during scale up?.
+
+Is it possible to use pre-installed sprout-node as a snapshot VM and join it with existing clearwater cluster ?
+
+
+Best Regards
+Karthik Balasubramanian
+CTO Office  ? SDN/NFV Technologies
+TATA ELXSI
+Tel +91 9042028695
+
+
+
+--
+???????????????????????????????????????????? This email may contain confidential information. Please do not use or disclose it in any way and delete it if you are not the intended recipient.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170118/a643dabf/attachment.html>
+
+From jiaxuan at chinamobile.com  Wed Jan 18 03:07:23 2017
+From: jiaxuan at chinamobile.com (jiaxuan)
+Date: Wed, 18 Jan 2017 16:07:23 +0800
+Subject: [Project Clearwater] Requirement: Clearwater connect the outside
+ database.
+Message-ID: <008601d27161$e7173570$b545a050$@chinamobile.com>
+
+Hi Community :
+     I am glad to know we have Kubernetes branch for Clearwater.  It reduces
+us a lot of tasks. Thanks for your awesome contribution. 
+     Now I have a requirement for clearwater.  How can clearwater to use the
+outside databases?  
+     We want to do a demo about it. Cassandra or memcached run in virtual
+machine or bare metal machine. And clearwater is still running in
+Kubernetes.  
+     Could anybody tell me how can I do ?  
+     
+     Thanks 
+Xuan Jia
+Project Manager
+Big Data & IT Technology Research Center China Mobile Research Institute
+32 Xuanwumen West Street, Xicheng Distirct, Beijing 100032, China
+Mobile: (+86) 13811000575
+E-mail: jiaxuan at chinamobile.com
+
+
+
+
+
+
+
+From Sebastian.Rex at metaswitch.com  Fri Jan 20 04:43:44 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Fri, 20 Jan 2017 09:43:44 +0000
+Subject: [Project Clearwater] Sprout regularly crashes
+In-Reply-To: <CAFVTNVwxxybpG9xLDc6jqNpifix+Lb-S+6rqP4=W0a2B=d-iyA@mail.gmail.com>
+References: <CAFVTNVwxxybpG9xLDc6jqNpifix+Lb-S+6rqP4=W0a2B=d-iyA@mail.gmail.com>
+Message-ID: <SN1PR02MB16640625A501A430A1E42F108F710@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi Steve,
+
+It looks like the Sprout health monitoring script (possibly erroneously) thinks that Sprout is in a bad state and is killing it.
+
+Could you send us the monit logs from a time covering a crash? That should allow us to check whether that?s the case. They?re at /var/log/monit.log
+
+Also, do you have debug logging turned on? If so, then the sprout logs (/var/log/sprout/sprout_x.log) would also be useful.
+
+Could you also give us some more context here? i.e.
+
+- How much load are you putting through this system?
+- How big is your deployment? (Both the number of sprout nodes and the size of each sprout node)
+
+(If you both have debug logging turned on and are putting load through the system, we would suggest turning debug logging off as it considerably worsens performance and makes this more likely to occur.)
+
+Thanks,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Steven Adams
+Sent: 06 January 2017 21:04
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Sprout regularly crashes
+
+Started using Tauros recently and are noticing that sprout crashes a lot with this error:
+Signal 6 caught
+
+Basic stack dump:
+/usr/share/clearwater/bin/sprout(_ZN6Logger9backtraceEPKc+0x6d)[0x51467d]
+/usr/share/clearwater/bin/sprout(_ZN3Log9backtraceEPKcz+0x10d)[0x5d488d]
+/usr/share/clearwater/bin/sprout(_Z14signal_handleri+0x2c)[0x63ce4c]
+/lib/x86_64-linux-gnu/libc.so.6(+0x36cb0)[0x7fe1660a7cb0]
+/lib/x86_64-linux-gnu/libpthread.so.0(sem_wait+0x2e)[0x7fe1673af66e]
+/usr/share/clearwater/bin/sprout(main+0xb6fa)[0x5138ca]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf5)[0x7fe166092f45]
+/usr/share/clearwater/bin/sprout[0x51451c]
+
+Advanced stack dump (requires gdb):
+sh: 1: /usr/bin/gdb: not found
+
+gdb failed with return code 32512
+
+Typically seems to happen after sprout has received an incoming 200 OK message.  Sprout does restart itself so it's not the end of the world but it doesn't bode well for stability.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170120/1af6bb79/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Fri Jan 20 05:15:07 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Fri, 20 Jan 2017 10:15:07 +0000
+Subject: [Project Clearwater] Sprout regularly crashes
+In-Reply-To: <SN1PR02MB16640625A501A430A1E42F108F710@SN1PR02MB1664.namprd02.prod.outlook.com>
+References: <CAFVTNVwxxybpG9xLDc6jqNpifix+Lb-S+6rqP4=W0a2B=d-iyA@mail.gmail.com>
+	<SN1PR02MB16640625A501A430A1E42F108F710@SN1PR02MB1664.namprd02.prod.outlook.com>
+Message-ID: <SN1PR02MB16649E4EAF01E3CDD6C09DB38F710@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Steve,
+
+Further to the below, we?ve also fixed a couple of bugs in this area recently, most notably https://github.com/Metaswitch/sprout/issues/1570 which caused problems on Sprout overload. This particular issue was fixed in release-111 (the Rapidash release) so if you haven?t already it would also be a good idea to try upgrading to at least that release.
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Sebastian Rex
+Sent: 20 January 2017 09:44
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Sprout regularly crashes
+
+Hi Steve,
+
+It looks like the Sprout health monitoring script (possibly erroneously) thinks that Sprout is in a bad state and is killing it.
+
+Could you send us the monit logs from a time covering a crash? That should allow us to check whether that?s the case. They?re at /var/log/monit.log
+
+Also, do you have debug logging turned on? If so, then the sprout logs (/var/log/sprout/sprout_x.log) would also be useful.
+
+Could you also give us some more context here? i.e.
+
+- How much load are you putting through this system?
+- How big is your deployment? (Both the number of sprout nodes and the size of each sprout node)
+
+(If you both have debug logging turned on and are putting load through the system, we would suggest turning debug logging off as it considerably worsens performance and makes this more likely to occur.)
+
+Thanks,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Steven Adams
+Sent: 06 January 2017 21:04
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Sprout regularly crashes
+
+Started using Tauros recently and are noticing that sprout crashes a lot with this error:
+Signal 6 caught
+
+Basic stack dump:
+/usr/share/clearwater/bin/sprout(_ZN6Logger9backtraceEPKc+0x6d)[0x51467d]
+/usr/share/clearwater/bin/sprout(_ZN3Log9backtraceEPKcz+0x10d)[0x5d488d]
+/usr/share/clearwater/bin/sprout(_Z14signal_handleri+0x2c)[0x63ce4c]
+/lib/x86_64-linux-gnu/libc.so.6(+0x36cb0)[0x7fe1660a7cb0]
+/lib/x86_64-linux-gnu/libpthread.so.0(sem_wait+0x2e)[0x7fe1673af66e]
+/usr/share/clearwater/bin/sprout(main+0xb6fa)[0x5138ca]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf5)[0x7fe166092f45]
+/usr/share/clearwater/bin/sprout[0x51451c]
+
+Advanced stack dump (requires gdb):
+sh: 1: /usr/bin/gdb: not found
+
+gdb failed with return code 32512
+
+Typically seems to happen after sprout has received an incoming 200 OK message.  Sprout does restart itself so it's not the end of the world but it doesn't bode well for stability.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170120/065b51c4/attachment.html>
+
+From stevena at opencloud.com  Fri Jan 20 05:32:27 2017
+From: stevena at opencloud.com (Steven Adams)
+Date: Fri, 20 Jan 2017 10:32:27 +0000
+Subject: [Project Clearwater] Sprout regularly crashes
+In-Reply-To: <SN1PR02MB16649E4EAF01E3CDD6C09DB38F710@SN1PR02MB1664.namprd02.prod.outlook.com>
+References: <CAFVTNVwxxybpG9xLDc6jqNpifix+Lb-S+6rqP4=W0a2B=d-iyA@mail.gmail.com>
+	<SN1PR02MB16640625A501A430A1E42F108F710@SN1PR02MB1664.namprd02.prod.outlook.com>
+	<SN1PR02MB16649E4EAF01E3CDD6C09DB38F710@SN1PR02MB1664.namprd02.prod.outlook.com>
+Message-ID: <CAFVTNVxHpq1nS=XiGZeoVtfKddUp0Mo8ofze_ci=SE6fbrHB3A@mail.gmail.com>
+
+Hi Seb,
+
+While I'm collecting logs, etc, I'll just mention that I've tried Umbreon
+and that was more unstable than the previous version.  Spout crashed on
+every REGISTER that was sent to it.  I've gone back to Quilava and that is
+more stable but does still crash on occasion.
+
+While I'm here, some answers to the easy questions:
+
+- How much load are you putting through this system?
+>
+
+Practically zero.  I'm working on an end-to-end test with only two SIP
+clients which (try to) register and I'm manually making a single call
+between the two.
+
+
+> - How big is your deployment? (Both the number of sprout nodes and the
+> size of each sprout node)
+>
+
+It's a CW all-in-one installation, so whatever default metrics you define
+for this.
+
+Regards,
+Steve
+
+
+On 20 January 2017 at 10:15, Sebastian Rex <Sebastian.Rex at metaswitch.com>
+wrote:
+
+> Steve,
+>
+>
+>
+> Further to the below, we?ve also fixed a couple of bugs in this area
+> recently, most notably https://github.com/Metaswitch/sprout/issues/1570
+> which caused problems on Sprout overload. This particular issue was fixed
+> in release-111 (the Rapidash release) so if you haven?t already it would
+> also be a good idea to try upgrading to at least that release.
+>
+>
+>
+> Seb.
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *Sebastian Rex
+> *Sent:* 20 January 2017 09:44
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Project Clearwater] Sprout regularly crashes
+>
+>
+>
+> Hi Steve,
+>
+>
+>
+> It looks like the Sprout health monitoring script (possibly erroneously)
+> thinks that Sprout is in a bad state and is killing it.
+>
+>
+>
+> Could you send us the monit logs from a time covering a crash? That should
+> allow us to check whether that?s the case. They?re at /var/log/monit.log
+>
+>
+>
+> Also, do you have debug logging turned on? If so, then the sprout logs
+> (/var/log/sprout/sprout_x.log) would also be useful.
+>
+>
+>
+> Could you also give us some more context here? i.e.
+>
+>
+>
+> - How much load are you putting through this system?
+>
+> - How big is your deployment? (Both the number of sprout nodes and the
+> size of each sprout node)
+>
+>
+>
+> (If you both have debug logging turned on and are putting load through the
+> system, we would suggest turning debug logging off as it considerably
+> worsens performance and makes this more likely to occur.)
+>
+>
+>
+> Thanks,
+>
+>
+>
+> Seb.
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org
+> <clearwater-bounces at lists.projectclearwater.org>] *On Behalf Of *Steven
+> Adams
+> *Sent:* 06 January 2017 21:04
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Project Clearwater] Sprout regularly crashes
+>
+>
+>
+> Started using Tauros recently and are noticing that sprout crashes a lot
+> with this error:
+>
+> Signal 6 caught
+>
+> Basic stack dump:
+> /usr/share/clearwater/bin/sprout(_ZN6Logger9backtraceEPKc+0x6d)[0x51467d]
+> /usr/share/clearwater/bin/sprout(_ZN3Log9backtraceEPKcz+0x10d)[0x5d488d]
+> /usr/share/clearwater/bin/sprout(_Z14signal_handleri+0x2c)[0x63ce4c]
+> /lib/x86_64-linux-gnu/libc.so.6(+0x36cb0)[0x7fe1660a7cb0]
+> /lib/x86_64-linux-gnu/libpthread.so.0(sem_wait+0x2e)[0x7fe1673af66e]
+> /usr/share/clearwater/bin/sprout(main+0xb6fa)[0x5138ca]
+> /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf5)[0x7fe166092f45]
+> /usr/share/clearwater/bin/sprout[0x51451c]
+>
+> Advanced stack dump (requires gdb):
+> sh: 1: /usr/bin/gdb: not found
+>
+> gdb failed with return code 32512
+>
+>
+>
+> Typically seems to happen after sprout has received an incoming 200 OK
+> message.  Sprout does restart itself so it's not the end of the world but
+> it doesn't bode well for stability.
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.
+> projectclearwater.org
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170120/77b33dfd/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Fri Jan 20 05:55:38 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Fri, 20 Jan 2017 10:55:38 +0000
+Subject: [Project Clearwater] Sprout regularly crashes
+In-Reply-To: <CAFVTNVxHpq1nS=XiGZeoVtfKddUp0Mo8ofze_ci=SE6fbrHB3A@mail.gmail.com>
+References: <CAFVTNVwxxybpG9xLDc6jqNpifix+Lb-S+6rqP4=W0a2B=d-iyA@mail.gmail.com>
+	<SN1PR02MB16640625A501A430A1E42F108F710@SN1PR02MB1664.namprd02.prod.outlook.com>
+	<SN1PR02MB16649E4EAF01E3CDD6C09DB38F710@SN1PR02MB1664.namprd02.prod.outlook.com>
+	<CAFVTNVxHpq1nS=XiGZeoVtfKddUp0Mo8ofze_ci=SE6fbrHB3A@mail.gmail.com>
+Message-ID: <SN1PR02MB16647DC80252918B1E9A63C38F710@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Thanks for the info.
+
+OK, it sounds like your sprout node is definitely not overloaded, so the issue I linked to below is not likely to be relevant. I?m now more interested to see the logs, as that clearly doesn?t sound right. Given that your system should not be overloaded, can I ask you to turn on debug logging for Sprout, and then send the logs? Instructions for turning on debug logging can be found here http://clearwater.readthedocs.io/en/latest/Troubleshooting_and_Recovery.html#sprout under ?To turn on debug logging for Sprout??
+
+Thanks,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Steven Adams
+Sent: 20 January 2017 10:32
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Sprout regularly crashes
+
+Hi Seb,
+While I'm collecting logs, etc, I'll just mention that I've tried Umbreon and that was more unstable than the previous version.  Spout crashed on every REGISTER that was sent to it.  I've gone back to Quilava and that is more stable but does still crash on occasion.
+While I'm here, some answers to the easy questions:
+- How much load are you putting through this system?
+
+Practically zero.  I'm working on an end-to-end test with only two SIP clients which (try to) register and I'm manually making a single call between the two.
+
+- How big is your deployment? (Both the number of sprout nodes and the size of each sprout node)
+
+It's a CW all-in-one installation, so whatever default metrics you define for this.
+
+Regards,
+Steve
+
+
+On 20 January 2017 at 10:15, Sebastian Rex <Sebastian.Rex at metaswitch.com<mailto:Sebastian.Rex at metaswitch.com>> wrote:
+Steve,
+
+Further to the below, we?ve also fixed a couple of bugs in this area recently, most notably https://github.com/Metaswitch/sprout/issues/1570 which caused problems on Sprout overload. This particular issue was fixed in release-111 (the Rapidash release) so if you haven?t already it would also be a good idea to try upgrading to at least that release.
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>] On Behalf Of Sebastian Rex
+Sent: 20 January 2017 09:44
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] Sprout regularly crashes
+
+Hi Steve,
+
+It looks like the Sprout health monitoring script (possibly erroneously) thinks that Sprout is in a bad state and is killing it.
+
+Could you send us the monit logs from a time covering a crash? That should allow us to check whether that?s the case. They?re at /var/log/monit.log
+
+Also, do you have debug logging turned on? If so, then the sprout logs (/var/log/sprout/sprout_x.log) would also be useful.
+
+Could you also give us some more context here? i.e.
+
+- How much load are you putting through this system?
+- How big is your deployment? (Both the number of sprout nodes and the size of each sprout node)
+
+(If you both have debug logging turned on and are putting load through the system, we would suggest turning debug logging off as it considerably worsens performance and makes this more likely to occur.)
+
+Thanks,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Steven Adams
+Sent: 06 January 2017 21:04
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Sprout regularly crashes
+
+Started using Tauros recently and are noticing that sprout crashes a lot with this error:
+Signal 6 caught
+
+Basic stack dump:
+/usr/share/clearwater/bin/sprout(_ZN6Logger9backtraceEPKc+0x6d)[0x51467d]
+/usr/share/clearwater/bin/sprout(_ZN3Log9backtraceEPKcz+0x10d)[0x5d488d]
+/usr/share/clearwater/bin/sprout(_Z14signal_handleri+0x2c)[0x63ce4c]
+/lib/x86_64-linux-gnu/libc.so.6(+0x36cb0)[0x7fe1660a7cb0]
+/lib/x86_64-linux-gnu/libpthread.so.0(sem_wait+0x2e)[0x7fe1673af66e]
+/usr/share/clearwater/bin/sprout(main+0xb6fa)[0x5138ca]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf5)[0x7fe166092f45]
+/usr/share/clearwater/bin/sprout[0x51451c]
+
+Advanced stack dump (requires gdb):
+sh: 1: /usr/bin/gdb: not found
+
+gdb failed with return code 32512
+
+Typically seems to happen after sprout has received an incoming 200 OK message.  Sprout does restart itself so it's not the end of the world but it doesn't bode well for stability.
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170120/036bd235/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Tue Jan 24 07:00:50 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Tue, 24 Jan 2017 12:00:50 +0000
+Subject: [Project Clearwater] Release note for Vulpix
+Message-ID: <SN1PR02MB1664D9D14D43B20AD7F8824D8F750@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+The release for Project Clearwater sprint "Vulpix" has been cut. The code for this release is tagged as release-115 in GitHub.
+
+This release includes the following bug fixes:
+
+
+*         Log spam leading to 3GB log file and maybe crashes: Error (Net-SNMP): Use snmp_sess_select_info2() for processing large file descriptors (https://github.com/Metaswitch/sprout/issues/1662)
+
+*         Errors from SNMP agent at startup (https://github.com/Metaswitch/sprout/issues/1475)
+
+*         Clearwater may cause bursts in load, triggering overload (https://github.com/Metaswitch/sprout/issues/1401)
+
+*         chronosBindAverage.scopePrevious5SecondPeriod stat doesn't match the average of chronosBindInstantaneousCount (https://github.com/Metaswitch/chronos/issues/329)
+
+*         Chronos seems to have stuck values for chronosBindAverage and chronosRegAverage stats (https://github.com/Metaswitch/chronos/issues/328)
+
+*         Possible tight loop (https://github.com/Metaswitch/chronos/issues/326)
+
+*         Crest may throw ZeroDivisionError when multiple requests get stacked up (https://github.com/Metaswitch/crest/issues/301)
+
+*         RADIUS timeout affects local authentication (https://github.com/Metaswitch/clearwater-infrastructure/issues/414)
+
+*         Incorrect case in the 'display name' of enterprise MIB alarms (https://github.com/Metaswitch/clearwater-snmp-handlers/issues/167)
+
+*         Monit commands to stop monitoring and kill a group of processes don't work on the latest OVAs (https://github.com/Metaswitch/clearwater-monit/issues/46)
+
+*         check_config_sync reports that dns_config is missing (https://github.com/Metaswitch/clearwater-etcd/issues/374)
+
+To upgrade to this release, follow the instructions at http://docs.projectclearwater.org/en/stable/Upgrading_a_Clearwater_deployment.html.  If you are deploying an all-in-one node, the standard image (http://vm-images.cw-ngv.com/cw-aio.ova) has been updated for this release.
+
+Seb
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170124/3143326a/attachment.html>
+
+From fabrizio.faustinoni at usi.ch  Tue Jan 24 09:49:07 2017
+From: fabrizio.faustinoni at usi.ch (Faustinoni Fabrizio)
+Date: Tue, 24 Jan 2017 14:49:07 +0000
+Subject: [Project Clearwater] Clearwater sip-stress fail due to
+ Unexpected-Msg 183
+Message-ID: <408F8F41-C528-4504-BE45-00749BC1CD6C@usi.ch>
+
+Hi,
+I deployed a Clearwater Cluster, everything looks fine.
+If I start the stress test /usr/share/clearwater/bin/run_stress --sipp-output demo.clearwater 400 10
+the test fail:
+
+
+Last Error: Aborting call on unexpected message for Call-Id '10-4484 at 127...
+------------------------------ Scenario Screen -------- [1-9]: Change Screen --
+Call-rate(length)   Port   Total-time  Total-calls  Remote-host
+0.1(5000 ms)/1.000s   5061     141.75 s           10  192.168.3.46:5054(TCP)
+
+0 new calls during 1.004 s period      1 ms scheduler resolution
+0 calls (limit 1)                      Peak was 1 calls, after 13 s
+1 Running, 2 Paused, 3 Woken up
+0 dead call msg (discarded)            0 out-of-call msg (discarded)
+3 open sockets
+
+                             Messages  Retrans   Timeout   Unexpected-Msg
+  INVITE ---------->         10        0         0
+     100 <----------         10        0         0         0
+     183 <----------         0         0         0         10
+
+There aren?t error messages in the logs file.
+In sprout nodes I can see this log but I don?t understand if this is an error or just a info:
+4-01-2017 14:47:20.227 UTC Status alarm.cpp:62: sprout issued 1004.1 alarm
+24-01-2017 14:47:20.227 UTC Status alarm.cpp:62: sprout issued 1001.1 alarm
+24-01-2017 14:47:20.227 UTC Status alarm.cpp:62: sprout issued 1002.1 alarm
+24-01-2017 14:47:50.227 UTC Status alarm.cpp:62: sprout issued 1004.1 alarm
+
+
+Thank you
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170124/633c6cf5/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Tue Jan 24 10:21:31 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Tue, 24 Jan 2017 15:21:31 +0000
+Subject: [Project Clearwater] Clearwater sip-stress fail due to
+ Unexpected-Msg 183
+In-Reply-To: <408F8F41-C528-4504-BE45-00749BC1CD6C@usi.ch>
+References: <408F8F41-C528-4504-BE45-00749BC1CD6C@usi.ch>
+Message-ID: <SN1PR02MB166497FBF6D23E08DA43F8708F750@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+Would you mind also telling us what release of Project Clearwater you?re running on?
+
+Thanks,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Faustinoni Fabrizio
+Sent: 24 January 2017 14:49
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Clearwater sip-stress fail due to Unexpected-Msg 183
+
+Hi,
+I deployed a Clearwater Cluster, everything looks fine.
+If I start the stress test /usr/share/clearwater/bin/run_stress --sipp-output demo.clearwater 400 10
+the test fail:
+
+
+Last Error: Aborting call on unexpected message for Call-Id '10-4484 at 127...
+
+------------------------------ Scenario Screen -------- [1-9]: Change Screen --
+
+Call-rate(length)   Port   Total-time  Total-calls  Remote-host
+
+0.1(5000 ms)/1.000s   5061     141.75 s           10  192.168.3.46:5054(TCP)
+
+
+
+0 new calls during 1.004 s period      1 ms scheduler resolution
+
+0 calls (limit 1)                      Peak was 1 calls, after 13 s
+
+1 Running, 2 Paused, 3 Woken up
+
+0 dead call msg (discarded)            0 out-of-call msg (discarded)
+
+3 open sockets
+
+
+
+                             Messages  Retrans   Timeout   Unexpected-Msg
+
+  INVITE ---------->         10        0         0
+
+     100 <----------         10        0         0         0
+
+     183 <----------         0         0         0         10
+
+There aren?t error messages in the logs file.
+In sprout nodes I can see this log but I don?t understand if this is an error or just a info:
+4-01-2017 14:47:20.227 UTC Status alarm.cpp:62: sprout issued 1004.1 alarm
+24-01-2017 14:47:20.227 UTC Status alarm.cpp:62: sprout issued 1001.1 alarm
+24-01-2017 14:47:20.227 UTC Status alarm.cpp:62: sprout issued 1002.1 alarm
+24-01-2017 14:47:50.227 UTC Status alarm.cpp:62: sprout issued 1004.1 alarm
+
+
+Thank you
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170124/c3b7648e/attachment.html>
+
+From fabrizio.faustinoni at usi.ch  Wed Jan 25 14:02:47 2017
+From: fabrizio.faustinoni at usi.ch (Faustinoni Fabrizio)
+Date: Wed, 25 Jan 2017 19:02:47 +0000
+Subject: [Project Clearwater] Clearwater sip-stress fail due to
+ Unexpected-Msg 183
+In-Reply-To: <577FCEF4-D910-4639-8544-B83053FD74F1@usi.ch>
+References: <408F8F41-C528-4504-BE45-00749BC1CD6C@usi.ch>
+	<SN1PR02MB166497FBF6D23E08DA43F8708F750@SN1PR02MB1664.namprd02.prod.outlook.com>
+	<SN1PR02MB16643B78D3DD2B5880C317ED8F740@SN1PR02MB1664.namprd02.prod.outlook.com>
+	<577FCEF4-D910-4639-8544-B83053FD74F1@usi.ch>
+Message-ID: <6F685295-AF10-4CCD-A239-CF4EEA92A076@usi.ch>
+
+Now I?ve enough time to explain my whole scenario.
+
+I?ve deployed a Clearater cluster on Openstack:
+
+  *   2 ralf nodes
+  *   5 sprout nodes
+  *   5 bono nodes
+  *   4 homestead
+  *   4 homer
+  *   1 ellis
+  *   1 stress test node
+  *   1 dns node (bind software)
+
+I?ve followed the Manual installation: http://clearwater.readthedocs.io/en/stable/Installation_Instructions.html
+
+From each node I can ping:
+
+  *   The home_domain: demo.clearwater  (every time a different bono node answer)
+  *   The sprout.demo.clearwater   (every time a different sprout node answer)
+  *   The homer.demo.clearwater (every time a different homer node answer)
+  *   The hs.demo.clearwater (every time a different homestead node answer)
+  *   Ther ralf.demo.clearwater (every time a different ralf node answer)
+  *   All bono-N.demo.clearwater nodes
+  *   All sprout-N.demo.clearwater nodes
+  *   All homer.-N.demo.clearwater nodes
+  *   All homestead-N.demo.clearwater nodes
+
+
+If I login in any homestead node and I execute: "nodetool status" the output is
+
+Datacenter: site1
+=================
+Status=Up/Down
+|/ State=Normal/Leaving/Joining/Moving
+--  Address       Load       Tokens  Owns (effective)  Host ID                               Rack
+UN  192.168.3.50  12.61 MB   256     48.2%             67a708b3-8b18-4bba-804c-228c0a40f519  RAC1
+UN  192.168.3.51  12.67 MB   256     48.9%             aff78ecb-b7e0-4099-803a-dc7c1df8545f  RAC1
+UN  192.168.3.52  15.76 MB   256     50.2%             b78c5a38-e136-4735-a41f-93f2476a012a  RAC1
+UN  192.168.3.53  16.41 MB   256     52.7%             ddee088a-bff5-4c80-80e0-fcfa37a73077  RAC1
+
+
+
+If I execute clearwater-etcdctl cluster-health
+member 176dfbe09295f8fb is healthy: got healthy result from http://192.168.3.50:4000
+member 3099bb17539a7c44 is healthy: got healthy result from http://192.168.3.51:4000
+member 327f1928783cf78e is healthy: got healthy result from http://192.168.3.60:4000
+member 32e70f18c5b85cbf is healthy: got healthy result from http://192.168.3.43:4000
+member 439bb97c4682c8c9 is healthy: got healthy result from http://192.168.3.46:4000
+member 44cd47f6fd725bb2 is healthy: got healthy result from http://192.168.3.44:4000
+member 4fd1f4e06276b755 is healthy: got healthy result from http://192.168.3.56:4000
+member 72859264f699bc49 is healthy: got healthy result from http://192.168.3.61:4000
+member 732ad30023c78349 is healthy: got healthy result from http://192.168.3.53:4000
+member 8e4684e027bcf7e1 is healthy: got healthy result from http://192.168.3.55:4000
+member 92687a19b70d0308 is healthy: got healthy result from http://192.168.3.58:4000
+member ac8738522a031a34 is healthy: got healthy result from http://192.168.3.48:4000
+member b124cc2916d37e7f is healthy: got healthy result from http://192.168.3.54:4000
+member be8408958431cf89 is healthy: got healthy result from http://192.168.3.59:4000
+member c0d2f53681553fb6 is healthy: got healthy result from http://192.168.3.52:4000
+member c5e64aae2d1fe7b1 is healthy: got healthy result from http://192.168.3.42:4000
+member c99d1fc5050334f7 is healthy: got healthy result from http://192.168.3.57:4000
+member d5b010e57f2d2145 is healthy: got healthy result from http://192.168.3.47:4000
+member e510c4aa36d98ad8 is healthy: got healthy result from http://192.168.3.45:4000
+member f3f724c6247f3c10 is healthy: got healthy result from http://192.168.3.49:4000
+member f6fb305b3f402aff is healthy: got healthy result from http://192.168.3.41:4000
+cluster is healthy
+
+
+Sip stress node:
+
+I tried the 2 sip-stress test (the old one and the new one):
+
+The old one:
+I execute the provisioning command on homestead: /usr/share/clearwater/crest/src/metaswitch/crest/tools/stress_provision.sh
+I?ve added the configuration reg_max_expires=1800 in the shared_configs and executed /usr/share/clearwater/clearwater-config-manager/scripts/upload_shared_config
+I?ve created the local_config in the sip_stress and add the local_ip configuration
+I?ve executed sudo apt-get install clearwater-sip-stress
+I dind?t change the original sip-stress.xml
+I?ve executed  /usr/share/clearwater/infrastructure/scripts/sip-stress (which generate /usr/share/clearwater/sip-stress/users.csv.1)
+I?ve started the service: sudo service clearwater-sip-stress restart && tail -f /var/log/clearwater-sipp/sip-stress.1.out
+
+The output is in the attacched file sip-stress.1.out.zip
+
+Question: There are some Timeouts messages after REGISTER, is this normal? it is depends of a wrong configuration?
+
+This could be the problem for the timeouts messages?
+
+However the old stress test seems working.
+
+
+
+The new stress method:
+
+I?ve created a new virtual machine
+I?ve created the local_config in the sip_stress and add the local_ip configuration
+I?ve executed: sudo apt-get install clearwater-sip-stress-coreonly
+I?ve executed:
+/usr/share/clearwater/bin/run_stress demo.clearwater 20 30
+
+And surprisingly now the test (after that I re-installed the sip-stress) ended successfully:
+Starting initial registration, will take 0 seconds
+Initial registration succeeded
+Starting test
+Test complete
+
+Elapsed time: 00:27:41
+Start: 2017-01-25 19:16:23.260399
+End: 2017-01-25 19:46:23.300702
+
+Total calls: 6
+Successful calls: 0 (0.0%)
+Failed calls: 6 (100.0%)
+
+Retransmissions: 0
+
+Average time from INVITE to 180 Ringing: 0.0 ms
+# of calls with 0-2ms from INVITE to 180 Ringing: 0 (0.0%)
+# of calls with 2-20ms from INVITE to 180 Ringing: 0 (0.0%)
+# of calls with 20-200ms from INVITE to 180 Ringing: 0 (0.0%)
+# of calls with 200-2000ms from INVITE to 180 Ringing: 0 (0.0%)
+# of calls with 2000+ms from INVITE to 180 Ringing: 0 (0.0%)
+
+Total re-REGISTERs: 20
+Successful re-REGISTERs: 20 (100.0%)
+Failed re-REGISTERS: 0 (0.0%)
+
+REGISTER retransmissions: 0
+
+Average time from REGISTER to 200 OK: 31.0 ms
+
+Log files at /var/log/clearwater-sip-stress/2687_*
+
+But If I check the log: /var/log/clearwater-sip-stress/2687_caller_errors.log
+there are some errors (check the attached files: 2687_caller_errors.log)
+
+
+
+Question: in some logs I see:  sprout issued 1005.1 alarm
+what does it mean?
+
+If you need any other information please let me know
+Thanks
+
+
+
+
+On Jan 25, 2017, at 4:43 PM, Faustinoni Fabrizio <fabrizio.faustinoni at usi.ch<mailto:fabrizio.faustinoni at usi.ch>> wrote:
+
+Hi Sebastian,
+I;ve subscribed to the mailing list.
+
+How can I know the clearwater versione? I?ve installed it just a couple of days ago.
+
+
+On Jan 25, 2017, at 10:38 AM, Sebastian Rex <Sebastian.Rex at metaswitch.com<mailto:Sebastian.Rex at metaswitch.com>> wrote:
+
+Hi,
+
+It?s just been brought to my attention that you?re not signed up to the mailing list, so I suspect that you haven?t seen my response, below.
+
+If you want to see all responses, I suggest you sign up to the mailing list using:http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+Regards,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Sebastian Rex
+Sent: 24 January 2017 15:22
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] Clearwater sip-stress fail due to Unexpected-Msg 183
+
+Hi,
+
+Would you mind also telling us what release of Project Clearwater you?re running on?
+
+Thanks,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Faustinoni Fabrizio
+Sent: 24 January 2017 14:49
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Clearwater sip-stress fail due to Unexpected-Msg 183
+
+Hi,
+I deployed a Clearwater Cluster, everything looks fine.
+If I start the stress test /usr/share/clearwater/bin/run_stress --sipp-output demo.clearwater 400 10
+the test fail:
+
+
+Last Error: Aborting call on unexpected message for Call-Id '10-4484 at 127...
+
+------------------------------ Scenario Screen -------- [1-9]: Change Screen --
+
+Call-rate(length)   Port   Total-time  Total-calls  Remote-host
+
+0.1(5000 ms)/1.000s   5061     141.75 s           10  192.168.3.46:5054(TCP)
+
+
+
+0 new calls during 1.004 s period      1 ms scheduler resolution
+
+0 calls (limit 1)                      Peak was 1 calls, after 13 s
+
+1 Running, 2 Paused, 3 Woken up
+
+0 dead call msg (discarded)            0 out-of-call msg (discarded)
+
+3 open sockets
+
+
+
+                             Messages  Retrans   Timeout   Unexpected-Msg
+
+  INVITE ---------->         10        0         0
+
+     100 <----------         10        0         0         0
+
+     183 <----------         0         0         0         10
+
+
+There aren?t error messages in the logs file.
+In sprout nodes I can see this log but I don?t understand if this is an error or just a info:
+4-01-2017 14:47:20.227 UTC Status alarm.cpp:62: sprout issued 1004.1 alarm
+24-01-2017 14:47:20.227 UTC Status alarm.cpp:62: sprout issued 1001.1 alarm
+24-01-2017 14:47:20.227 UTC Status alarm.cpp:62: sprout issued 1002.1 alarm
+24-01-2017 14:47:50.227 UTC Status alarm.cpp:62: sprout issued 1004.1 alarm
+
+
+Thank you
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170125/7092f986/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: sip-stress.1.out.zip
+Type: application/zip
+Size: 21868 bytes
+Desc: sip-stress.1.out.zip
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170125/7092f986/attachment.zip>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: 2687_caller_errors.log.zip
+Type: application/zip
+Size: 781 bytes
+Desc: 2687_caller_errors.log.zip
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170125/7092f986/attachment-0001.zip>
+
+From fabrizio.faustinoni at usi.ch  Fri Jan 27 04:59:15 2017
+From: fabrizio.faustinoni at usi.ch (Faustinoni Fabrizio)
+Date: Fri, 27 Jan 2017 09:59:15 +0000
+Subject: [Project Clearwater] Unable to restart bono
+Message-ID: <9607873E-B17E-4954-9417-A71F81143410@usi.ch>
+
+Hi guys,
+
+I?ve the following deployment: 5 bono, 5 sprout, 4 homestead, 4 homer, 1 ellis
+
+If I try to restart the bono node:
+sudo service clearwater-infrastructure restart
+sudo service bono quiesce
+
+the command is stuck after the output: * Quiescing Bono SIP Edge Proxy bono
+
+In the log file I see: 
+Quiesce signal received
+27-01-2017 09:50:49.759 UTC Status stack.cpp:155: Setting quiescing = PJ_TRUE
+27-01-2017 09:50:49.766 UTC Status stack.cpp:186: Quiescing state changed
+27-01-2017 09:50:49.767 UTC Status quiescing_manager.cpp:164: The Quiescing Manager received input QUIESCE (0) when in state ACTIVE (0)
+27-01-2017 09:50:49.767 UTC Status quiescing_manager.cpp:290: Close untrusted listening port
+27-01-2017 09:50:49.767 UTC Status stack.cpp:398: Destroyed TCP transport for port 5060
+27-01-2017 09:50:49.767 UTC Status quiescing_manager.cpp:298: Quiesce FlowTable
+
+(after that I restart the node to be sure that the bono node is restarted successfully)
+
+Have you any Idea?
+
+Also in the log file I see a lot of :
+UTC Status alarm.cpp:62: sprout issued 1005.1 alarm
+
+What does this log means?
+
+My clearwater version is the last one.
+Last question: Where can I find the exact clearwater version number in my deployment? (I?ve installed it manually with apt-get install)
+
+thanks
+
+From Sebastian.Rex at metaswitch.com  Fri Jan 27 07:30:03 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Fri, 27 Jan 2017 12:30:03 +0000
+Subject: [Project Clearwater] Remove Ralf nodes
+In-Reply-To: <E1DE8FAD-4D91-48E0-8936-9BB3235CFA99@usi.ch>
+References: <E1DE8FAD-4D91-48E0-8936-9BB3235CFA99@usi.ch>
+Message-ID: <SN1PR02MB1664549D03F551D594D317958F760@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+Were you trying to remove them using the process documented here: http://clearwater.readthedocs.io/en/latest/Clearwater_Elastic_Scaling.html? i.e. did you run 
+
+     sudo service clearwater-etcd decommission
+
+on the Ralf nodes that you were decommissioning?
+
+Regardless, it looks like the Ralf nodes have failed to leave the memcached cluster. To resolve this, you should follow the process outlined here: http://clearwater.readthedocs.io/en/latest/Handling_Failed_Nodes.html#removing-a-failed-node , ensuring that you follow the instructions for "Removing a Node from a Datastore", including the fact that you must run the script for each of that datastore's failed nodes simultaneously.
+
+As for your second question: no, you do not need to remove the Ralf nodes' IP addresses from the local_config file on other nodes. That value is only used on joining the etc cluster.
+
+Also, It looks like you're not signed up to the mailing list with this email address, which means that we don't see your emails as quickly as we would otherwise. I'd suggest that you either use the email address with which you signed up to the list, or sign up to the list with this address too.
+
+Regards,
+
+Seb.
+
+-----Original Message-----
+From: Clearwater [mailto:mailman-bounces at host.metaswitch.com] On Behalf Of Faustinoni Fabrizio
+Sent: 27 January 2017 11:11
+To: clearwater-owner at lists.projectclearwater.org
+Subject: Remove Ralf nodes
+
+Hi guys,
+
+I?ve a clearwater cluster (last version, manual installation) I wanted to remove the ralf nodes from the cluster because we are not using them.
+
+I think that something went wrong because if I run:
+/usr/share/clearwater/clearwater-cluster-manager/scripts/check_cluster_state
+
+In the output I can still see the  Ralf Memcached cluster :
+
+Describing the Homer Cassandra cluster:
+  The local node is *not* in this cluster
+  The cluster is stable
+    192.168.3.42 is in state normal
+    192.168.3.43 is in state normal
+    192.168.3.44 is in state normal
+    192.168.3.45 is in state normal
+
+Describing the Homestead Cassandra cluster:
+  The local node is *not* in this cluster
+  The cluster is stable
+    192.168.3.51 is in state normal
+    192.168.3.50 is in state normal
+    192.168.3.53 is in state normal
+    192.168.3.52 is in state normal
+
+Describing the Ralf Chronos cluster in site site1:
+  The local node is *not* in this cluster
+  The cluster is stable
+
+Describing the Ralf Memcached cluster in site site1:
+  The local node is *not* in this cluster
+  The cluster is *not* stable
+    192.168.3.55 is in state normal, config changed
+    192.168.3.54 is in state leaving, config changed
+
+Describing the Sprout Chronos cluster in site site1:
+  The local node is *not* in this cluster
+  The cluster is stable
+    192.168.3.48 is in state normal
+    192.168.3.56 is in state normal
+    192.168.3.46 is in state normal
+    192.168.3.47 is in state normal
+    192.168.3.49 is in state normal
+
+Describing the Sprout Memcached cluster in site site1:
+  The local node is *not* in this cluster
+  The cluster is stable
+    192.168.3.48 is in state normal
+    192.168.3.56 is in state normal
+    192.168.3.46 is in state normal
+    192.168.3.47 is in state normal
+    192.168.3.49 is in state normal
+
+
+I don?t think that is a bug but I think that I did something wrong.
+
+How can I remove ralf nodes totally??
+I don?t understand also if I have to remove the nodes also form local_config file: etcd_cluster  on all the nodes of the cluster
+
+Thanks
+
+
+From Sebastian.Rex at metaswitch.com  Fri Jan 27 07:47:38 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Fri, 27 Jan 2017 12:47:38 +0000
+Subject: [Project Clearwater] Unable to restart bono
+In-Reply-To: <9607873E-B17E-4954-9417-A71F81143410@usi.ch>
+References: <9607873E-B17E-4954-9417-A71F81143410@usi.ch>
+Message-ID: <SN1PR02MB16648A089369064F2DD2D30F8F760@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+HI,
+
+Quiescing Bono will take a long time to finish, as it must wait for all active registrations to timeout. So if you have a re-registration time of 10 minutes, it can take up to 10 minutes (20 if using UDP) for the bono quiesce command to complete. So I suspect that you didn't wait long enough.
+If you're not worried about preserving service when restarting Bono, you can just stop it with:
+
+sudo service bono stop
+
+although this will not preserve existing REGISTERs.
+
+As for the alarm question: that alarm is benign. Any alarm which ends with a ".1" means that the alarm is cleared and there's no issue.
+
+To find out the version you have installed, you can run
+
+dpkg -s clearwater-infrastructure
+
+which will include "Version: xxx" in the output.
+
+Regards,
+
+Seb.
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Faustinoni Fabrizio
+Sent: 27 January 2017 09:59
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Unable to restart bono
+
+Hi guys,
+
+I?ve the following deployment: 5 bono, 5 sprout, 4 homestead, 4 homer, 1 ellis
+
+If I try to restart the bono node:
+sudo service clearwater-infrastructure restart sudo service bono quiesce
+
+the command is stuck after the output: * Quiescing Bono SIP Edge Proxy bono
+
+In the log file I see: 
+Quiesce signal received
+27-01-2017 09:50:49.759 UTC Status stack.cpp:155: Setting quiescing = PJ_TRUE
+27-01-2017 09:50:49.766 UTC Status stack.cpp:186: Quiescing state changed
+27-01-2017 09:50:49.767 UTC Status quiescing_manager.cpp:164: The Quiescing Manager received input QUIESCE (0) when in state ACTIVE (0)
+27-01-2017 09:50:49.767 UTC Status quiescing_manager.cpp:290: Close untrusted listening port
+27-01-2017 09:50:49.767 UTC Status stack.cpp:398: Destroyed TCP transport for port 5060
+27-01-2017 09:50:49.767 UTC Status quiescing_manager.cpp:298: Quiesce FlowTable
+
+(after that I restart the node to be sure that the bono node is restarted successfully)
+
+Have you any Idea?
+
+Also in the log file I see a lot of :
+UTC Status alarm.cpp:62: sprout issued 1005.1 alarm
+
+What does this log means?
+
+My clearwater version is the last one.
+Last question: Where can I find the exact clearwater version number in my deployment? (I?ve installed it manually with apt-get install)
+
+thanks
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+From Sebastian.Rex at metaswitch.com  Fri Jan 27 07:58:26 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Fri, 27 Jan 2017 12:58:26 +0000
+Subject: [Project Clearwater] Clearwater sip-stress fail due to
+ Unexpected-Msg 183
+In-Reply-To: <6F685295-AF10-4CCD-A239-CF4EEA92A076@usi.ch>
+References: <408F8F41-C528-4504-BE45-00749BC1CD6C@usi.ch>
+	<SN1PR02MB166497FBF6D23E08DA43F8708F750@SN1PR02MB1664.namprd02.prod.outlook.com>
+	<SN1PR02MB16643B78D3DD2B5880C317ED8F740@SN1PR02MB1664.namprd02.prod.outlook.com>
+	<577FCEF4-D910-4639-8544-B83053FD74F1@usi.ch>
+	<6F685295-AF10-4CCD-A239-CF4EEA92A076@usi.ch>
+Message-ID: <SN1PR02MB1664DD88D6FA9035B996787F8F760@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+The new-style clearwater-sip-stress-coreonly scripts are broken in the most recent stable release of Project Clearwater. They will be fixed in the next release.
+
+
+To work around this, you could either use the clearwater-sip-stress-coreonly package from the ?latest? repository, rather than ?stable? (i.e. http://repo.cw-ngv.com/latest), or you could continue to use the old-style clearwater-sip-stress scripts until the next release.
+
+I hope that helps,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Faustinoni Fabrizio
+Sent: 25 January 2017 19:03
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Clearwater sip-stress fail due to Unexpected-Msg 183
+
+Now I?ve enough time to explain my whole scenario.
+
+I?ve deployed a Clearater cluster on Openstack:
+
+  *   2 ralf nodes
+  *   5 sprout nodes
+  *   5 bono nodes
+  *   4 homestead
+  *   4 homer
+  *   1 ellis
+  *   1 stress test node
+  *   1 dns node (bind software)
+
+I?ve followed the Manual installation: http://clearwater.readthedocs.io/en/stable/Installation_Instructions.html
+
+From each node I can ping:
+
+  *   The home_domain: demo.clearwater  (every time a different bono node answer)
+  *   The sprout.demo.clearwater   (every time a different sprout node answer)
+  *   The homer.demo.clearwater (every time a different homer node answer)
+  *   The hs.demo.clearwater (every time a different homestead node answer)
+  *   Ther ralf.demo.clearwater (every time a different ralf node answer)
+  *   All bono-N.demo.clearwater nodes
+  *   All sprout-N.demo.clearwater nodes
+  *   All homer.-N.demo.clearwater nodes
+  *   All homestead-N.demo.clearwater nodes
+
+
+If I login in any homestead node and I execute: "nodetool status" the output is
+
+Datacenter: site1
+=================
+Status=Up/Down
+|/ State=Normal/Leaving/Joining/Moving
+--  Address       Load       Tokens  Owns (effective)  Host ID                               Rack
+UN  192.168.3.50  12.61 MB   256     48.2%             67a708b3-8b18-4bba-804c-228c0a40f519  RAC1
+UN  192.168.3.51  12.67 MB   256     48.9%             aff78ecb-b7e0-4099-803a-dc7c1df8545f  RAC1
+UN  192.168.3.52  15.76 MB   256     50.2%             b78c5a38-e136-4735-a41f-93f2476a012a  RAC1
+UN  192.168.3.53  16.41 MB   256     52.7%             ddee088a-bff5-4c80-80e0-fcfa37a73077  RAC1
+
+
+
+If I execute clearwater-etcdctl cluster-health
+member 176dfbe09295f8fb is healthy: got healthy result from http://192.168.3.50:4000
+member 3099bb17539a7c44 is healthy: got healthy result from http://192.168.3.51:4000
+member 327f1928783cf78e is healthy: got healthy result from http://192.168.3.60:4000
+member 32e70f18c5b85cbf is healthy: got healthy result from http://192.168.3.43:4000
+member 439bb97c4682c8c9 is healthy: got healthy result from http://192.168.3.46:4000
+member 44cd47f6fd725bb2 is healthy: got healthy result from http://192.168.3.44:4000
+member 4fd1f4e06276b755 is healthy: got healthy result from http://192.168.3.56:4000
+member 72859264f699bc49 is healthy: got healthy result from http://192.168.3.61:4000
+member 732ad30023c78349 is healthy: got healthy result from http://192.168.3.53:4000
+member 8e4684e027bcf7e1 is healthy: got healthy result from http://192.168.3.55:4000
+member 92687a19b70d0308 is healthy: got healthy result from http://192.168.3.58:4000
+member ac8738522a031a34 is healthy: got healthy result from http://192.168.3.48:4000
+member b124cc2916d37e7f is healthy: got healthy result from http://192.168.3.54:4000
+member be8408958431cf89 is healthy: got healthy result from http://192.168.3.59:4000
+member c0d2f53681553fb6 is healthy: got healthy result from http://192.168.3.52:4000
+member c5e64aae2d1fe7b1 is healthy: got healthy result from http://192.168.3.42:4000
+member c99d1fc5050334f7 is healthy: got healthy result from http://192.168.3.57:4000
+member d5b010e57f2d2145 is healthy: got healthy result from http://192.168.3.47:4000
+member e510c4aa36d98ad8 is healthy: got healthy result from http://192.168.3.45:4000
+member f3f724c6247f3c10 is healthy: got healthy result from http://192.168.3.49:4000
+member f6fb305b3f402aff is healthy: got healthy result from http://192.168.3.41:4000
+cluster is healthy
+
+
+Sip stress node:
+
+I tried the 2 sip-stress test (the old one and the new one):
+
+The old one:
+I execute the provisioning command on homestead: /usr/share/clearwater/crest/src/metaswitch/crest/tools/stress_provision.sh
+I?ve added the configuration reg_max_expires=1800 in the shared_configs and executed /usr/share/clearwater/clearwater-config-manager/scripts/upload_shared_config
+I?ve created the local_config in the sip_stress and add the local_ip configuration
+I?ve executed sudo apt-get install clearwater-sip-stress
+I dind?t change the original sip-stress.xml
+I?ve executed  /usr/share/clearwater/infrastructure/scripts/sip-stress (which generate /usr/share/clearwater/sip-stress/users.csv.1)
+I?ve started the service: sudo service clearwater-sip-stress restart && tail -f /var/log/clearwater-sipp/sip-stress.1.out
+
+The output is in the attacched file sip-stress.1.out.zip
+
+Question: There are some Timeouts messages after REGISTER, is this normal? it is depends of a wrong configuration?
+
+This could be the problem for the timeouts messages?
+
+However the old stress test seems working.
+
+
+
+The new stress method:
+
+I?ve created a new virtual machine
+I?ve created the local_config in the sip_stress and add the local_ip configuration
+I?ve executed: sudo apt-get install clearwater-sip-stress-coreonly
+I?ve executed:
+/usr/share/clearwater/bin/run_stress demo.clearwater 20 30
+
+And surprisingly now the test (after that I re-installed the sip-stress) ended successfully:
+Starting initial registration, will take 0 seconds
+Initial registration succeeded
+Starting test
+Test complete
+
+Elapsed time: 00:27:41
+Start: 2017-01-25 19:16:23.260399
+End: 2017-01-25 19:46:23.300702
+
+Total calls: 6
+Successful calls: 0 (0.0%)
+Failed calls: 6 (100.0%)
+
+Retransmissions: 0
+
+Average time from INVITE to 180 Ringing: 0.0 ms
+# of calls with 0-2ms from INVITE to 180 Ringing: 0 (0.0%)
+# of calls with 2-20ms from INVITE to 180 Ringing: 0 (0.0%)
+# of calls with 20-200ms from INVITE to 180 Ringing: 0 (0.0%)
+# of calls with 200-2000ms from INVITE to 180 Ringing: 0 (0.0%)
+# of calls with 2000+ms from INVITE to 180 Ringing: 0 (0.0%)
+
+Total re-REGISTERs: 20
+Successful re-REGISTERs: 20 (100.0%)
+Failed re-REGISTERS: 0 (0.0%)
+
+REGISTER retransmissions: 0
+
+Average time from REGISTER to 200 OK: 31.0 ms
+
+Log files at /var/log/clearwater-sip-stress/2687_*
+
+But If I check the log: /var/log/clearwater-sip-stress/2687_caller_errors.log
+there are some errors (check the attached files: 2687_caller_errors.log)
+
+
+
+Question: in some logs I see:  sprout issued 1005.1 alarm
+what does it mean?
+
+If you need any other information please let me know
+Thanks
+
+
+
+
+On Jan 25, 2017, at 4:43 PM, Faustinoni Fabrizio <fabrizio.faustinoni at usi.ch<mailto:fabrizio.faustinoni at usi.ch>> wrote:
+
+Hi Sebastian,
+I;ve subscribed to the mailing list.
+
+How can I know the clearwater versione? I?ve installed it just a couple of days ago.
+
+
+On Jan 25, 2017, at 10:38 AM, Sebastian Rex <Sebastian.Rex at metaswitch.com<mailto:Sebastian.Rex at metaswitch.com>> wrote:
+
+Hi,
+
+It?s just been brought to my attention that you?re not signed up to the mailing list, so I suspect that you haven?t seen my response, below.
+
+If you want to see all responses, I suggest you sign up to the mailing list using:http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+Regards,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Sebastian Rex
+Sent: 24 January 2017 15:22
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] Clearwater sip-stress fail due to Unexpected-Msg 183
+
+Hi,
+
+Would you mind also telling us what release of Project Clearwater you?re running on?
+
+Thanks,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Faustinoni Fabrizio
+Sent: 24 January 2017 14:49
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Clearwater sip-stress fail due to Unexpected-Msg 183
+
+Hi,
+I deployed a Clearwater Cluster, everything looks fine.
+If I start the stress test /usr/share/clearwater/bin/run_stress --sipp-output demo.clearwater 400 10
+the test fail:
+
+
+Last Error: Aborting call on unexpected message for Call-Id '10-4484 at 127...
+
+------------------------------ Scenario Screen -------- [1-9]: Change Screen --
+
+Call-rate(length)   Port   Total-time  Total-calls  Remote-host
+
+0.1(5000 ms)/1.000s   5061     141.75 s           10  192.168.3.46:5054(TCP)
+
+
+
+0 new calls during 1.004 s period      1 ms scheduler resolution
+
+0 calls (limit 1)                      Peak was 1 calls, after 13 s
+
+1 Running, 2 Paused, 3 Woken up
+
+0 dead call msg (discarded)            0 out-of-call msg (discarded)
+
+3 open sockets
+
+
+
+                             Messages  Retrans   Timeout   Unexpected-Msg
+
+  INVITE ---------->         10        0         0
+
+     100 <----------         10        0         0         0
+
+     183 <----------         0         0         0         10
+
+There aren?t error messages in the logs file.
+In sprout nodes I can see this log but I don?t understand if this is an error or just a info:
+4-01-2017 14:47:20.227 UTC Status alarm.cpp:62: sprout issued 1004.1 alarm
+24-01-2017 14:47:20.227 UTC Status alarm.cpp:62: sprout issued 1001.1 alarm
+24-01-2017 14:47:20.227 UTC Status alarm.cpp:62: sprout issued 1002.1 alarm
+24-01-2017 14:47:50.227 UTC Status alarm.cpp:62: sprout issued 1004.1 alarm
+
+
+Thank you
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170127/14706e5b/attachment.html>
+
+From fabrizio.faustinoni at usi.ch  Fri Jan 27 08:16:13 2017
+From: fabrizio.faustinoni at usi.ch (Faustinoni Fabrizio)
+Date: Fri, 27 Jan 2017 13:16:13 +0000
+Subject: [Project Clearwater] Unable to restart bono
+In-Reply-To: <SN1PR02MB16648A089369064F2DD2D30F8F760@SN1PR02MB1664.namprd02.prod.outlook.com>
+References: <9607873E-B17E-4954-9417-A71F81143410@usi.ch>
+	<SN1PR02MB16648A089369064F2DD2D30F8F760@SN1PR02MB1664.namprd02.prod.outlook.com>
+Message-ID: <0371E040-40E0-438B-8328-56300C65B356@usi.ch>
+
+Yes you are right, I waited only a couple of minutes.
+
+A question:
+If I run the sip-stress-test, it will register 15000 users.
+For all active user there will be a connection in bono nodes right? 
+When I stop the stress service (sudo clearwater-sip-stress stop), this connection will be stopped immediately or I have to wait as you said 10/20 minutes?
+
+However my clearwater version is: Version: 1.0-170113.135901
+
+thanks
+
+> On Jan 27, 2017, at 1:47 PM, Sebastian Rex <Sebastian.Rex at metaswitch.com> wrote:
+> 
+> HI,
+> 
+> Quiescing Bono will take a long time to finish, as it must wait for all active registrations to timeout. So if you have a re-registration time of 10 minutes, it can take up to 10 minutes (20 if using UDP) for the bono quiesce command to complete. So I suspect that you didn't wait long enough.
+> If you're not worried about preserving service when restarting Bono, you can just stop it with:
+> 
+> sudo service bono stop
+> 
+> although this will not preserve existing REGISTERs.
+> 
+> As for the alarm question: that alarm is benign. Any alarm which ends with a ".1" means that the alarm is cleared and there's no issue.
+> 
+> To find out the version you have installed, you can run
+> 
+> dpkg -s clearwater-infrastructure
+> 
+> which will include "Version: xxx" in the output.
+> 
+> Regards,
+> 
+> Seb.
+> 
+> -----Original Message-----
+> From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Faustinoni Fabrizio
+> Sent: 27 January 2017 09:59
+> To: clearwater at lists.projectclearwater.org
+> Subject: [Project Clearwater] Unable to restart bono
+> 
+> Hi guys,
+> 
+> I?ve the following deployment: 5 bono, 5 sprout, 4 homestead, 4 homer, 1 ellis
+> 
+> If I try to restart the bono node:
+> sudo service clearwater-infrastructure restart sudo service bono quiesce
+> 
+> the command is stuck after the output: * Quiescing Bono SIP Edge Proxy bono
+> 
+> In the log file I see: 
+> Quiesce signal received
+> 27-01-2017 09:50:49.759 UTC Status stack.cpp:155: Setting quiescing = PJ_TRUE
+> 27-01-2017 09:50:49.766 UTC Status stack.cpp:186: Quiescing state changed
+> 27-01-2017 09:50:49.767 UTC Status quiescing_manager.cpp:164: The Quiescing Manager received input QUIESCE (0) when in state ACTIVE (0)
+> 27-01-2017 09:50:49.767 UTC Status quiescing_manager.cpp:290: Close untrusted listening port
+> 27-01-2017 09:50:49.767 UTC Status stack.cpp:398: Destroyed TCP transport for port 5060
+> 27-01-2017 09:50:49.767 UTC Status quiescing_manager.cpp:298: Quiesce FlowTable
+> 
+> (after that I restart the node to be sure that the bono node is restarted successfully)
+> 
+> Have you any Idea?
+> 
+> Also in the log file I see a lot of :
+> UTC Status alarm.cpp:62: sprout issued 1005.1 alarm
+> 
+> What does this log means?
+> 
+> My clearwater version is the last one.
+> Last question: Where can I find the exact clearwater version number in my deployment? (I?ve installed it manually with apt-get install)
+> 
+> thanks
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+
+From fabrizio.faustinoni at usi.ch  Fri Jan 27 08:21:19 2017
+From: fabrizio.faustinoni at usi.ch (Faustinoni Fabrizio)
+Date: Fri, 27 Jan 2017 13:21:19 +0000
+Subject: [Project Clearwater] Clearwater sip-stress fail due to
+ Unexpected-Msg 183
+In-Reply-To: <SN1PR02MB1664DD88D6FA9035B996787F8F760@SN1PR02MB1664.namprd02.prod.outlook.com>
+References: <408F8F41-C528-4504-BE45-00749BC1CD6C@usi.ch>
+	<SN1PR02MB166497FBF6D23E08DA43F8708F750@SN1PR02MB1664.namprd02.prod.outlook.com>
+	<SN1PR02MB16643B78D3DD2B5880C317ED8F740@SN1PR02MB1664.namprd02.prod.outlook.com>
+	<577FCEF4-D910-4639-8544-B83053FD74F1@usi.ch>
+	<6F685295-AF10-4CCD-A239-CF4EEA92A076@usi.ch>
+	<SN1PR02MB1664DD88D6FA9035B996787F8F760@SN1PR02MB1664.namprd02.prod.outlook.com>
+Message-ID: <9F8BB279-DCCC-4CD3-A997-160EBAEB8E95@usi.ch>
+
+Thank you for your answer.
+Then I?ll wait for the new version to run the new test.
+
+However, running the old stress test I saw something strange, there are 2830 Unexpected-Msg as you see in the following log.
+Do you know what can cause this problem? ( I didn?t change the sip-stress.xml, is the original one.)
+
+Thank you again
+
+Fabrizio
+
+------------------------------ Scenario Screen -------- [1-9]: Change Screen --
+     Users (length)   Port   Total-time  Total-calls  Remote-host
+       15000 (0 ms)   5060    7057.86 s        15000  192.168.3.61:5060(TCP)
+
+  Call limit reached (-m 15000), 1.001 s period  1 ms scheduler resolution
+  12170 calls (limit 15000)              Peak was 15000 calls, after 0 s
+  0 Running, 12172 Paused, 55 Woken up
+  0 dead call msg (discarded)            0 out-of-call msg (discarded)
+  12172 open sockets
+
+                                 Messages  Retrans   Timeout   Unexpected-Msg
+       Pause [0ms/10:00]         15000                         0
+    REGISTER ---------->         15000     0
+         401 <----------         15000     0         0         0
+    REGISTER ---------->         15000     0
+         200 <----------         15000     0         0         0
+    REGISTER ---------->         15000     0
+         401 <----------         15000     0         0         0
+    REGISTER ---------->         15000     0
+         200 <----------         15000     0         0         0
+       Pause [    10.0s]         15000                         0
+    REGISTER ---------->  B-RTD1 318238    0
+         200 <----------  E-RTD1 318238    0         0         0
+    REGISTER ---------->  B-RTD1 318238    0
+         200 <----------  E-RTD1 318238    0         0         0
+       Pause [$reg_pause]        265542                        0
+       Pause [$pre_call_delay]   52696                         0
+      INVITE ---------->  B-RTD2 51768     0
+         100 <----------         51755     0         0         0
+      INVITE <----------         13        0         0         0
+         100 <----------         13        0         0         0
+      INVITE <----------         48925     0         0         2830
+         100 ---------->         48938     0
+         180 ---------->         48938     0
+         180 <----------         48938     0         0         0
+       Pause [$call_answer]      48938                         0
+         200 ---------->         48909     0
+         200 <----------         48909     0         0         0
+         ACK ---------->         48909     0
+         ACK <----------         48909     0         0         0
+      UPDATE ---------->         48909     0
+      UPDATE <----------         48909     0         0         0
+         200 ---------->         48909     0
+         200 <----------  E-RTD2 48909     0         0         0
+       Pause [$call_length]      48909                         0
+         BYE ---------->  B-RTD3 48751     0
+         BYE <----------         48751     0         0         0
+         200 ---------->         48751     0
+         200 <----------  E-RTD3 48751     0         0         0
+       Pause [$post_call_delay]  48751                         0
+------- Waiting for active calls to end. Press [q] again to force exit. -------
+
+Last Error: Aborting call on unexpected message for Call-Id '7810-9023 at 1...
+
+Fabrizio
+
+On Jan 27, 2017, at 1:58 PM, Sebastian Rex <Sebastian.Rex at metaswitch.com<mailto:Sebastian.Rex at metaswitch.com>> wrote:
+
+Hi,
+
+The new-style clearwater-sip-stress-coreonly scripts are broken in the most recent stable release of Project Clearwater. They will be fixed in the next release.
+
+
+To work around this, you could either use the clearwater-sip-stress-coreonly package from the ?latest? repository, rather than ?stable? (i.e. http://repo.cw-ngv.com/latest), or you could continue to use the old-style clearwater-sip-stress scripts until the next release.
+
+
+I hope that helps,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Faustinoni Fabrizio
+Sent: 25 January 2017 19:03
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] Clearwater sip-stress fail due to Unexpected-Msg 183
+
+Now I?ve enough time to explain my whole scenario.
+
+I?ve deployed a Clearater cluster on Openstack:
+
+  *   2 ralf nodes
+  *   5 sprout nodes
+  *   5 bono nodes
+  *   4 homestead
+  *   4 homer
+  *   1 ellis
+  *   1 stress test node
+  *   1 dns node (bind software)
+
+
+I?ve followed the Manual installation: http://clearwater.readthedocs.io/en/stable/Installation_Instructions.html
+
+From each node I can ping:
+
+  *   The home_domain: demo.clearwater  (every time a different bono node answer)
+  *   The sprout.demo.clearwater   (every time a different sprout node answer)
+  *   The homer.demo.clearwater (every time a different homer node answer)
+  *   The hs.demo.clearwater (every time a different homestead node answer)
+  *   Ther ralf.demo.clearwater (every time a different ralf node answer)
+  *   All bono-N.demo.clearwater nodes
+  *   All sprout-N.demo.clearwater nodes
+  *   All homer.-N.demo.clearwater nodes
+  *   All homestead-N.demo.clearwater nodes
+
+
+
+If I login in any homestead node and I execute: "nodetool status" the output is
+
+Datacenter: site1
+=================
+Status=Up/Down
+|/ State=Normal/Leaving/Joining/Moving
+--  Address       Load       Tokens  Owns (effective)  Host ID                               Rack
+UN  192.168.3.50  12.61 MB   256     48.2%             67a708b3-8b18-4bba-804c-228c0a40f519  RAC1
+UN  192.168.3.51  12.67 MB   256     48.9%             aff78ecb-b7e0-4099-803a-dc7c1df8545f  RAC1
+UN  192.168.3.52  15.76 MB   256     50.2%             b78c5a38-e136-4735-a41f-93f2476a012a  RAC1
+UN  192.168.3.53  16.41 MB   256     52.7%             ddee088a-bff5-4c80-80e0-fcfa37a73077  RAC1
+
+
+
+If I execute clearwater-etcdctl cluster-health
+member 176dfbe09295f8fb is healthy: got healthy result from http://192.168.3.50:4000<http://192.168.3.50:4000/>
+member 3099bb17539a7c44 is healthy: got healthy result from http://192.168.3.51:4000<http://192.168.3.51:4000/>
+member 327f1928783cf78e is healthy: got healthy result from http://192.168.3.60:4000<http://192.168.3.60:4000/>
+member 32e70f18c5b85cbf is healthy: got healthy result from http://192.168.3.43:4000<http://192.168.3.43:4000/>
+member 439bb97c4682c8c9 is healthy: got healthy result from http://192.168.3.46:4000<http://192.168.3.46:4000/>
+member 44cd47f6fd725bb2 is healthy: got healthy result from http://192.168.3.44:4000<http://192.168.3.44:4000/>
+member 4fd1f4e06276b755 is healthy: got healthy result from http://192.168.3.56:4000<http://192.168.3.56:4000/>
+member 72859264f699bc49 is healthy: got healthy result from http://192.168.3.61:4000<http://192.168.3.61:4000/>
+member 732ad30023c78349 is healthy: got healthy result from http://192.168.3.53:4000<http://192.168.3.53:4000/>
+member 8e4684e027bcf7e1 is healthy: got healthy result from http://192.168.3.55:4000<http://192.168.3.55:4000/>
+member 92687a19b70d0308 is healthy: got healthy result from http://192.168.3.58:4000<http://192.168.3.58:4000/>
+member ac8738522a031a34 is healthy: got healthy result from http://192.168.3.48:4000<http://192.168.3.48:4000/>
+member b124cc2916d37e7f is healthy: got healthy result from http://192.168.3.54:4000<http://192.168.3.54:4000/>
+member be8408958431cf89 is healthy: got healthy result from http://192.168.3.59:4000<http://192.168.3.59:4000/>
+member c0d2f53681553fb6 is healthy: got healthy result from http://192.168.3.52:4000<http://192.168.3.52:4000/>
+member c5e64aae2d1fe7b1 is healthy: got healthy result from http://192.168.3.42:4000<http://192.168.3.42:4000/>
+member c99d1fc5050334f7 is healthy: got healthy result from http://192.168.3.57:4000<http://192.168.3.57:4000/>
+member d5b010e57f2d2145 is healthy: got healthy result from http://192.168.3.47:4000<http://192.168.3.47:4000/>
+member e510c4aa36d98ad8 is healthy: got healthy result from http://192.168.3.45:4000<http://192.168.3.45:4000/>
+member f3f724c6247f3c10 is healthy: got healthy result from http://192.168.3.49:4000<http://192.168.3.49:4000/>
+member f6fb305b3f402aff is healthy: got healthy result from http://192.168.3.41:4000<http://192.168.3.41:4000/>
+cluster is healthy
+
+
+Sip stress node:
+
+I tried the 2 sip-stress test (the old one and the new one):
+
+The old one:
+I execute the provisioning command on homestead: /usr/share/clearwater/crest/src/metaswitch/crest/tools/stress_provision.sh
+I?ve added the configuration reg_max_expires=1800 in the shared_configs and executed /usr/share/clearwater/clearwater-config-manager/scripts/upload_shared_config
+I?ve created the local_config in the sip_stress and add the local_ip configuration
+I?ve executed sudo apt-get install clearwater-sip-stress
+I dind?t change the original sip-stress.xml
+I?ve executed  /usr/share/clearwater/infrastructure/scripts/sip-stress (which generate /usr/share/clearwater/sip-stress/users.csv.1)
+I?ve started the service: sudo service clearwater-sip-stress restart && tail -f /var/log/clearwater-sipp/sip-stress.1.out
+
+The output is in the attacched file sip-stress.1.out.zip
+
+Question: There are some Timeouts messages after REGISTER, is this normal? it is depends of a wrong configuration?
+
+This could be the problem for the timeouts messages?
+
+However the old stress test seems working.
+
+
+
+The new stress method:
+
+I?ve created a new virtual machine
+I?ve created the local_config in the sip_stress and add the local_ip configuration
+I?ve executed: sudo apt-get install clearwater-sip-stress-coreonly
+I?ve executed:
+/usr/share/clearwater/bin/run_stress demo.clearwater 20 30
+
+And surprisingly now the test (after that I re-installed the sip-stress) ended successfully:
+Starting initial registration, will take 0 seconds
+Initial registration succeeded
+Starting test
+Test complete
+
+Elapsed time: 00:27:41
+Start: 2017-01-25 19:16:23.260399
+End: 2017-01-25 19:46:23.300702
+
+Total calls: 6
+Successful calls: 0 (0.0%)
+Failed calls: 6 (100.0%)
+
+Retransmissions: 0
+
+Average time from INVITE to 180 Ringing: 0.0 ms
+# of calls with 0-2ms from INVITE to 180 Ringing: 0 (0.0%)
+# of calls with 2-20ms from INVITE to 180 Ringing: 0 (0.0%)
+# of calls with 20-200ms from INVITE to 180 Ringing: 0 (0.0%)
+# of calls with 200-2000ms from INVITE to 180 Ringing: 0 (0.0%)
+# of calls with 2000+ms from INVITE to 180 Ringing: 0 (0.0%)
+
+Total re-REGISTERs: 20
+Successful re-REGISTERs: 20 (100.0%)
+Failed re-REGISTERS: 0 (0.0%)
+
+REGISTER retransmissions: 0
+
+Average time from REGISTER to 200 OK: 31.0 ms
+
+Log files at /var/log/clearwater-sip-stress/2687_*
+
+But If I check the log: /var/log/clearwater-sip-stress/2687_caller_errors.log
+there are some errors (check the attached files: 2687_caller_errors.log)
+
+
+
+Question: in some logs I see:  sprout issued 1005.1 alarm
+what does it mean?
+
+If you need any other information please let me know
+Thanks
+
+
+
+
+On Jan 25, 2017, at 4:43 PM, Faustinoni Fabrizio <fabrizio.faustinoni at usi.ch<mailto:fabrizio.faustinoni at usi.ch>> wrote:
+
+Hi Sebastian,
+I;ve subscribed to the mailing list.
+
+How can I know the clearwater versione? I?ve installed it just a couple of days ago.
+
+
+On Jan 25, 2017, at 10:38 AM, Sebastian Rex <Sebastian.Rex at metaswitch.com<mailto:Sebastian.Rex at metaswitch.com>> wrote:
+
+Hi,
+
+It?s just been brought to my attention that you?re not signed up to the mailing list, so I suspect that you haven?t seen my response, below.
+
+If you want to see all responses, I suggest you sign up to the mailing list using:http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+Regards,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Sebastian Rex
+Sent: 24 January 2017 15:22
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] Clearwater sip-stress fail due to Unexpected-Msg 183
+
+Hi,
+
+Would you mind also telling us what release of Project Clearwater you?re running on?
+
+Thanks,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Faustinoni Fabrizio
+Sent: 24 January 2017 14:49
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Clearwater sip-stress fail due to Unexpected-Msg 183
+
+Hi,
+I deployed a Clearwater Cluster, everything looks fine.
+If I start the stress test /usr/share/clearwater/bin/run_stress --sipp-output demo.clearwater 400 10
+the test fail:
+
+
+Last Error: Aborting call on unexpected message for Call-Id '10-4484 at 127...
+
+------------------------------ Scenario Screen -------- [1-9]: Change Screen --
+
+Call-rate(length)   Port   Total-time  Total-calls  Remote-host
+
+0.1(5000 ms)/1.000s   5061     141.75 s           10  192.168.3.46:5054(TCP)
+
+
+
+0 new calls during 1.004 s period      1 ms scheduler resolution
+
+0 calls (limit 1)                      Peak was 1 calls, after 13 s
+
+1 Running, 2 Paused, 3 Woken up
+
+0 dead call msg (discarded)            0 out-of-call msg (discarded)
+
+3 open sockets
+
+
+
+                             Messages  Retrans   Timeout   Unexpected-Msg
+
+  INVITE ---------->         10        0         0
+
+     100 <----------         10        0         0         0
+
+     183 <----------         0         0         0         10
+
+
+There aren?t error messages in the logs file.
+In sprout nodes I can see this log but I don?t understand if this is an error or just a info:
+4-01-2017 14:47:20.227 UTC Status alarm.cpp:62: sprout issued 1004.1 alarm
+24-01-2017 14:47:20.227 UTC Status alarm.cpp:62: sprout issued 1001.1 alarm
+24-01-2017 14:47:20.227 UTC Status alarm.cpp:62: sprout issued 1002.1 alarm
+24-01-2017 14:47:50.227 UTC Status alarm.cpp:62: sprout issued 1004.1 alarm
+
+
+Thank you
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170127/d5efdf84/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Fri Jan 27 12:24:25 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Fri, 27 Jan 2017 17:24:25 +0000
+Subject: [Project Clearwater] Unable to restart bono
+In-Reply-To: <0371E040-40E0-438B-8328-56300C65B356@usi.ch>
+References: <9607873E-B17E-4954-9417-A71F81143410@usi.ch>
+	<SN1PR02MB16648A089369064F2DD2D30F8F760@SN1PR02MB1664.namprd02.prod.outlook.com>
+	<0371E040-40E0-438B-8328-56300C65B356@usi.ch>
+Message-ID: <SN1PR02MB1664E3B0B202311E01FFC3A48F760@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+I think that the sip-stress scripts actually register for an hour and don't un-register. This means that if you run the scripts and then try to quiesce bono, it will wait until at least an hour after the start of the stress run before the quiesce will finish.
+
+If all you're doing is running stress (i.e. you're not worried about the impact to service once the stress run is done) then I'd suggest you stop, rather than quiesce, bono so that you don't have to wait so long.
+
+Thanks,
+
+Seb.
+
+-----Original Message-----
+From: Faustinoni Fabrizio [mailto:fabrizio.faustinoni at usi.ch] 
+Sent: 27 January 2017 13:16
+To: Sebastian Rex
+Cc: clearwater at lists.projectclearwater.org
+Subject: Re: Unable to restart bono
+
+Yes you are right, I waited only a couple of minutes.
+
+A question:
+If I run the sip-stress-test, it will register 15000 users.
+For all active user there will be a connection in bono nodes right? 
+When I stop the stress service (sudo clearwater-sip-stress stop), this connection will be stopped immediately or I have to wait as you said 10/20 minutes?
+
+However my clearwater version is: Version: 1.0-170113.135901
+
+thanks
+
+> On Jan 27, 2017, at 1:47 PM, Sebastian Rex <Sebastian.Rex at metaswitch.com> wrote:
+> 
+> HI,
+> 
+> Quiescing Bono will take a long time to finish, as it must wait for all active registrations to timeout. So if you have a re-registration time of 10 minutes, it can take up to 10 minutes (20 if using UDP) for the bono quiesce command to complete. So I suspect that you didn't wait long enough.
+> If you're not worried about preserving service when restarting Bono, you can just stop it with:
+> 
+> sudo service bono stop
+> 
+> although this will not preserve existing REGISTERs.
+> 
+> As for the alarm question: that alarm is benign. Any alarm which ends with a ".1" means that the alarm is cleared and there's no issue.
+> 
+> To find out the version you have installed, you can run
+> 
+> dpkg -s clearwater-infrastructure
+> 
+> which will include "Version: xxx" in the output.
+> 
+> Regards,
+> 
+> Seb.
+> 
+> -----Original Message-----
+> From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Faustinoni Fabrizio
+> Sent: 27 January 2017 09:59
+> To: clearwater at lists.projectclearwater.org
+> Subject: [Project Clearwater] Unable to restart bono
+> 
+> Hi guys,
+> 
+> I?ve the following deployment: 5 bono, 5 sprout, 4 homestead, 4 homer, 1 ellis
+> 
+> If I try to restart the bono node:
+> sudo service clearwater-infrastructure restart sudo service bono quiesce
+> 
+> the command is stuck after the output: * Quiescing Bono SIP Edge Proxy bono
+> 
+> In the log file I see: 
+> Quiesce signal received
+> 27-01-2017 09:50:49.759 UTC Status stack.cpp:155: Setting quiescing = PJ_TRUE
+> 27-01-2017 09:50:49.766 UTC Status stack.cpp:186: Quiescing state changed
+> 27-01-2017 09:50:49.767 UTC Status quiescing_manager.cpp:164: The Quiescing Manager received input QUIESCE (0) when in state ACTIVE (0)
+> 27-01-2017 09:50:49.767 UTC Status quiescing_manager.cpp:290: Close untrusted listening port
+> 27-01-2017 09:50:49.767 UTC Status stack.cpp:398: Destroyed TCP transport for port 5060
+> 27-01-2017 09:50:49.767 UTC Status quiescing_manager.cpp:298: Quiesce FlowTable
+> 
+> (after that I restart the node to be sure that the bono node is restarted successfully)
+> 
+> Have you any Idea?
+> 
+> Also in the log file I see a lot of :
+> UTC Status alarm.cpp:62: sprout issued 1005.1 alarm
+> 
+> What does this log means?
+> 
+> My clearwater version is the last one.
+> Last question: Where can I find the exact clearwater version number in my deployment? (I?ve installed it manually with apt-get install)
+> 
+> thanks
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+
+From amuthamozhias at tataelxsi.co.in  Tue Jan 31 05:23:56 2017
+From: amuthamozhias at tataelxsi.co.in (AMUTHA  MOZHI  A)
+Date: Tue, 31 Jan 2017 10:23:56 +0000
+Subject: [Project Clearwater] Active number of calls
+Message-ID: <PS1PR0401MB20108612A94316508E7BF13FF54A0@PS1PR0401MB2010.apcprd04.prod.outlook.com>
+
+Dear All,
+
+
+I am trying to get number of active calls from ralf node. It always returns 0. Where as  the individual sprout SNMP MIBs returns proper data. For example from below elements i could get the invite and bye count from sprout
+
+PROJECT-CLEARWATER-MIB::sproutICSCFIncomingSIPTransactionsSuccesses.scopeCurrent5MinutePeriod.scopeINVITE
+
+PROJECT-CLEARWATER-MIB::sproutICSCFIncomingSIPTransactionsSuccesses.scopeCurrent5MinutePeriod.scopeACK.
+
+Could you please help me in getting number of active calls?
+
+
+Or any other approach is available to get active number of calls other than SNMP like REST?
+
+
+Thanks in advance.
+
+
+Regards,
+
+Amutha.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170131/e00f6f52/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Tue Jan 31 10:30:49 2017
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Tue, 31 Jan 2017 15:30:49 +0000
+Subject: [Project Clearwater] Active number of calls
+In-Reply-To: <PS1PR0401MB20108612A94316508E7BF13FF54A0@PS1PR0401MB2010.apcprd04.prod.outlook.com>
+References: <PS1PR0401MB20108612A94316508E7BF13FF54A0@PS1PR0401MB2010.apcprd04.prod.outlook.com>
+Message-ID: <SN1PR02MB1664DCCB37721F7B61E674C58F4A0@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi Amutha,
+
+What statistic are you trying to poll? I think that the one that you want is chronosCallInstantaneousCount, as described in https://github.com/Metaswitch/clearwater-snmp-handlers/blob/master/PROJECT-CLEARWATER-MIB
+
+If that is the stat that you're polling, then it's worth checking that you have your deployment configured to use Ralf (and, by extension, have set up Rf billing as per: http://clearwater.readthedocs.io/en/latest/CDF_Integration.html) If your deployment isn't using Ralf, then it will think there are no active calls.
+
+Hope that helps,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of AMUTHA MOZHI A
+Sent: 31 January 2017 10:24
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Active number of calls
+
+
+Dear All,
+
+
+
+I am trying to get number of active calls from ralf node. It always returns 0. Where as  the individual sprout SNMP MIBs returns proper data. For example from below elements i could get the invite and bye count from sprout
+
+PROJECT-CLEARWATER-MIB::sproutICSCFIncomingSIPTransactionsSuccesses.scopeCurrent5MinutePeriod.scopeINVITE
+
+PROJECT-CLEARWATER-MIB::sproutICSCFIncomingSIPTransactionsSuccesses.scopeCurrent5MinutePeriod.scopeACK.
+
+Could you please help me in getting number of active calls?
+
+
+
+Or any other approach is available to get active number of calls other than SNMP like REST?
+
+
+
+Thanks in advance.
+
+
+
+Regards,
+
+Amutha.
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20170131/d1e877e9/attachment.html>
+

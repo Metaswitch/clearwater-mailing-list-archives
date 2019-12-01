@@ -1,0 +1,445 @@
+From Charles.Liu at L3Harris.com  Thu Oct 10 12:48:03 2019
+From: Charles.Liu at L3Harris.com (Liu, Charles)
+Date: Thu, 10 Oct 2019 16:48:03 +0000
+Subject: [Project Clearwater] clearwater and fhoss integration
+In-Reply-To: <6d0df0bc49dd492eaf5bb9c00c147f1b@MLBXCH16.cs.myharris.net>
+References: <6d0df0bc49dd492eaf5bb9c00c147f1b@MLBXCH16.cs.myharris.net>
+Message-ID: <49d92ccc5d044c7789d1a0217a358d9c@MLBXCH16.cs.myharris.net>
+
+For clearwater & fhoss integration,
+
+What need to be configured for /etc/fhoss/DiameterPeerHSS.xml on fhoss for clearwater IMS?
+
+<Peer FQDN="icscf.ims1.sip.uniza.sk" Realm=" ims1.sip.uniza.sk " port="3869" />
+<Peer FQDN="scscf. ims1.sip.uniza.sk " Realm=" ims1.sip.uniza.sk ="3870" />
+
+Port 3869 & 3870 were not listening at clearwater deployment.
+
+
+Thanks,
+
+--Charles
+
+
+  
+
+CONFIDENTIALITY NOTICE: This email and any attachments are for the sole use of the intended recipient and may contain material that is proprietary, confidential, privileged or otherwise legally protected or restricted under applicable government laws. Any review, disclosure, distributing or other use without expressed permission of the sender is strictly prohibited. If you are not the intended recipient, please contact the sender and delete all copies without reading, printing, or saving.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20191010/2ac3200d/attachment.html>
+
+From pinkesh.j.shah at intel.com  Thu Oct 24 12:52:16 2019
+From: pinkesh.j.shah at intel.com (Shah, Pinkesh J)
+Date: Thu, 24 Oct 2019 16:52:16 +0000
+Subject: [Project Clearwater] Issue connecting to repo.cw-ngv.com
+Message-ID: <96F030DF3A380C429E52DF54D54BD4F791778371@FMSMSX108.amr.corp.intel.com>
+
+Hi,
+I am trying to download precompiled version of clearwater IMS components but the above machine on amazon is not responding.
+
+Below is response to ping
+Pinging ec2-107-21-20-219.compute-1.amazonaws.com [107.21.20.219] with 32 bytes of data:
+Request timed out.
+
+Pinkesh Shah
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20191024/10a87710/attachment.html>
+
+From jwoh95 at dcn.ssu.ac.kr  Fri Oct 25 03:47:34 2019
+From: jwoh95 at dcn.ssu.ac.kr (Jaewook Oh)
+Date: Fri, 25 Oct 2019 16:47:34 +0900
+Subject: [Project Clearwater] [REPO] It seems clearwater repo is dead now.
+Message-ID: <CABZrd4x3f8=U4KELVfL7VOm_T+XEo4yRZaBmWjjNTHm1eoyY1A@mail.gmail.com>
+
+Hello Clearwater members,
+
+Recently, I was working with Clearwater, but since yesterday, I couldn't
+download Clearwater Debian files.
+I found that the repo.cw-ngv.com is not working now.
+
+Can anybody figure this out?
+I really need the debian files..
+
+Best Regards,
+Jaewook.
+
+================================================
+*Jaewook Oh* (???)
+IISTRC - Internet Infra System Technology Research Center
+369 Sangdo-ro, Dongjak-gu,
+06978, Seoul, Republic of Korea
+Tel : +82-2-820-0841 | Mobile : +82-10-9924-2618
+E-mail : jwoh95 at dcn.ssu.ac.kr
+================================================
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20191025/a7de7bf8/attachment.html>
+
+From Eleanor.Merry at metaswitch.com  Fri Oct 25 13:13:31 2019
+From: Eleanor.Merry at metaswitch.com (Eleanor Merry)
+Date: Fri, 25 Oct 2019 17:13:31 +0000
+Subject: [Project Clearwater] [REPO] It seems clearwater repo is dead
+ now.
+In-Reply-To: <CABZrd4x3f8=U4KELVfL7VOm_T+XEo4yRZaBmWjjNTHm1eoyY1A@mail.gmail.com>
+References: <CABZrd4x3f8=U4KELVfL7VOm_T+XEo4yRZaBmWjjNTHm1eoyY1A@mail.gmail.com>
+Message-ID: <CH2PR02MB67588E815B6E92DB507512709B650@CH2PR02MB6758.namprd02.prod.outlook.com>
+
+Hi All, Jaewook, Pinkesh,
+
+Thanks for letting us know about this. We?ve taken down the repo server (repo.cw-ngv.com) for maintenance; please watch this space for updates.
+
+Thanks,
+
+Ellie
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of Jaewook Oh
+Sent: 25 October 2019 08:48
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] [REPO] It seems clearwater repo is dead now.
+
+NOTE: Message is from an external sender
+Hello Clearwater members,
+
+Recently, I was working with Clearwater, but since yesterday, I couldn't download Clearwater Debian files.
+I found that the repo.cw-ngv.com<https://nam01.safelinks.protection.outlook.com/?url=http%3A%2F%2Frepo.cw-ngv.com&data=02%7C01%7CEleanor.Merry%40metaswitch.com%7Cfb0caa07427145be256808d7591fbb98%7C9d9e56ebf6134ddbb27bbfcdf14b2cdb%7C1%7C1%7C637075865170274552&sdata=C1AzbEtLmN7PvBYY0tYYUHER0%2FZ%2BCLKy3tJ4vmctWBw%3D&reserved=0> is not working now.
+
+Can anybody figure this out?
+I really need the debian files..
+
+Best Regards,
+Jaewook.
+
+================================================
+Jaewook Oh (???)
+IISTRC - Internet Infra System Technology Research Center
+369 Sangdo-ro, Dongjak-gu,
+06978, Seoul, Republic of Korea
+Tel : +82-2-820-0841 | Mobile : +82-10-9924-2618
+E-mail : jwoh95 at dcn.ssu.ac.kr<mailto:jwoh95 at dcn.ssu.ac.kr>
+================================================
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20191025/a1fd477c/attachment.html>
+
+From pinkesh.j.shah at intel.com  Fri Oct 25 13:24:10 2019
+From: pinkesh.j.shah at intel.com (Shah, Pinkesh J)
+Date: Fri, 25 Oct 2019 17:24:10 +0000
+Subject: [Project Clearwater] [REPO] It seems clearwater repo is dead
+ now.
+In-Reply-To: <CH2PR02MB67588E815B6E92DB507512709B650@CH2PR02MB6758.namprd02.prod.outlook.com>
+References: <CABZrd4x3f8=U4KELVfL7VOm_T+XEo4yRZaBmWjjNTHm1eoyY1A@mail.gmail.com>
+ <CH2PR02MB67588E815B6E92DB507512709B650@CH2PR02MB6758.namprd02.prod.outlook.com>
+Message-ID: <96F030DF3A380C429E52DF54D54BD4F791779321@FMSMSX108.amr.corp.intel.com>
+
+Ellie,
+Thanks for letting us know. Do you have an estimate when the repo server will be up? Thank you.
+
+
+Pinkesh Shah
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of Eleanor Merry
+Sent: Friday, October 25, 2019 10:14 AM
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] [REPO] It seems clearwater repo is dead now.
+
+Hi All, Jaewook, Pinkesh,
+
+Thanks for letting us know about this. We?ve taken down the repo server (repo.cw-ngv.com) for maintenance; please watch this space for updates.
+
+Thanks,
+
+Ellie
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>> On Behalf Of Jaewook Oh
+Sent: 25 October 2019 08:48
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] [REPO] It seems clearwater repo is dead now.
+
+
+NOTE: Message is from an external sender
+
+Hello Clearwater members,
+
+Recently, I was working with Clearwater, but since yesterday, I couldn't download Clearwater Debian files.
+I found that the repo.cw-ngv.com<https://nam01.safelinks.protection.outlook.com/?url=http%3A%2F%2Frepo.cw-ngv.com&data=02%7C01%7CEleanor.Merry%40metaswitch.com%7Cfb0caa07427145be256808d7591fbb98%7C9d9e56ebf6134ddbb27bbfcdf14b2cdb%7C1%7C1%7C637075865170274552&sdata=C1AzbEtLmN7PvBYY0tYYUHER0%2FZ%2BCLKy3tJ4vmctWBw%3D&reserved=0> is not working now.
+
+Can anybody figure this out?
+I really need the debian files..
+
+Best Regards,
+Jaewook.
+
+================================================
+Jaewook Oh (???)
+IISTRC - Internet Infra System Technology Research Center
+369 Sangdo-ro, Dongjak-gu,
+06978, Seoul, Republic of Korea
+Tel : +82-2-820-0841 | Mobile : +82-10-9924-2618
+E-mail : jwoh95 at dcn.ssu.ac.kr<mailto:jwoh95 at dcn.ssu.ac.kr>
+================================================
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20191025/0d162682/attachment-0001.html>
+
+From jwoh95 at dcn.ssu.ac.kr  Mon Oct 28 00:27:43 2019
+From: jwoh95 at dcn.ssu.ac.kr (Jaewook Oh)
+Date: Mon, 28 Oct 2019 13:27:43 +0900
+Subject: [Project Clearwater] [REPO] It seems clearwater repo is dead
+ now.
+In-Reply-To: <CH2PR02MB67588E815B6E92DB507512709B650@CH2PR02MB6758.namprd02.prod.outlook.com>
+References: <CABZrd4x3f8=U4KELVfL7VOm_T+XEo4yRZaBmWjjNTHm1eoyY1A@mail.gmail.com>
+ <CH2PR02MB67588E815B6E92DB507512709B650@CH2PR02MB6758.namprd02.prod.outlook.com>
+Message-ID: <CABZrd4zp6SrQXzWrtkWtOw2wdAQCEBXAJwc9rSL+CHrAiPwCig@mail.gmail.com>
+
+Thanks for replying!
+
+Then, as Pinkesh mentioned, could you let me know when the repo server will
+work again?
+And is there any mirror repo site so that I can download the debian files
+instead of the repo server?
+
+Thanks,
+Jaewook.
+
+================================================
+*Jaewook Oh* (???)
+IISTRC - Internet Infra System Technology Research Center
+369 Sangdo-ro, Dongjak-gu,
+06978, Seoul, Republic of Korea
+Tel : +82-2-820-0841 | Mobile : +82-10-9924-2618
+E-mail : jwoh95 at dcn.ssu.ac.kr
+================================================
+
+
+2019? 10? 26? (?) ?? 2:14, Eleanor Merry <Eleanor.Merry at metaswitch.com>??
+??:
+
+> Hi All, Jaewook, Pinkesh,
+>
+>
+>
+> Thanks for letting us know about this. We?ve taken down the repo server (
+> repo.cw-ngv.com) for maintenance; please watch this space for updates.
+>
+>
+>
+> Thanks,
+>
+>
+>
+> Ellie
+>
+>
+>
+> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+> Behalf Of *Jaewook Oh
+> *Sent:* 25 October 2019 08:48
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Project Clearwater] [REPO] It seems clearwater repo is dead
+> now.
+>
+>
+>
+> NOTE: Message is from an external sender
+>
+> Hello Clearwater members,
+>
+>
+>
+> Recently, I was working with Clearwater, but since yesterday, I couldn't
+> download Clearwater Debian files.
+>
+> I found that the repo.cw-ngv.com
+> <https://nam01.safelinks.protection.outlook.com/?url=http%3A%2F%2Frepo.cw-ngv.com&data=02%7C01%7CEleanor.Merry%40metaswitch.com%7Cfb0caa07427145be256808d7591fbb98%7C9d9e56ebf6134ddbb27bbfcdf14b2cdb%7C1%7C1%7C637075865170274552&sdata=C1AzbEtLmN7PvBYY0tYYUHER0%2FZ%2BCLKy3tJ4vmctWBw%3D&reserved=0>
+> is not working now.
+>
+>
+>
+> Can anybody figure this out?
+>
+> I really need the debian files..
+>
+>
+>
+> Best Regards,
+>
+> Jaewook.
+>
+> ================================================
+> *Jaewook Oh* (???)
+> IISTRC - Internet Infra System Technology Research Center
+> 369 Sangdo-ro, Dongjak-gu,
+> 06978, Seoul, Republic of Korea
+> Tel : +82-2-820-0841 | Mobile : +82-10-9924-2618
+> E-mail : jwoh95 at dcn.ssu.ac.kr
+> ================================================
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20191028/11e6f2e7/attachment.html>
+
+From alessio.diama at gmail.com  Tue Oct 29 05:23:26 2019
+From: alessio.diama at gmail.com (Alessio Diamanti)
+Date: Tue, 29 Oct 2019 10:23:26 +0100
+Subject: [Project Clearwater] Clearwater-heat make call
+Message-ID: <CAAuAcPDuj2-F+1=yP2kq8ajMQoc+RUGjU+BoiZu=cGng6ds7wg@mail.gmail.com>
+
+Hi all,
+i deployed Clearwater through official heat template in my private
+Openstack but i'm not able to perform a call neither with sipp nor with
+Zoiper. Every time i receive back a timeout message like that:
+
+'SIP/2.0 408 Request Timeout
+Via: SIP/2.0/UDP 172.24.4.1:5071
+;rport=5071;received=172.24.4.1;branch=z9hG4bK-2010000002-1--1
+Call-ID: 2010000002-///1-53118 at 127.0.1.1
+From: <sip:2010000002 at example.com>;tag=53118SIPpTag0011234
+To: <sip:2010000003 at example.com>;tag=z9hG4bK-2010000002-1--1
+CSeq: 3 INVITE
+Content-Length:  0
+
+I tried looking at bono and sprout logs but there is no special error
+messages, just timeouts expiring. Does anyone have a working sipp scenario
+or had the same problem has me in the past?
+Thank you in advance,
+
+Alessio
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20191029/8e7de654/attachment.html>
+
+From aj.shirvani at gmail.com  Thu Oct 31 01:01:40 2019
+From: aj.shirvani at gmail.com (Ali Shirvani)
+Date: Thu, 31 Oct 2019 08:31:40 +0330
+Subject: [Project Clearwater] Application Server Acting as Originator UA
+Message-ID: <CAFQ97XGyMkGMLJ7yZ15Loiiztc4T1zP+8aDo-FkWTzFJp_mPjA@mail.gmail.com>
+
+Hi all,
+
+I want to implement simple application server to originate a call to a
+registered user. According to clearwater documents I should send the INVITE
+request to the scscf on port 5054. But when I send an INVITE request to the
+scscf it doesn't forward the INVITE to the user.
+
+Which headers are mandatory when I want to originate a call from AS?
+
+Regards,
+Ali
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20191031/01adc13b/attachment.html>
+
+From jwoh95 at dcn.ssu.ac.kr  Thu Oct 31 01:22:11 2019
+From: jwoh95 at dcn.ssu.ac.kr (Jaewook Oh)
+Date: Thu, 31 Oct 2019 14:22:11 +0900
+Subject: [Project Clearwater] [REPO] It seems clearwater repo is dead
+ now.
+In-Reply-To: <CH2PR02MB67588E815B6E92DB507512709B650@CH2PR02MB6758.namprd02.prod.outlook.com>
+References: <CABZrd4x3f8=U4KELVfL7VOm_T+XEo4yRZaBmWjjNTHm1eoyY1A@mail.gmail.com>
+ <CH2PR02MB67588E815B6E92DB507512709B650@CH2PR02MB6758.namprd02.prod.outlook.com>
+Message-ID: <CABZrd4xYpOwLPmdhSE+h51Yhj8e4nvvBGgBCodytnr66nq7jsQ@mail.gmail.com>
+
+Hi all,
+Sorry for my redundant mail!
+
+But I really do want to know when the server will be on again.
+Or is there any mirror repository for Clearwater debian files?
+
+I'm now working with clearwater for my graduation but I'm currently still
+stuck in the deployment since last week Thursday.
+Any help would be appreciated.
+
+BR,
+Jaewook.
+
+================================================
+*Jaewook Oh* (???)
+IISTRC - Internet Infra System Technology Research Center
+369 Sangdo-ro, Dongjak-gu,
+06978, Seoul, Republic of Korea
+Tel : +82-2-820-0841 | Mobile : +82-10-9924-2618
+E-mail : jwoh95 at dcn.ssu.ac.kr
+================================================
+
+
+2019? 10? 26? (?) ?? 2:14, Eleanor Merry <Eleanor.Merry at metaswitch.com>??
+??:
+
+> Hi All, Jaewook, Pinkesh,
+>
+>
+>
+> Thanks for letting us know about this. We?ve taken down the repo server (
+> repo.cw-ngv.com) for maintenance; please watch this space for updates.
+>
+>
+>
+> Thanks,
+>
+>
+>
+> Ellie
+>
+>
+>
+> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+> Behalf Of *Jaewook Oh
+> *Sent:* 25 October 2019 08:48
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Project Clearwater] [REPO] It seems clearwater repo is dead
+> now.
+>
+>
+>
+> NOTE: Message is from an external sender
+>
+> Hello Clearwater members,
+>
+>
+>
+> Recently, I was working with Clearwater, but since yesterday, I couldn't
+> download Clearwater Debian files.
+>
+> I found that the repo.cw-ngv.com
+> <https://nam01.safelinks.protection.outlook.com/?url=http%3A%2F%2Frepo.cw-ngv.com&data=02%7C01%7CEleanor.Merry%40metaswitch.com%7Cfb0caa07427145be256808d7591fbb98%7C9d9e56ebf6134ddbb27bbfcdf14b2cdb%7C1%7C1%7C637075865170274552&sdata=C1AzbEtLmN7PvBYY0tYYUHER0%2FZ%2BCLKy3tJ4vmctWBw%3D&reserved=0>
+> is not working now.
+>
+>
+>
+> Can anybody figure this out?
+>
+> I really need the debian files..
+>
+>
+>
+> Best Regards,
+>
+> Jaewook.
+>
+> ================================================
+> *Jaewook Oh* (???)
+> IISTRC - Internet Infra System Technology Research Center
+> 369 Sangdo-ro, Dongjak-gu,
+> 06978, Seoul, Republic of Korea
+> Tel : +82-2-820-0841 | Mobile : +82-10-9924-2618
+> E-mail : jwoh95 at dcn.ssu.ac.kr
+> ================================================
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20191031/d4e7eb43/attachment.html>
+

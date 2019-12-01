@@ -1,0 +1,100 @@
+From aj.shirvani at gmail.com  Thu May  9 03:10:58 2019
+From: aj.shirvani at gmail.com (Ali Shirvani)
+Date: Thu, 9 May 2019 11:40:58 +0430
+Subject: [Project Clearwater] "No available numbers" error when trying to
+ create new private identity in Ellis
+Message-ID: <CAFQ97XF16nRyOW1TwKZzZte9Gjk-x-P=0Y8Ko+Ki-tdUHum+GA@mail.gmail.com>
+
+Hi all,
+
+I installed clearwater using docker-compose and clearwater-docker
+repository. Installation was successful without any issues. I can login to
+ellis via web browser. But when I tried to create private identity I got
+following error:
+
+{"status": 503, "message": "Service Unavailable", "reason": "No available
+> numbers", "detail": {}, "error": true}
+
+
+Would you please help me to resolve this issue?
+
+Regards,
+Ali
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190509/41e70c53/attachment.html>
+
+From trey.ormsbee at interoptechnologies.com  Tue May 28 12:40:14 2019
+From: trey.ormsbee at interoptechnologies.com (Trey Ormsbee)
+Date: Tue, 28 May 2019 11:40:14 -0500
+Subject: [Project Clearwater] Ubuntu 14.04 EOL, any updated builds?
+Message-ID: <bd1ffc3b-78e6-1509-ecb1-c57a6fda831f@interoptechnologies.com>
+
+Ubuntu 14.04 is now EOL.? Are there any plans for updated builds on 16 
+or better yet 18?
+
+
+Thanks,
+
+Trey
+
+-- 
+	<http://www.interoptechnologies.com>
+<http://www.facebook.com/pages/Interop-Technologies/166558410115178><https://twitter.com/#!/InteropTechnolo><http://www.linkedin.com/company/interop-technologies><http://www.youtube.com/user/InteropTechnologies/> 
+	*Trey Ormsbee *
+Infrastructure Engineer 	
+*T:* +1 972-753-1847 (Desk) *T:* +1 239-425-3010 (NOC Main)
+Confidentiality Notice: The information in this e-mail and in any 
+attachment may contain information which is legally privileged. It is 
+intended only for the attention and use of the named recipient. If you 
+are not the intended recipient, you are not authorized to retain, 
+disclose, copy or distribute the message and/or any of its attachments. 
+If you received this e-mail in error, please notify me and delete this 
+message. Thank you.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190528/9a8a3923/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: hbgmaelbndnfmpnj.gif
+Type: image/gif
+Size: 64 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190528/9a8a3923/attachment.gif>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: mmebopekjkeamilj.png
+Type: image/png
+Size: 4917 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190528/9a8a3923/attachment.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: efkkefahaimghbkn.png
+Type: image/png
+Size: 306 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190528/9a8a3923/attachment-0001.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: hklcacbanbpandbd.png
+Type: image/png
+Size: 435 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190528/9a8a3923/attachment-0002.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: eldahgnnpkddfian.png
+Type: image/png
+Size: 408 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190528/9a8a3923/attachment-0003.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: agigfbhmapipkepe.png
+Type: image/png
+Size: 651 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190528/9a8a3923/attachment-0004.png>
+

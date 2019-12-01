@@ -1,0 +1,2580 @@
+From junaidaliyahya at gmail.com  Mon Dec  3 06:41:05 2018
+From: junaidaliyahya at gmail.com (Junaid Ali)
+Date: Mon, 3 Dec 2018 11:41:05 +0000
+Subject: [Project Clearwater] Clearwater-management package conflicts with
+ bind9
+Message-ID: <CA+kT6RWa0Jz98beX-AzSL=R_8FzQ_QV8E5jE7pXPB+z7XTMywQ@mail.gmail.com>
+
+Junaid Ali <junaidaliyahya at gmail.com>
+Tue, Nov 20, 11:56 AM (13 days ago)
+to clearwater
+Hi,
+I'm Junaid and have deployed Clearwater vIMS using Cloudify (
+https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater). Initially,
+I deployed it using the repo 'repo122' as mentioned at
+https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/blob/master/docs/clearwater.md,
+Line#53, which worked fine and I was able to make calls and run stress
+test. I have now changed the repo to 'stable' and tried to re-deploy vIMS
+but the installation of Bind node was failing since Cloudify installs
+clearwater-management alongside bind9 package on the Bind node.
+
+It looks like to me that clearwater packages in 'stable' repo have some
+conflict with 'bind9' package. I have provided more details to a GitHub
+issue (
+https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/issues/23)
+in Clearwater cloudify repo but the issue appears to be with Clearwater
+packages or bind9.
+Does anyone else has faced a similar issue? Any help would be much
+appreciated.
+
+Kind Regards,
+Junaid
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181203/e8c3f170/attachment.html>
+
+From junaidaliyahya at gmail.com  Tue Dec  4 09:09:46 2018
+From: junaidaliyahya at gmail.com (Junaid Ali)
+Date: Tue, 4 Dec 2018 14:09:46 +0000
+Subject: [Project Clearwater]  Initiating calls between two SIPp instances
+Message-ID: <CA+kT6RV8O4qmfLQZO2_0_CQNYUhWZN83juBH4XXcN6VEQAYH9g@mail.gmail.com>
+
+Hi guys,
+I am trying to create a call between two SIPp instances (caller and callee)
+using Clearwater IMS. Can anyone share the scenario files for caller and
+callee please if anyone has tried the same scenario?
+
+I have looked at the default scenario file which is present in the
+sip-stress package but that emulates the same node as both caller and
+callee.
+
+Any help would be really appreciated. Thanks.
+
+Kind Regards,
+Junaid
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181204/8baba035/attachment.html>
+
+From Mark.Perryman at metaswitch.com  Fri Dec  7 11:07:05 2018
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Fri, 7 Dec 2018 16:07:05 +0000
+Subject: [Project Clearwater] Clearwater-management package conflicts
+ with bind9
+In-Reply-To: <CA+kT6RWa0Jz98beX-AzSL=R_8FzQ_QV8E5jE7pXPB+z7XTMywQ@mail.gmail.com>
+References: <CA+kT6RWa0Jz98beX-AzSL=R_8FzQ_QV8E5jE7pXPB+z7XTMywQ@mail.gmail.com>
+Message-ID: <BYAPR02MB42473E32C82AB15A3EBF02A68FAA0@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+Hi Junaid,
+
+I?m afraid I don?t know much about the Orange cloudify repo.  I would suggest running bind9 on a separate node to the Clearwater nodes if that is possible.
+
+Sorry not to have a better solution,
+
+Mark Perryman
+
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of Junaid Ali
+Sent: 03 December 2018 11:41
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Clearwater-management package conflicts with bind9
+
+
+Junaid Ali <junaidaliyahya at gmail.com<mailto:junaidaliyahya at gmail.com>>
+
+
+Tue, Nov 20, 11:56 AM (13 days ago)
+
+[Image removed by sender.]
+[Image removed by sender.]
+
+
+
+
+Hi,
+I'm Junaid and have deployed Clearwater vIMS using Cloudify (https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater). Initially, I deployed it using the repo 'repo122' as mentioned at https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/blob/master/docs/clearwater.md, Line#53, which worked fine and I was able to make calls and run stress test. I have now changed the repo to 'stable' and tried to re-deploy vIMS but the installation of Bind node was failing since Cloudify installs clearwater-management alongside bind9 package on the Bind node.
+
+It looks like to me that clearwater packages in 'stable' repo have some conflict with 'bind9' package. I have provided more details to a GitHub issue (https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/issues/23) in Clearwater cloudify repo but the issue appears to be with Clearwater packages or bind9.
+Does anyone else has faced a similar issue? Any help would be much appreciated.
+
+Kind Regards,
+Junaid
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181207/f35eb4ed/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: ~WRD000.jpg
+Type: image/jpeg
+Size: 823 bytes
+Desc: ~WRD000.jpg
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181207/f35eb4ed/attachment.jpg>
+
+From Mark.Perryman at metaswitch.com  Fri Dec  7 11:09:20 2018
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Fri, 7 Dec 2018 16:09:20 +0000
+Subject: [Project Clearwater] Initiating calls between two SIPp instances
+In-Reply-To: <CA+kT6RV8O4qmfLQZO2_0_CQNYUhWZN83juBH4XXcN6VEQAYH9g@mail.gmail.com>
+References: <CA+kT6RV8O4qmfLQZO2_0_CQNYUhWZN83juBH4XXcN6VEQAYH9g@mail.gmail.com>
+Message-ID: <BYAPR02MB42475234ED935E7789C866B28FAA0@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+The basic client and server scripts that ship with SIPp itself should be suitable.
+
+http://sipp.sourceforge.net/
+http://sipp.sourceforge.net/doc/reference.html#UAC
+http://sipp.sourceforge.net/doc/reference.html#UAS
+
+Hope that helps, let me know if that doesn?t work.
+
+Mark Perryman.
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of Junaid Ali
+Sent: 04 December 2018 14:10
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Initiating calls between two SIPp instances
+
+Hi guys,
+I am trying to create a call between two SIPp instances (caller and callee) using Clearwater IMS. Can anyone share the scenario files for caller and callee please if anyone has tried the same scenario?
+
+I have looked at the default scenario file which is present in the sip-stress package but that emulates the same node as both caller and callee.
+
+Any help would be really appreciated. Thanks.
+
+Kind Regards,
+Junaid
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181207/d6afea0f/attachment.html>
+
+From junaidaliyahya at gmail.com  Tue Dec 11 05:50:24 2018
+From: junaidaliyahya at gmail.com (Junaid Ali)
+Date: Tue, 11 Dec 2018 10:50:24 +0000
+Subject: [Project Clearwater] Initiating calls between two SIPp instances
+In-Reply-To: <BYAPR02MB42475234ED935E7789C866B28FAA0@BYAPR02MB4247.namprd02.prod.outlook.com>
+References: <CA+kT6RV8O4qmfLQZO2_0_CQNYUhWZN83juBH4XXcN6VEQAYH9g@mail.gmail.com>
+	<BYAPR02MB42475234ED935E7789C866B28FAA0@BYAPR02MB4247.namprd02.prod.outlook.com>
+Message-ID: <CA+kT6RV4foM8XeW_Mc76tG28ppGkubDVChmV8ucf_O5KV0-Jyw@mail.gmail.com>
+
+Hi Mark,
+
+Apologies for the late reply. I have tried the above scenario files as well
+but couldn't make the call work.
+I'm registering a number on the caller and callee machines for initiating
+the calls using this csv file: http://ix.io/1vMI
+
+Here is the scenario file on caller machine: http://ix.io/1vME
+which first registers a number (2010000000) and then send an invite to
+callee machine.
+
+On callee machine, I'm registering a number (2010000002) and waiting for
+the call to establish using this scenario file: http://ix.io/1vMF
+
+The SIPp output on the callee machine looks like this: http://ix.io/1vMK which
+shows that it gets timeout waiting for INVITE from the caller.
+The output of /var/log/clearwater-sipp/sip-stress_6766_errors.log on callee
+is: http://ix.io/1vMO
+which suggests that INVITE is received on the callee machine but it doesn't
+get reflected in the SIPp output.
+
+The SIPp output the caller machine is: http://ix.io/1vML
+
+Bono output at log_level=5: http://ix.io/1vMN
+Sprout output at log_level=5: http://ix.io/1vMM
+
+I'm not sure if I'm missing anything in my scenario file since I don't
+observe any error messages in bono and sprout logs. Your help is much
+appreciated.
+
+Kind Regards,
+Junaid
+
+
+
+On Fri, Dec 7, 2018 at 4:10 PM Mark Perryman <Mark.Perryman at metaswitch.com>
+wrote:
+
+> The basic client and server scripts that ship with SIPp itself should be
+> suitable.
+>
+>
+>
+> http://sipp.sourceforge.net/
+>
+> http://sipp.sourceforge.net/doc/reference.html#UAC
+>
+> http://sipp.sourceforge.net/doc/reference.html#UAS
+>
+>
+>
+> Hope that helps, let me know if that doesn?t work.
+>
+>
+>
+> Mark Perryman.
+>
+>
+>
+> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+> Behalf Of *Junaid Ali
+> *Sent:* 04 December 2018 14:10
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Project Clearwater] Initiating calls between two SIPp
+> instances
+>
+>
+>
+> Hi guys,
+>
+> I am trying to create a call between two SIPp instances (caller and
+> callee) using Clearwater IMS. Can anyone share the scenario files for
+> caller and callee please if anyone has tried the same scenario?
+>
+>
+>
+> I have looked at the default scenario file which is present in the
+> sip-stress package but that emulates the same node as both caller and
+> callee.
+>
+>
+>
+> Any help would be really appreciated. Thanks.
+>
+>
+>
+> Kind Regards,
+> Junaid
+>
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181211/aea1bb7d/attachment.html>
+
+From Mark.Perryman at metaswitch.com  Tue Dec 11 05:55:26 2018
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Tue, 11 Dec 2018 10:55:26 +0000
+Subject: [Project Clearwater] Running I-CSCF and S-CSCF in different
+ machines/containers
+In-Reply-To: <CAGy+FHLW60MX7ZDjO2MuvrLN9OV5FayYefzjt4OiqdQFRyn0kA@mail.gmail.com>
+References: <BYAPR02MB42476593BCF2F9F8B0409F9F8FD70@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CAGy+FHLW60MX7ZDjO2MuvrLN9OV5FayYefzjt4OiqdQFRyn0kA@mail.gmail.com>
+Message-ID: <BYAPR02MB4247E35E1CB10DC9E339ABF58FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+Sorry for the delay in responding.  The easiest way is probably to reinstall the Ellis software.
+
+You might have luck wiping Ellis?s MySQL database and recreating the numbers table but this is not really supported.
+
+Hope that helps,
+Mark.
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of GABRIEL DAVID OROZCO URRUTIA
+Sent: 29 November 2018 21:57
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Running I-CSCF and S-CSCF in different machines/containers
+
+Hi Mark
+
+We have done some advances in the deployment using virtual machines.
+
+[?]
+
+However, when we try to call using softphones, the registration process is working but the call process is not.
+
+We think that maybe is because the home-domain in Ellis (cw-ngv.com<http://cw-ngv.com>) is different from us (rtn.edu.co<http://rtn.edu.co>). The Sipptest uses the rtn.edu.co<http://rtn.edu.co>
+
+We try to change the home domain using the following steps:
+
+    change home_domain in /etc/clearwater/shared_config
+    sudo service clearwater-infraestructure restart
+    sudo monit restart all
+    and, inside ellis:
+
+sudo bash -c "export PATH=/usr/share/clearwater/ellis/env/bin:$PATH ;
+>               cd /usr/share/clearwater/ellis/src/metaswitch/ellis/tools/ ;
+>               python create_numbers.py --start 6505550000 --count 1000"
+But the home-domain in ellis is not changing
+
+What should we do?
+
+Gabriel David Orozco
+Presidente Rama estudiantil IEEE Universidad del Cauca
+(57) 3004351630
+[Image removed by sender.]<http://ieee.unicauca.edu.co/>
+
+
+El lun., 26 nov. 2018 a las 9:24, Mark Perryman (<Mark.Perryman at metaswitch.com<mailto:Mark.Perryman at metaswitch.com>>) escribi?:
+> We're trying to understand how sprout does all the S-CSCF and I-CSCF functions.
+
+> I saw that Sprout have two Network alias icscf.sprout and scscf.sprout. There's any possibility to run the S-CSCF and I-CSCF in different Virtual Machines or Containers?
+
+Separating the I-CSCF and S-CSCF functions between multiple sprout nodes should be possible, with appropriate DNS settings for the icscf.sprout and scscf.sprout although external_icscf_uri will need to be set otherwise the S-CSCF to I-CSCF hop will just happen locally.
+
+However, it isn?t a normal configuration, so I would be interested in whether you encounter any issues.
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+________________________________
+
+Hacia una Universidad comprometida con la Paz Territorial
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181211/f9635be1/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image001.jpg
+Type: image/jpeg
+Size: 575 bytes
+Desc: image001.jpg
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181211/f9635be1/attachment.jpg>
+
+From junaidaliyahya at gmail.com  Tue Dec 11 05:58:44 2018
+From: junaidaliyahya at gmail.com (Junaid Ali)
+Date: Tue, 11 Dec 2018 10:58:44 +0000
+Subject: [Project Clearwater] Clearwater-management package conflicts
+ with bind9
+In-Reply-To: <BYAPR02MB42473E32C82AB15A3EBF02A68FAA0@BYAPR02MB4247.namprd02.prod.outlook.com>
+References: <CA+kT6RWa0Jz98beX-AzSL=R_8FzQ_QV8E5jE7pXPB+z7XTMywQ@mail.gmail.com>
+	<BYAPR02MB42473E32C82AB15A3EBF02A68FAA0@BYAPR02MB4247.namprd02.prod.outlook.com>
+Message-ID: <CA+kT6RUCMz8J4=USUQ3U909f7co_C-U3AEatpWGeuH7JEznoiw@mail.gmail.com>
+
+Hi Mark,
+Thanks for your response and apologies for my late reply. Bind node is
+separate in my cluster but I'm not sure if clearwater packages should also
+be installed on it or not (Orange repo installs some clearwater packages on
+bind node as well).
+$ dpkg -l | grep clearwater
+ii  clearwater-cluster-manager       1.0-170508.104112
+    all          Cluster manager for Clearwater
+ii  clearwater-config-manager        1.0-170508.104112
+    all          Configuration manager for Clearwater
+ii  clearwater-diags-monitor           1.0-170504.093807
+      all          Diagnostics monitor and bundler for all Clearwater
+servers
+ii  clearwater-etcd                          1.0-170508.104112
+            all          etcd configured for Clearwater
+ii  clearwater-infrastructure            1.0-170504.093807
+       amd64        Common infrastructure for all Clearwater servers
+ii  clearwater-management            1.0-170508.104112
+    all          Meta-package for installing all Clearwater management
+services
+ii  clearwater-monit                         5.18-170403.124108
+          amd64        utility for monitoring and managing daemons or
+similar programs
+ii  clearwater-queue-manager        1.0-170508.104112
+    all          Queue manager for Clearwater
+
+$ dpkg -l | grep bind9
+ii  bind9                            1:9.9.5.dfsg-3ubuntu0.18
+     amd64        Internet Domain Name Server
+ii  bind9-host                       1:9.9.5.dfsg-3ubuntu0.18
+     amd64        Version of 'host' bundled with BIND 9.X
+ii  bind9utils                       1:9.9.5.dfsg-3ubuntu0.18
+     amd64        Utilities for BIND
+ii  libbind9-90                      1:9.9.5.dfsg-3ubuntu0.18
+     amd64        BIND9 Shared Library used by BIND
+
+
+
+On Fri, Dec 7, 2018 at 4:08 PM Mark Perryman <Mark.Perryman at metaswitch.com>
+wrote:
+
+> Hi Junaid,
+>
+>
+>
+> I?m afraid I don?t know much about the Orange cloudify repo.  I would
+> suggest running bind9 on a separate node to the Clearwater nodes if that is
+> possible.
+>
+>
+>
+> Sorry not to have a better solution,
+>
+>
+>
+> Mark Perryman
+>
+>
+>
+>
+>
+> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+> Behalf Of *Junaid Ali
+> *Sent:* 03 December 2018 11:41
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Project Clearwater] Clearwater-management package conflicts
+> with bind9
+>
+>
+>
+>
+> Junaid Ali <junaidaliyahya at gmail.com>
+>
+> Tue, Nov 20, 11:56 AM (13 days ago)
+>
+> [image: Image removed by sender.]
+>
+> [image: Image removed by sender.]
+>
+>
+>
+> Hi,
+>
+> I'm Junaid and have deployed Clearwater vIMS using Cloudify (
+> https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater).
+> Initially, I deployed it using the repo 'repo122' as mentioned at
+> https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/blob/master/docs/clearwater.md,
+> Line#53, which worked fine and I was able to make calls and run stress
+> test. I have now changed the repo to 'stable' and tried to re-deploy vIMS
+> but the installation of Bind node was failing since Cloudify installs
+> clearwater-management alongside bind9 package on the Bind node.
+>
+>
+>
+> It looks like to me that clearwater packages in 'stable' repo have some
+> conflict with 'bind9' package. I have provided more details to a GitHub
+> issue (
+> https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/issues/23)
+> in Clearwater cloudify repo but the issue appears to be with Clearwater
+> packages or bind9.
+>
+> Does anyone else has faced a similar issue? Any help would be much
+> appreciated.
+>
+>
+>
+> Kind Regards,
+> Junaid
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181211/2462b52e/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: ~WRD000.jpg
+Type: image/jpeg
+Size: 823 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181211/2462b52e/attachment.jpg>
+
+From Mark.Perryman at metaswitch.com  Tue Dec 11 06:22:24 2018
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Tue, 11 Dec 2018 11:22:24 +0000
+Subject: [Project Clearwater] Initiating calls between two SIPp instances
+In-Reply-To: <CA+kT6RV4foM8XeW_Mc76tG28ppGkubDVChmV8ucf_O5KV0-Jyw@mail.gmail.com>
+References: <CA+kT6RV8O4qmfLQZO2_0_CQNYUhWZN83juBH4XXcN6VEQAYH9g@mail.gmail.com>
+	<BYAPR02MB42475234ED935E7789C866B28FAA0@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CA+kT6RV4foM8XeW_Mc76tG28ppGkubDVChmV8ucf_O5KV0-Jyw@mail.gmail.com>
+Message-ID: <BYAPR02MB42479F7BB92DDD8570D391D58FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+So bono?s log
+
+11-12-2018 10:27:40.054 UTC Verbose common_sip_processing.cpp:136: TX 2739 bytes Request msg INVITE/cseq=4 (tdta0x7fc5f0052330) to TCP 192.168.120.12:60900:
+suggests that the INVITE is sent to the callee.
+
+Something is then responding 200 OK
+
+11-12-2018 10:27:40.055 UTC Verbose common_sip_processing.cpp:120: RX 689 bytes Response msg 200/INVITE/cseq=4 (rdata0x7fc5f80046f0) from TCP 192.168.120.12:60900:
+
+Is something else running on the callee machine that might be responding instead of the SIPp script.
+
+Mark.
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of Junaid Ali
+Sent: 11 December 2018 10:50
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Initiating calls between two SIPp instances
+
+Hi Mark,
+
+Apologies for the late reply. I have tried the above scenario files as well but couldn't make the call work.
+I'm registering a number on the caller and callee machines for initiating the calls using this csv file: http://ix.io/1vMI
+
+Here is the scenario file on caller machine: http://ix.io/1vME
+which first registers a number (2010000000) and then send an invite to callee machine.
+
+On callee machine, I'm registering a number (2010000002) and waiting for the call to establish using this scenario file: http://ix.io/1vMF
+
+The SIPp output on the callee machine looks like this: http://ix.io/1vMK which shows that it gets timeout waiting for INVITE from the caller.
+The output of /var/log/clearwater-sipp/sip-stress_6766_errors.log on callee is: http://ix.io/1vMO
+which suggests that INVITE is received on the callee machine but it doesn't get reflected in the SIPp output.
+
+The SIPp output the caller machine is: http://ix.io/1vML
+
+Bono output at log_level=5: http://ix.io/1vMN
+Sprout output at log_level=5: http://ix.io/1vMM
+
+I'm not sure if I'm missing anything in my scenario file since I don't observe any error messages in bono and sprout logs. Your help is much appreciated.
+
+Kind Regards,
+Junaid
+
+
+
+On Fri, Dec 7, 2018 at 4:10 PM Mark Perryman <Mark.Perryman at metaswitch.com<mailto:Mark.Perryman at metaswitch.com>> wrote:
+The basic client and server scripts that ship with SIPp itself should be suitable.
+
+http://sipp.sourceforge.net/
+http://sipp.sourceforge.net/doc/reference.html#UAC
+http://sipp.sourceforge.net/doc/reference.html#UAS
+
+Hope that helps, let me know if that doesn?t work.
+
+Mark Perryman.
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>> On Behalf Of Junaid Ali
+Sent: 04 December 2018 14:10
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Initiating calls between two SIPp instances
+
+Hi guys,
+I am trying to create a call between two SIPp instances (caller and callee) using Clearwater IMS. Can anyone share the scenario files for caller and callee please if anyone has tried the same scenario?
+
+I have looked at the default scenario file which is present in the sip-stress package but that emulates the same node as both caller and callee.
+
+Any help would be really appreciated. Thanks.
+
+Kind Regards,
+Junaid
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181211/04201ada/attachment.html>
+
+From Mark.Perryman at metaswitch.com  Tue Dec 11 06:24:55 2018
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Tue, 11 Dec 2018 11:24:55 +0000
+Subject: [Project Clearwater] Clearwater-management package conflicts
+ with bind9
+In-Reply-To: <CA+kT6RUCMz8J4=USUQ3U909f7co_C-U3AEatpWGeuH7JEznoiw@mail.gmail.com>
+References: <CA+kT6RWa0Jz98beX-AzSL=R_8FzQ_QV8E5jE7pXPB+z7XTMywQ@mail.gmail.com>
+	<BYAPR02MB42473E32C82AB15A3EBF02A68FAA0@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CA+kT6RUCMz8J4=USUQ3U909f7co_C-U3AEatpWGeuH7JEznoiw@mail.gmail.com>
+Message-ID: <BYAPR02MB4247FF336D6773CC300168C68FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+As I have said, I don?t know about the Orange cloudify repo.  However, I see no reason why Clearwater packages should need to installed on the DNS server.
+
+Mark.
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of Junaid Ali
+Sent: 11 December 2018 10:59
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Clearwater-management package conflicts with bind9
+
+Hi Mark,
+Thanks for your response and apologies for my late reply. Bind node is separate in my cluster but I'm not sure if clearwater packages should also be installed on it or not (Orange repo installs some clearwater packages on bind node as well).
+$ dpkg -l | grep clearwater
+ii  clearwater-cluster-manager       1.0-170508.104112                          all          Cluster manager for Clearwater
+ii  clearwater-config-manager        1.0-170508.104112                          all          Configuration manager for Clearwater
+ii  clearwater-diags-monitor           1.0-170504.093807                          all          Diagnostics monitor and bundler for all Clearwater servers
+ii  clearwater-etcd                          1.0-170508.104112                          all          etcd configured for Clearwater
+ii  clearwater-infrastructure            1.0-170504.093807                         amd64        Common infrastructure for all Clearwater servers
+ii  clearwater-management            1.0-170508.104112                          all          Meta-package for installing all Clearwater management services
+ii  clearwater-monit                         5.18-170403.124108                      amd64        utility for monitoring and managing daemons or similar programs
+ii  clearwater-queue-manager        1.0-170508.104112                          all          Queue manager for Clearwater
+
+$ dpkg -l | grep bind9
+ii  bind9                            1:9.9.5.dfsg-3ubuntu0.18                   amd64        Internet Domain Name Server
+ii  bind9-host                       1:9.9.5.dfsg-3ubuntu0.18                   amd64        Version of 'host' bundled with BIND 9.X
+ii  bind9utils                       1:9.9.5.dfsg-3ubuntu0.18                   amd64        Utilities for BIND
+ii  libbind9-90                      1:9.9.5.dfsg-3ubuntu0.18                   amd64        BIND9 Shared Library used by BIND
+
+
+
+On Fri, Dec 7, 2018 at 4:08 PM Mark Perryman <Mark.Perryman at metaswitch.com<mailto:Mark.Perryman at metaswitch.com>> wrote:
+Hi Junaid,
+
+I?m afraid I don?t know much about the Orange cloudify repo.  I would suggest running bind9 on a separate node to the Clearwater nodes if that is possible.
+
+Sorry not to have a better solution,
+
+Mark Perryman
+
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>> On Behalf Of Junaid Ali
+Sent: 03 December 2018 11:41
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Clearwater-management package conflicts with bind9
+
+
+Junaid Ali <junaidaliyahya at gmail.com<mailto:junaidaliyahya at gmail.com>>
+
+
+Tue, Nov 20, 11:56 AM (13 days ago)
+
+[Image removed by sender.]
+[Image removed by sender.]
+
+
+
+
+Hi,
+I'm Junaid and have deployed Clearwater vIMS using Cloudify (https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater). Initially, I deployed it using the repo 'repo122' as mentioned at https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/blob/master/docs/clearwater.md, Line#53, which worked fine and I was able to make calls and run stress test. I have now changed the repo to 'stable' and tried to re-deploy vIMS but the installation of Bind node was failing since Cloudify installs clearwater-management alongside bind9 package on the Bind node.
+
+It looks like to me that clearwater packages in 'stable' repo have some conflict with 'bind9' package. I have provided more details to a GitHub issue (https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/issues/23) in Clearwater cloudify repo but the issue appears to be with Clearwater packages or bind9.
+Does anyone else has faced a similar issue? Any help would be much appreciated.
+
+Kind Regards,
+Junaid
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181211/39bea6be/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image001.jpg
+Type: image/jpeg
+Size: 823 bytes
+Desc: image001.jpg
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181211/39bea6be/attachment.jpg>
+
+From junaidaliyahya at gmail.com  Tue Dec 11 06:25:45 2018
+From: junaidaliyahya at gmail.com (Junaid Ali)
+Date: Tue, 11 Dec 2018 11:25:45 +0000
+Subject: [Project Clearwater] Initiating calls between two SIPp instances
+In-Reply-To: <BYAPR02MB42479F7BB92DDD8570D391D58FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+References: <CA+kT6RV8O4qmfLQZO2_0_CQNYUhWZN83juBH4XXcN6VEQAYH9g@mail.gmail.com>
+	<BYAPR02MB42475234ED935E7789C866B28FAA0@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CA+kT6RV4foM8XeW_Mc76tG28ppGkubDVChmV8ucf_O5KV0-Jyw@mail.gmail.com>
+	<BYAPR02MB42479F7BB92DDD8570D391D58FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+Message-ID: <CA+kT6RWOprA8DJrAwbYhT3y_YcQRxe+FyfUhx6HibYCKQ7BQ0w@mail.gmail.com>
+
+Let me check and get back to you in a few minutes please.
+
+On Tue, Dec 11, 2018 at 11:23 AM Mark Perryman <Mark.Perryman at metaswitch.com>
+wrote:
+
+> So bono?s log
+>
+> 11-12-2018 10:27:40.054 UTC Verbose common_sip_processing.cpp:136: TX 2739 bytes Request msg INVITE/cseq=4 (tdta0x7fc5f0052330) to TCP 192.168.120.12:60900:
+>
+> suggests that the INVITE is sent to the callee.
+>
+>
+>
+> Something is then responding 200 OK
+>
+> 11-12-2018 10:27:40.055 UTC Verbose common_sip_processing.cpp:120: RX 689 bytes Response msg 200/INVITE/cseq=4 (rdata0x7fc5f80046f0) from TCP 192.168.120.12:60900:
+>
+>
+>
+> Is something else running on the callee machine that might be responding
+> instead of the SIPp script.
+>
+>
+>
+> Mark.
+>
+>
+>
+> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+> Behalf Of *Junaid Ali
+> *Sent:* 11 December 2018 10:50
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Project Clearwater] Initiating calls between two SIPp
+> instances
+>
+>
+>
+> Hi Mark,
+>
+>
+>
+> Apologies for the late reply. I have tried the above scenario files as
+> well but couldn't make the call work.
+>
+> I'm registering a number on the caller and callee machines for initiating
+> the calls using this csv file: http://ix.io/1vMI
+>
+>
+>
+> Here is the scenario file on caller machine: http://ix.io/1vME
+>
+> which first registers a number (2010000000) and then send an invite to
+> callee machine.
+>
+>
+>
+> On callee machine, I'm registering a number (2010000002) and waiting for
+> the call to establish using this scenario file: http://ix.io/1vMF
+>
+>
+>
+> The SIPp output on the callee machine looks like this: http://ix.io/1vMK which
+> shows that it gets timeout waiting for INVITE from the caller.
+>
+> The output of /var/log/clearwater-sipp/sip-stress_6766_errors.log on
+> callee is: http://ix.io/1vMO
+>
+> which suggests that INVITE is received on the callee machine but it
+> doesn't get reflected in the SIPp output.
+>
+>
+>
+> The SIPp output the caller machine is: http://ix.io/1vML
+>
+>
+>
+> Bono output at log_level=5: http://ix.io/1vMN
+>
+> Sprout output at log_level=5: http://ix.io/1vMM
+>
+>
+>
+> I'm not sure if I'm missing anything in my scenario file since I don't
+> observe any error messages in bono and sprout logs. Your help is much
+> appreciated.
+>
+>
+>
+> Kind Regards,
+> Junaid
+>
+>
+>
+>
+>
+>
+>
+> On Fri, Dec 7, 2018 at 4:10 PM Mark Perryman <Mark.Perryman at metaswitch.com>
+> wrote:
+>
+> The basic client and server scripts that ship with SIPp itself should be
+> suitable.
+>
+>
+>
+> http://sipp.sourceforge.net/
+>
+> http://sipp.sourceforge.net/doc/reference.html#UAC
+>
+> http://sipp.sourceforge.net/doc/reference.html#UAS
+>
+>
+>
+> Hope that helps, let me know if that doesn?t work.
+>
+>
+>
+> Mark Perryman.
+>
+>
+>
+> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+> Behalf Of *Junaid Ali
+> *Sent:* 04 December 2018 14:10
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Project Clearwater] Initiating calls between two SIPp
+> instances
+>
+>
+>
+> Hi guys,
+>
+> I am trying to create a call between two SIPp instances (caller and
+> callee) using Clearwater IMS. Can anyone share the scenario files for
+> caller and callee please if anyone has tried the same scenario?
+>
+>
+>
+> I have looked at the default scenario file which is present in the
+> sip-stress package but that emulates the same node as both caller and
+> callee.
+>
+>
+>
+> Any help would be really appreciated. Thanks.
+>
+>
+>
+> Kind Regards,
+> Junaid
+>
+>
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181211/7a25bbe9/attachment.html>
+
+From junaidaliyahya at gmail.com  Tue Dec 11 06:28:44 2018
+From: junaidaliyahya at gmail.com (Junaid Ali)
+Date: Tue, 11 Dec 2018 11:28:44 +0000
+Subject: [Project Clearwater] Clearwater-management package conflicts
+ with bind9
+In-Reply-To: <BYAPR02MB4247FF336D6773CC300168C68FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+References: <CA+kT6RWa0Jz98beX-AzSL=R_8FzQ_QV8E5jE7pXPB+z7XTMywQ@mail.gmail.com>
+	<BYAPR02MB42473E32C82AB15A3EBF02A68FAA0@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CA+kT6RUCMz8J4=USUQ3U909f7co_C-U3AEatpWGeuH7JEznoiw@mail.gmail.com>
+	<BYAPR02MB4247FF336D6773CC300168C68FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+Message-ID: <CA+kT6RVy9AuNFJXTrxfkvFHdjiB5fxSWkHxXbvnMxyECEUZQ+Q@mail.gmail.com>
+
+Thanks, I will remove the packages and will validate the deployment again.
+
+Kind Regards,
+Junaid
+
+On Tue, Dec 11, 2018 at 11:25 AM Mark Perryman <Mark.Perryman at metaswitch.com>
+wrote:
+
+> As I have said, I don?t know about the Orange cloudify repo.  However, I
+> see no reason why Clearwater packages should need to installed on the DNS
+> server.
+>
+>
+>
+> Mark.
+>
+>
+>
+> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+> Behalf Of *Junaid Ali
+> *Sent:* 11 December 2018 10:59
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Project Clearwater] Clearwater-management package
+> conflicts with bind9
+>
+>
+>
+> Hi Mark,
+>
+> Thanks for your response and apologies for my late reply. Bind node is
+> separate in my cluster but I'm not sure if clearwater packages should also
+> be installed on it or not (Orange repo installs some clearwater packages on
+> bind node as well).
+>
+> $ dpkg -l | grep clearwater
+>
+> ii  clearwater-cluster-manager       1.0-170508.104112
+>       all          Cluster manager for Clearwater
+>
+> ii  clearwater-config-manager        1.0-170508.104112
+>       all          Configuration manager for Clearwater
+>
+> ii  clearwater-diags-monitor           1.0-170504.093807
+>         all          Diagnostics monitor and bundler for all Clearwater
+> servers
+>
+> ii  clearwater-etcd                          1.0-170508.104112
+>               all          etcd configured for Clearwater
+>
+> ii  clearwater-infrastructure            1.0-170504.093807
+>          amd64        Common infrastructure for all Clearwater servers
+>
+> ii  clearwater-management            1.0-170508.104112
+>       all          Meta-package for installing all Clearwater management
+> services
+>
+> ii  clearwater-monit                         5.18-170403.124108
+>           amd64        utility for monitoring and managing daemons or
+> similar programs
+>
+> ii  clearwater-queue-manager        1.0-170508.104112
+>     all          Queue manager for Clearwater
+>
+>
+>
+> $ dpkg -l | grep bind9
+>
+> ii  bind9                            1:9.9.5.dfsg-3ubuntu0.18
+>      amd64        Internet Domain Name Server
+>
+> ii  bind9-host                       1:9.9.5.dfsg-3ubuntu0.18
+>      amd64        Version of 'host' bundled with BIND 9.X
+>
+> ii  bind9utils                       1:9.9.5.dfsg-3ubuntu0.18
+>      amd64        Utilities for BIND
+>
+> ii  libbind9-90                      1:9.9.5.dfsg-3ubuntu0.18
+>      amd64        BIND9 Shared Library used by BIND
+>
+>
+>
+>
+>
+>
+>
+> On Fri, Dec 7, 2018 at 4:08 PM Mark Perryman <Mark.Perryman at metaswitch.com>
+> wrote:
+>
+> Hi Junaid,
+>
+>
+>
+> I?m afraid I don?t know much about the Orange cloudify repo.  I would
+> suggest running bind9 on a separate node to the Clearwater nodes if that is
+> possible.
+>
+>
+>
+> Sorry not to have a better solution,
+>
+>
+>
+> Mark Perryman
+>
+>
+>
+>
+>
+> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+> Behalf Of *Junaid Ali
+> *Sent:* 03 December 2018 11:41
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Project Clearwater] Clearwater-management package conflicts
+> with bind9
+>
+>
+>
+>
+> Junaid Ali <junaidaliyahya at gmail.com>
+>
+> Tue, Nov 20, 11:56 AM (13 days ago)
+>
+> [image: Image removed by sender.]
+>
+> [image: Image removed by sender.]
+>
+>
+>
+> Hi,
+>
+> I'm Junaid and have deployed Clearwater vIMS using Cloudify (
+> https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater).
+> Initially, I deployed it using the repo 'repo122' as mentioned at
+> https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/blob/master/docs/clearwater.md,
+> Line#53, which worked fine and I was able to make calls and run stress
+> test. I have now changed the repo to 'stable' and tried to re-deploy vIMS
+> but the installation of Bind node was failing since Cloudify installs
+> clearwater-management alongside bind9 package on the Bind node.
+>
+>
+>
+> It looks like to me that clearwater packages in 'stable' repo have some
+> conflict with 'bind9' package. I have provided more details to a GitHub
+> issue (
+> https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/issues/23)
+> in Clearwater cloudify repo but the issue appears to be with Clearwater
+> packages or bind9.
+>
+> Does anyone else has faced a similar issue? Any help would be much
+> appreciated.
+>
+>
+>
+> Kind Regards,
+> Junaid
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181211/0d5ed2c7/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image001.jpg
+Type: image/jpeg
+Size: 823 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181211/0d5ed2c7/attachment.jpg>
+
+From Mark.Perryman at metaswitch.com  Tue Dec 11 06:29:42 2018
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Tue, 11 Dec 2018 11:29:42 +0000
+Subject: [Project Clearwater] SIP call failing with 408 Request timed
+ out.
+In-Reply-To: <CAAEbxXVna8N5E1KfpBWBqvJg0ajGjnXT-PberNp=RW7NyXE6EA@mail.gmail.com>
+References: <CAAEbxXVna8N5E1KfpBWBqvJg0ajGjnXT-PberNp=RW7NyXE6EA@mail.gmail.com>
+Message-ID: <BYAPR02MB4247A59243F6CC922C022D208FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+Sorry for the delay in responding.
+
+It is hard to work out what is going wrong with the diagnostics you have sent.  Are there any firewall issues between the clients and the Openstack rig?  Could you send the full sprout and bono logs?
+
+Thanks,
+
+Mark Perryman.
+
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of Mayur Koshal
+Sent: 28 November 2018 16:58
+To: Clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] SIP call failing with 408 Request timed out.
+
+Hi,
+
+I have done  manual installation of Clearwater vIMS  of all the nodes on Openstack Ocata (devstack) .  I have configured all the nodes in a private network.
+
+I have provisioned 10 numbers in Ellis starting from  6505550000.
+
+I am able to successfully register users on softphones Zoiper as well as Jitsi.
+
+But when i try to make a call from one user to another  it gives an error message: Call failure : SIP 408 -Request timeout
+
+
+Request your help to figure out where it is going wrong .....
+
+
+My Zoiper configurations are :
+
+Username : 6505550006
+domain : ims.hom
+password :*****
+Auth username : 6505550006 at ims.hom<mailto:6505550006 at ims.hom>
+Outbound proxy : 172.24.4.11 Bono IP :5060
+MWI -- disabled
+Transport - tcp
+Use rport - checked
+STUN - not using
+
+Similarly I have registered another user 6505550005 at ims.hom<mailto:6505550005 at ims.hom>.
+
+
+my home domain in /etc/clearwater/shared config is ims.hom.
+local config of bono contains the hostname as bono ip.
+
+
+I have set the log level to 5 but could not make out much as I am not getting any error message in the logs of all the nodes as well as the syslog or monit logs.
+
+Some noticeable logs from Bono and sprout below :
+
+Bono Node -- syslog
+
+Nov 28 11:16:09 bono issue-alarm: zmq_msg_recv: Invalid argument
+Nov 28 11:16:09 bono issue-alarm: message repeated 3 times: [ zmq_msg_recv: Invalid argument]
+Nov 28 11:16:11 bono config-manager[13653]: dropped request: 'issue-alarm config-manager 8500.1'
+Nov 28 11:16:19 bono issue-alarm: zmq_msg_recv: Invalid argument
+Nov 28 11:16:19 bono issue-alarm: message repeated 3 times: [ zmq_msg_recv: Invalid argument]
+Nov 28 11:16:22 bono bono[27913]: <analytics> 2018-11-28T11:16:22.410+00:00 Call-Disconnected: CALL_ID=ZDBiMWZhNWE2ZGY2YjIzMDRjZTZhYmIwY2Y1ZGQ2NjM. REASON=401
+Nov 28 11:16:22 bono bono[27913]: <analytics> 2018-11-28T11:16:22.786+00:00 Call-Disconnected: CALL_ID=c7ac9b71e654bfcd44e33941d6006bc3 at 0:0:0:0:0:0:0:0 REASON=408
+Nov 28 11:16:28 bono bono[27913]: <analytics> 2018-11-28T11:16:28.460+00:00 Call-Disconnected: CALL_ID=dee3256df4301e17c7600bb52d71fb08 at 0:0:0:0:0:0:0:0 REASON=408
+Nov 28 11:16:29 bono issue-alarm: zmq_msg_recv: Invalid argument
+Nov 28 11:16:29 bono issue-alarm: message repeated 3 times: [ zmq_msg_recv: Invalid argument]
+Nov 28 11:16:34 bono bono[27913]: <analytics> 2018-11-28T11:16:34.443+00:00 Call-Disconnected: CALL_ID=ZTcxMGY2ZWM5N2FjM2ViOTZhMjA0Mzk0NzEwY2M2MTM. REASON=401
+Nov 28 11:16:35 bono queue-manager[13538]: dropped request: 'issue-alarm queue-manager 9001.1'
+Nov 28 11:16:37 bono queue-manager[13538]: dropped request: 'issue-alarm queue-manager 9002.1'
+Nov 28 11:16:39 bono issue-alarm: zmq_msg_recv: Invalid argument
+Nov 28 11:16:39 bono issue-alarm: message repeated 3 times: [ zmq_msg_recv: Invalid argument]
+Nov 28 11:16:41 bono config-manager[13653]: dropped request: 'issue-alarm config-manager 8500.1'
+Nov 28 11:16:47 bono bono[27913]: <analytics> 2018-11-28T11:16:47.786+00:00 Call-Disconnected: CALL_ID=df3848fdc02e7f129051f5f766ad303a at 0:0:0:0:0:0:0:0 REASON=408
+Nov 28 11:16:49 bono issue-alarm: zmq_msg_recv: Invalid argument
+Nov 28 11:16:49 bono issue-alarm: message repeated 3 times: [ zmq_msg_recv: Invalid argument]
+Nov 28 11:16:53 bono bono[27913]: <analytics> 2018-11-28T11:16:53.465+00:00 Call-Disconnected: CALL_ID=c98ce23b310df66264e25322dc987121 at 0:0:0:0:0:0:0:0 REASON=408
+Nov 28 11:16:59 bono issue-alarm: zmq_msg_recv: Invalid argument
+Nov 28 11:16:59 bono issue-alarm: message repeated 3 times: [ zmq_msg_recv: Invalid argument]
+Nov 28 11:17:01 bono CRON[25278]: (root) CMD (/usr/sbin/iotop -b -o -t -n 1 -k >> /var/log/iotop.log 2>&1)
+Nov 28 11:17:01 bono CRON[25279]: (root) CMD (/usr/lib/sysstat/sadc 1 1 /var/log/sysstat/clearwater-sa`date +%d` > /dev/null 2>&1)
+Nov 28 11:17:01 bono CRON[25280]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Nov 28 11:17:05 bono queue-manager[13538]: dropped request: 'issue-alarm queue-manager 9001.1'
+Nov 28 11:17:07 bono queue-manager[13538]: dropped request: 'issue-alarm queue-manager 9002.1'
+Nov 28 11:17:09 bono issue-alarm: zmq_msg_recv: Invalid argument
+Nov 28 11:17:09 bono issue-alarm: message repeated 3 times: [ zmq_msg_recv: Invalid argument]
+Nov 28 11:17:11 bono config-manager[13653]: dropped request: 'issue-alarm config-manager 8500.1'
+Nov 28 11:17:12 bono bono[27913]: <analytics> 2018-11-28T11:17:12.787+00:00 Call-Disconnected: CALL_ID=6150cea252d458e388043380bbc46e3f at 0:0:0:0:0:0:0:0 REASON=408
+Nov 28 11:17:18 bono bono[27913]: <analytics> 2018-11-28T11:17:18.465+00:00 Call-Disconnected: CALL_ID=e737a61c0d0d9fc67ec952f6e2501bed at 0:0:0:0:0:0:0:0 REASON=408
+Nov 28 11:17:19 bono issue-alarm: zmq_msg_recv: Invalid argument
+-----------------------------------------------------------------------------------------
+Bono logs  -
+*********
+1-2018 11:14:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout issued 1012.3 alarm
+28-11-2018 11:14:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout issued 1013.3 alarm
+28-11-2018 11:14:47.512 UTC [7f5c9affd700] Status sip_connection_pool.cpp:428: Recycle TCP connection slot 5
+28-11-2018 11:14:48.790 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning: Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:15:03.800 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning: Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:15:06.514 UTC [7f5c9affd700] Status sip_connection_pool.cpp:428: Recycle TCP connection slot 37
+28-11-2018 11:15:07.515 UTC [7f5c9affd700] Status sip_connection_pool.cpp:428: Recycle TCP connection slot 43
+28-11-2018 11:15:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:244: Reraising all alarms with a known state
+28-11-2018 11:15:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout issued 1012.3 alarm
+28-11-2018 11:15:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout issued 1013.3 alarm
+28-11-2018 11:15:18.815 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning: Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:15:33.825 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning: Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:15:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:244: Reraising all alarms with a known state
+28-11-2018 11:15:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout issued 1012.3 alarm
+28-11-2018 11:15:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout issued 1013.3 alarm
+28-11-2018 11:15:48.840 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning: Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:16:03.854 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning: Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:16:09.522 UTC [7f5c9affd700] Status sip_connection_pool.cpp:428: Recycle TCP connection slot 0
+28-11-2018 11:16:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:244: Reraising all alarms with a known state
+28-11-2018 11:16:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout issued 1012.3 alarm
+28-11-2018 11:16:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout issued 1013.3 alarm
+28-11-2018 11:16:13.523 UTC [7f5c9affd700] Status sip_connection_pool.cpp:428: Recycle TCP connection slot 49
+28-11-2018 11:16:18.868 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning: Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:16:33.883 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning: Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:16:41.526 UTC [7f5c9affd700] Status sip_connection_pool.cpp:428: Recycle TCP connection slot 4
+28-11-2018 11:16:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:244: Reraising all alarms with a known state
+28-11-2018 11:16:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout issued 1012.3 alarm
+28-11-2018 11:16:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout issued 1013.3 alarm
+28-11-2018 11:16:44.527 UTC [7f5c9affd700] Status sip_connection_pool.cpp:428: Recycle TCP connection slot 7
+28-11-2018 11:16:47.527 UTC [7f5c9affd700] Status sip_connection_pool.cpp:428: Recycle TCP connection slot 16
+28-11-2018 11:16:48.898 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning: Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:16:53.456 UTC [7f5c997fa700] Warning dnscachedresolver.cpp:698: Failed to retrieve record for _sip._tcp.scscf.sprout.ims.hom: Domain name not found
+28-11-2018 11:17:03.530 UTC [7f5c9affd700] Status sip_connection_pool.cpp:428: Recycle TCP connection slot 46
+28-11-2018 11:17:03.910 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning: Failed to connect to the agentx master agent ([NIL]):
+28-11-2018 11:17:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:244: Reraising all alarms with a known ------------------
+
+-----------------------------------------------------------------------------------------------------------------------------
+Sprout --
+**********
+analytics.log
+
+2018-11-28T11:11:52.884+00:00 Registration: USER_URI=sip:6505550005 at ims.hom BINDING_ID=sip:6505550005 at 172.24.4.1:51030;transport=TCP;rinstance=871c7de37ebab0b2 CONTACT_URI=sip:6505550005 at 172.24.4.1:51030;transport=TCP;rinstance=871c7de37ebab0b2 EXPIRES=300
+2018-11-28T11:12:04.910+00:00 Registration: USER_URI=sip:6505550006 at ims.hom BINDING_ID=sip:6505550006 at 172.24.4.1:32094;transport=TCP;rinstance=5d8742e5a588c1d6 CONTACT_URI=sip:6505550006 at 172.24.4.1:32094;transport=TCP;rinstance=5d8742e5a588c1d6 EXPIRES=300
+2018-11-28T11:13:44.146+00:00 Registration: USER_URI=sip:6505550002 at ims.hom BINDING_ID=sip:6505550002 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom CONTACT_URI=sip:6505550002 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom EXPIRES=0
+2018-11-28T11:14:08.915+00:00 Registration: USER_URI=sip:6505550006 at ims.hom BINDING_ID=sip:6505550006 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom CONTACT_URI=sip:6505550006 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom EXPIRES=0
+2018-11-28T11:16:22.926+00:00 Registration: USER_URI=sip:6505550005 at ims.hom BINDING_ID=sip:6505550005 at 172.24.4.1:51030;transport=TCP;rinstance=871c7de37ebab0b2 CONTACT_URI=sip:6505550005 at 172.24.4.1:51030;transport=TCP;rinstance=871c7de37ebab0b2 EXPIRES=300
+2018-11-28T11:16:34.965+00:00 Registration: USER_URI=sip:6505550006 at ims.hom BINDING_ID=sip:6505550006 at 172.24.4.1:32094;transport=TCP;rinstance=5d8742e5a588c1d6 CONTACT_URI=sip:6505550006 at 172.24.4.1:32094;transport=TCP;rinstance=5d8742e5a588c1d6 EXPIRES=300
+2018-11-28T11:17:44.188+00:00 Registration: USER_URI=sip:6505550002 at ims.hom BINDING_ID=sip:6505550002 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom CONTACT_URI=sip:6505550002 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom EXPIRES=300
+2018-11-28T11:18:08.334+00:00 Registration: USER_URI=sip:6505550006 at ims.hom BINDING_ID=sip:6505550006 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom CONTACT_URI=sip:6505550006 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom EXPIRES=300
+2018-11-28T11:20:52.962+00:00 Registration: USER_URI=sip:6505550005 at ims.hom BINDING_ID=sip:6505550005 at 172.24.4.1:51030;transport=TCP;rinstance=871c7de37ebab0b2 CONTACT_URI=sip:6505550005 at 172.24.4.1:51030;transport=TCP;rinstance=871c7de37ebab0b2 EXPIRES=300
+2018-11-28T11:21:05.010+00:00 Registration: USER_URI=sip:6505550006 at ims.hom BINDING_ID=sip:6505550006 at 172.24.4.1:32094;transport=TCP;rinstance=5d8742e5a588c1d6 CONTACT_URI=sip:6505550006 at 172.24.4.1:32094;transport=TCP;rinstance=5d8742e5a588c1d6 EXPIRES=300
+2018-11-28T11:22:44.197+00:00 Registration: USER_URI=sip:6505550002 at ims.hom BINDING_ID=sip:6505550002 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom CONTACT_URI=sip:6505550002 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom EXPIRES=0
+~
+------------------------------------------------------------------------------------------------
+
+
+
+
+Regards
+Mayur
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181211/9dfc417a/attachment.html>
+
+From junaidaliyahya at gmail.com  Tue Dec 11 07:18:02 2018
+From: junaidaliyahya at gmail.com (Junaid Ali)
+Date: Tue, 11 Dec 2018 12:18:02 +0000
+Subject: [Project Clearwater] Initiating calls between two SIPp instances
+In-Reply-To: <CA+kT6RWOprA8DJrAwbYhT3y_YcQRxe+FyfUhx6HibYCKQ7BQ0w@mail.gmail.com>
+References: <CA+kT6RV8O4qmfLQZO2_0_CQNYUhWZN83juBH4XXcN6VEQAYH9g@mail.gmail.com>
+	<BYAPR02MB42475234ED935E7789C866B28FAA0@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CA+kT6RV4foM8XeW_Mc76tG28ppGkubDVChmV8ucf_O5KV0-Jyw@mail.gmail.com>
+	<BYAPR02MB42479F7BB92DDD8570D391D58FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CA+kT6RWOprA8DJrAwbYhT3y_YcQRxe+FyfUhx6HibYCKQ7BQ0w@mail.gmail.com>
+Message-ID: <CA+kT6RV+6KwBantfo9mXsPxutTggABkVoiF8QZLYCuRk9vxi0A@mail.gmail.com>
+
+Hi Mark,
+Just found the cause of that 200 OK response. Actually, I was using "-aa"
+as an argument to SIPp tool on the callee machine. The man page of SIPp for
+'-aa' argument says: "Enable automatic 200 OK answer for INFO, UPDATE and
+NOTIFY messages."
+
+I have removed the '-aa' parameter, but now I'm getting this error on the
+callee machine: http://ix.io/1vNj. I googled a little bit about this error
+and it seems to me that this might be due to different call-ids on caller
+and callee responses. SIPp output for callee: http://ix.io/1vNl
+
+On caller node, I'm getting 408 Timeout error for INVITE sig:
+http://ix.io/1vNn
+
+Sprout logs: http://ix.io/1vNg
+Bono logs: http://ix.io/1vNh
+
+Kind Regards,
+Junaid
+
+On Tue, Dec 11, 2018 at 11:25 AM Junaid Ali <junaidaliyahya at gmail.com>
+wrote:
+
+> Let me check and get back to you in a few minutes please.
+>
+> On Tue, Dec 11, 2018 at 11:23 AM Mark Perryman <
+> Mark.Perryman at metaswitch.com> wrote:
+>
+>> So bono?s log
+>>
+>> 11-12-2018 10:27:40.054 UTC Verbose common_sip_processing.cpp:136: TX 2739 bytes Request msg INVITE/cseq=4 (tdta0x7fc5f0052330) to TCP 192.168.120.12:60900:
+>>
+>> suggests that the INVITE is sent to the callee.
+>>
+>>
+>>
+>> Something is then responding 200 OK
+>>
+>> 11-12-2018 10:27:40.055 UTC Verbose common_sip_processing.cpp:120: RX 689 bytes Response msg 200/INVITE/cseq=4 (rdata0x7fc5f80046f0) from TCP 192.168.120.12:60900:
+>>
+>>
+>>
+>> Is something else running on the callee machine that might be responding
+>> instead of the SIPp script.
+>>
+>>
+>>
+>> Mark.
+>>
+>>
+>>
+>> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+>> Behalf Of *Junaid Ali
+>> *Sent:* 11 December 2018 10:50
+>> *To:* clearwater at lists.projectclearwater.org
+>> *Subject:* Re: [Project Clearwater] Initiating calls between two SIPp
+>> instances
+>>
+>>
+>>
+>> Hi Mark,
+>>
+>>
+>>
+>> Apologies for the late reply. I have tried the above scenario files as
+>> well but couldn't make the call work.
+>>
+>> I'm registering a number on the caller and callee machines for initiating
+>> the calls using this csv file: http://ix.io/1vMI
+>>
+>>
+>>
+>> Here is the scenario file on caller machine: http://ix.io/1vME
+>>
+>> which first registers a number (2010000000) and then send an invite to
+>> callee machine.
+>>
+>>
+>>
+>> On callee machine, I'm registering a number (2010000002) and waiting for
+>> the call to establish using this scenario file: http://ix.io/1vMF
+>>
+>>
+>>
+>> The SIPp output on the callee machine looks like this: http://ix.io/1vMK which
+>> shows that it gets timeout waiting for INVITE from the caller.
+>>
+>> The output of /var/log/clearwater-sipp/sip-stress_6766_errors.log on
+>> callee is: http://ix.io/1vMO
+>>
+>> which suggests that INVITE is received on the callee machine but it
+>> doesn't get reflected in the SIPp output.
+>>
+>>
+>>
+>> The SIPp output the caller machine is: http://ix.io/1vML
+>>
+>>
+>>
+>> Bono output at log_level=5: http://ix.io/1vMN
+>>
+>> Sprout output at log_level=5: http://ix.io/1vMM
+>>
+>>
+>>
+>> I'm not sure if I'm missing anything in my scenario file since I don't
+>> observe any error messages in bono and sprout logs. Your help is much
+>> appreciated.
+>>
+>>
+>>
+>> Kind Regards,
+>> Junaid
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>> On Fri, Dec 7, 2018 at 4:10 PM Mark Perryman <
+>> Mark.Perryman at metaswitch.com> wrote:
+>>
+>> The basic client and server scripts that ship with SIPp itself should be
+>> suitable.
+>>
+>>
+>>
+>> http://sipp.sourceforge.net/
+>>
+>> http://sipp.sourceforge.net/doc/reference.html#UAC
+>>
+>> http://sipp.sourceforge.net/doc/reference.html#UAS
+>>
+>>
+>>
+>> Hope that helps, let me know if that doesn?t work.
+>>
+>>
+>>
+>> Mark Perryman.
+>>
+>>
+>>
+>> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+>> Behalf Of *Junaid Ali
+>> *Sent:* 04 December 2018 14:10
+>> *To:* clearwater at lists.projectclearwater.org
+>> *Subject:* [Project Clearwater] Initiating calls between two SIPp
+>> instances
+>>
+>>
+>>
+>> Hi guys,
+>>
+>> I am trying to create a call between two SIPp instances (caller and
+>> callee) using Clearwater IMS. Can anyone share the scenario files for
+>> caller and callee please if anyone has tried the same scenario?
+>>
+>>
+>>
+>> I have looked at the default scenario file which is present in the
+>> sip-stress package but that emulates the same node as both caller and
+>> callee.
+>>
+>>
+>>
+>> Any help would be really appreciated. Thanks.
+>>
+>>
+>>
+>> Kind Regards,
+>> Junaid
+>>
+>>
+>>
+>> _______________________________________________
+>> Clearwater mailing list
+>> Clearwater at lists.projectclearwater.org
+>>
+>> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>>
+>> _______________________________________________
+>> Clearwater mailing list
+>> Clearwater at lists.projectclearwater.org
+>>
+>> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181211/6b11f1ff/attachment.html>
+
+From Mark.Perryman at metaswitch.com  Tue Dec 11 08:23:03 2018
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Tue, 11 Dec 2018 13:23:03 +0000
+Subject: [Project Clearwater] Initiating calls between two SIPp instances
+In-Reply-To: <CA+kT6RV+6KwBantfo9mXsPxutTggABkVoiF8QZLYCuRk9vxi0A@mail.gmail.com>
+References: <CA+kT6RV8O4qmfLQZO2_0_CQNYUhWZN83juBH4XXcN6VEQAYH9g@mail.gmail.com>
+	<BYAPR02MB42475234ED935E7789C866B28FAA0@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CA+kT6RV4foM8XeW_Mc76tG28ppGkubDVChmV8ucf_O5KV0-Jyw@mail.gmail.com>
+	<BYAPR02MB42479F7BB92DDD8570D391D58FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CA+kT6RWOprA8DJrAwbYhT3y_YcQRxe+FyfUhx6HibYCKQ7BQ0w@mail.gmail.com>
+	<CA+kT6RV+6KwBantfo9mXsPxutTggABkVoiF8QZLYCuRk9vxi0A@mail.gmail.com>
+Message-ID: <BYAPR02MB424762B8137AD9D739E27E658FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+Junaid,
+
+You are encountering this problem.  https://github.com/SIPp/sipp/issues/199
+
+There seem to be suggestions of what to try.
+
+Mark Perryman.
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of Junaid Ali
+Sent: 11 December 2018 12:18
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Initiating calls between two SIPp instances
+
+Hi Mark,
+Just found the cause of that 200 OK response. Actually, I was using "-aa" as an argument to SIPp tool on the callee machine. The man page of SIPp for '-aa' argument says: "Enable automatic 200 OK answer for INFO, UPDATE and NOTIFY messages."
+
+I have removed the '-aa' parameter, but now I'm getting this error on the callee machine: http://ix.io/1vNj. I googled a little bit about this error and it seems to me that this might be due to different call-ids on caller and callee responses. SIPp output for callee: http://ix.io/1vNl
+
+On caller node, I'm getting 408 Timeout error for INVITE sig: http://ix.io/1vNn
+
+Sprout logs: http://ix.io/1vNg
+Bono logs: http://ix.io/1vNh
+
+Kind Regards,
+Junaid
+
+On Tue, Dec 11, 2018 at 11:25 AM Junaid Ali <junaidaliyahya at gmail.com<mailto:junaidaliyahya at gmail.com>> wrote:
+Let me check and get back to you in a few minutes please.
+
+On Tue, Dec 11, 2018 at 11:23 AM Mark Perryman <Mark.Perryman at metaswitch.com<mailto:Mark.Perryman at metaswitch.com>> wrote:
+So bono?s log
+
+11-12-2018 10:27:40.054 UTC Verbose common_sip_processing.cpp:136: TX 2739 bytes Request msg INVITE/cseq=4 (tdta0x7fc5f0052330) to TCP 192.168.120.12:60900<http://192.168.120.12:60900>:
+suggests that the INVITE is sent to the callee.
+
+Something is then responding 200 OK
+
+11-12-2018 10:27:40.055 UTC Verbose common_sip_processing.cpp:120: RX 689 bytes Response msg 200/INVITE/cseq=4 (rdata0x7fc5f80046f0) from TCP 192.168.120.12:60900<http://192.168.120.12:60900>:
+
+Is something else running on the callee machine that might be responding instead of the SIPp script.
+
+Mark.
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>> On Behalf Of Junaid Ali
+Sent: 11 December 2018 10:50
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] Initiating calls between two SIPp instances
+
+Hi Mark,
+
+Apologies for the late reply. I have tried the above scenario files as well but couldn't make the call work.
+I'm registering a number on the caller and callee machines for initiating the calls using this csv file: http://ix.io/1vMI
+
+Here is the scenario file on caller machine: http://ix.io/1vME
+which first registers a number (2010000000) and then send an invite to callee machine.
+
+On callee machine, I'm registering a number (2010000002) and waiting for the call to establish using this scenario file: http://ix.io/1vMF
+
+The SIPp output on the callee machine looks like this: http://ix.io/1vMK which shows that it gets timeout waiting for INVITE from the caller.
+The output of /var/log/clearwater-sipp/sip-stress_6766_errors.log on callee is: http://ix.io/1vMO
+which suggests that INVITE is received on the callee machine but it doesn't get reflected in the SIPp output.
+
+The SIPp output the caller machine is: http://ix.io/1vML
+
+Bono output at log_level=5: http://ix.io/1vMN
+Sprout output at log_level=5: http://ix.io/1vMM
+
+I'm not sure if I'm missing anything in my scenario file since I don't observe any error messages in bono and sprout logs. Your help is much appreciated.
+
+Kind Regards,
+Junaid
+
+
+
+On Fri, Dec 7, 2018 at 4:10 PM Mark Perryman <Mark.Perryman at metaswitch.com<mailto:Mark.Perryman at metaswitch.com>> wrote:
+The basic client and server scripts that ship with SIPp itself should be suitable.
+
+http://sipp.sourceforge.net/
+http://sipp.sourceforge.net/doc/reference.html#UAC
+http://sipp.sourceforge.net/doc/reference.html#UAS
+
+Hope that helps, let me know if that doesn?t work.
+
+Mark Perryman.
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>> On Behalf Of Junaid Ali
+Sent: 04 December 2018 14:10
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Initiating calls between two SIPp instances
+
+Hi guys,
+I am trying to create a call between two SIPp instances (caller and callee) using Clearwater IMS. Can anyone share the scenario files for caller and callee please if anyone has tried the same scenario?
+
+I have looked at the default scenario file which is present in the sip-stress package but that emulates the same node as both caller and callee.
+
+Any help would be really appreciated. Thanks.
+
+Kind Regards,
+Junaid
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181211/d815e69d/attachment.html>
+
+From junaidaliyahya at gmail.com  Tue Dec 11 08:29:10 2018
+From: junaidaliyahya at gmail.com (Junaid Ali)
+Date: Tue, 11 Dec 2018 13:29:10 +0000
+Subject: [Project Clearwater] Initiating calls between two SIPp instances
+In-Reply-To: <BYAPR02MB424762B8137AD9D739E27E658FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+References: <CA+kT6RV8O4qmfLQZO2_0_CQNYUhWZN83juBH4XXcN6VEQAYH9g@mail.gmail.com>
+	<BYAPR02MB42475234ED935E7789C866B28FAA0@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CA+kT6RV4foM8XeW_Mc76tG28ppGkubDVChmV8ucf_O5KV0-Jyw@mail.gmail.com>
+	<BYAPR02MB42479F7BB92DDD8570D391D58FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CA+kT6RWOprA8DJrAwbYhT3y_YcQRxe+FyfUhx6HibYCKQ7BQ0w@mail.gmail.com>
+	<CA+kT6RV+6KwBantfo9mXsPxutTggABkVoiF8QZLYCuRk9vxi0A@mail.gmail.com>
+	<BYAPR02MB424762B8137AD9D739E27E658FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+Message-ID: <CA+kT6RVoTujumJ78utF38sFG+2jz-72fTESXuA8_os_KpRXwBw@mail.gmail.com>
+
+Hi Mark,
+
+I read this issue earlier and separated the registration and call set up in
+two different scenario files on the callee machine, but I was getting the
+same error. Let me separate the registration and call set up on caller
+machine as well please and see if there is any effect. Thanks a lot for
+looking into this issue.
+
+Kind Regards,
+Junaid
+
+On Tue, Dec 11, 2018 at 1:24 PM Mark Perryman <Mark.Perryman at metaswitch.com>
+wrote:
+
+> Junaid,
+>
+>
+>
+> You are encountering this problem.
+> https://github.com/SIPp/sipp/issues/199
+>
+>
+>
+> There seem to be suggestions of what to try.
+>
+>
+>
+> Mark Perryman.
+>
+>
+>
+> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+> Behalf Of *Junaid Ali
+> *Sent:* 11 December 2018 12:18
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Project Clearwater] Initiating calls between two SIPp
+> instances
+>
+>
+>
+> Hi Mark,
+>
+> Just found the cause of that 200 OK response. Actually, I was using "-aa"
+> as an argument to SIPp tool on the callee machine. The man page of SIPp for
+> '-aa' argument says: "Enable automatic 200 OK answer for INFO, UPDATE and
+> NOTIFY messages."
+>
+>
+>
+> I have removed the '-aa' parameter, but now I'm getting this error on the
+> callee machine: http://ix.io/1vNj. I googled a little bit about this
+> error and it seems to me that this might be due to different call-ids on
+> caller and callee responses. SIPp output for callee: http://ix.io/1vNl
+>
+>
+>
+> On caller node, I'm getting 408 Timeout error for INVITE sig:
+> http://ix.io/1vNn
+>
+>
+>
+> Sprout logs: http://ix.io/1vNg
+>
+> Bono logs: http://ix.io/1vNh
+>
+>
+>
+> Kind Regards,
+> Junaid
+>
+>
+>
+> On Tue, Dec 11, 2018 at 11:25 AM Junaid Ali <junaidaliyahya at gmail.com>
+> wrote:
+>
+> Let me check and get back to you in a few minutes please.
+>
+>
+>
+> On Tue, Dec 11, 2018 at 11:23 AM Mark Perryman <
+> Mark.Perryman at metaswitch.com> wrote:
+>
+> So bono?s log
+>
+> 11-12-2018 10:27:40.054 UTC Verbose common_sip_processing.cpp:136: TX 2739 bytes Request msg INVITE/cseq=4 (tdta0x7fc5f0052330) to TCP 192.168.120.12:60900:
+>
+> suggests that the INVITE is sent to the callee.
+>
+>
+>
+> Something is then responding 200 OK
+>
+> 11-12-2018 10:27:40.055 UTC Verbose common_sip_processing.cpp:120: RX 689 bytes Response msg 200/INVITE/cseq=4 (rdata0x7fc5f80046f0) from TCP 192.168.120.12:60900:
+>
+>
+>
+> Is something else running on the callee machine that might be responding
+> instead of the SIPp script.
+>
+>
+>
+> Mark.
+>
+>
+>
+> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+> Behalf Of *Junaid Ali
+> *Sent:* 11 December 2018 10:50
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Project Clearwater] Initiating calls between two SIPp
+> instances
+>
+>
+>
+> Hi Mark,
+>
+>
+>
+> Apologies for the late reply. I have tried the above scenario files as
+> well but couldn't make the call work.
+>
+> I'm registering a number on the caller and callee machines for initiating
+> the calls using this csv file: http://ix.io/1vMI
+>
+>
+>
+> Here is the scenario file on caller machine: http://ix.io/1vME
+>
+> which first registers a number (2010000000) and then send an invite to
+> callee machine.
+>
+>
+>
+> On callee machine, I'm registering a number (2010000002) and waiting for
+> the call to establish using this scenario file: http://ix.io/1vMF
+>
+>
+>
+> The SIPp output on the callee machine looks like this: http://ix.io/1vMK which
+> shows that it gets timeout waiting for INVITE from the caller.
+>
+> The output of /var/log/clearwater-sipp/sip-stress_6766_errors.log on
+> callee is: http://ix.io/1vMO
+>
+> which suggests that INVITE is received on the callee machine but it
+> doesn't get reflected in the SIPp output.
+>
+>
+>
+> The SIPp output the caller machine is: http://ix.io/1vML
+>
+>
+>
+> Bono output at log_level=5: http://ix.io/1vMN
+>
+> Sprout output at log_level=5: http://ix.io/1vMM
+>
+>
+>
+> I'm not sure if I'm missing anything in my scenario file since I don't
+> observe any error messages in bono and sprout logs. Your help is much
+> appreciated.
+>
+>
+>
+> Kind Regards,
+> Junaid
+>
+>
+>
+>
+>
+>
+>
+> On Fri, Dec 7, 2018 at 4:10 PM Mark Perryman <Mark.Perryman at metaswitch.com>
+> wrote:
+>
+> The basic client and server scripts that ship with SIPp itself should be
+> suitable.
+>
+>
+>
+> http://sipp.sourceforge.net/
+>
+> http://sipp.sourceforge.net/doc/reference.html#UAC
+>
+> http://sipp.sourceforge.net/doc/reference.html#UAS
+>
+>
+>
+> Hope that helps, let me know if that doesn?t work.
+>
+>
+>
+> Mark Perryman.
+>
+>
+>
+> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+> Behalf Of *Junaid Ali
+> *Sent:* 04 December 2018 14:10
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Project Clearwater] Initiating calls between two SIPp
+> instances
+>
+>
+>
+> Hi guys,
+>
+> I am trying to create a call between two SIPp instances (caller and
+> callee) using Clearwater IMS. Can anyone share the scenario files for
+> caller and callee please if anyone has tried the same scenario?
+>
+>
+>
+> I have looked at the default scenario file which is present in the
+> sip-stress package but that emulates the same node as both caller and
+> callee.
+>
+>
+>
+> Any help would be really appreciated. Thanks.
+>
+>
+>
+> Kind Regards,
+> Junaid
+>
+>
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181211/06784a5a/attachment.html>
+
+From junaidaliyahya at gmail.com  Tue Dec 11 10:37:04 2018
+From: junaidaliyahya at gmail.com (Junaid Ali)
+Date: Tue, 11 Dec 2018 15:37:04 +0000
+Subject: [Project Clearwater] Initiating calls between two SIPp instances
+In-Reply-To: <CA+kT6RVoTujumJ78utF38sFG+2jz-72fTESXuA8_os_KpRXwBw@mail.gmail.com>
+References: <CA+kT6RV8O4qmfLQZO2_0_CQNYUhWZN83juBH4XXcN6VEQAYH9g@mail.gmail.com>
+	<BYAPR02MB42475234ED935E7789C866B28FAA0@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CA+kT6RV4foM8XeW_Mc76tG28ppGkubDVChmV8ucf_O5KV0-Jyw@mail.gmail.com>
+	<BYAPR02MB42479F7BB92DDD8570D391D58FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CA+kT6RWOprA8DJrAwbYhT3y_YcQRxe+FyfUhx6HibYCKQ7BQ0w@mail.gmail.com>
+	<CA+kT6RV+6KwBantfo9mXsPxutTggABkVoiF8QZLYCuRk9vxi0A@mail.gmail.com>
+	<BYAPR02MB424762B8137AD9D739E27E658FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CA+kT6RVoTujumJ78utF38sFG+2jz-72fTESXuA8_os_KpRXwBw@mail.gmail.com>
+Message-ID: <CA+kT6RXgFanxd6pUQdyzOOOVONXAhNrj8HP-10QqU-CfU+zizw@mail.gmail.com>
+
+Hi Mark,
+
+The link you shared suggests having two different scenario files for
+registration and call setup. So, I created these files on the callee machine
+register.xml: http://ix.io/1vOj
+call-set-up.xml: http://ix.io/1vOk
+
+While initiating the registration scenario with a small pause or without
+any pause at the end of register.xml, SIPp command on caller machine fails
+with 430 Flow error. I think that error is due to the termination of the
+SIPp process which is responsible for registration on the callee machine
+before the INVITE signal from the caller.
+
+If I add a large pause to keep the registration process alive for a bit
+longer on the callee node, I face this error again:  <goog_643911926>
+http://ix.io/1vNj . One thing I have observed is that INVITE signal is
+captured by the registration SIPp process instead of the call setup SIPp
+process on the callee machine. Check the image here please:
+https://i.imgur.com/jlFv7mD.jpg , where the upper window is for
+registration and in the lower window I'm running the call set up scenario.
+
+ I'm not passing the '-aa' parameter to the SIPp tool which is suggested in
+the link because then we face the issue you mentioned in your reply#2.
+
+Kind Regards,
+Junaid
+
+
+On Tue, Dec 11, 2018 at 1:29 PM Junaid Ali <junaidaliyahya at gmail.com> wrote:
+
+> Hi Mark,
+>
+> I read this issue earlier and separated the registration and call set up
+> in two different scenario files on the callee machine, but I was getting
+> the same error. Let me separate the registration and call set up on caller
+> machine as well please and see if there is any effect. Thanks a lot for
+> looking into this issue.
+>
+> Kind Regards,
+> Junaid
+>
+> On Tue, Dec 11, 2018 at 1:24 PM Mark Perryman <
+> Mark.Perryman at metaswitch.com> wrote:
+>
+>> Junaid,
+>>
+>>
+>>
+>> You are encountering this problem.
+>> https://github.com/SIPp/sipp/issues/199
+>>
+>>
+>>
+>> There seem to be suggestions of what to try.
+>>
+>>
+>>
+>> Mark Perryman.
+>>
+>>
+>>
+>> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+>> Behalf Of *Junaid Ali
+>> *Sent:* 11 December 2018 12:18
+>> *To:* clearwater at lists.projectclearwater.org
+>> *Subject:* Re: [Project Clearwater] Initiating calls between two SIPp
+>> instances
+>>
+>>
+>>
+>> Hi Mark,
+>>
+>> Just found the cause of that 200 OK response. Actually, I was using "-aa"
+>> as an argument to SIPp tool on the callee machine. The man page of SIPp for
+>> '-aa' argument says: "Enable automatic 200 OK answer for INFO, UPDATE and
+>> NOTIFY messages."
+>>
+>>
+>>
+>> I have removed the '-aa' parameter, but now I'm getting this error on the
+>> callee machine: http://ix.io/1vNj. I googled a little bit about this
+>> error and it seems to me that this might be due to different call-ids on
+>> caller and callee responses. SIPp output for callee: http://ix.io/1vNl
+>>
+>>
+>>
+>> On caller node, I'm getting 408 Timeout error for INVITE sig:
+>> http://ix.io/1vNn
+>>
+>>
+>>
+>> Sprout logs: http://ix.io/1vNg
+>>
+>> Bono logs: http://ix.io/1vNh
+>>
+>>
+>>
+>> Kind Regards,
+>> Junaid
+>>
+>>
+>>
+>> On Tue, Dec 11, 2018 at 11:25 AM Junaid Ali <junaidaliyahya at gmail.com>
+>> wrote:
+>>
+>> Let me check and get back to you in a few minutes please.
+>>
+>>
+>>
+>> On Tue, Dec 11, 2018 at 11:23 AM Mark Perryman <
+>> Mark.Perryman at metaswitch.com> wrote:
+>>
+>> So bono?s log
+>>
+>> 11-12-2018 10:27:40.054 UTC Verbose common_sip_processing.cpp:136: TX 2739 bytes Request msg INVITE/cseq=4 (tdta0x7fc5f0052330) to TCP 192.168.120.12:60900:
+>>
+>> suggests that the INVITE is sent to the callee.
+>>
+>>
+>>
+>> Something is then responding 200 OK
+>>
+>> 11-12-2018 10:27:40.055 UTC Verbose common_sip_processing.cpp:120: RX 689 bytes Response msg 200/INVITE/cseq=4 (rdata0x7fc5f80046f0) from TCP 192.168.120.12:60900:
+>>
+>>
+>>
+>> Is something else running on the callee machine that might be responding
+>> instead of the SIPp script.
+>>
+>>
+>>
+>> Mark.
+>>
+>>
+>>
+>> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+>> Behalf Of *Junaid Ali
+>> *Sent:* 11 December 2018 10:50
+>> *To:* clearwater at lists.projectclearwater.org
+>> *Subject:* Re: [Project Clearwater] Initiating calls between two SIPp
+>> instances
+>>
+>>
+>>
+>> Hi Mark,
+>>
+>>
+>>
+>> Apologies for the late reply. I have tried the above scenario files as
+>> well but couldn't make the call work.
+>>
+>> I'm registering a number on the caller and callee machines for initiating
+>> the calls using this csv file: http://ix.io/1vMI
+>>
+>>
+>>
+>> Here is the scenario file on caller machine: http://ix.io/1vME
+>>
+>> which first registers a number (2010000000) and then send an invite to
+>> callee machine.
+>>
+>>
+>>
+>> On callee machine, I'm registering a number (2010000002) and waiting for
+>> the call to establish using this scenario file: http://ix.io/1vMF
+>>
+>>
+>>
+>> The SIPp output on the callee machine looks like this: http://ix.io/1vMK which
+>> shows that it gets timeout waiting for INVITE from the caller.
+>>
+>> The output of /var/log/clearwater-sipp/sip-stress_6766_errors.log on
+>> callee is: http://ix.io/1vMO
+>>
+>> which suggests that INVITE is received on the callee machine but it
+>> doesn't get reflected in the SIPp output.
+>>
+>>
+>>
+>> The SIPp output the caller machine is: http://ix.io/1vML
+>>
+>>
+>>
+>> Bono output at log_level=5: http://ix.io/1vMN
+>>
+>> Sprout output at log_level=5: http://ix.io/1vMM
+>>
+>>
+>>
+>> I'm not sure if I'm missing anything in my scenario file since I don't
+>> observe any error messages in bono and sprout logs. Your help is much
+>> appreciated.
+>>
+>>
+>>
+>> Kind Regards,
+>> Junaid
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>> On Fri, Dec 7, 2018 at 4:10 PM Mark Perryman <
+>> Mark.Perryman at metaswitch.com> wrote:
+>>
+>> The basic client and server scripts that ship with SIPp itself should be
+>> suitable.
+>>
+>>
+>>
+>> http://sipp.sourceforge.net/
+>>
+>> http://sipp.sourceforge.net/doc/reference.html#UAC
+>>
+>> http://sipp.sourceforge.net/doc/reference.html#UAS
+>>
+>>
+>>
+>> Hope that helps, let me know if that doesn?t work.
+>>
+>>
+>>
+>> Mark Perryman.
+>>
+>>
+>>
+>> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+>> Behalf Of *Junaid Ali
+>> *Sent:* 04 December 2018 14:10
+>> *To:* clearwater at lists.projectclearwater.org
+>> *Subject:* [Project Clearwater] Initiating calls between two SIPp
+>> instances
+>>
+>>
+>>
+>> Hi guys,
+>>
+>> I am trying to create a call between two SIPp instances (caller and
+>> callee) using Clearwater IMS. Can anyone share the scenario files for
+>> caller and callee please if anyone has tried the same scenario?
+>>
+>>
+>>
+>> I have looked at the default scenario file which is present in the
+>> sip-stress package but that emulates the same node as both caller and
+>> callee.
+>>
+>>
+>>
+>> Any help would be really appreciated. Thanks.
+>>
+>>
+>>
+>> Kind Regards,
+>> Junaid
+>>
+>>
+>>
+>> _______________________________________________
+>> Clearwater mailing list
+>> Clearwater at lists.projectclearwater.org
+>>
+>> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>>
+>> _______________________________________________
+>> Clearwater mailing list
+>> Clearwater at lists.projectclearwater.org
+>>
+>> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>>
+>> _______________________________________________
+>> Clearwater mailing list
+>> Clearwater at lists.projectclearwater.org
+>>
+>> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181211/14532b7d/attachment.html>
+
+From mayurkoshal at gmail.com  Wed Dec 12 21:52:38 2018
+From: mayurkoshal at gmail.com (Mayur Koshal)
+Date: Thu, 13 Dec 2018 08:22:38 +0530
+Subject: [Project Clearwater] SIP call failing with 408 Request timed
+ out.
+In-Reply-To: <BYAPR02MB4247A59243F6CC922C022D208FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+References: <CAAEbxXVna8N5E1KfpBWBqvJg0ajGjnXT-PberNp=RW7NyXE6EA@mail.gmail.com>
+	<BYAPR02MB4247A59243F6CC922C022D208FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+Message-ID: <CAAEbxXVEHr1VwBRFcMmkOvZJdDutdR1vnq8M=jEAq5Bdgs7UwA@mail.gmail.com>
+
+Hi Mark,
+
+Thank you for your response.
+
+I was able to resolve the issue  by adding the entry in the bind dns file
+(/etc/bind/zones/db.ims.hom) file :
+
+_sip._tcp.scscf.sprout IN SRV 0 0 5054 sprout
+
+_sip._tcp.icscf.sprout IN SRV 0 0 5052 sprout
+
+which was previously
+
+_sip._tcp.scscf IN SRV 0 0 5054 sprout
+
+_sip._tcp.icscf IN SRV 0 0 5052 sprout
+
+
+The call was successfully placed then.
+
+Regards
+Mayur
+
+On Tue, Dec 11, 2018 at 5:00 PM Mark Perryman <Mark.Perryman at metaswitch.com>
+wrote:
+
+> Sorry for the delay in responding.
+>
+>
+>
+> It is hard to work out what is going wrong with the diagnostics you have
+> sent.  Are there any firewall issues between the clients and the Openstack
+> rig?  Could you send the full sprout and bono logs?
+>
+>
+>
+> Thanks,
+>
+>
+>
+> Mark Perryman.
+>
+>
+>
+>
+>
+> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+> Behalf Of *Mayur Koshal
+> *Sent:* 28 November 2018 16:58
+> *To:* Clearwater at lists.projectclearwater.org
+> *Subject:* [Project Clearwater] SIP call failing with 408 Request timed
+> out.
+>
+>
+>
+> Hi,
+>
+>
+>
+> I have done  manual installation of Clearwater vIMS  of all the nodes on
+> Openstack Ocata (devstack) .  I have configured all the nodes in a private
+> network.
+>
+>
+>
+> I have provisioned 10 numbers in Ellis starting from  6505550000.
+>
+>
+>
+> *I am able to successfully register users on softphones Zoiper as well as
+> Jitsi. *
+>
+>
+>
+> *But when i try to make a call from one user to another  it gives an error
+> message: Call failure : SIP 408 -Request timeout *
+>
+>
+>
+>
+>
+> *Request your help to figure out where it is going wrong .....*
+>
+>
+>
+>
+>
+> My Zoiper configurations are :
+>
+>
+>
+> Username : 6505550006
+>
+> domain : ims.hom
+>
+> password :*****
+>
+> Auth username : 6505550006 at ims.hom
+>
+> Outbound proxy : 172.24.4.11 Bono IP :5060
+>
+> MWI -- disabled
+>
+> Transport - tcp
+>
+> Use rport - checked
+>
+> STUN - not using
+>
+>
+>
+> Similarly I have registered another user 6505550005 at ims.hom.
+>
+>
+>
+>
+>
+> my home domain in /etc/clearwater/shared config is ims.hom.
+>
+> local config of bono contains the hostname as bono ip.
+>
+>
+>
+>
+>
+> I have set the log level to 5 but could not make out much as I am not
+> getting any error message in the logs of all the nodes as well as the
+> syslog or monit logs.
+>
+>
+>
+> Some noticeable logs from Bono and sprout below :
+>
+>
+>
+> *Bono Node -- syslog*
+>
+>
+>
+> Nov 28 11:16:09 bono issue-alarm: zmq_msg_recv: Invalid argument
+>
+> Nov 28 11:16:09 bono issue-alarm: message repeated 3 times: [
+> zmq_msg_recv: Invalid argument]
+>
+> Nov 28 11:16:11 bono config-manager[13653]: dropped request: 'issue-alarm
+> config-manager 8500.1'
+>
+> Nov 28 11:16:19 bono issue-alarm: zmq_msg_recv: Invalid argument
+>
+> Nov 28 11:16:19 bono issue-alarm: message repeated 3 times: [
+> zmq_msg_recv: Invalid argument]
+>
+> Nov 28 11:16:22 bono bono[27913]: <analytics>
+> 2018-11-28T11:16:22.410+00:00 Call-Disconnected:
+> CALL_ID=ZDBiMWZhNWE2ZGY2YjIzMDRjZTZhYmIwY2Y1ZGQ2NjM. REASON=401
+>
+> Nov 28 11:16:22 bono bono[27913]: <analytics>
+> 2018-11-28T11:16:22.786+00:00 Call-Disconnected:
+> CALL_ID=c7ac9b71e654bfcd44e33941d6006bc3 at 0:0:0:0:0:0:0:0 REASON=408
+>
+> Nov 28 11:16:28 bono bono[27913]: <analytics>
+> 2018-11-28T11:16:28.460+00:00 Call-Disconnected:
+> CALL_ID=dee3256df4301e17c7600bb52d71fb08 at 0:0:0:0:0:0:0:0 REASON=408
+>
+> Nov 28 11:16:29 bono issue-alarm: zmq_msg_recv: Invalid argument
+>
+> Nov 28 11:16:29 bono issue-alarm: message repeated 3 times: [
+> zmq_msg_recv: Invalid argument]
+>
+> Nov 28 11:16:34 bono bono[27913]: <analytics>
+> 2018-11-28T11:16:34.443+00:00 Call-Disconnected:
+> CALL_ID=ZTcxMGY2ZWM5N2FjM2ViOTZhMjA0Mzk0NzEwY2M2MTM. REASON=401
+>
+> Nov 28 11:16:35 bono queue-manager[13538]: dropped request: 'issue-alarm
+> queue-manager 9001.1'
+>
+> Nov 28 11:16:37 bono queue-manager[13538]: dropped request: 'issue-alarm
+> queue-manager 9002.1'
+>
+> Nov 28 11:16:39 bono issue-alarm: zmq_msg_recv: Invalid argument
+>
+> Nov 28 11:16:39 bono issue-alarm: message repeated 3 times: [
+> zmq_msg_recv: Invalid argument]
+>
+> Nov 28 11:16:41 bono config-manager[13653]: dropped request: 'issue-alarm
+> config-manager 8500.1'
+>
+> Nov 28 11:16:47 bono bono[27913]: <analytics>
+> 2018-11-28T11:16:47.786+00:00 Call-Disconnected:
+> CALL_ID=df3848fdc02e7f129051f5f766ad303a at 0:0:0:0:0:0:0:0 REASON=408
+>
+> Nov 28 11:16:49 bono issue-alarm: zmq_msg_recv: Invalid argument
+>
+> Nov 28 11:16:49 bono issue-alarm: message repeated 3 times: [
+> zmq_msg_recv: Invalid argument]
+>
+> Nov 28 11:16:53 bono bono[27913]: <analytics>
+> 2018-11-28T11:16:53.465+00:00 Call-Disconnected:
+> CALL_ID=c98ce23b310df66264e25322dc987121 at 0:0:0:0:0:0:0:0 REASON=408
+>
+> Nov 28 11:16:59 bono issue-alarm: zmq_msg_recv: Invalid argument
+>
+> Nov 28 11:16:59 bono issue-alarm: message repeated 3 times: [
+> zmq_msg_recv: Invalid argument]
+>
+> Nov 28 11:17:01 bono CRON[25278]: (root) CMD (/usr/sbin/iotop -b -o -t -n
+> 1 -k >> /var/log/iotop.log 2>&1)
+>
+> Nov 28 11:17:01 bono CRON[25279]: (root) CMD (/usr/lib/sysstat/sadc 1 1
+> /var/log/sysstat/clearwater-sa`date +%d` > /dev/null 2>&1)
+>
+> Nov 28 11:17:01 bono CRON[25280]: (root) CMD (   cd / && run-parts
+> --report /etc/cron.hourly)
+>
+> Nov 28 11:17:05 bono queue-manager[13538]: dropped request: 'issue-alarm
+> queue-manager 9001.1'
+>
+> Nov 28 11:17:07 bono queue-manager[13538]: dropped request: 'issue-alarm
+> queue-manager 9002.1'
+>
+> Nov 28 11:17:09 bono issue-alarm: zmq_msg_recv: Invalid argument
+>
+> Nov 28 11:17:09 bono issue-alarm: message repeated 3 times: [
+> zmq_msg_recv: Invalid argument]
+>
+> Nov 28 11:17:11 bono config-manager[13653]: dropped request: 'issue-alarm
+> config-manager 8500.1'
+>
+> *Nov 28 11:17:12 bono bono[27913]: <analytics>
+> 2018-11-28T11:17:12.787+00:00 Call-Disconnected:
+> CALL_ID=6150cea252d458e388043380bbc46e3f at 0:0:0:0:0:0:0:0 REASON=408*
+>
+> *Nov 28 11:17:18 bono bono[27913]: <analytics>
+> 2018-11-28T11:17:18.465+00:00 Call-Disconnected:
+> CALL_ID=e737a61c0d0d9fc67ec952f6e2501bed at 0:0:0:0:0:0:0:0 REASON=408*
+>
+> *Nov 28 11:17:19 bono issue-alarm: zmq_msg_recv: Invalid argument*
+>
+>
+> -----------------------------------------------------------------------------------------
+>
+> *Bono logs * -
+>
+> *********
+>
+> 1-2018 11:14:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout issued
+> 1012.3 alarm
+>
+> 28-11-2018 11:14:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout
+> issued 1013.3 alarm
+>
+> 28-11-2018 11:14:47.512 UTC [7f5c9affd700] Status
+> sip_connection_pool.cpp:428: Recycle TCP connection slot 5
+>
+> 28-11-2018 11:14:48.790 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+> Failed to connect to the agentx master agent ([NIL]):
+>
+> 28-11-2018 11:15:03.800 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+> Failed to connect to the agentx master agent ([NIL]):
+>
+> 28-11-2018 11:15:06.514 UTC [7f5c9affd700] Status
+> sip_connection_pool.cpp:428: Recycle TCP connection slot 37
+>
+> 28-11-2018 11:15:07.515 UTC [7f5c9affd700] Status
+> sip_connection_pool.cpp:428: Recycle TCP connection slot 43
+>
+> 28-11-2018 11:15:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:244: Reraising
+> all alarms with a known state
+>
+> 28-11-2018 11:15:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout
+> issued 1012.3 alarm
+>
+> 28-11-2018 11:15:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout
+> issued 1013.3 alarm
+>
+> 28-11-2018 11:15:18.815 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+> Failed to connect to the agentx master agent ([NIL]):
+>
+> 28-11-2018 11:15:33.825 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+> Failed to connect to the agentx master agent ([NIL]):
+>
+> 28-11-2018 11:15:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:244: Reraising
+> all alarms with a known state
+>
+> 28-11-2018 11:15:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout
+> issued 1012.3 alarm
+>
+> 28-11-2018 11:15:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout
+> issued 1013.3 alarm
+>
+> 28-11-2018 11:15:48.840 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+> Failed to connect to the agentx master agent ([NIL]):
+>
+> 28-11-2018 11:16:03.854 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+> Failed to connect to the agentx master agent ([NIL]):
+>
+> 28-11-2018 11:16:09.522 UTC [7f5c9affd700] Status
+> sip_connection_pool.cpp:428: Recycle TCP connection slot 0
+>
+> 28-11-2018 11:16:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:244: Reraising
+> all alarms with a known state
+>
+> 28-11-2018 11:16:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout
+> issued 1012.3 alarm
+>
+> 28-11-2018 11:16:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout
+> issued 1013.3 alarm
+>
+> 28-11-2018 11:16:13.523 UTC [7f5c9affd700] Status
+> sip_connection_pool.cpp:428: Recycle TCP connection slot 49
+>
+> 28-11-2018 11:16:18.868 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+> Failed to connect to the agentx master agent ([NIL]):
+>
+> 28-11-2018 11:16:33.883 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+> Failed to connect to the agentx master agent ([NIL]):
+>
+> 28-11-2018 11:16:41.526 UTC [7f5c9affd700] Status
+> sip_connection_pool.cpp:428: Recycle TCP connection slot 4
+>
+> 28-11-2018 11:16:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:244: Reraising
+> all alarms with a known state
+>
+> 28-11-2018 11:16:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout
+> issued 1012.3 alarm
+>
+> 28-11-2018 11:16:43.409 UTC [7f5ca9ad9700] Status alarm.cpp:37: sprout
+> issued 1013.3 alarm
+>
+> 28-11-2018 11:16:44.527 UTC [7f5c9affd700] Status
+> sip_connection_pool.cpp:428: Recycle TCP connection slot 7
+>
+> 28-11-2018 11:16:47.527 UTC [7f5c9affd700] Status
+> sip_connection_pool.cpp:428: Recycle TCP connection slot 16
+>
+> 28-11-2018 11:16:48.898 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+> Failed to connect to the agentx master agent ([NIL]):
+>
+> 28-11-2018 11:16:53.456 UTC [7f5c997fa700] Warning
+> dnscachedresolver.cpp:698: Failed to retrieve record for
+> _sip._tcp.scscf.sprout.ims.hom: Domain name not found
+>
+> 28-11-2018 11:17:03.530 UTC [7f5c9affd700] Status
+> sip_connection_pool.cpp:428: Recycle TCP connection slot 46
+>
+> 28-11-2018 11:17:03.910 UTC [7f5c99ffb700] Warning (Net-SNMP): Warning:
+> Failed to connect to the agentx master agent ([NIL]):
+>
+> 28-11-2018 11:17:13.409 UTC [7f5ca9ad9700] Status alarm.cpp:244: Reraising
+> all alarms with a known ------------------
+>
+>
+>
+>
+> -----------------------------------------------------------------------------------------------------------------------------
+>
+> *Sprout --*
+>
+> **********
+>
+> *analytics.log*
+>
+>
+>
+> 2018-11-28T11:11:52.884+00:00 Registration: USER_URI=sip:6505550005 at ims.hom
+> BINDING_ID=sip:6505550005 at 172.24.4.1:51030;transport=TCP;rinstance=871c7de37ebab0b2
+> CONTACT_URI=sip:6505550005 at 172.24.4.1:51030;transport=TCP;rinstance=871c7de37ebab0b2
+> EXPIRES=300
+>
+> 2018-11-28T11:12:04.910+00:00 Registration: USER_URI=sip:6505550006 at ims.hom
+> BINDING_ID=sip:6505550006 at 172.24.4.1:32094;transport=TCP;rinstance=5d8742e5a588c1d6
+> CONTACT_URI=sip:6505550006 at 172.24.4.1:32094;transport=TCP;rinstance=5d8742e5a588c1d6
+> EXPIRES=300
+>
+> 2018-11-28T11:13:44.146+00:00 Registration: USER_URI=sip:6505550002 at ims.hom
+> BINDING_ID=sip:6505550002 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+> CONTACT_URI=sip:6505550002 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+> EXPIRES=0
+>
+> 2018-11-28T11:14:08.915+00:00 Registration: USER_URI=sip:6505550006 at ims.hom
+> BINDING_ID=sip:6505550006 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+> CONTACT_URI=sip:6505550006 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+> EXPIRES=0
+>
+> 2018-11-28T11:16:22.926+00:00 Registration: USER_URI=sip:6505550005 at ims.hom
+> BINDING_ID=sip:6505550005 at 172.24.4.1:51030;transport=TCP;rinstance=871c7de37ebab0b2
+> CONTACT_URI=sip:6505550005 at 172.24.4.1:51030;transport=TCP;rinstance=871c7de37ebab0b2
+> EXPIRES=300
+>
+> 2018-11-28T11:16:34.965+00:00 Registration: USER_URI=sip:6505550006 at ims.hom
+> BINDING_ID=sip:6505550006 at 172.24.4.1:32094;transport=TCP;rinstance=5d8742e5a588c1d6
+> CONTACT_URI=sip:6505550006 at 172.24.4.1:32094;transport=TCP;rinstance=5d8742e5a588c1d6
+> EXPIRES=300
+>
+> 2018-11-28T11:17:44.188+00:00 Registration: USER_URI=sip:6505550002 at ims.hom
+> BINDING_ID=sip:6505550002 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+> CONTACT_URI=sip:6505550002 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+> EXPIRES=300
+>
+> 2018-11-28T11:18:08.334+00:00 Registration: USER_URI=sip:6505550006 at ims.hom
+> BINDING_ID=sip:6505550006 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+> CONTACT_URI=sip:6505550006 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+> EXPIRES=300
+>
+> 2018-11-28T11:20:52.962+00:00 Registration: USER_URI=sip:6505550005 at ims.hom
+> BINDING_ID=sip:6505550005 at 172.24.4.1:51030;transport=TCP;rinstance=871c7de37ebab0b2
+> CONTACT_URI=sip:6505550005 at 172.24.4.1:51030;transport=TCP;rinstance=871c7de37ebab0b2
+> EXPIRES=300
+>
+> 2018-11-28T11:21:05.010+00:00 Registration: USER_URI=sip:6505550006 at ims.hom
+> BINDING_ID=sip:6505550006 at 172.24.4.1:32094;transport=TCP;rinstance=5d8742e5a588c1d6
+> CONTACT_URI=sip:6505550006 at 172.24.4.1:32094;transport=TCP;rinstance=5d8742e5a588c1d6
+> EXPIRES=300
+>
+> 2018-11-28T11:22:44.197+00:00 Registration: USER_URI=sip:6505550002 at ims.hom
+> BINDING_ID=sip:6505550002 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+> CONTACT_URI=sip:6505550002 at 172.24.4.1:52273;transport=tcp;registering_acc=ims_hom
+> EXPIRES=0
+>
+> ~
+>
+>
+>
+> ------------------------------------------------------------------------------------------------
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> Regards
+>
+> Mayur
+>
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181213/92e712ce/attachment.html>
+
+From aj.shirvani at gmail.com  Sun Dec 30 01:58:04 2018
+From: aj.shirvani at gmail.com (Ali Shirvani)
+Date: Sun, 30 Dec 2018 10:28:04 +0330
+Subject: [Project Clearwater] Application Server Menu doesn't appear in Ellis
+Message-ID: <CAFQ97XHvQG3egCtXcvtQCP0diwYXa+H0iYaw17bc_NNynHA5-g@mail.gmail.com>
+
+Hi all,
+
+I just installed clearwater all-in-one-image, I can connect to
+`localhost:8080` and add new users. I followed the guide about configuring
+application server in clear water, I added two application servers
+in `/usr/share/clearwater/ellis/web-content/js/app-servers.json` but I
+couldn't see the result in Ellis.
+
+Where can I see the application server status in clearwater project?
+
+Regards,
+Ali
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181230/5f2c2c6d/attachment.html>
+
+From aj.shirvani at gmail.com  Mon Dec 31 07:50:03 2018
+From: aj.shirvani at gmail.com (Ali Shirvani)
+Date: Mon, 31 Dec 2018 16:20:03 +0330
+Subject: [Project Clearwater] Couldn't change domain name from example.com
+Message-ID: <CAFQ97XGXi=0ZcB66CmKnKoH8cah1zwbwRtw2FBh2amKSYcF9qg@mail.gmail.com>
+
+Hi all,
+
+I installed clearwater all-in-one-image in the virtualbox machine. I have
+access to localhost:8080 and I created a user. But the domain is `
+example.com`, I changed the domain to `localhost.local` in `shared_config`
+file and restarted the virtual machine, but when I login to Ellis and try
+to create private identity the domain is still `example.com`.
+
+How should I fix this issue?
+
+Regards,
+Ali
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181231/48099561/attachment.html>
+

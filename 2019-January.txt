@@ -1,0 +1,1281 @@
+From Mark.Perryman at metaswitch.com  Wed Jan  2 06:02:39 2019
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Wed, 2 Jan 2019 11:02:39 +0000
+Subject: [Project Clearwater] Couldn't change domain name from
+ example.com
+In-Reply-To: <CAFQ97XGXi=0ZcB66CmKnKoH8cah1zwbwRtw2FBh2amKSYcF9qg@mail.gmail.com>
+References: <CAFQ97XGXi=0ZcB66CmKnKoH8cah1zwbwRtw2FBh2amKSYcF9qg@mail.gmail.com>
+Message-ID: <BYAPR02MB424778A84B161086D04D2A558F8C0@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+Hi Ali,
+
+As per https://clearwater.readthedocs.io/en/stable/All_in_one_Images.html, the example.com realm is one of the restrictions of the all-in-one image and cannot be changed.
+
+Using a standard deployment with one VM per node will allow you to configure your own home domain, or you can configure an outbound proxy on your SIP clients to route to your deployment using the hard-coded example.com.
+
+Hope that helps,
+
+Mark Perryman
+
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of Ali Shirvani
+Sent: 31 December 2018 12:50
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Couldn't change domain name from example.com
+
+Hi all,
+
+I installed clearwater all-in-one-image in the virtualbox machine. I have access to localhost:8080 and I created a user. But the domain is `example.com<http://example.com>`, I changed the domain to `localhost.local` in `shared_config` file and restarted the virtual machine, but when I login to Ellis and try to create private identity the domain is still `example.com<http://example.com>`.
+
+How should I fix this issue?
+
+Regards,
+Ali
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190102/0d35bfa1/attachment.html>
+
+From Mark.Perryman at metaswitch.com  Wed Jan  2 06:09:31 2019
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Wed, 2 Jan 2019 11:09:31 +0000
+Subject: [Project Clearwater] Application Server Menu doesn't appear in
+ Ellis
+In-Reply-To: <CAFQ97XHvQG3egCtXcvtQCP0diwYXa+H0iYaw17bc_NNynHA5-g@mail.gmail.com>
+References: <CAFQ97XHvQG3egCtXcvtQCP0diwYXa+H0iYaw17bc_NNynHA5-g@mail.gmail.com>
+Message-ID: <BYAPR02MB42474BA96E71A767B7ADA5498F8C0@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+Hi Ali,
+
+If this is still a problem, please send some screenshots of what you see.
+
+Thanks,
+
+Mark Perryman.
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of Ali Shirvani
+Sent: 30 December 2018 06:58
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Application Server Menu doesn't appear in Ellis
+
+Hi all,
+
+I just installed clearwater all-in-one-image, I can connect to `localhost:8080` and add new users. I followed the guide about configuring application server in clear water, I added two application servers in `/usr/share/clearwater/ellis/web-content/js/app-servers.json` but I couldn't see the result in Ellis.
+
+Where can I see the application server status in clearwater project?
+
+Regards,
+Ali
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190102/a70db817/attachment.html>
+
+From gabrielorozco20 at unicauca.edu.co  Wed Jan  2 18:50:18 2019
+From: gabrielorozco20 at unicauca.edu.co (GABRIEL DAVID OROZCO URRUTIA)
+Date: Wed, 2 Jan 2019 18:50:18 -0500
+Subject: [Project Clearwater] Test IMS core and P-CSCF Problems
+Message-ID: <CAGy+FH+WR2-uX+Y=2iaNL9Eg4AJJB97AOGxOBmpRNOJZpAf_MQ@mail.gmail.com>
+
+I have the VM deployment of clearwater. Running test against the deployment
+with the SIPP-STRESS-COREONLY (IMS CORE ONLY with run_stress) is working
+fine:
+
+[image: image.png]
+
+But, when I try to run the SIPP-STRESS (IMS-CORE and P-CSCF with
+sipp-stress) I get the following error:
+
+What is the trouble?
+
+I appreciate your help!
+Gabriel David Orozco
+Presidente Rama estudiantil IEEE Universidad del Cauca
+(57) 3004351630
+<http://ieee.unicauca.edu.co/>
+
+-- 
+
+
+*Hacia una
+Universidad comprometida con la Paz Territorial*
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190102/02543aed/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 134584 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190102/02543aed/attachment.png>
+
+From junaidaliyahya at gmail.com  Thu Jan 10 05:07:43 2019
+From: junaidaliyahya at gmail.com (Junaid Ali)
+Date: Thu, 10 Jan 2019 10:07:43 +0000
+Subject: [Project Clearwater] Initiating calls between two SIPp instances
+In-Reply-To: <CA+kT6RXgFanxd6pUQdyzOOOVONXAhNrj8HP-10QqU-CfU+zizw@mail.gmail.com>
+References: <CA+kT6RV8O4qmfLQZO2_0_CQNYUhWZN83juBH4XXcN6VEQAYH9g@mail.gmail.com>
+	<BYAPR02MB42475234ED935E7789C866B28FAA0@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CA+kT6RV4foM8XeW_Mc76tG28ppGkubDVChmV8ucf_O5KV0-Jyw@mail.gmail.com>
+	<BYAPR02MB42479F7BB92DDD8570D391D58FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CA+kT6RWOprA8DJrAwbYhT3y_YcQRxe+FyfUhx6HibYCKQ7BQ0w@mail.gmail.com>
+	<CA+kT6RV+6KwBantfo9mXsPxutTggABkVoiF8QZLYCuRk9vxi0A@mail.gmail.com>
+	<BYAPR02MB424762B8137AD9D739E27E658FA60@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CA+kT6RVoTujumJ78utF38sFG+2jz-72fTESXuA8_os_KpRXwBw@mail.gmail.com>
+	<CA+kT6RXgFanxd6pUQdyzOOOVONXAhNrj8HP-10QqU-CfU+zizw@mail.gmail.com>
+Message-ID: <CA+kT6RXNUBg6NM4TaF73F6piP_TvoePoUK7ew_s=cry9DApUPw@mail.gmail.com>
+
+Hi folks,
+I am still looking for a solution to set up a call between two SIPp
+instances (first as a caller and second as a callee). Let me know please if
+anyone has successfully done this. Thanks.
+
+Kind Regards,
+Junaid
+
+On Tue, Dec 11, 2018 at 3:37 PM Junaid Ali <junaidaliyahya at gmail.com> wrote:
+
+> Hi Mark,
+>
+> The link you shared suggests having two different scenario files for
+> registration and call setup. So, I created these files on the callee machine
+> register.xml: http://ix.io/1vOj
+> call-set-up.xml: http://ix.io/1vOk
+>
+> While initiating the registration scenario with a small pause or without
+> any pause at the end of register.xml, SIPp command on caller machine fails
+> with 430 Flow error. I think that error is due to the termination of the
+> SIPp process which is responsible for registration on the callee machine
+> before the INVITE signal from the caller.
+>
+> If I add a large pause to keep the registration process alive for a bit
+> longer on the callee node, I face this error again:
+> <http://goog_643911926>http://ix.io/1vNj . One thing I have observed is
+> that INVITE signal is captured by the registration SIPp process instead of
+> the call setup SIPp process on the callee machine. Check the image here
+> please: https://i.imgur.com/jlFv7mD.jpg , where the upper window is for
+> registration and in the lower window I'm running the call set up scenario.
+>
+>  I'm not passing the '-aa' parameter to the SIPp tool which is suggested
+> in the link because then we face the issue you mentioned in your reply#2.
+>
+> Kind Regards,
+> Junaid
+>
+>
+> On Tue, Dec 11, 2018 at 1:29 PM Junaid Ali <junaidaliyahya at gmail.com>
+> wrote:
+>
+>> Hi Mark,
+>>
+>> I read this issue earlier and separated the registration and call set up
+>> in two different scenario files on the callee machine, but I was getting
+>> the same error. Let me separate the registration and call set up on caller
+>> machine as well please and see if there is any effect. Thanks a lot for
+>> looking into this issue.
+>>
+>> Kind Regards,
+>> Junaid
+>>
+>> On Tue, Dec 11, 2018 at 1:24 PM Mark Perryman <
+>> Mark.Perryman at metaswitch.com> wrote:
+>>
+>>> Junaid,
+>>>
+>>>
+>>>
+>>> You are encountering this problem.
+>>> https://github.com/SIPp/sipp/issues/199
+>>>
+>>>
+>>>
+>>> There seem to be suggestions of what to try.
+>>>
+>>>
+>>>
+>>> Mark Perryman.
+>>>
+>>>
+>>>
+>>> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+>>> Behalf Of *Junaid Ali
+>>> *Sent:* 11 December 2018 12:18
+>>> *To:* clearwater at lists.projectclearwater.org
+>>> *Subject:* Re: [Project Clearwater] Initiating calls between two SIPp
+>>> instances
+>>>
+>>>
+>>>
+>>> Hi Mark,
+>>>
+>>> Just found the cause of that 200 OK response. Actually, I was using
+>>> "-aa" as an argument to SIPp tool on the callee machine. The man page of
+>>> SIPp for '-aa' argument says: "Enable automatic 200 OK answer for INFO,
+>>> UPDATE and NOTIFY messages."
+>>>
+>>>
+>>>
+>>> I have removed the '-aa' parameter, but now I'm getting this error on
+>>> the callee machine: http://ix.io/1vNj. I googled a little bit about
+>>> this error and it seems to me that this might be due to different call-ids
+>>> on caller and callee responses. SIPp output for callee:
+>>> http://ix.io/1vNl
+>>>
+>>>
+>>>
+>>> On caller node, I'm getting 408 Timeout error for INVITE sig:
+>>> http://ix.io/1vNn
+>>>
+>>>
+>>>
+>>> Sprout logs: http://ix.io/1vNg
+>>>
+>>> Bono logs: http://ix.io/1vNh
+>>>
+>>>
+>>>
+>>> Kind Regards,
+>>> Junaid
+>>>
+>>>
+>>>
+>>> On Tue, Dec 11, 2018 at 11:25 AM Junaid Ali <junaidaliyahya at gmail.com>
+>>> wrote:
+>>>
+>>> Let me check and get back to you in a few minutes please.
+>>>
+>>>
+>>>
+>>> On Tue, Dec 11, 2018 at 11:23 AM Mark Perryman <
+>>> Mark.Perryman at metaswitch.com> wrote:
+>>>
+>>> So bono?s log
+>>>
+>>> 11-12-2018 10:27:40.054 UTC Verbose common_sip_processing.cpp:136: TX 2739 bytes Request msg INVITE/cseq=4 (tdta0x7fc5f0052330) to TCP 192.168.120.12:60900:
+>>>
+>>> suggests that the INVITE is sent to the callee.
+>>>
+>>>
+>>>
+>>> Something is then responding 200 OK
+>>>
+>>> 11-12-2018 10:27:40.055 UTC Verbose common_sip_processing.cpp:120: RX 689 bytes Response msg 200/INVITE/cseq=4 (rdata0x7fc5f80046f0) from TCP 192.168.120.12:60900:
+>>>
+>>>
+>>>
+>>> Is something else running on the callee machine that might be responding
+>>> instead of the SIPp script.
+>>>
+>>>
+>>>
+>>> Mark.
+>>>
+>>>
+>>>
+>>> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+>>> Behalf Of *Junaid Ali
+>>> *Sent:* 11 December 2018 10:50
+>>> *To:* clearwater at lists.projectclearwater.org
+>>> *Subject:* Re: [Project Clearwater] Initiating calls between two SIPp
+>>> instances
+>>>
+>>>
+>>>
+>>> Hi Mark,
+>>>
+>>>
+>>>
+>>> Apologies for the late reply. I have tried the above scenario files as
+>>> well but couldn't make the call work.
+>>>
+>>> I'm registering a number on the caller and callee machines for
+>>> initiating the calls using this csv file: http://ix.io/1vMI
+>>>
+>>>
+>>>
+>>> Here is the scenario file on caller machine: http://ix.io/1vME
+>>>
+>>> which first registers a number (2010000000) and then send an invite to
+>>> callee machine.
+>>>
+>>>
+>>>
+>>> On callee machine, I'm registering a number (2010000002) and waiting for
+>>> the call to establish using this scenario file: http://ix.io/1vMF
+>>>
+>>>
+>>>
+>>> The SIPp output on the callee machine looks like this: http://ix.io/1vMK which
+>>> shows that it gets timeout waiting for INVITE from the caller.
+>>>
+>>> The output of /var/log/clearwater-sipp/sip-stress_6766_errors.log on
+>>> callee is: http://ix.io/1vMO
+>>>
+>>> which suggests that INVITE is received on the callee machine but it
+>>> doesn't get reflected in the SIPp output.
+>>>
+>>>
+>>>
+>>> The SIPp output the caller machine is: http://ix.io/1vML
+>>>
+>>>
+>>>
+>>> Bono output at log_level=5: http://ix.io/1vMN
+>>>
+>>> Sprout output at log_level=5: http://ix.io/1vMM
+>>>
+>>>
+>>>
+>>> I'm not sure if I'm missing anything in my scenario file since I don't
+>>> observe any error messages in bono and sprout logs. Your help is much
+>>> appreciated.
+>>>
+>>>
+>>>
+>>> Kind Regards,
+>>> Junaid
+>>>
+>>>
+>>>
+>>>
+>>>
+>>>
+>>>
+>>> On Fri, Dec 7, 2018 at 4:10 PM Mark Perryman <
+>>> Mark.Perryman at metaswitch.com> wrote:
+>>>
+>>> The basic client and server scripts that ship with SIPp itself should be
+>>> suitable.
+>>>
+>>>
+>>>
+>>> http://sipp.sourceforge.net/
+>>>
+>>> http://sipp.sourceforge.net/doc/reference.html#UAC
+>>>
+>>> http://sipp.sourceforge.net/doc/reference.html#UAS
+>>>
+>>>
+>>>
+>>> Hope that helps, let me know if that doesn?t work.
+>>>
+>>>
+>>>
+>>> Mark Perryman.
+>>>
+>>>
+>>>
+>>> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+>>> Behalf Of *Junaid Ali
+>>> *Sent:* 04 December 2018 14:10
+>>> *To:* clearwater at lists.projectclearwater.org
+>>> *Subject:* [Project Clearwater] Initiating calls between two SIPp
+>>> instances
+>>>
+>>>
+>>>
+>>> Hi guys,
+>>>
+>>> I am trying to create a call between two SIPp instances (caller and
+>>> callee) using Clearwater IMS. Can anyone share the scenario files for
+>>> caller and callee please if anyone has tried the same scenario?
+>>>
+>>>
+>>>
+>>> I have looked at the default scenario file which is present in the
+>>> sip-stress package but that emulates the same node as both caller and
+>>> callee.
+>>>
+>>>
+>>>
+>>> Any help would be really appreciated. Thanks.
+>>>
+>>>
+>>>
+>>> Kind Regards,
+>>> Junaid
+>>>
+>>>
+>>>
+>>> _______________________________________________
+>>> Clearwater mailing list
+>>> Clearwater at lists.projectclearwater.org
+>>>
+>>> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>>>
+>>> _______________________________________________
+>>> Clearwater mailing list
+>>> Clearwater at lists.projectclearwater.org
+>>>
+>>> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>>>
+>>> _______________________________________________
+>>> Clearwater mailing list
+>>> Clearwater at lists.projectclearwater.org
+>>>
+>>> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>>>
+>>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190110/fff9bd08/attachment.html>
+
+From brian.grant at creantech.com  Tue Jan 15 04:30:14 2019
+From: brian.grant at creantech.com (Brian Grant)
+Date: Tue, 15 Jan 2019 09:30:14 +0000
+Subject: [Project Clearwater] Bono responds to INVITE from SCSCF with 403
+ Forbidden
+Message-ID: <CWXP265MB1336588001A2C3A2EE7F27AEE2810@CWXP265MB1336.GBRP265.PROD.OUTLOOK.COM>
+
+
+I'm testing an ON-NET call between two simulated UEs (using signalling emulation tools to generate the call).
+
+Both UEs have been provisioned in Ellis and registration procedure for both is successful.
+
+When the call is initiated I can follow the INVITE out to MMTEL, but when it returns back to Bono for routing to the destination UE Bono returns 403 Forbidden due to the request coming from an untrusted port/source.
+
+Do I need to explicitly configured Sprout as a trusted_peer?
+
+Snip from Bono log is below:
+
+--
+
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug bono.cpp:775: Request received on non-trusted port 5060
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug bono.cpp:1017: Perform access proxy routing for INVITE request
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug bono.cpp:1154: Message received on non-trusted port 5060
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug flowtable.cpp:111: Find flow for transport tcps0x7f38ec02ae68 (2), remote address 192.168.8.102:51136
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Info bono.cpp:1344: Rejecting request from untrusted source
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug acr.cpp:1797: Create RalfACR for node type P-CSCF with role Terminating
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug acr.cpp:24: Created ACR (0x7f38f0050dc0)
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug acr.cpp:170: Created P-CSCF Ralf ACR
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug acr.cpp:210: Set record type for P/S-CSCF
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug acr.cpp:237: Dialog-initiating INVITE => START_RECORD
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Info bono.cpp:729: Reject INVITE request with 403 status code
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug pjsip:       endpoint Response msg 403/INVITE/cseq=2 (tdta0x7f38f0051010) created
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug acr.cpp:581: Failed to start session, change record type to EVENT_RECORD
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Verbose common_sip_processing.cpp:103: TX 1057 bytes Response msg 403/INVITE/cseq=2 (tdta0x7f38f0051010) to TCP 192.168.8.102:51136:
+--start msg--
+
+SIP/2.0 403 Forbidden
+Via: SIP/2.0/TCP 192.168.8.102:5052;rport=51136;received=192.168.8.102;branch=z9hG4bKPjPNr4bIF3DLT9xqlOFvCZ1P3t2N6wmHrw
+Via: SIP/2.0/TCP scscf.sprout.oam.eeint.co.uk;branch=z9hG4bKPj6EhZFW9TJhleMvXcPCIo2d03WCZSrtot
+Via: SIP/2.0/TCP mmtel.sprout.oam.eeint.co.uk;branch=z9hG4bKPjI-i5YN5dvVhM0Bt4EC6LXyTI7s30rB4.
+Via: SIP/2.0/TCP scscf.sprout.oam.eeint.co.uk;branch=z9hG4bKPjBNjxQMKIrXLcRVXPQhZqf.CxknrW95le
+Via: SIP/2.0/TCP 192.168.8.106:5058;rport=54884;received=192.168.8.106;branch=z9hG4bKPjmGKWRhHQn07Kl7C0MN4H2hNlbnmpuws4
+Via: SIP/2.0/UDP 192.168.9.10;received=192.168.9.10;branch=z9hG4bK0114EE278d6a48
+Record-Route: <sip:scscf.sprout.oam.eeint.co.uk;transport=TCP;lr;billing-role=charge-orig>
+Record-Route: <sip:192.168.8.106:5058;transport=TCP;lr>
+Record-Route: <sip:vF5Pd/Okpb at Bono:5060;transport=UDP;lr>
+Call-ID: 2bafb0ac3d4be9621 at 192.168.9.10<mailto:2bafb0ac3d4be9621 at 192.168.9.10>
+From: <sip:6505550164 at oam.eeint.co.uk>;tag=315F3381
+To: <sip:6505550637 at 192.168.8.106>;tag=z9hG4bKPjPNr4bIF3DLT9xqlOFvCZ1P3t2N6wmHrw
+CSeq: 2 INVITE
+Content-Length:  0
+
+
+--end msg-
+
+Regards,
+
+Brian.
+
+--
+Brian Grant
+Creantech Consulting
+T: +44 781 050 6475
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190115/80d27bd8/attachment.html>
+
+From Mark.Perryman at metaswitch.com  Tue Jan 15 11:33:36 2019
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Tue, 15 Jan 2019 16:33:36 +0000
+Subject: [Project Clearwater] Test IMS core and P-CSCF Problems
+In-Reply-To: <CAGy+FH+WR2-uX+Y=2iaNL9Eg4AJJB97AOGxOBmpRNOJZpAf_MQ@mail.gmail.com>
+References: <CAGy+FH+WR2-uX+Y=2iaNL9Eg4AJJB97AOGxOBmpRNOJZpAf_MQ@mail.gmail.com>
+Message-ID: <BYAPR02MB42473CFDB00BB5DCAF7AE2A38F810@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+Gabriel,
+
+The test you show has 15000 ?Unexpected messages?.
+
+Please use the -trace_err parameter to post what the message is that is being received.
+
+Are you able to make a single call through the P-CSCF.  I suspect that something is misconfigured there.
+
+Mark Perryman
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of GABRIEL DAVID OROZCO URRUTIA
+Sent: 02 January 2019 23:50
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Test IMS core and P-CSCF Problems
+
+
+I have the VM deployment of clearwater. Running test against the deployment with the SIPP-STRESS-COREONLY (IMS CORE ONLY with run_stress) is working fine:
+
+[image.png]
+
+But, when I try to run the SIPP-STRESS (IMS-CORE and P-CSCF with sipp-stress) I get the following error:
+
+[https://lh4.googleusercontent.com/59HlX9IN2kUiBbuRj-VYX9m4bgtvGNdzspitsRjHdhXB_zlsZ3AMu2-9Typ7PtlSI3W7_o088Gt2WbN81lB_6jTbWbnaH2j2F7ILG-KwfrhBgqzCxJWwb9AP8cT8vrIdBngGp7x0]
+What is the trouble?
+
+I appreciate your help!
+Gabriel David Orozco
+Presidente Rama estudiantil IEEE Universidad del Cauca
+(57) 3004351630
+[https://docs.google.com/uc?export=download&id=1hIgGfajnxXR-ZsevmEAXkJs5zNI2ncdW&revid=0B3nNJ3ZigH7IZ2Vjc1lkRGN0MW03QVg3YWZhczhPbXpPZlJFPQ]<http://ieee.unicauca.edu.co/>
+
+________________________________
+
+Hacia una Universidad comprometida con la Paz Territorial
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190115/05203a32/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image001.jpg
+Type: image/jpeg
+Size: 54786 bytes
+Desc: image001.jpg
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190115/05203a32/attachment.jpg>
+
+From Mark.Perryman at metaswitch.com  Tue Jan 15 11:35:14 2019
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Tue, 15 Jan 2019 16:35:14 +0000
+Subject: [Project Clearwater] Bono responds to INVITE from SCSCF with
+ 403 Forbidden
+In-Reply-To: <CWXP265MB1336588001A2C3A2EE7F27AEE2810@CWXP265MB1336.GBRP265.PROD.OUTLOOK.COM>
+References: <CWXP265MB1336588001A2C3A2EE7F27AEE2810@CWXP265MB1336.GBRP265.PROD.OUTLOOK.COM>
+Message-ID: <BYAPR02MB42471A7CCFAE671A7A63A63B8F810@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+No, you shouldn't have to configure Sprout as a trusted peer.  However, Sprout should be talking to bono over trusted port 5058, rather than 5060.  It is not clear from those logs why this is not the case.
+
+Does the call work if you do not invoke the Application Server?
+
+Please send sprout logs as well.
+
+Mark Perryman
+
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of Brian Grant
+Sent: 15 January 2019 09:30
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Bono responds to INVITE from SCSCF with 403 Forbidden
+
+
+NOTE: Message is from an external sender
+
+
+I'm testing an ON-NET call between two simulated UEs (using signalling emulation tools to generate the call).
+
+Both UEs have been provisioned in Ellis and registration procedure for both is successful.
+
+When the call is initiated I can follow the INVITE out to MMTEL, but when it returns back to Bono for routing to the destination UE Bono returns 403 Forbidden due to the request coming from an untrusted port/source.
+
+Do I need to explicitly configured Sprout as a trusted_peer?
+
+Snip from Bono log is below:
+
+--
+
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug bono.cpp:775: Request received on non-trusted port 5060
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug bono.cpp:1017: Perform access proxy routing for INVITE request
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug bono.cpp:1154: Message received on non-trusted port 5060
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug flowtable.cpp:111: Find flow for transport tcps0x7f38ec02ae68 (2), remote address 192.168.8.102:51136
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Info bono.cpp:1344: Rejecting request from untrusted source
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug acr.cpp:1797: Create RalfACR for node type P-CSCF with role Terminating
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug acr.cpp:24: Created ACR (0x7f38f0050dc0)
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug acr.cpp:170: Created P-CSCF Ralf ACR
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug acr.cpp:210: Set record type for P/S-CSCF
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug acr.cpp:237: Dialog-initiating INVITE => START_RECORD
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Info bono.cpp:729: Reject INVITE request with 403 status code
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug pjsip:       endpoint Response msg 403/INVITE/cseq=2 (tdta0x7f38f0051010) created
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Debug acr.cpp:581: Failed to start session, change record type to EVENT_RECORD
+11-01-2019 14:28:21.494 UTC [7f39017e2700] Verbose common_sip_processing.cpp:103: TX 1057 bytes Response msg 403/INVITE/cseq=2 (tdta0x7f38f0051010) to TCP 192.168.8.102:51136:
+--start msg--
+
+SIP/2.0 403 Forbidden
+Via: SIP/2.0/TCP 192.168.8.102:5052;rport=51136;received=192.168.8.102;branch=z9hG4bKPjPNr4bIF3DLT9xqlOFvCZ1P3t2N6wmHrw
+Via: SIP/2.0/TCP scscf.sprout.oam.eeint.co.uk;branch=z9hG4bKPj6EhZFW9TJhleMvXcPCIo2d03WCZSrtot
+Via: SIP/2.0/TCP mmtel.sprout.oam.eeint.co.uk;branch=z9hG4bKPjI-i5YN5dvVhM0Bt4EC6LXyTI7s30rB4.
+Via: SIP/2.0/TCP scscf.sprout.oam.eeint.co.uk;branch=z9hG4bKPjBNjxQMKIrXLcRVXPQhZqf.CxknrW95le
+Via: SIP/2.0/TCP 192.168.8.106:5058;rport=54884;received=192.168.8.106;branch=z9hG4bKPjmGKWRhHQn07Kl7C0MN4H2hNlbnmpuws4
+Via: SIP/2.0/UDP 192.168.9.10;received=192.168.9.10;branch=z9hG4bK0114EE278d6a48
+Record-Route: <sip:scscf.sprout.oam.eeint.co.uk;transport=TCP;lr;billing-role=charge-orig>
+Record-Route: <sip:192.168.8.106:5058;transport=TCP;lr>
+Record-Route: <sip:vF5Pd/Okpb at Bono:5060;transport=UDP;lr>
+Call-ID: 2bafb0ac3d4be9621 at 192.168.9.10<mailto:2bafb0ac3d4be9621 at 192.168.9.10>
+From: <sip:6505550164 at oam.eeint.co.uk>;tag=315F3381
+To: <sip:6505550637 at 192.168.8.106>;tag=z9hG4bKPjPNr4bIF3DLT9xqlOFvCZ1P3t2N6wmHrw
+CSeq: 2 INVITE
+Content-Length:  0
+
+
+--end msg-
+
+Regards,
+
+Brian.
+
+--
+Brian Grant
+Creantech Consulting
+T: +44 781 050 6475
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190115/00031fc0/attachment.html>
+
+From brian.grant at creantech.com  Thu Jan 17 04:51:02 2019
+From: brian.grant at creantech.com (Brian Grant)
+Date: Thu, 17 Jan 2019 09:51:02 +0000
+Subject: [Project Clearwater] Bono responds to INVITE from SCSCF with
+ 403 Forbidden
+Message-ID: <CWXP265MB13362B233F268E5F90E7AD42E2830@CWXP265MB1336.GBRP265.PROD.OUTLOOK.COM>
+
+Hi Mark,
+
+While awaiting moderation of my message with the attached logs, I have pulled out the relevant part of the Sprout log, showing the creation of the INVITE message to Bono (192.168.8.108) on the untrusted 5060 port.
+
+-----8<----
+
+--start msg--
+
+INVITE sip:6505550637 at 192.168.8.106 SIP/2.0
+Record-Route: <sip:scscf.sprout.oam.eeint.co.uk;transport=TCP;lr;billing-role=charge-orig>
+Record-Route: <sip:192.168.8.106:5058;transport=TCP;lr>
+Record-Route: <sip:6XitsiyizX at Bono:5060;transport=UDP;lr>
+Via: SIP/2.0/TCP scscf.sprout.oam.eeint.co.uk;branch=z9hG4bKPjDOqb2VgR3yLNf4Zz9R.RwOgAu6lVkGe1
+Via: SIP/2.0/TCP mmtel.sprout.oam.eeint.co.uk;branch=z9hG4bKPjsPEoMDQOUAlOd3eCNRPplYTORl-OGumY
+Via: SIP/2.0/TCP scscf.sprout.oam.eeint.co.uk;branch=z9hG4bKPjJldrraM6mxRuZf2H7WOjAKKug-6cuY9S
+Via: SIP/2.0/TCP 192.168.8.106:5058;rport=58455;received=192.168.8.106;branch=z9hG4bKPjE8IDlwRqcANKZfWqmYq-q.XQrTArbCut
+Via: SIP/2.0/UDP 192.168.9.10;received=192.168.9.10;branch=z9hG4bK011B678b6fac1e
+From: <sip:6505550164 at oam.eeint.co.uk>;tag=3C8463B1
+To: <sip:6505550637 at 192.168.8.106>
+Call-ID: 2d990fa160b656171 at 192.168.9.10
+CSeq: 3 INVITE
+Contact: <sip:6505550164 at 192.168.9.10>
+User-Agent: IxLoad-IMS-UA-0
+P-Access-Network-Info: 3GPP-UTRAN-TDD;utran-cell-id-3gpp=12345ABCDE0
+Max-Forwards: 66
+Require: 100rel
+Supported: 100rel, replaces, timer, join
+Allow: INVITE, ACK, BYE, CANCEL, OPTIONS, SUBSCRIBE, REFER, NOTIFY, PRACK, UPDATE, MESSAGE, INFO
+Allow-Events: refer
+P-Asserted-Identity: <sip:6505550164 at oam.eeint.co.uk>
+Session-Expires: 600
+P-Served-User: <sip:6505550164 at oam.eeint.co.uk>;sescase=orig;regstate=reg
+Route: <sip:bgcf.sprout.oam.eeint.co.uk;transport=TCP;lr>
+Content-Type: application/sdp
+Content-Length:   290
+
+v=0
+o=- 0 0 IN IP4 192.168.9.10
+s=session
+c=IN IP4 192.168.9.10
+t=0 0
+m=audio 10000 RTP/AVP 0 8 18 100 101
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:18 G729/8000
+a=fmtp:18 annexb=no
+a=rtpmap:100 telephone-event/8000
+a=fmtp:100 0-16
+a=rtpmap:101 tones/8000
+a=ptime:20
+
+--end msg--
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug pjutils.cpp:744: Cloned tdta0x3725fa0 to tdta0x3729ec0
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug sproutletproxy.cpp:1783: Remove top Route header Route: <sip:bgcf.sprout.oam.eeint.co.uk;transport=TCP;lr>
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug sproutletproxy.cpp:2453: Adding message 0x372a4d0 => txdata 0x3729f68 mapping
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Verbose sproutletproxy.cpp:2284: bgcf-0x36600d0 pass initial request Request msg INVITE/cseq=3 (tdta0x3729ec0) to Sproutlet
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug acr.cpp:1797: Create RalfACR for node type BGCF with role Terminating
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug acr.cpp:24: Created ACR (0x3652120)
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug acr.cpp:170: Created BGCF Ralf ACR
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug acr.cpp:250: Set record type for I-CSCF, BGCF, IBCF, AS to EVENT_RECORD
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug uri_classifier.cpp:139: home domain: false, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug uri_classifier.cpp:173: Classified URI sip:6505550637 at 192.168.8.106 as 5
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug pjutils.cpp:2657: Not translating URI
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug uri_classifier.cpp:139: home domain: false, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug uri_classifier.cpp:173: Classified URI sip:6505550637 at 192.168.8.106 as 5
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug bgcfservice.cpp:163: Getting route for URI domain 192.168.8.106 via BGCF lookup
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug bgcfsproutlet.cpp:205: No route configured for 192.168.8.106
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug sproutletproxy.cpp:1954: Sproutlet send_request 0x372a4d0
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Verbose sproutletproxy.cpp:1995: bgcf-0x36600d0 sending Request msg INVITE/cseq=3 (tdta0x3729ec0) on fork 0
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug sproutletproxy.cpp:2468: Processing actions from sproutlet - 0 responses, 1 requests, 0 timers
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sproutletproxy.cpp:2508: Processing request 0x3729f68, fork = 0
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sproutletproxy.cpp:2672: bgcf-0x36600d0 transmitting request on fork 0
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sproutletproxy.cpp:2687: bgcf-0x36600d0 store reference to non-ACK request Request msg INVITE/cseq=3 (tdta0x3729ec0) on fork 0
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sproutletproxy.cpp:2460: Removing message 0x372a4d0 => txdata 0x3729f68 mapping
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sproutletproxy.cpp:185: Find target Sproutlet for request
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sproutletproxy.cpp:220: Found next routable URI: sip:6505550637 at 192.168.8.106
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sproutletproxy.cpp:381: Possible service name 192 will be used if 168.8.106 is a local hostname
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sproutletproxy.cpp:405: Found user part - 6505550637
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sproutletproxy.cpp:1189: No local sproutlet matches request
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug pjsip:   tsx0x372ced8 Transaction created for Request msg INVITE/cseq=3 (tdta0x3729ec0)
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug basicproxy.cpp:1676: Added trail identifier 52004 to UAC transaction
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug pjutils.cpp:518: Next hop node is encoded in Request-URI
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sipresolver.cpp:84: SIPResolver::resolve for name 192.168.8.106, port 0, transport -1, family 2
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug utils.cpp:446: Attempt to parse 192.168.8.106 as IP address
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sipresolver.cpp:101: Target is an IP address - default port/transport if required
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug baseresolver.cpp:587: 192.168.8.106:5060;transport=UDP has state: WHITE
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug baseresolver.cpp:648: Address 192.168.8.106:5060 is in state WHITE and is allowed to be used based on an allowed host state bitfield of 0x3
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Info pjutils.cpp:1001: Resolved destination URI sip:6505550637 at 192.168.8.106
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug pjutils.cpp:518: Next hop node is encoded in Request-URI
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug basicproxy.cpp:1700: Next hop 192.168.8.106 is not a stateless proxy
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug basicproxy.cpp:1714: Sending request for sip:6505550637 at 192.168.8.106
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug basicproxy.cpp:2399: Selected host 192.168.8.106:5060;transport=UDP (will be blacklisted by default)
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug pjsip:   tsx0x372ced8 Sending Request msg INVITE/cseq=3 (tdta0x3729ec0) in state Null
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug pjsip:       endpoint Request msg INVITE/cseq=3 (tdta0x3729ec0): skipping target resolution because address is already set
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug pjsip:       endpoint Request msg INVITE/cseq=3 (tdta0x3729ec0) exceeds UDP size threshold (1300), sending with TCP
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Verbose pjsip:  tcpc0x372f5b8 tcp->base.local_name: 192.168.8.102
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Verbose pjsip:  tcpc0x372f5b8 TCP client transport created
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Verbose pjsip:  tcpc0x372f5b8 TCP transport 192.168.8.102:5052 is connecting to 192.168.8.106:5060...
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Verbose common_sip_processing.cpp:103: TX 1815 bytes Request msg INVITE/cseq=3 (tdta0x3729ec0) to TCP 192.168.8.106:5060:
+--start msg--
+
+INVITE sip:6505550637 at 192.168.8.106 SIP/2.0
+Record-Route: <sip:scscf.sprout.oam.eeint.co.uk;transport=TCP;lr;billing-role=charge-orig>
+Record-Route: <sip:192.168.8.106:5058;transport=TCP;lr>
+Record-Route: <sip:6XitsiyizX at Bono:5060;transport=UDP;lr>
+Via: SIP/2.0/TCP 192.168.8.102:5052;rport;branch=z9hG4bKPjxZg6vBPzxGnvZauLAk4t56Q7jwqup-FJ
+Via: SIP/2.0/TCP scscf.sprout.oam.eeint.co.uk;branch=z9hG4bKPjDOqb2VgR3yLNf4Zz9R.RwOgAu6lVkGe1
+Via: SIP/2.0/TCP mmtel.sprout.oam.eeint.co.uk;branch=z9hG4bKPjsPEoMDQOUAlOd3eCNRPplYTORl-OGumY
+Via: SIP/2.0/TCP scscf.sprout.oam.eeint.co.uk;branch=z9hG4bKPjJldrraM6mxRuZf2H7WOjAKKug-6cuY9S
+Via: SIP/2.0/TCP 192.168.8.106:5058;rport=58455;received=192.168.8.106;branch=z9hG4bKPjE8IDlwRqcANKZfWqmYq-q.XQrTArbCut
+Via: SIP/2.0/UDP 192.168.9.10;received=192.168.9.10;branch=z9hG4bK011B678b6fac1e
+From: <sip:6505550164 at oam.eeint.co.uk>;tag=3C8463B1
+To: <sip:6505550637 at 192.168.8.106>
+Call-ID: 2d990fa160b656171 at 192.168.9.10
+CSeq: 3 INVITE
+Contact: <sip:6505550164 at 192.168.9.10>
+User-Agent: IxLoad-IMS-UA-0
+P-Access-Network-Info: 3GPP-UTRAN-TDD;utran-cell-id-3gpp=12345ABCDE0
+Max-Forwards: 66
+Require: 100rel
+Supported: 100rel, replaces, timer, join
+Allow: INVITE, ACK, BYE, CANCEL, OPTIONS, SUBSCRIBE, REFER, NOTIFY, PRACK, UPDATE, MESSAGE, INFO
+Allow-Events: refer
+P-Asserted-Identity: <sip:6505550164 at oam.eeint.co.uk>
+Session-Expires: 600
+P-Served-User: <sip:6505550164 at oam.eeint.co.uk>;sescase=orig;regstate=reg
+Content-Type: application/sdp
+Content-Length:   290
+
+v=0
+o=- 0 0 IN IP4 192.168.9.10
+s=session
+c=IN IP4 192.168.9.10
+t=0 0
+m=audio 10000 RTP/AVP 0 8 18 100 101
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:18 G729/8000
+a=fmtp:18 annexb=no
+a=rtpmap:100 telephone-event/8000
+a=fmtp:100 0-16
+a=rtpmap:101 tones/8000
+a=ptime:20
+
+--end msg--
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug pjsip:   tsx0x372ced8 State changed from Null to Calling, event=TX_MSG
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug basicproxy.cpp:190: tsx0x372ced8 - tu_on_tsx_state UAC, TSX_STATE TX_MSG state=Calling
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug basicproxy.cpp:1949: tsx0x372ced8 - uac_tsx = 0x365f1b0, uas_tsx = 0x365d350
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug basicproxy.cpp:1957: TX_MSG event on current UAC transaction
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug basicproxy.cpp:2288: Starting timer C
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug thread_dispatcher.cpp:273: Worker thread completed processing message 0x7f729807aba8
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug thread_dispatcher.cpp:287: Request latency = 3783us
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug event_statistic_accumulator.cpp:32: Accumulate 3783 for 0x2613348
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug event_statistic_accumulator.cpp:32: Accumulate 3783 for 0x26133c0
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug load_monitor.cpp:341: Not recalculating rate as we haven't processed 20 requests yet (only 9).
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug utils.cpp:878: Removed IOHook 0x7f72c9f62df0 to stack. There are now 0 hooks
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug thread_dispatcher.cpp:161: Attempting to process queue element
+16-01-2019 14:14:38.494 UTC [7f729d70a700] Verbose pjsip:  tcpc0x372f5b8 TCP transport 192.168.8.102:5052 is connected to 192.168.8.106:5060
+16-01-2019 14:14:38.494 UTC [7f729d70a700] Debug pjsip: sip_endpoint.c Processing incoming message: Response msg 403/INVITE/cseq=3 (rdata0x372f8f0)
+16-01-2019 14:14:38.494 UTC [7f729d70a700] Verbose common_sip_processing.cpp:87: RX 1057 bytes Response msg 403/INVITE/cseq=3 (rdata0x372f8f0) from TCP 192.168.8.106:5060:
+--start msg--
+
+SIP/2.0 403 Forbidden
+Via: SIP/2.0/TCP 192.168.8.102:5052;rport=38340;received=192.168.8.102;branch=z9hG4bKPjxZg6vBPzxGnvZauLAk4t56Q7jwqup-FJ
+Via: SIP/2.0/TCP scscf.sprout.oam.eeint.co.uk;branch=z9hG4bKPjDOqb2VgR3yLNf4Zz9R.RwOgAu6lVkGe1
+Via: SIP/2.0/TCP mmtel.sprout.oam.eeint.co.uk;branch=z9hG4bKPjsPEoMDQOUAlOd3eCNRPplYTORl-OGumY
+Via: SIP/2.0/TCP scscf.sprout.oam.eeint.co.uk;branch=z9hG4bKPjJldrraM6mxRuZf2H7WOjAKKug-6cuY9S
+Via: SIP/2.0/TCP 192.168.8.106:5058;rport=58455;received=192.168.8.106;branch=z9hG4bKPjE8IDlwRqcANKZfWqmYq-q.XQrTArbCut
+Via: SIP/2.0/UDP 192.168.9.10;received=192.168.9.10;branch=z9hG4bK011B678b6fac1e
+Record-Route: <sip:scscf.sprout.oam.eeint.co.uk;transport=TCP;lr;billing-role=charge-orig>
+Record-Route: <sip:192.168.8.106:5058;transport=TCP;lr>
+Record-Route: <sip:6XitsiyizX at Bono:5060;transport=UDP;lr>
+Call-ID: 2d990fa160b656171 at 192.168.9.10
+From: <sip:6505550164 at oam.eeint.co.uk>;tag=3C8463B1
+To: <sip:6505550637 at 192.168.8.106>;tag=z9hG4bKPjxZg6vBPzxGnvZauLAk4t56Q7jwqup-FJ
+CSeq: 3 INVITE
+Content-Length:  0
+
+
+--end msg--
+
+Let me know if you need more.
+
+Regards,
+
+Brian.
+
+From: Brian Grant
+Sent: 17 January 2019 08:44
+To: clearwater at lists.projectclearwater.org
+Cc: mark.perryman at metaswitch.com
+Subject: Re: [Project Clearwater] Bono responds to INVITE from SCSCF with 403 Forbidden
+
+Hi Mark,
+
+Thank you for your swift response and confirmation that Sprout should be communicating back to Bono on the trusted port 5058.
+
+Please find attached the corresponding Bono and Sprout logs for further debug.
+
+Regards,
+
+Brian.
+
+
+No, you shouldn't have to configure Sprout as a trusted peer.  However, Sprout
+should be talking to bono over trusted port 5058, rather than 5060.  It is not
+clear from those logs why this is not the case.
+
+Does the call work if you do not invoke the Application Server?
+
+Please send sprout logs as well.
+
+Mark Perryman
+
+--
+Brian Grant
+Creantech Consulting
+T: +44 781 050 6475
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190117/8c3c129c/attachment.html>
+
+From Mark.Perryman at metaswitch.com  Thu Jan 17 08:26:32 2019
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Thu, 17 Jan 2019 13:26:32 +0000
+Subject: [Project Clearwater] Bono responds to INVITE from SCSCF with
+ 403 Forbidden
+In-Reply-To: <CWXP265MB13362B233F268E5F90E7AD42E2830@CWXP265MB1336.GBRP265.PROD.OUTLOOK.COM>
+References: <CWXP265MB13362B233F268E5F90E7AD42E2830@CWXP265MB1336.GBRP265.PROD.OUTLOOK.COM>
+Message-ID: <BYAPR02MB4247C34BAE9FD17578A6AE278F830@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+Thanks.  That looks good.
+
+I assume that bono is 192.168.8.106.
+
+It seems that sprout is trying to route to the IP address in the URI as an off-net peer (that just happens to be bono), rather than treating the call as an on-net call and using the Service-Route from the accompanying REGISTER.
+
+I would expect the INVITE to be coming in to sip:6505550637 at oam.eeint.co.uk, assuming oam.eeint.co.uk is your home domain.
+
+Hope that helps,
+
+Mark Perryman
+
+
+From: Brian Grant <brian.grant at creantech.com>
+Sent: 17 January 2019 09:51
+To: clearwater at lists.projectclearwater.org
+Cc: Mark Perryman <Mark.Perryman at metaswitch.com>
+Subject: RE: Re: [Project Clearwater] Bono responds to INVITE from SCSCF with 403 Forbidden
+
+
+NOTE: Message is from an external sender
+
+Hi Mark,
+
+While awaiting moderation of my message with the attached logs, I have pulled out the relevant part of the Sprout log, showing the creation of the INVITE message to Bono (192.168.8.108) on the untrusted 5060 port.
+
+-----8<----
+
+--start msg--
+
+INVITE sip:6505550637 at 192.168.8.106 SIP/2.0
+Record-Route: <sip:scscf.sprout.oam.eeint.co.uk;transport=TCP;lr;billing-role=charge-orig>
+Record-Route: <sip:192.168.8.106:5058;transport=TCP;lr>
+Record-Route: <sip:6XitsiyizX at Bono:5060;transport=UDP;lr>
+Via: SIP/2.0/TCP scscf.sprout.oam.eeint.co.uk;branch=z9hG4bKPjDOqb2VgR3yLNf4Zz9R.RwOgAu6lVkGe1
+Via: SIP/2.0/TCP mmtel.sprout.oam.eeint.co.uk;branch=z9hG4bKPjsPEoMDQOUAlOd3eCNRPplYTORl-OGumY
+Via: SIP/2.0/TCP scscf.sprout.oam.eeint.co.uk;branch=z9hG4bKPjJldrraM6mxRuZf2H7WOjAKKug-6cuY9S
+Via: SIP/2.0/TCP 192.168.8.106:5058;rport=58455;received=192.168.8.106;branch=z9hG4bKPjE8IDlwRqcANKZfWqmYq-q.XQrTArbCut
+Via: SIP/2.0/UDP 192.168.9.10;received=192.168.9.10;branch=z9hG4bK011B678b6fac1e
+From: <sip:6505550164 at oam.eeint.co.uk>;tag=3C8463B1
+To: <sip:6505550637 at 192.168.8.106>
+Call-ID: 2d990fa160b656171 at 192.168.9.10<mailto:2d990fa160b656171 at 192.168.9.10>
+CSeq: 3 INVITE
+Contact: <sip:6505550164 at 192.168.9.10>
+User-Agent: IxLoad-IMS-UA-0
+P-Access-Network-Info: 3GPP-UTRAN-TDD;utran-cell-id-3gpp=12345ABCDE0
+Max-Forwards: 66
+Require: 100rel
+Supported: 100rel, replaces, timer, join
+Allow: INVITE, ACK, BYE, CANCEL, OPTIONS, SUBSCRIBE, REFER, NOTIFY, PRACK, UPDATE, MESSAGE, INFO
+Allow-Events: refer
+P-Asserted-Identity: <sip:6505550164 at oam.eeint.co.uk>
+Session-Expires: 600
+P-Served-User: <sip:6505550164 at oam.eeint.co.uk>;sescase=orig;regstate=reg
+Route: <sip:bgcf.sprout.oam.eeint.co.uk;transport=TCP;lr>
+Content-Type: application/sdp
+Content-Length:   290
+
+v=0
+o=- 0 0 IN IP4 192.168.9.10
+s=session
+c=IN IP4 192.168.9.10
+t=0 0
+m=audio 10000 RTP/AVP 0 8 18 100 101
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:18 G729/8000
+a=fmtp:18 annexb=no
+a=rtpmap:100 telephone-event/8000
+a=fmtp:100 0-16
+a=rtpmap:101 tones/8000
+a=ptime:20
+
+--end msg--
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug pjutils.cpp:744: Cloned tdta0x3725fa0 to tdta0x3729ec0
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug sproutletproxy.cpp:1783: Remove top Route header Route: <sip:bgcf.sprout.oam.eeint.co.uk;transport=TCP;lr>
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug sproutletproxy.cpp:2453: Adding message 0x372a4d0 => txdata 0x3729f68 mapping
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Verbose sproutletproxy.cpp:2284: bgcf-0x36600d0 pass initial request Request msg INVITE/cseq=3 (tdta0x3729ec0) to Sproutlet
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug acr.cpp:1797: Create RalfACR for node type BGCF with role Terminating
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug acr.cpp:24: Created ACR (0x3652120)
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug acr.cpp:170: Created BGCF Ralf ACR
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug acr.cpp:250: Set record type for I-CSCF, BGCF, IBCF, AS to EVENT_RECORD
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug uri_classifier.cpp:139: home domain: false, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug uri_classifier.cpp:173: Classified URI sip:6505550637 at 192.168.8.106 as 5
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug pjutils.cpp:2657: Not translating URI
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug uri_classifier.cpp:139: home domain: false, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug uri_classifier.cpp:173: Classified URI sip:6505550637 at 192.168.8.106 as 5
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug bgcfservice.cpp:163: Getting route for URI domain 192.168.8.106 via BGCF lookup
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug bgcfsproutlet.cpp:205: No route configured for 192.168.8.106
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug sproutletproxy.cpp:1954: Sproutlet send_request 0x372a4d0
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Verbose sproutletproxy.cpp:1995: bgcf-0x36600d0 sending Request msg INVITE/cseq=3 (tdta0x3729ec0) on fork 0
+16-01-2019 14:14:38.483 UTC [7f72c9f63700] Debug sproutletproxy.cpp:2468: Processing actions from sproutlet - 0 responses, 1 requests, 0 timers
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sproutletproxy.cpp:2508: Processing request 0x3729f68, fork = 0
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sproutletproxy.cpp:2672: bgcf-0x36600d0 transmitting request on fork 0
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sproutletproxy.cpp:2687: bgcf-0x36600d0 store reference to non-ACK request Request msg INVITE/cseq=3 (tdta0x3729ec0) on fork 0
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sproutletproxy.cpp:2460: Removing message 0x372a4d0 => txdata 0x3729f68 mapping
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sproutletproxy.cpp:185: Find target Sproutlet for request
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sproutletproxy.cpp:220: Found next routable URI: sip:6505550637 at 192.168.8.106
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sproutletproxy.cpp:381: Possible service name 192 will be used if 168.8.106 is a local hostname
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sproutletproxy.cpp:405: Found user part - 6505550637
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sproutletproxy.cpp:1189: No local sproutlet matches request
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug pjsip:   tsx0x372ced8 Transaction created for Request msg INVITE/cseq=3 (tdta0x3729ec0)
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug basicproxy.cpp:1676: Added trail identifier 52004 to UAC transaction
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug pjutils.cpp:518: Next hop node is encoded in Request-URI
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sipresolver.cpp:84: SIPResolver::resolve for name 192.168.8.106, port 0, transport -1, family 2
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug utils.cpp:446: Attempt to parse 192.168.8.106 as IP address
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug sipresolver.cpp:101: Target is an IP address - default port/transport if required
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug baseresolver.cpp:587: 192.168.8.106:5060;transport=UDP has state: WHITE
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug baseresolver.cpp:648: Address 192.168.8.106:5060 is in state WHITE and is allowed to be used based on an allowed host state bitfield of 0x3
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Info pjutils.cpp:1001: Resolved destination URI sip:6505550637 at 192.168.8.106
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug pjutils.cpp:518: Next hop node is encoded in Request-URI
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug basicproxy.cpp:1700: Next hop 192.168.8.106 is not a stateless proxy
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug basicproxy.cpp:1714: Sending request for sip:6505550637 at 192.168.8.106
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug basicproxy.cpp:2399: Selected host 192.168.8.106:5060;transport=UDP (will be blacklisted by default)
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug pjsip:   tsx0x372ced8 Sending Request msg INVITE/cseq=3 (tdta0x3729ec0) in state Null
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug pjsip:       endpoint Request msg INVITE/cseq=3 (tdta0x3729ec0): skipping target resolution because address is already set
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug pjsip:       endpoint Request msg INVITE/cseq=3 (tdta0x3729ec0) exceeds UDP size threshold (1300), sending with TCP
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Verbose pjsip:  tcpc0x372f5b8 tcp->base.local_name: 192.168.8.102
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Verbose pjsip:  tcpc0x372f5b8 TCP client transport created
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Verbose pjsip:  tcpc0x372f5b8 TCP transport 192.168.8.102:5052 is connecting to 192.168.8.106:5060...
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Verbose common_sip_processing.cpp:103: TX 1815 bytes Request msg INVITE/cseq=3 (tdta0x3729ec0) to TCP 192.168.8.106:5060:
+--start msg--
+
+INVITE sip:6505550637 at 192.168.8.106 SIP/2.0
+Record-Route: <sip:scscf.sprout.oam.eeint.co.uk;transport=TCP;lr;billing-role=charge-orig>
+Record-Route: <sip:192.168.8.106:5058;transport=TCP;lr>
+Record-Route: <sip:6XitsiyizX at Bono:5060;transport=UDP;lr>
+Via: SIP/2.0/TCP 192.168.8.102:5052;rport;branch=z9hG4bKPjxZg6vBPzxGnvZauLAk4t56Q7jwqup-FJ
+Via: SIP/2.0/TCP scscf.sprout.oam.eeint.co.uk;branch=z9hG4bKPjDOqb2VgR3yLNf4Zz9R.RwOgAu6lVkGe1
+Via: SIP/2.0/TCP mmtel.sprout.oam.eeint.co.uk;branch=z9hG4bKPjsPEoMDQOUAlOd3eCNRPplYTORl-OGumY
+Via: SIP/2.0/TCP scscf.sprout.oam.eeint.co.uk;branch=z9hG4bKPjJldrraM6mxRuZf2H7WOjAKKug-6cuY9S
+Via: SIP/2.0/TCP 192.168.8.106:5058;rport=58455;received=192.168.8.106;branch=z9hG4bKPjE8IDlwRqcANKZfWqmYq-q.XQrTArbCut
+Via: SIP/2.0/UDP 192.168.9.10;received=192.168.9.10;branch=z9hG4bK011B678b6fac1e
+From: <sip:6505550164 at oam.eeint.co.uk>;tag=3C8463B1
+To: <sip:6505550637 at 192.168.8.106>
+Call-ID: 2d990fa160b656171 at 192.168.9.10<mailto:2d990fa160b656171 at 192.168.9.10>
+CSeq: 3 INVITE
+Contact: <sip:6505550164 at 192.168.9.10>
+User-Agent: IxLoad-IMS-UA-0
+P-Access-Network-Info: 3GPP-UTRAN-TDD;utran-cell-id-3gpp=12345ABCDE0
+Max-Forwards: 66
+Require: 100rel
+Supported: 100rel, replaces, timer, join
+Allow: INVITE, ACK, BYE, CANCEL, OPTIONS, SUBSCRIBE, REFER, NOTIFY, PRACK, UPDATE, MESSAGE, INFO
+Allow-Events: refer
+P-Asserted-Identity: <sip:6505550164 at oam.eeint.co.uk>
+Session-Expires: 600
+P-Served-User: <sip:6505550164 at oam.eeint.co.uk>;sescase=orig;regstate=reg
+Content-Type: application/sdp
+Content-Length:   290
+
+v=0
+o=- 0 0 IN IP4 192.168.9.10
+s=session
+c=IN IP4 192.168.9.10
+t=0 0
+m=audio 10000 RTP/AVP 0 8 18 100 101
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:18 G729/8000
+a=fmtp:18 annexb=no
+a=rtpmap:100 telephone-event/8000
+a=fmtp:100 0-16
+a=rtpmap:101 tones/8000
+a=ptime:20
+
+--end msg--
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug pjsip:   tsx0x372ced8 State changed from Null to Calling, event=TX_MSG
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug basicproxy.cpp:190: tsx0x372ced8 - tu_on_tsx_state UAC, TSX_STATE TX_MSG state=Calling
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug basicproxy.cpp:1949: tsx0x372ced8 - uac_tsx = 0x365f1b0, uas_tsx = 0x365d350
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug basicproxy.cpp:1957: TX_MSG event on current UAC transaction
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug basicproxy.cpp:2288: Starting timer C
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug thread_dispatcher.cpp:273: Worker thread completed processing message 0x7f729807aba8
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug thread_dispatcher.cpp:287: Request latency = 3783us
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug event_statistic_accumulator.cpp:32: Accumulate 3783 for 0x2613348
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug event_statistic_accumulator.cpp:32: Accumulate 3783 for 0x26133c0
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug load_monitor.cpp:341: Not recalculating rate as we haven't processed 20 requests yet (only 9).
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug utils.cpp:878: Removed IOHook 0x7f72c9f62df0 to stack. There are now 0 hooks
+16-01-2019 14:14:38.484 UTC [7f72c9f63700] Debug thread_dispatcher.cpp:161: Attempting to process queue element
+16-01-2019 14:14:38.494 UTC [7f729d70a700] Verbose pjsip:  tcpc0x372f5b8 TCP transport 192.168.8.102:5052 is connected to 192.168.8.106:5060
+16-01-2019 14:14:38.494 UTC [7f729d70a700] Debug pjsip: sip_endpoint.c Processing incoming message: Response msg 403/INVITE/cseq=3 (rdata0x372f8f0)
+16-01-2019 14:14:38.494 UTC [7f729d70a700] Verbose common_sip_processing.cpp:87: RX 1057 bytes Response msg 403/INVITE/cseq=3 (rdata0x372f8f0) from TCP 192.168.8.106:5060:
+--start msg--
+
+SIP/2.0 403 Forbidden
+Via: SIP/2.0/TCP 192.168.8.102:5052;rport=38340;received=192.168.8.102;branch=z9hG4bKPjxZg6vBPzxGnvZauLAk4t56Q7jwqup-FJ
+Via: SIP/2.0/TCP scscf.sprout.oam.eeint.co.uk;branch=z9hG4bKPjDOqb2VgR3yLNf4Zz9R.RwOgAu6lVkGe1
+Via: SIP/2.0/TCP mmtel.sprout.oam.eeint.co.uk;branch=z9hG4bKPjsPEoMDQOUAlOd3eCNRPplYTORl-OGumY
+Via: SIP/2.0/TCP scscf.sprout.oam.eeint.co.uk;branch=z9hG4bKPjJldrraM6mxRuZf2H7WOjAKKug-6cuY9S
+Via: SIP/2.0/TCP 192.168.8.106:5058;rport=58455;received=192.168.8.106;branch=z9hG4bKPjE8IDlwRqcANKZfWqmYq-q.XQrTArbCut
+Via: SIP/2.0/UDP 192.168.9.10;received=192.168.9.10;branch=z9hG4bK011B678b6fac1e
+Record-Route: <sip:scscf.sprout.oam.eeint.co.uk;transport=TCP;lr;billing-role=charge-orig>
+Record-Route: <sip:192.168.8.106:5058;transport=TCP;lr>
+Record-Route: <sip:6XitsiyizX at Bono:5060;transport=UDP;lr>
+Call-ID: 2d990fa160b656171 at 192.168.9.10<mailto:2d990fa160b656171 at 192.168.9.10>
+From: <sip:6505550164 at oam.eeint.co.uk>;tag=3C8463B1
+To: <sip:6505550637 at 192.168.8.106>;tag=z9hG4bKPjxZg6vBPzxGnvZauLAk4t56Q7jwqup-FJ
+CSeq: 3 INVITE
+Content-Length:  0
+
+
+--end msg--
+
+
+Let me know if you need more.
+
+Regards,
+
+Brian.
+
+From: Brian Grant
+Sent: 17 January 2019 08:44
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Cc: mark.perryman at metaswitch.com<mailto:mark.perryman at metaswitch.com>
+Subject: Re: [Project Clearwater] Bono responds to INVITE from SCSCF with 403 Forbidden
+
+Hi Mark,
+
+Thank you for your swift response and confirmation that Sprout should be communicating back to Bono on the trusted port 5058.
+
+Please find attached the corresponding Bono and Sprout logs for further debug.
+
+Regards,
+
+Brian.
+
+
+No, you shouldn't have to configure Sprout as a trusted peer.  However, Sprout
+should be talking to bono over trusted port 5058, rather than 5060.  It is not
+clear from those logs why this is not the case.
+
+Does the call work if you do not invoke the Application Server?
+
+Please send sprout logs as well.
+
+Mark Perryman
+
+--
+Brian Grant
+Creantech Consulting
+T: +44 781 050 6475
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190117/38d63f6c/attachment.html>
+
+From brian.grant at creantech.com  Thu Jan 17 12:35:17 2019
+From: brian.grant at creantech.com (Brian Grant)
+Date: Thu, 17 Jan 2019 17:35:17 +0000
+Subject: [Project Clearwater] Bono responds to INVITE from SCSCF with
+ 403 Forbidden
+Message-ID: <CWXP265MB13361BB2F7E3FBA03B24D541E2830@CWXP265MB1336.GBRP265.PROD.OUTLOOK.COM>
+
+Hi Mark,
+
+Thank you again for your response. Comments inline.
+
+
+?  I assume that bono is 192.168.8.106.
+
+
+
+Yes Bono is 192.168.8.106.
+
+
+
+?  It seems that sprout is trying to route to the IP address in the URI as an off-net peer (that just happens to be bono), rather than treating the call as an on-net call and using the Service-Route from the accompanying REGISTER.
+
+
+
+?  I would expect the INVITE to be coming in to sip:6505550637 at oam.eeint.co.uk<http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org>, assuming oam.eeint.co.uk is your home domain.
+
+
+
+Yes, oam.eeint.co.uk is my home domain.
+
+
+
+I expected that Bono(P-CSCF) should route this INVITE back to the UE (6505550637 at oam.eeint.co.uk<mailto:6505550637 at oam.eeint.co.uk>) however, as per my original email Bono responds to this INVITE with 403 Forbidden. Which you mentioned might be because it is sent on UNTRUSTED 5060 rather than 5058.
+
+
+
+When/where is the translation of the called URI done? I don't see my called IP address in any of the messages.
+
+
+
+Thanks again,
+
+
+
+Regards,
+
+
+
+Brian.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190117/e0e6db1b/attachment.html>
+
+From brian.grant at creantech.com  Mon Jan 21 06:10:43 2019
+From: brian.grant at creantech.com (Brian Grant)
+Date: Mon, 21 Jan 2019 11:10:43 +0000
+Subject: [Project Clearwater] Bono responds to INVITE from SCSCF with
+ 403 Forbidden
+Message-ID: <CWXP265MB133648B4A601EB87EFF91F51E29F0@CWXP265MB1336.GBRP265.PROD.OUTLOOK.COM>
+
+Hi Mark,
+
+I don't have an entry in DNS for Bono port 5058 - is this required?
+
+Regards,
+
+Brian.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190121/380f798e/attachment.html>
+
+From Mark.Perryman at metaswitch.com  Mon Jan 21 10:32:58 2019
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Mon, 21 Jan 2019 15:32:58 +0000
+Subject: [Project Clearwater] Bono responds to INVITE from SCSCF with
+ 403 Forbidden
+In-Reply-To: <CWXP265MB133648B4A601EB87EFF91F51E29F0@CWXP265MB1336.GBRP265.PROD.OUTLOOK.COM>
+References: <CWXP265MB133648B4A601EB87EFF91F51E29F0@CWXP265MB1336.GBRP265.PROD.OUTLOOK.COM>
+Message-ID: <BYAPR02MB4247C475E2A5C6C7F4589DF28F9F0@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+No.  If the invite were recognised as being for a registered subscriber, then it would use the Service-Route from the REGISTER (which should be bono port 5058) with no need for DNS to be set.
+
+However the To URI in the INVITE is not 6505550637 at oam.eeint.co.uk<mailto:6505550637 at oam.eeint.co.uk>, but 6505550637 at 192.168.8.106<mailto:6505550637 at 192.168.8.106>.  Sprout does not recognise this as an on-net subscriber, and so tries to route off-net (to a destination which happens to be bono).
+
+Mark.
+
+
+From: Brian Grant <brian.grant at creantech.com>
+Sent: 21 January 2019 11:11
+To: clearwater at lists.projectclearwater.org
+Cc: Mark Perryman <Mark.Perryman at metaswitch.com>
+Subject: Re: [Project Clearwater] Bono responds to INVITE from SCSCF with 403 Forbidden
+
+
+NOTE: Message is from an external sender
+
+Hi Mark,
+
+I don't have an entry in DNS for Bono port 5058 - is this required?
+
+Regards,
+
+Brian.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190121/1790eb5c/attachment.html>
+
+From brian.grant at creantech.com  Tue Jan 22 09:30:39 2019
+From: brian.grant at creantech.com (Brian Grant)
+Date: Tue, 22 Jan 2019 14:30:39 +0000
+Subject: [Project Clearwater] Bono responds to INVITE from SCSCF with
+ 403 Forbidden
+Message-ID: <CWXP265MB1336C581A7BA3C19E660D9F5E2980@CWXP265MB1336.GBRP265.PROD.OUTLOOK.COM>
+
+Hi Mark,
+
+Thank you for the response - it seems that the simulation tool is incorrectly forming the INVITE "To URI".
+
+Regards,
+
+Brian.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190122/392801c0/attachment.html>
+
+From gabrielorozco20 at unicauca.edu.co  Tue Jan 29 09:00:14 2019
+From: gabrielorozco20 at unicauca.edu.co (GABRIEL DAVID OROZCO URRUTIA)
+Date: Tue, 29 Jan 2019 09:00:14 -0500
+Subject: [Project Clearwater] MMTEL in a different container
+Message-ID: <CAGy+FHJh8kNE61ZWxt0adGrrXwpmGVO-7_qxOr0rnBGMhCcX+Q@mail.gmail.com>
+
+Hello
+
+I'm experimenting with the Application Servers. I want to know if its
+possible to run MMTEL AS over a separated container.
+I tried to run it over a container named "mmtel" and I followed the process
+described in the read the docs Configuring an Application Server via Ellis:
+
+{
+"MMTEL" :
+"<InitialFilterCriteria><Priority>0</Priority><TriggerPoint><ConditionTypeCNF></ConditionTypeCNF><SPT><ConditionNegated>0</ConditionNegated><Group>0</Group><Method>INVITE</Method><Extension></Extension></SPT></TriggerPoint><ApplicationServer><ServerName>sip:
+mmtel.example.com
+</ServerName><DefaultHandling>0</DefaultHandling></ApplicationServer></InitialFilterCriteria>"
+}
+
+The MMTEL appears in the UI but I got no idea of how to turn on the MMTEL
+services
+
+Thanks for the help!
+Gabriel David Orozco
+Presidente Rama estudiantil IEEE Universidad del Cauca
+(57) 3004351630
+<http://ieee.unicauca.edu.co/>
+
+-- 
+
+
+*Hacia una
+Universidad comprometida con la Paz Territorial*
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190129/ca8d2907/attachment.html>
+

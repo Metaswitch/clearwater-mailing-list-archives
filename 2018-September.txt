@@ -1,0 +1,2135 @@
+From amirhatami1000 at gmail.com  Sun Sep  2 06:54:43 2018
+From: amirhatami1000 at gmail.com (Amir Moahammad Hatami)
+Date: Sun, 2 Sep 2018 15:24:43 +0430
+Subject: [Project Clearwater] Stress tests problem with call_length more
+ than 20 second
+Message-ID: <CAEtN4MAOKQaJcJQSGoX8O5CHPZvAb3KYXrmeRdojPsZ4e82Yew@mail.gmail.com>
+
+Hi,
+
+I am running some stress tests on the clearwater deployment. When I
+increase the call_length from 19 second to 20 second, it receives 100
+instead of 200 in the last massage and the percentage of successful calls
+falls below 20 percent while it was 100% in with 19 second call length.
+
+
+I have not changed anything form the installation defaults. Any idea on
+what the problem is?
+
+Thanks
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180902/6f42c91a/attachment.html>
+
+From Benjamin.Laing at metaswitch.com  Thu Sep  6 05:44:58 2018
+From: Benjamin.Laing at metaswitch.com (Benjamin Laing)
+Date: Thu, 6 Sep 2018 09:44:58 +0000
+Subject: [Project Clearwater] Stress tests problem with call_length more
+ than 20 second
+Message-ID: <BYAPR02MB43741069744A51FEC3E5BEE9F1010@BYAPR02MB4374.namprd02.prod.outlook.com>
+
+We discussed this off-list, but posting the response here for completeness:
+Calls dropping after 20 seconds is a common result of no RTP packets being transferred, i.e. no media being passed in the calls. As Clearwater doesn't handle any media itself, and that has meant that having valid/accurate SDP on the tests we've written hasn't been high priority. I don't know the Project Clearwater stress tests very well, but I could certainly believe that they aren't setting up the media properly. Unless you have a specific need to test media, I'd recommend keeping call_length below 20 seconds.
+Thanks,
+Ben
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180906/11b9c838/attachment.html>
+
+From gabrielorozco20 at unicauca.edu.co  Tue Sep 11 12:29:30 2018
+From: gabrielorozco20 at unicauca.edu.co (GABRIEL DAVID OROZCO URRUTIA)
+Date: Tue, 11 Sep 2018 11:29:30 -0500
+Subject: [Project Clearwater] Difference between source code of Clearwater
+ over containers and Virtual Machines
+Message-ID: <CAGy+FHKPBYVzan6F6HibHC7c78nV9_NBQCrEvo0t_ONP0YRFpw@mail.gmail.com>
+
+Hello
+
+We?re working on a performance test of clearwater over containers. We want
+to know if the source code of the components (eg., bono, sprout) over
+containers are the same for the deploy over virtual machines.
+Also, we want to know where is the source code of homestead-prov. Because
+we found all the other components codes in the metaswitch github
+repository(eg., ralf, homestead, cassandra) but not the one of
+homestead-prov.
+
+Thanks for the help
+
+-- 
+
+
+*Hacia una
+Universidad comprometida con la Paz Territorial*
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180911/52db2d95/attachment.html>
+
+From trey.ormsbee at interoptechnologies.com  Tue Sep 11 15:41:31 2018
+From: trey.ormsbee at interoptechnologies.com (Trey Ormsbee)
+Date: Tue, 11 Sep 2018 14:41:31 -0500
+Subject: [Project Clearwater] Bug Report - +g.gsma.rcs.botversion="#=0.92"
+ causes parse error
+Message-ID: <1536694891.787.6.camel@interoptechnologies.com>
+
+Hey All-
+
+We have run into an issue with the feature tag
++g.gsma.rcs.botversion="#=0.92",  it throws a parse error in sprout. 
+We posted an issue to the project-clearwater-issues, a few days ago but
+it doesnt look like anyone has commented on any of those issues since
+Dec 6, 2017.
+
+So is that the correct place to report a sprout issue?  If it helps a
+colleague has already wrote a patch included in the issue,  we would
+like to see about getting it included in the next release.
+
+The issue in question is:  https://github.com/Metaswitch/project-clearw
+ater-issues/issues/33
+
+Please let me know the correct procedure to get this patch in place.
+
+Thanks,
+Trey
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180911/8b6814f7/attachment.html>
+
+From Matthew.Davis.2 at team.telstra.com  Tue Sep 11 19:08:16 2018
+From: Matthew.Davis.2 at team.telstra.com (Davis, Matthew)
+Date: Tue, 11 Sep 2018 23:08:16 +0000
+Subject: [Project Clearwater] Difference between source code of
+ Clearwater over containers and Virtual Machines
+In-Reply-To: <CAGy+FHKPBYVzan6F6HibHC7c78nV9_NBQCrEvo0t_ONP0YRFpw@mail.gmail.com>
+References: <CAGy+FHKPBYVzan6F6HibHC7c78nV9_NBQCrEvo0t_ONP0YRFpw@mail.gmail.com>
+Message-ID: <MEAPR01MB4135E9BD49E2B418CBEC2403C2040@MEAPR01MB4135.ausprd01.prod.outlook.com>
+
+Hi,
+
+Yes the code is the same for both.
+
+The Dockerfiles just do `apt-get install $MODULE`
+e.g. here?s the one for homestead: https://github.com/Metaswitch/clearwater-docker/blob/83d9519c34bdf52c2e5eb4bd74ceeed1be8f2a15/homestead/Dockerfile#L4
+
+Yes there?s something funny about homestead-prov. I don?t know the answer to that one.
+
+Regards,
+
+Matthew Davis
+Technical Specialist
+Telstra | CTO | Cloud SDN NFV
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of GABRIEL DAVID OROZCO URRUTIA
+Sent: Wednesday, 12 September 2018 2:30 AM
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Difference between source code of Clearwater over containers and Virtual Machines
+
+Hello
+
+We?re working on a performance test of clearwater over containers. We want to know if the source code of the components (eg., bono, sprout) over containers are the same for the deploy over virtual machines.
+Also, we want to know where is the source code of homestead-prov. Because we found all the other components codes in the metaswitch github repository(eg., ralf, homestead, cassandra) but not the one of homestead-prov.
+
+Thanks for the help
+
+________________________________
+
+Hacia una Universidad comprometida con la Paz Territorial
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180911/de4f5652/attachment.html>
+
+From gabrielorozco20 at unicauca.edu.co  Tue Sep 11 23:38:50 2018
+From: gabrielorozco20 at unicauca.edu.co (GABRIEL DAVID OROZCO URRUTIA)
+Date: Tue, 11 Sep 2018 22:38:50 -0500
+Subject: [Project Clearwater] Difference between source code of
+ Clearwater over containers and Virtual Machines
+In-Reply-To: <MEAPR01MB4135E9BD49E2B418CBEC2403C2040@MEAPR01MB4135.ausprd01.prod.outlook.com>
+References: <CAGy+FHKPBYVzan6F6HibHC7c78nV9_NBQCrEvo0t_ONP0YRFpw@mail.gmail.com>
+	<MEAPR01MB4135E9BD49E2B418CBEC2403C2040@MEAPR01MB4135.ausprd01.prod.outlook.com>
+Message-ID: <CAGy+FHKJJK9LQ3Eo2jRQ=sr0KVi_Wqx-7dQF6KJsf5G1AraGhw@mail.gmail.com>
+
+Thanks so much for your help, Matthew.
+
+But, It makes me question another thing: what about the local_config file?
+Because there are differences between the deploy over VM and containers.
+
+Local_config file over containers:
+# Local IP configuration
+local_ip=172.17.0.2
+public_ip=172.17.0.2
+public_hostname=172.17.0.2
+
+# Only keep 50MB of logs
+max_log_directory_size=52428800
+etcd_proxy=etcd0=http://etcd:2380
+
+Local file over Virtual Machines:
+local_ip=<privateIP>
+public_ip=<publicIP>
+public_hostname=<hostname>
+etcd_cluster="<comma separated list of private IPs>"
+
+The differences are in the usage of etcd_proxy, right? But, where is the
+configuration file for the automatic change when it is deployed over
+containers?
+
+Again, thanks so much for your help
+
+Att: Gabriel Orozco (University of Cauca Student)
+
+El mar., 11 sept. 2018 a las 18:09, Davis, Matthew (<
+Matthew.Davis.2 at team.telstra.com>) escribi?:
+
+> Hi,
+>
+>
+>
+> Yes the code is the same for both.
+>
+> The Dockerfiles just do `apt-get install $MODULE`
+> e.g. here?s the one for homestead: https://github.com/Metaswitch/clearwater-docker/blob/83d9519c34bdf52c2e5eb4bd74ceeed1be8f2a15/homestead/Dockerfile#L4
+>
+>
+>
+> Yes there?s something funny about homestead-prov. I don?t know the answer
+> to that one.
+>
+>
+>
+> Regards,
+>
+>
+>
+> *Matthew Davis*
+>
+> Technical Specialist
+>
+> Telstra | CTO | Cloud SDN NFV
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *GABRIEL DAVID OROZCO URRUTIA
+> *Sent:* Wednesday, 12 September 2018 2:30 AM
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Project Clearwater] Difference between source code of
+> Clearwater over containers and Virtual Machines
+>
+>
+>
+> Hello
+>
+>
+>
+> We?re working on a performance test of clearwater over containers. We want
+> to know if the source code of the components (eg., bono, sprout) over
+> containers are the same for the deploy over virtual machines.
+>
+> Also, we want to know where is the source code of homestead-prov. Because
+> we found all the other components codes in the metaswitch github
+> repository(eg., ralf, homestead, cassandra) but not the one of
+> homestead-prov.
+>
+>
+>
+> Thanks for the help
+>
+>
+> ------------------------------
+>
+> *Hacia una Universidad comprometida con la Paz Territorial*
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+
+-- 
+
+
+*Hacia una
+Universidad comprometida con la Paz Territorial*
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180911/f50df729/attachment.html>
+
+From Matthew.Davis.2 at team.telstra.com  Tue Sep 11 23:45:07 2018
+From: Matthew.Davis.2 at team.telstra.com (Davis, Matthew)
+Date: Wed, 12 Sep 2018 03:45:07 +0000
+Subject: [Project Clearwater] Difference between source code of
+ Clearwater over containers and Virtual Machines
+In-Reply-To: <CAGy+FHKJJK9LQ3Eo2jRQ=sr0KVi_Wqx-7dQF6KJsf5G1AraGhw@mail.gmail.com>
+References: <CAGy+FHKPBYVzan6F6HibHC7c78nV9_NBQCrEvo0t_ONP0YRFpw@mail.gmail.com>
+	<MEAPR01MB4135E9BD49E2B418CBEC2403C2040@MEAPR01MB4135.ausprd01.prod.outlook.com>
+	<CAGy+FHKJJK9LQ3Eo2jRQ=sr0KVi_Wqx-7dQF6KJsf5G1AraGhw@mail.gmail.com>
+Message-ID: <MEAPR01MB413547DBFEE8AE6BBEB2CBE1C21B0@MEAPR01MB4135.ausprd01.prod.outlook.com>
+
+Hi Gabriel,
+
+Yes there are of course some differences in networking configuration.
+I don?t know much about the details of etcd. However I do know that when working with Kubernetes (and presumably other container orchestrators) you do not want to ever hard code IP addresses. Those change. So etcd is referenced through DNS, and it points to a service which distributes requests across the cluster of etcd notes.
+
+The end result is the same.
+
+Regards,
+
+Matt
+Technical Specialist
+Telstra | CTO | Cloud SDN NFV
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of GABRIEL DAVID OROZCO URRUTIA
+Sent: Wednesday, 12 September 2018 1:39 PM
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Difference between source code of Clearwater over containers and Virtual Machines
+
+Thanks so much for your help, Matthew.
+
+But, It makes me question another thing: what about the local_config file?
+Because there are differences between the deploy over VM and containers.
+
+Local_config file over containers:
+# Local IP configuration
+local_ip=172.17.0.2
+public_ip=172.17.0.2
+public_hostname=172.17.0.2
+
+# Only keep 50MB of logs
+max_log_directory_size=52428800
+etcd_proxy=etcd0=http://etcd:2380
+
+Local file over Virtual Machines:
+local_ip=<privateIP>
+public_ip=<publicIP>
+public_hostname=<hostname>
+etcd_cluster="<comma separated list of private IPs>"
+
+The differences are in the usage of etcd_proxy, right? But, where is the configuration file for the automatic change when it is deployed over containers?
+
+Again, thanks so much for your help
+
+Att: Gabriel Orozco (University of Cauca Student)
+
+El mar., 11 sept. 2018 a las 18:09, Davis, Matthew (<Matthew.Davis.2 at team.telstra.com<mailto:Matthew.Davis.2 at team.telstra.com>>) escribi?:
+Hi,
+
+Yes the code is the same for both.
+
+The Dockerfiles just do `apt-get install $MODULE`
+e.g. here?s the one for homestead: https://github.com/Metaswitch/clearwater-docker/blob/83d9519c34bdf52c2e5eb4bd74ceeed1be8f2a15/homestead/Dockerfile#L4
+
+Yes there?s something funny about homestead-prov. I don?t know the answer to that one.
+
+Regards,
+
+Matthew Davis
+Technical Specialist
+Telstra | CTO | Cloud SDN NFV
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>] On Behalf Of GABRIEL DAVID OROZCO URRUTIA
+Sent: Wednesday, 12 September 2018 2:30 AM
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Difference between source code of Clearwater over containers and Virtual Machines
+
+Hello
+
+We?re working on a performance test of clearwater over containers. We want to know if the source code of the components (eg., bono, sprout) over containers are the same for the deploy over virtual machines.
+Also, we want to know where is the source code of homestead-prov. Because we found all the other components codes in the metaswitch github repository(eg., ralf, homestead, cassandra) but not the one of homestead-prov.
+
+Thanks for the help
+
+________________________________
+
+Hacia una Universidad comprometida con la Paz Territorial
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+________________________________
+
+Hacia una Universidad comprometida con la Paz Territorial
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180912/d07bf8c9/attachment.html>
+
+From gabrielorozco20 at unicauca.edu.co  Wed Sep 12 00:10:48 2018
+From: gabrielorozco20 at unicauca.edu.co (GABRIEL DAVID OROZCO URRUTIA)
+Date: Tue, 11 Sep 2018 23:10:48 -0500
+Subject: [Project Clearwater] Difference between source code of
+ Clearwater over containers and Virtual Machines
+In-Reply-To: <MEAPR01MB413547DBFEE8AE6BBEB2CBE1C21B0@MEAPR01MB4135.ausprd01.prod.outlook.com>
+References: <CAGy+FHKPBYVzan6F6HibHC7c78nV9_NBQCrEvo0t_ONP0YRFpw@mail.gmail.com>
+	<MEAPR01MB4135E9BD49E2B418CBEC2403C2040@MEAPR01MB4135.ausprd01.prod.outlook.com>
+	<CAGy+FHKJJK9LQ3Eo2jRQ=sr0KVi_Wqx-7dQF6KJsf5G1AraGhw@mail.gmail.com>
+	<MEAPR01MB413547DBFEE8AE6BBEB2CBE1C21B0@MEAPR01MB4135.ausprd01.prod.outlook.com>
+Message-ID: <CAGy+FHLbifMQ+SexdJ=t92GoZ7Y+jY+ODqjckrhggTLgpMZMBQ@mail.gmail.com>
+
+Okay Matthew we're going to investigate the changes in the networking
+configuration. But again thanks for your help.
+
+Talking about kubernetes, we're having also some trobles in the deployment.
+
+When we try to run clearwater over containers with kubernetes as
+orchestator we have the next issue:
+
+*When running the command  for the pods, this is the result:*
+NAME                             READY     STATUS             RESTARTS   AGE
+astaire-778bc84754-k7w5p         2/2       Running            0          33m
+bono-5bcc97f696-sv85w            2/2       Running            0          33m
+cassandra-757bfd8c68-4prkh       0/1       Running            3          33m
+cassandra-757bfd8c68-x6js6       0/1       Running            3          33m
+cassandra-757bfd8c68-xqq7l       0/1       Running            3          33m
+chronos-94c95964b-b2mw9          2/2       Running            0          33m
+ellis-5769fc8bd5-8ks2x           1/1       Running            0          33m
+etcd-7954884d7-84jr7             1/1       Running            0          33m
+homer-74b7bf5878-k9gr4           1/1       Running            0          33m
+homestead-6489ccbf6f-7df66       2/2       Running            0          33m
+homestead-prov-89dc6f9c9-9f49p   0/1       CrashLoopBackOff   11         33m
+ralf-74dc869579-pcs9f            2/2       Running            0          33m
+sprout-564484959d-wkq2v          2/2       Running            0          33m
+
+
+*The logs for homestead is:*
+
+ 15-08-2018 14:32:01.469 UTC [7f53d3eb37c0] Status diameterstack.cpp:571:
+Starting Diameter stack
+15-08-2018 14:32:01.469 UTC [7f53d3eb37c0] Status freeDiameter: Local
+server address(es): Unknown error{---L-}
+15-08-2018 14:32:01.469 UTC [7f53d3eb37c0] Status httpstack.cpp:40:
+Constructing HTTP stack with 12 threads
+15-08-2018 14:32:01.469 UTC [7f53d3eb37c0] Status httpstack.cpp:163:
+Binding HTTP TCP socket: address=172.17.0.16, port=8888
+15-08-2018 14:32:01.533 UTC [7f53d3eb37c0] Status httpstack.cpp:40:
+Constructing HTTP stack with 5 threads
+15-08-2018 14:32:01.533 UTC [7f53d3eb37c0] Status httpstack.cpp:215:
+Binding HTTP unix socket: path=/tmp/homestead-http-mgmt-socket
+15-08-2018 14:32:01.558 UTC [7f53d3eb37c0] Status diameterresolver.cpp:37:
+Created Diameter resolver
+15-08-2018 14:32:01.558 UTC [7f53d3eb37c0] Status main.cpp:1179: Start-up
+complete - wait for termination signal
+15-08-2018 14:32:01.896 UTC [7f52697f2700] Error
+dnscachedresolver.cpp:1098: Resolution of example.com timed out
+15-08-2018 14:32:01.896 UTC [7f52697f2700] Warning
+dnscachedresolver.cpp:698: Failed to retrieve record for example.com:
+Timeout while contacting DNS servers
+15-08-2018 14:32:02.308 UTC [7f52697f2700] Error
+dnscachedresolver.cpp:1098: Resolution of _diameter._tcp.example.com timed
+out
+15-08-2018 14:32:02.308 UTC [7f52697f2700] Warning
+dnscachedresolver.cpp:698: Failed to retrieve record for _diameter._
+tcp.example.com: Timeout while contacting DNS servers
+15-08-2018 14:32:02.346 UTC [7f52697f2700] Error
+dnscachedresolver.cpp:1098: Resolution of _diameter._sctp.example.com timed
+out
+15-08-2018 14:32:02.346 UTC [7f52697f2700] Warning
+dnscachedresolver.cpp:698: Failed to retrieve record for _diameter._
+sctp.example.com: Timeout while contacting DNS servers
+15-08-2018 14:32:02.759 UTC [7f52697f2700] Error
+dnscachedresolver.cpp:1098: Resolution of hss.example.com timed out
+15-08-2018 14:32:02.759 UTC [7f52697f2700] Warning
+dnscachedresolver.cpp:698: Failed to retrieve record for hss.example.com:
+Timeout while contacting DNS servers
+15-08-2018 14:32:02.759 UTC [7f52697f2700] Error diameterstack.cpp:862: No
+Diameter peers have been found
+15-08-2018 14:32:31.220 UTC [7f53c546a700] Status alarm.cpp:244: Reraising
+all alarms with a known state
+15-08-2018 14:32:33.134 UTC [7f52697f2700] Error
+dnscachedresolver.cpp:1098: Resolution of _diameter._tcp.example.com timed
+out
+15-08-2018 14:32:33.134 UTC [7f52697f2700] Warning
+dnscachedresolver.cpp:698: Failed to retrieve record for _diameter._
+tcp.example.com: Timeout while contacting DNS servers
+15-08-2018 14:32:33.209 UTC [7f52697f2700] Error
+dnscachedresolver.cpp:1098: Resolution of _diameter._sctp.example.com timed
+out
+15-08-2018 14:32:33.210 UTC [7f52697f2700] Warning
+dnscachedresolver.cpp:698: Failed to retrieve record for _diameter._
+sctp.example.com: Timeout while contacting DNS servers
+15-08-2018 14:32:33.622 UTC [7f52697f2700] Error
+dnscachedresolver.cpp:1098: Resolution of hss.example.com timed out
+15-08-2018 14:32:33.622 UTC [7f52697f2700] Warning
+dnscachedresolver.cpp:698: Failed to retrieve record for hss.example.com:
+Timeout while contacting DNS servers
+15-08-2018 14:32:33.622 UTC [7f52697f2700] Error diameterstack.cpp:862: No
+Diameter peers have been found
+15-08-2018 14:33:01.220 UTC [7f53c546a700] Status alarm.cpp:244: Reraising
+all alarms with a known state
+15-08-2018 14:33:03.700 UTC [7f52697f2700] Warning
+dnscachedresolver.cpp:698: Failed to retrieve record for _diameter._
+tcp.example.com: Domain name not found
+15-08-2018 14:33:03.789 UTC [7f52697f2700] Warning
+dnscachedresolver.cpp:698: Failed to retrieve record for _diameter._
+sctp.example.com: Domain name not found
+15-08-2018 14:33:03.884 UTC [7f52697f2700] Warning
+dnscachedresolver.cpp:698: Failed to retrieve record for hss.example.com:
+Domain name not found
+15-08-2018 14:33:03.884 UTC [7f52697f2700] Error diameterstack.cpp:862: No
+Diameter peers have been found
+15-08-2018 14:33:31.220 UTC [7f53c546a700] Status alarm.cpp:244: Reraising
+all alarms with a known state
+15-08-2018 14:34:01.221 UTC [7f53c546a700] Status alarm.cpp:244: Reraising
+all alarms with a known state
+15-08-2018 14:34:31.222 UTC [7f53c546a700] Status alarm.cpp:244: Reraising
+all alarms with a known state
+15-08-2018 14:35:01.222 UTC [7f53c546a700] Status alarm.cpp:244: Reraising
+all alarms with a known state
+15-08-2018 14:35:31.223 UTC [7f53c546a700] Status alarm.cpp:244: Reraising
+all alarms with a known state
+15-08-2018 14:36:01.224 UTC [7f53c546a700] Status alarm.cpp:244: Reraising
+all alarms with a known state
+
+*The logs for homestead_prov is:*
+ 2018-08-15 14:36:03,725 CRIT Supervisor running as root (no user in config
+file)
+2018-08-15 14:36:03,725 WARN Included extra file
+"/etc/supervisor/conf.d/socket-factory.supervisord.conf" during parsing
+2018-08-15 14:36:03,725 WARN Included extra file
+"/etc/supervisor/conf.d/clearwater-group.conf" during parsing
+2018-08-15 14:36:03,725 WARN Included extra file
+"/etc/supervisor/conf.d/nginx.conf" during parsing
+2018-08-15 14:36:03,725 WARN Included extra file
+"/etc/supervisor/conf.d/homestead-prov.conf" during parsing
+2018-08-15 14:36:03,725 WARN Included extra file
+"/etc/supervisor/conf.d/snmpd.conf" during parsing
+2018-08-15 14:36:03,725 WARN Included extra file
+"/etc/supervisor/conf.d/clearwater-infrastructure.conf" during parsing
+2018-08-15 14:36:03,725 WARN Included extra file
+"/etc/supervisor/conf.d/supervisord.conf" during parsing
+2018-08-15 14:36:03,740 INFO RPC interface 'supervisor' initialized
+2018-08-15 14:36:03,741 CRIT Server 'unix_http_server' running without any
+HTTP authentication checking
+2018-08-15 14:36:03,741 INFO supervisord started with pid 1
+2018-08-15 14:36:04,742 INFO spawned: 'snmpd' with pid 7
+2018-08-15 14:36:04,743 INFO spawnerr: can't find command
+'/usr/share/clearwater/bin/clearwater-socket-factory-sig-wrapper'
+2018-08-15 14:36:04,749 INFO spawned: 'clearwater-infrastructure' with pid 9
+2018-08-15 14:36:04,751 INFO spawnerr: can't find command
+'/usr/share/clearwater/bin/clearwater-socket-factory-mgmt-wrapper'
+2018-08-15 14:36:04,752 INFO success: snmpd entered RUNNING state, process
+has stayed up for > than 0 seconds (startsecs)
+2018-08-15 14:36:04,752 INFO success: clearwater-infrastructure entered
+RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2018-08-15 14:36:05,225 INFO exited: snmpd (exit status 0; expected)
+2018-08-15 14:36:05,226 CRIT reaped unknown pid 48)
+2018-08-15 14:36:06,226 INFO spawnerr: can't find command
+'/usr/share/clearwater/bin/clearwater-socket-factory-sig-wrapper'
+2018-08-15 14:36:06,227 INFO spawnerr: can't find command
+'/usr/share/clearwater/bin/clearwater-socket-factory-mgmt-wrapper'
+2018-08-15 14:36:07,297 CRIT reaped unknown pid 52)
+2018-08-15 14:36:07,298 CRIT reaped unknown pid 53)
+2018-08-15 14:36:08,300 INFO spawnerr: can't find command
+'/usr/share/clearwater/bin/clearwater-socket-factory-sig-wrapper'
+2018-08-15 14:36:08,300 INFO spawnerr: can't find command
+'/usr/share/clearwater/bin/clearwater-socket-factory-mgmt-wrapper'
+2018-08-15 14:36:08,605 CRIT reaped unknown pid 183)
+2018-08-15 14:36:08,605 CRIT reaped unknown pid 184)
+2018-08-15 14:36:08,630 CRIT reaped unknown pid 209)
+2018-08-15 14:36:09,860 INFO spawned: 'homestead-prov' with pid 241
+2018-08-15 14:36:09,862 INFO spawned: 'nginx' with pid 242
+2018-08-15 14:36:10,302 INFO exited: homestead-prov (exit status 0; not
+expected)
+2018-08-15 14:36:11,307 INFO spawned: 'homestead-prov' with pid 257
+2018-08-15 14:36:11,309 INFO success: nginx entered RUNNING state, process
+has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:36:11,310 INFO spawnerr: can't find command
+'/usr/share/clearwater/bin/clearwater-socket-factory-sig-wrapper'
+2018-08-15 14:36:11,310 INFO gave up: socket-factory-sig entered FATAL
+state, too many start retries too quickly
+2018-08-15 14:36:11,311 INFO spawnerr: can't find command
+'/usr/share/clearwater/bin/clearwater-socket-factory-mgmt-wrapper'
+2018-08-15 14:36:11,311 INFO gave up: socket-factory-mgmt entered FATAL
+state, too many start retries too quickly
+2018-08-15 14:36:11,624 INFO exited: clearwater-infrastructure (exit status
+0; expected)
+2018-08-15 14:36:11,704 INFO exited: homestead-prov (exit status 0; not
+expected)
+2018-08-15 14:36:13,707 INFO spawned: 'homestead-prov' with pid 286
+2018-08-15 14:36:14,096 INFO exited: homestead-prov (exit status 0; not
+expected)
+2018-08-15 14:36:17,104 INFO spawned: 'homestead-prov' with pid 297
+2018-08-15 14:36:17,498 INFO exited: homestead-prov (exit status 0; not
+expected)
+2018-08-15 14:36:18,498 INFO gave up: homestead-prov entered FATAL state,
+too many start retries too quickly
+
+*The log file for one  Cassandra containers is:*
+ 2018-08-15 14:31:37,714 CRIT Supervisor running as root (no user in config
+file)
+2018-08-15 14:31:37,714 WARN Included extra file
+"/etc/supervisor/conf.d/clearwater-group.conf" during parsing
+2018-08-15 14:31:37,715 WARN Included extra file
+"/etc/supervisor/conf.d/cassandra.conf" during parsing
+2018-08-15 14:31:37,715 WARN Included extra file
+"/etc/supervisor/conf.d/snmpd.conf" during parsing
+2018-08-15 14:31:37,715 WARN Included extra file
+"/etc/supervisor/conf.d/clearwater-infrastructure.conf" during parsing
+2018-08-15 14:31:37,715 WARN Included extra file
+"/etc/supervisor/conf.d/supervisord.conf" during parsing
+2018-08-15 14:31:37,730 INFO RPC interface 'supervisor' initialized
+2018-08-15 14:31:37,730 CRIT Server 'unix_http_server' running without any
+HTTP authentication checking
+2018-08-15 14:31:37,730 INFO supervisord started with pid 1
+2018-08-15 14:31:38,736 INFO spawned: 'snmpd' with pid 10
+2018-08-15 14:31:38,739 INFO spawned: 'clearwater-infrastructure' with pid
+11
+2018-08-15 14:31:38,748 INFO success: snmpd entered RUNNING state, process
+has stayed up for > than 0 seconds (startsecs)
+2018-08-15 14:31:38,748 INFO success: clearwater-infrastructure entered
+RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2018-08-15 14:31:39,092 INFO exited: snmpd (exit status 0; expected)
+2018-08-15 14:31:39,092 CRIT reaped unknown pid 51)
+2018-08-15 14:31:41,116 CRIT reaped unknown pid 55)
+2018-08-15 14:31:41,117 CRIT reaped unknown pid 56)
+2018-08-15 14:31:41,339 CRIT reaped unknown pid 117)
+2018-08-15 14:31:41,340 CRIT reaped unknown pid 116)
+2018-08-15 14:31:41,363 CRIT reaped unknown pid 141)
+2018-08-15 14:31:43,549 CRIT reaped unknown pid 178)
+2018-08-15 14:31:43,610 INFO spawned: 'cassandra' with pid 183
+2018-08-15 14:31:44,635 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:31:44,641 INFO exited: clearwater-infrastructure (exit status
+0; expected)
+2018-08-15 14:31:45,637 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:31:46,640 INFO spawned: 'cassandra' with pid 194
+2018-08-15 14:31:47,663 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:31:48,666 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:31:49,668 INFO spawned: 'cassandra' with pid 197
+2018-08-15 14:31:50,675 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:31:51,677 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:31:52,681 INFO spawned: 'cassandra' with pid 200
+2018-08-15 14:31:53,693 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:31:54,699 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:31:55,702 INFO spawned: 'cassandra' with pid 203
+2018-08-15 14:31:56,707 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:31:57,708 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:31:58,709 INFO spawned: 'cassandra' with pid 212
+2018-08-15 14:31:59,716 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:00,718 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:01,720 INFO spawned: 'cassandra' with pid 215
+2018-08-15 14:32:02,726 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:03,726 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:04,730 INFO spawned: 'cassandra' with pid 218
+2018-08-15 14:32:05,753 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:06,756 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:07,762 INFO spawned: 'cassandra' with pid 229
+2018-08-15 14:32:08,781 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:09,784 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:10,785 INFO spawned: 'cassandra' with pid 232
+2018-08-15 14:32:11,791 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:12,791 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:13,793 INFO spawned: 'cassandra' with pid 235
+2018-08-15 14:32:14,801 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:15,801 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:16,805 INFO spawned: 'cassandra' with pid 244
+2018-08-15 14:32:17,824 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:18,827 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:19,830 INFO spawned: 'cassandra' with pid 247
+2018-08-15 14:32:20,841 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:21,841 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:22,843 INFO spawned: 'cassandra' with pid 250
+2018-08-15 14:32:23,852 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:24,855 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:25,858 INFO spawned: 'cassandra' with pid 253
+2018-08-15 14:32:26,863 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:27,864 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:28,868 INFO spawned: 'cassandra' with pid 263
+2018-08-15 14:32:29,888 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:30,891 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:31,897 INFO spawned: 'cassandra' with pid 266
+2018-08-15 14:32:32,913 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:33,917 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:34,919 INFO spawned: 'cassandra' with pid 269
+2018-08-15 14:32:35,931 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:36,934 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:37,940 INFO spawned: 'cassandra' with pid 278
+2018-08-15 14:32:38,964 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:39,967 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:40,969 INFO spawned: 'cassandra' with pid 281
+2018-08-15 14:32:41,976 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:42,980 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:43,983 INFO spawned: 'cassandra' with pid 284
+2018-08-15 14:32:44,997 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:45,999 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:47,002 INFO spawned: 'cassandra' with pid 294
+2018-08-15 14:32:48,021 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:49,023 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:50,026 INFO spawned: 'cassandra' with pid 297
+2018-08-15 14:32:51,047 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:52,050 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:53,054 INFO spawned: 'cassandra' with pid 300
+2018-08-15 14:32:54,075 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:55,080 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:56,084 INFO spawned: 'cassandra' with pid 303
+2018-08-15 14:32:57,097 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:58,098 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:32:59,104 INFO spawned: 'cassandra' with pid 314
+2018-08-15 14:33:00,123 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:01,123 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:02,129 INFO spawned: 'cassandra' with pid 317
+2018-08-15 14:33:03,140 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:04,149 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:05,154 INFO spawned: 'cassandra' with pid 320
+2018-08-15 14:33:06,177 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:07,178 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:08,182 INFO spawned: 'cassandra' with pid 329
+2018-08-15 14:33:09,206 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:10,205 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:11,209 INFO spawned: 'cassandra' with pid 332
+2018-08-15 14:33:12,219 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:13,220 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:14,226 INFO spawned: 'cassandra' with pid 336
+2018-08-15 14:33:15,244 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:16,251 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:17,254 INFO spawned: 'cassandra' with pid 348
+2018-08-15 14:33:18,259 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:19,259 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:20,263 INFO spawned: 'cassandra' with pid 351
+2018-08-15 14:33:21,282 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:22,286 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:23,287 INFO spawned: 'cassandra' with pid 354
+2018-08-15 14:33:24,292 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:25,295 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:26,298 INFO spawned: 'cassandra' with pid 362
+2018-08-15 14:33:27,318 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:28,319 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:29,321 INFO spawned: 'cassandra' with pid 365
+2018-08-15 14:33:30,327 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:31,328 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:32,331 INFO spawned: 'cassandra' with pid 368
+2018-08-15 14:33:33,349 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:34,356 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:35,358 INFO spawned: 'cassandra' with pid 371
+2018-08-15 14:33:36,364 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:37,364 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:38,367 INFO spawned: 'cassandra' with pid 380
+2018-08-15 14:33:39,389 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:40,393 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:41,399 INFO spawned: 'cassandra' with pid 383
+2018-08-15 14:33:42,422 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:43,424 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:44,430 INFO spawned: 'cassandra' with pid 386
+2018-08-15 14:33:45,441 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:46,443 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:47,445 INFO spawned: 'cassandra' with pid 395
+2018-08-15 14:33:48,452 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:49,452 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:50,454 INFO spawned: 'cassandra' with pid 398
+2018-08-15 14:33:51,463 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:52,464 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:53,467 INFO spawned: 'cassandra' with pid 401
+2018-08-15 14:33:54,477 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:55,478 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:56,483 INFO spawned: 'cassandra' with pid 411
+2018-08-15 14:33:57,488 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:58,490 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:33:59,492 INFO spawned: 'cassandra' with pid 414
+2018-08-15 14:34:00,497 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:34:01,500 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:34:02,505 INFO spawned: 'cassandra' with pid 417
+2018-08-15 14:34:03,523 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:34:04,526 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:34:05,530 INFO spawned: 'cassandra' with pid 420
+2018-08-15 14:34:06,535 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:34:07,536 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:34:08,541 INFO spawned: 'cassandra' with pid 429
+2018-08-15 14:34:09,563 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:34:10,567 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:34:11,572 INFO spawned: 'cassandra' with pid 432
+2018-08-15 14:34:12,591 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:34:13,593 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:34:14,597 INFO spawned: 'cassandra' with pid 435
+2018-08-15 14:34:15,603 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:34:16,604 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:34:17,608 INFO spawned: 'cassandra' with pid 446
+2018-08-15 14:34:18,626 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:34:19,631 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:34:20,634 INFO spawned: 'cassandra' with pid 456
+2018-08-15 14:34:21,643 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:34:22,643 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:34:23,646 INFO spawned: 'cassandra' with pid 512
+2018-08-15 14:34:23,682 CRIT reaped unknown pid 529)
+2018-08-15 14:34:24,050 CRIT reaped unknown pid 530)
+2018-08-15 14:34:25,052 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:34:41,929 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:34:42,226 INFO spawned: 'cassandra' with pid 1083
+2018-08-15 14:34:42,226 CRIT reaped unknown pid 577)
+2018-08-15 14:34:42,256 CRIT reaped unknown pid 1098)
+2018-08-15 14:34:42,586 CRIT reaped unknown pid 1100)
+2018-08-15 14:34:43,589 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:35:02,573 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:35:02,897 INFO spawned: 'cassandra' with pid 1735
+2018-08-15 14:35:02,897 CRIT reaped unknown pid 1145)
+2018-08-15 14:35:02,941 CRIT reaped unknown pid 1751)
+2018-08-15 14:35:03,340 CRIT reaped unknown pid 1752)
+2018-08-15 14:35:04,342 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:35:22,632 CRIT reaped unknown pid 1798)
+2018-08-15 14:35:22,674 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:35:23,677 INFO spawned: 'cassandra' with pid 2390
+2018-08-15 14:35:23,720 CRIT reaped unknown pid 2405)
+2018-08-15 14:35:24,126 CRIT reaped unknown pid 2406)
+2018-08-15 14:35:25,128 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:35:43,486 CRIT reaped unknown pid 2453)
+2018-08-15 14:35:43,600 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:35:44,603 INFO spawned: 'cassandra' with pid 3044
+2018-08-15 14:35:44,650 CRIT reaped unknown pid 3059)
+2018-08-15 14:35:45,128 CRIT reaped unknown pid 3060)
+2018-08-15 14:35:46,128 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:36:02,745 CRIT reaped unknown pid 3106)
+2018-08-15 14:36:02,867 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-15 14:36:03,869 INFO spawned: 'cassandra' with pid 3643
+2018-08-15 14:36:03,946 CRIT reaped unknown pid 3658)
+2018-08-15 14:36:04,497 CRIT reaped unknown pid 3659)
+2018-08-15 14:36:05,498 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+
+*The logs for etcd is:*
+
+ 2018-08-15 14:31:41.683108 I | etcdmain: etcd Version: 2.2.5
+2018-08-15 14:31:41.683372 I | etcdmain: Git SHA: bc9ddf2
+2018-08-15 14:31:41.683393 I | etcdmain: Go Version: go1.5.3
+2018-08-15 14:31:41.683452 I | etcdmain: Go OS/Arch: linux/amd64
+2018-08-15 14:31:41.683521 I | etcdmain: setting maximum number of CPUs to
+3, total number of available CPUs is 3
+2018-08-15 14:31:41.683590 W | etcdmain: no data-dir provided, using
+default data-dir ./etcd-7954884d7-84jr7.etcd
+2018-08-15 14:31:41.683740 I | etcdmain: listening for peers on
+http://0.0.0.0:2380
+2018-08-15 14:31:41.683848 I | etcdmain: listening for client requests on
+http://0.0.0.0:2379
+2018-08-15 14:31:41.683937 I | etcdmain: listening for client requests on
+http://0.0.0.0:4001
+2018-08-15 14:31:41.684172 I | etcdserver: name = etcd-7954884d7-84jr7
+2018-08-15 14:31:41.684204 I | etcdserver: data dir =
+etcd-7954884d7-84jr7.etcd
+2018-08-15 14:31:41.684268 I | etcdserver: member dir =
+etcd-7954884d7-84jr7.etcd/member
+2018-08-15 14:31:41.684308 I | etcdserver: heartbeat = 100ms
+2018-08-15 14:31:41.684340 I | etcdserver: election = 1000ms
+2018-08-15 14:31:41.684371 I | etcdserver: snapshot count = 10000
+2018-08-15 14:31:41.684408 I | etcdserver: advertise client URLs =
+http://172.17.0.14:2379,http://172.17.0.14:4001
+2018-08-15 14:31:41.684447 I | etcdserver: initial advertise peer URLs =
+http://172.17.0.14:2380
+2018-08-15 14:31:41.684484 I | etcdserver: initial cluster =
+etcd-7954884d7-84jr7=http://172.17.0.14:2380
+2018-08-15 14:31:41.690385 I | etcdserver: starting member a93655729080770c
+in cluster b43922894bcbe68b
+2018-08-15 14:31:41.690643 I | raft: a93655729080770c became follower at
+term 0
+2018-08-15 14:31:41.690729 I | raft: newRaft a93655729080770c [peers: [],
+term: 0, commit: 0, applied: 0, lastindex: 0, lastterm: 0]
+2018-08-15 14:31:41.690809 I | raft: a93655729080770c became follower at
+term 1
+2018-08-15 14:31:41.692539 I | etcdserver: starting server... [version:
+2.2.5, cluster version: to_be_decided]
+2018-08-15 14:31:41.695384 N | etcdserver: added local member
+a93655729080770c [http://172.17.0.14:2380] to cluster b43922894bcbe68b
+2018-08-15 14:31:41.992667 I | raft: a93655729080770c is starting a new
+election at term 1
+2018-08-15 14:31:41.992758 I | raft: a93655729080770c became candidate at
+term 2
+2018-08-15 14:31:41.992775 I | raft: a93655729080770c received vote from
+a93655729080770c at term 2
+2018-08-15 14:31:41.992794 I | raft: a93655729080770c became leader at term
+2
+2018-08-15 14:31:41.992802 I | raft: raft.node: a93655729080770c elected
+leader a93655729080770c at term 2
+2018-08-15 14:31:41.993316 I | etcdserver: published
+{Name:etcd-7954884d7-84jr7 ClientURLs:[http://172.17.0.14:2379
+http://172.17.0.14:4001]} to cluster b43922894bcbe68b
+2018-08-15 14:31:41.993514 I | etcdserver: setting up the initial cluster
+version to 2.2
+2018-08-15 14:31:41.999251 N | etcdserver: set the initial cluster version
+to 2.2
+
+*This is the information about the kubernetes version *
+
+Client Version: version.Info{Major:"1", Minor:"11", GitVersion:"v1.11.0",
+GitCommit:"91e7b4fd31fcd3d5f436da26c980becec37ceefe", GitTreeState:"clean",
+BuildDate:"2018-06-27T20:17:28Z", GoVersion:"go1.10.2", Compiler:"gc",
+Platform:"linux/amd64"}
+Server Version: version.Info{Major:"1", Minor:"10", GitVersion:"v1.10.0",
+GitCommit:"fc32d2f3698e36b93322a3465f63a14e9f0eaead", GitTreeState:"clean",
+BuildDate:"2018-03-26T16:44:10Z", GoVersion:"go1.9.3", Compiler:"gc",
+Platform:"linux/amd64"}
+
+And I'm using minikube 0.28.0
+
+Also, all the steps that we were followed are from the readme in github
+
+
+Thanks so much for your help.
+
+Att: Gabriel Orozco
+
+El mar., 11 sept. 2018 a las 22:46, Davis, Matthew (<
+Matthew.Davis.2 at team.telstra.com>) escribi?:
+
+> Hi Gabriel,
+>
+>
+>
+> Yes there are of course some differences in networking configuration.
+>
+> I don?t know much about the details of etcd. However I do know that when
+> working with Kubernetes (and presumably other container orchestrators) you
+> do *not* want to ever hard code IP addresses. Those change. So etcd is
+> referenced through DNS, and it points to a service which distributes
+> requests across the cluster of etcd notes.
+>
+> The end result is the same.
+>
+>
+>
+> Regards,
+>
+>
+>
+> *Matt*
+>
+> Technical Specialist
+>
+> Telstra | CTO | Cloud SDN NFV
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *GABRIEL DAVID OROZCO URRUTIA
+> *Sent:* Wednesday, 12 September 2018 1:39 PM
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Project Clearwater] Difference between source code of
+> Clearwater over containers and Virtual Machines
+>
+>
+>
+> Thanks so much for your help, Matthew.
+>
+>
+>
+> But, It makes me question another thing: what about the local_config file?
+>
+> Because there are differences between the deploy over VM and containers.
+>
+>
+>
+> Local_config file over containers:
+>
+> # Local IP configuration
+>
+> local_ip=172.17.0.2
+>
+> public_ip=172.17.0.2
+>
+> public_hostname=172.17.0.2
+>
+>
+>
+> # Only keep 50MB of logs
+>
+> max_log_directory_size=52428800
+>
+> etcd_proxy=etcd0=http://etcd:2380
+>
+>
+>
+> Local file over Virtual Machines:
+>
+> local_ip=<privateIP>
+>
+> public_ip=<publicIP>
+>
+> public_hostname=<hostname>
+>
+> etcd_cluster="<comma separated list of private IPs>"
+>
+>
+>
+> The differences are in the usage of etcd_proxy, right? But, where is the
+> configuration file for the automatic change when it is deployed over
+> containers?
+>
+>
+>
+> Again, thanks so much for your help
+>
+>
+>
+> Att: Gabriel Orozco (University of Cauca Student)
+>
+>
+>
+> El mar., 11 sept. 2018 a las 18:09, Davis, Matthew (<
+> Matthew.Davis.2 at team.telstra.com>) escribi?:
+>
+> Hi,
+>
+>
+>
+> Yes the code is the same for both.
+>
+> The Dockerfiles just do `apt-get install $MODULE`
+> e.g. here?s the one for homestead: https://github.com/Metaswitch/clearwater-docker/blob/83d9519c34bdf52c2e5eb4bd74ceeed1be8f2a15/homestead/Dockerfile#L4
+>
+>
+>
+> Yes there?s something funny about homestead-prov. I don?t know the answer
+> to that one.
+>
+>
+>
+> Regards,
+>
+>
+>
+> *Matthew Davis*
+>
+> Technical Specialist
+>
+> Telstra | CTO | Cloud SDN NFV
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *GABRIEL DAVID OROZCO URRUTIA
+> *Sent:* Wednesday, 12 September 2018 2:30 AM
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Project Clearwater] Difference between source code of
+> Clearwater over containers and Virtual Machines
+>
+>
+>
+> Hello
+>
+>
+>
+> We?re working on a performance test of clearwater over containers. We want
+> to know if the source code of the components (eg., bono, sprout) over
+> containers are the same for the deploy over virtual machines.
+>
+> Also, we want to know where is the source code of homestead-prov. Because
+> we found all the other components codes in the metaswitch github
+> repository(eg., ralf, homestead, cassandra) but not the one of
+> homestead-prov.
+>
+>
+>
+> Thanks for the help
+>
+>
+> ------------------------------
+>
+> *Hacia una Universidad comprometida con la Paz Territorial*
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+>
+> ------------------------------
+>
+> *Hacia una Universidad comprometida con la Paz Territorial*
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+
+-- 
+
+
+*Hacia una
+Universidad comprometida con la Paz Territorial*
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180911/d8369505/attachment.html>
+
+From Matthew.Davis.2 at team.telstra.com  Wed Sep 12 00:20:32 2018
+From: Matthew.Davis.2 at team.telstra.com (Davis, Matthew)
+Date: Wed, 12 Sep 2018 04:20:32 +0000
+Subject: [Project Clearwater] Difference between source code of
+ Clearwater over containers and Virtual Machines
+In-Reply-To: <CAGy+FHLbifMQ+SexdJ=t92GoZ7Y+jY+ODqjckrhggTLgpMZMBQ@mail.gmail.com>
+References: <CAGy+FHKPBYVzan6F6HibHC7c78nV9_NBQCrEvo0t_ONP0YRFpw@mail.gmail.com>
+	<MEAPR01MB4135E9BD49E2B418CBEC2403C2040@MEAPR01MB4135.ausprd01.prod.outlook.com>
+	<CAGy+FHKJJK9LQ3Eo2jRQ=sr0KVi_Wqx-7dQF6KJsf5G1AraGhw@mail.gmail.com>
+	<MEAPR01MB413547DBFEE8AE6BBEB2CBE1C21B0@MEAPR01MB4135.ausprd01.prod.outlook.com>
+	<CAGy+FHLbifMQ+SexdJ=t92GoZ7Y+jY+ODqjckrhggTLgpMZMBQ@mail.gmail.com>
+Message-ID: <MEAPR01MB41353388874B828D494066AAC21B0@MEAPR01MB4135.ausprd01.prod.outlook.com>
+
+Hi Gabriel,
+
+Homestead-prov is failing because Cassandra isn?t up.
+Cassandra normally takes a while to come up. It looks like it?s been trying for 33m, which is unusually slow. Wait another half hour. If that doesn?t work, delete and re-create just the Cassandra pods. (
+
+```
+kubectl delete ?f Cassandra-depl.yaml
+sleep 30
+kubectl apply ?f cassandra-depl.yaml
+```
+Then wait 20 minutes.
+
+Regards,
+Matt
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of GABRIEL DAVID OROZCO URRUTIA
+Sent: Wednesday, 12 September 2018 2:11 PM
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Difference between source code of Clearwater over containers and Virtual Machines
+
+Okay Matthew we're going to investigate the changes in the networking configuration. But again thanks for your help.
+
+Talking about kubernetes, we're having also some trobles in the deployment.
+
+When we try to run clearwater over containers with kubernetes as orchestator we have the next issue:
+
+When running the command  for the pods, this is the result:
+NAME                             READY     STATUS             RESTARTS   AGE
+astaire-778bc84754-k7w5p         2/2       Running            0          33m
+bono-5bcc97f696-sv85w            2/2       Running            0          33m
+cassandra-757bfd8c68-4prkh       0/1       Running            3          33m
+cassandra-757bfd8c68-x6js6       0/1       Running            3          33m
+cassandra-757bfd8c68-xqq7l       0/1       Running            3          33m
+chronos-94c95964b-b2mw9          2/2       Running            0          33m
+ellis-5769fc8bd5-8ks2x           1/1       Running            0          33m
+etcd-7954884d7-84jr7             1/1       Running            0          33m
+homer-74b7bf5878-k9gr4           1/1       Running            0          33m
+homestead-6489ccbf6f-7df66       2/2       Running            0          33m
+homestead-prov-89dc6f9c9-9f49p   0/1       CrashLoopBackOff   11         33m
+ralf-74dc869579-pcs9f            2/2       Running            0          33m
+sprout-564484959d-wkq2v          2/2       Running            0          33m
+
+
+The logs for homestead is:
+
+ 15-08-2018 14:32:01.469 UTC [7f53d3eb37c0] Status diameterstack.cpp:571: Starting Diameter stack
+15-08-2018 14:32:01.469 UTC [7f53d3eb37c0] Status freeDiameter: Local server address(es): Unknown error{---L-}
+15-08-2018 14:32:01.469 UTC [7f53d3eb37c0] Status httpstack.cpp:40: Constructing HTTP stack with 12 threads
+15-08-2018 14:32:01.469 UTC [7f53d3eb37c0] Status httpstack.cpp:163: Binding HTTP TCP socket: address=172.17.0.16, port=8888
+15-08-2018 14:32:01.533 UTC [7f53d3eb37c0] Status httpstack.cpp:40: Constructing HTTP stack with 5 threads
+15-08-2018 14:32:01.533 UTC [7f53d3eb37c0] Status httpstack.cpp:215: Binding HTTP unix socket: path=/tmp/homestead-http-mgmt-socket
+15-08-2018 14:32:01.558 UTC [7f53d3eb37c0] Status diameterresolver.cpp:37: Created Diameter resolver
+15-08-2018 14:32:01.558 UTC [7f53d3eb37c0] Status main.cpp:1179: Start-up complete - wait for termination signal
+15-08-2018 14:32:01.896 UTC [7f52697f2700] Error dnscachedresolver.cpp:1098: Resolution of example.com<http://example.com> timed out
+15-08-2018 14:32:01.896 UTC [7f52697f2700] Warning dnscachedresolver.cpp:698: Failed to retrieve record for example.com<http://example.com>: Timeout while contacting DNS servers
+15-08-2018 14:32:02.308 UTC [7f52697f2700] Error dnscachedresolver.cpp:1098: Resolution of _diameter._tcp.example.com<http://tcp.example.com> timed out
+15-08-2018 14:32:02.308 UTC [7f52697f2700] Warning dnscachedresolver.cpp:698: Failed to retrieve record for _diameter._tcp.example.com<http://tcp.example.com>: Timeout while contacting DNS servers
+15-08-2018 14:32:02.346 UTC [7f52697f2700] Error dnscachedresolver.cpp:1098: Resolution of _diameter._sctp.example.com<http://sctp.example.com> timed out
+15-08-2018 14:32:02.346 UTC [7f52697f2700] Warning dnscachedresolver.cpp:698: Failed to retrieve record for _diameter._sctp.example.com<http://sctp.example.com>: Timeout while contacting DNS servers
+15-08-2018 14:32:02.759 UTC [7f52697f2700] Error dnscachedresolver.cpp:1098: Resolution of hss.example.com<http://hss.example.com> timed out
+15-08-2018 14:32:02.759 UTC [7f52697f2700] Warning dnscachedresolver.cpp:698: Failed to retrieve record for hss.example.com<http://hss.example.com>: Timeout while contacting DNS servers
+15-08-2018 14:32:02.759 UTC [7f52697f2700] Error diameterstack.cpp:862: No Diameter peers have been found
+15-08-2018 14:32:31.220 UTC [7f53c546a700] Status alarm.cpp:244: Reraising all alarms with a known state
+15-08-2018 14:32:33.134 UTC [7f52697f2700] Error dnscachedresolver.cpp:1098: Resolution of _diameter._tcp.example.com<http://tcp.example.com> timed out
+15-08-2018 14:32:33.134 UTC [7f52697f2700] Warning dnscachedresolver.cpp:698: Failed to retrieve record for _diameter._tcp.example.com<http://tcp.example.com>: Timeout while contacting DNS servers
+15-08-2018 14:32:33.209 UTC [7f52697f2700] Error dnscachedresolver.cpp:1098: Resolution of _diameter._sctp.example.com<http://sctp.example.com> timed out
+15-08-2018 14:32:33.210 UTC [7f52697f2700] Warning dnscachedresolver.cpp:698: Failed to retrieve record for _diameter._sctp.example.com<http://sctp.example.com>: Timeout while contacting DNS servers
+15-08-2018 14:32:33.622 UTC [7f52697f2700] Error dnscachedresolver.cpp:1098: Resolution of hss.example.com<http://hss.example.com> timed out
+15-08-2018 14:32:33.622 UTC [7f52697f2700] Warning dnscachedresolver.cpp:698: Failed to retrieve record for hss.example.com<http://hss.example.com>: Timeout while contacting DNS servers
+15-08-2018 14:32:33.622 UTC [7f52697f2700] Error diameterstack.cpp:862: No Diameter peers have been found
+15-08-2018 14:33:01.220 UTC [7f53c546a700] Status alarm.cpp:244: Reraising all alarms with a known state
+15-08-2018 14:33:03.700 UTC [7f52697f2700] Warning dnscachedresolver.cpp:698: Failed to retrieve record for _diameter._tcp.example.com<http://tcp.example.com>: Domain name not found
+15-08-2018 14:33:03.789 UTC [7f52697f2700] Warning dnscachedresolver.cpp:698: Failed to retrieve record for _diameter._sctp.example.com<http://sctp.example.com>: Domain name not found
+15-08-2018 14:33:03.884 UTC [7f52697f2700] Warning dnscachedresolver.cpp:698: Failed to retrieve record for hss.example.com<http://hss.example.com>: Domain name not found
+15-08-2018 14:33:03.884 UTC [7f52697f2700] Error diameterstack.cpp:862: No Diameter peers have been found
+15-08-2018 14:33:31.220 UTC [7f53c546a700] Status alarm.cpp:244: Reraising all alarms with a known state
+15-08-2018 14:34:01.221 UTC [7f53c546a700] Status alarm.cpp:244: Reraising all alarms with a known state
+15-08-2018 14:34:31.222 UTC [7f53c546a700] Status alarm.cpp:244: Reraising all alarms with a known state
+15-08-2018 14:35:01.222 UTC [7f53c546a700] Status alarm.cpp:244: Reraising all alarms with a known state
+15-08-2018 14:35:31.223 UTC [7f53c546a700] Status alarm.cpp:244: Reraising all alarms with a known state
+15-08-2018 14:36:01.224 UTC [7f53c546a700] Status alarm.cpp:244: Reraising all alarms with a known state
+
+The logs for homestead_prov is:
+ 2018-08-15 14:36:03,725 CRIT Supervisor running as root (no user in config file)
+2018-08-15 14:36:03,725 WARN Included extra file "/etc/supervisor/conf.d/socket-factory.supervisord.conf" during parsing
+2018-08-15 14:36:03,725 WARN Included extra file "/etc/supervisor/conf.d/clearwater-group.conf" during parsing
+2018-08-15 14:36:03,725 WARN Included extra file "/etc/supervisor/conf.d/nginx.conf" during parsing
+2018-08-15 14:36:03,725 WARN Included extra file "/etc/supervisor/conf.d/homestead-prov.conf" during parsing
+2018-08-15 14:36:03,725 WARN Included extra file "/etc/supervisor/conf.d/snmpd.conf" during parsing
+2018-08-15 14:36:03,725 WARN Included extra file "/etc/supervisor/conf.d/clearwater-infrastructure.conf" during parsing
+2018-08-15 14:36:03,725 WARN Included extra file "/etc/supervisor/conf.d/supervisord.conf" during parsing
+2018-08-15 14:36:03,740 INFO RPC interface 'supervisor' initialized
+2018-08-15 14:36:03,741 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2018-08-15 14:36:03,741 INFO supervisord started with pid 1
+2018-08-15 14:36:04,742 INFO spawned: 'snmpd' with pid 7
+2018-08-15 14:36:04,743 INFO spawnerr: can't find command '/usr/share/clearwater/bin/clearwater-socket-factory-sig-wrapper'
+2018-08-15 14:36:04,749 INFO spawned: 'clearwater-infrastructure' with pid 9
+2018-08-15 14:36:04,751 INFO spawnerr: can't find command '/usr/share/clearwater/bin/clearwater-socket-factory-mgmt-wrapper'
+2018-08-15 14:36:04,752 INFO success: snmpd entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2018-08-15 14:36:04,752 INFO success: clearwater-infrastructure entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2018-08-15 14:36:05,225 INFO exited: snmpd (exit status 0; expected)
+2018-08-15 14:36:05,226 CRIT reaped unknown pid 48)
+2018-08-15 14:36:06,226 INFO spawnerr: can't find command '/usr/share/clearwater/bin/clearwater-socket-factory-sig-wrapper'
+2018-08-15 14:36:06,227 INFO spawnerr: can't find command '/usr/share/clearwater/bin/clearwater-socket-factory-mgmt-wrapper'
+2018-08-15 14:36:07,297 CRIT reaped unknown pid 52)
+2018-08-15 14:36:07,298 CRIT reaped unknown pid 53)
+2018-08-15 14:36:08,300 INFO spawnerr: can't find command '/usr/share/clearwater/bin/clearwater-socket-factory-sig-wrapper'
+2018-08-15 14:36:08,300 INFO spawnerr: can't find command '/usr/share/clearwater/bin/clearwater-socket-factory-mgmt-wrapper'
+2018-08-15 14:36:08,605 CRIT reaped unknown pid 183)
+2018-08-15 14:36:08,605 CRIT reaped unknown pid 184)
+2018-08-15 14:36:08,630 CRIT reaped unknown pid 209)
+2018-08-15 14:36:09,860 INFO spawned: 'homestead-prov' with pid 241
+2018-08-15 14:36:09,862 INFO spawned: 'nginx' with pid 242
+2018-08-15 14:36:10,302 INFO exited: homestead-prov (exit status 0; not expected)
+2018-08-15 14:36:11,307 INFO spawned: 'homestead-prov' with pid 257
+2018-08-15 14:36:11,309 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:36:11,310 INFO spawnerr: can't find command '/usr/share/clearwater/bin/clearwater-socket-factory-sig-wrapper'
+2018-08-15 14:36:11,310 INFO gave up: socket-factory-sig entered FATAL state, too many start retries too quickly
+2018-08-15 14:36:11,311 INFO spawnerr: can't find command '/usr/share/clearwater/bin/clearwater-socket-factory-mgmt-wrapper'
+2018-08-15 14:36:11,311 INFO gave up: socket-factory-mgmt entered FATAL state, too many start retries too quickly
+2018-08-15 14:36:11,624 INFO exited: clearwater-infrastructure (exit status 0; expected)
+2018-08-15 14:36:11,704 INFO exited: homestead-prov (exit status 0; not expected)
+2018-08-15 14:36:13,707 INFO spawned: 'homestead-prov' with pid 286
+2018-08-15 14:36:14,096 INFO exited: homestead-prov (exit status 0; not expected)
+2018-08-15 14:36:17,104 INFO spawned: 'homestead-prov' with pid 297
+2018-08-15 14:36:17,498 INFO exited: homestead-prov (exit status 0; not expected)
+2018-08-15 14:36:18,498 INFO gave up: homestead-prov entered FATAL state, too many start retries too quickly
+
+The log file for one  Cassandra containers is:
+ 2018-08-15 14:31:37,714 CRIT Supervisor running as root (no user in config file)
+2018-08-15 14:31:37,714 WARN Included extra file "/etc/supervisor/conf.d/clearwater-group.conf" during parsing
+2018-08-15 14:31:37,715 WARN Included extra file "/etc/supervisor/conf.d/cassandra.conf" during parsing
+2018-08-15 14:31:37,715 WARN Included extra file "/etc/supervisor/conf.d/snmpd.conf" during parsing
+2018-08-15 14:31:37,715 WARN Included extra file "/etc/supervisor/conf.d/clearwater-infrastructure.conf" during parsing
+2018-08-15 14:31:37,715 WARN Included extra file "/etc/supervisor/conf.d/supervisord.conf" during parsing
+2018-08-15 14:31:37,730 INFO RPC interface 'supervisor' initialized
+2018-08-15 14:31:37,730 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2018-08-15 14:31:37,730 INFO supervisord started with pid 1
+2018-08-15 14:31:38,736 INFO spawned: 'snmpd' with pid 10
+2018-08-15 14:31:38,739 INFO spawned: 'clearwater-infrastructure' with pid 11
+2018-08-15 14:31:38,748 INFO success: snmpd entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2018-08-15 14:31:38,748 INFO success: clearwater-infrastructure entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2018-08-15 14:31:39,092 INFO exited: snmpd (exit status 0; expected)
+2018-08-15 14:31:39,092 CRIT reaped unknown pid 51)
+2018-08-15 14:31:41,116 CRIT reaped unknown pid 55)
+2018-08-15 14:31:41,117 CRIT reaped unknown pid 56)
+2018-08-15 14:31:41,339 CRIT reaped unknown pid 117)
+2018-08-15 14:31:41,340 CRIT reaped unknown pid 116)
+2018-08-15 14:31:41,363 CRIT reaped unknown pid 141)
+2018-08-15 14:31:43,549 CRIT reaped unknown pid 178)
+2018-08-15 14:31:43,610 INFO spawned: 'cassandra' with pid 183
+2018-08-15 14:31:44,635 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:31:44,641 INFO exited: clearwater-infrastructure (exit status 0; expected)
+2018-08-15 14:31:45,637 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:31:46,640 INFO spawned: 'cassandra' with pid 194
+2018-08-15 14:31:47,663 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:31:48,666 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:31:49,668 INFO spawned: 'cassandra' with pid 197
+2018-08-15 14:31:50,675 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:31:51,677 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:31:52,681 INFO spawned: 'cassandra' with pid 200
+2018-08-15 14:31:53,693 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:31:54,699 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:31:55,702 INFO spawned: 'cassandra' with pid 203
+2018-08-15 14:31:56,707 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:31:57,708 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:31:58,709 INFO spawned: 'cassandra' with pid 212
+2018-08-15 14:31:59,716 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:00,718 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:01,720 INFO spawned: 'cassandra' with pid 215
+2018-08-15 14:32:02,726 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:03,726 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:04,730 INFO spawned: 'cassandra' with pid 218
+2018-08-15 14:32:05,753 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:06,756 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:07,762 INFO spawned: 'cassandra' with pid 229
+2018-08-15 14:32:08,781 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:09,784 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:10,785 INFO spawned: 'cassandra' with pid 232
+2018-08-15 14:32:11,791 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:12,791 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:13,793 INFO spawned: 'cassandra' with pid 235
+2018-08-15 14:32:14,801 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:15,801 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:16,805 INFO spawned: 'cassandra' with pid 244
+2018-08-15 14:32:17,824 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:18,827 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:19,830 INFO spawned: 'cassandra' with pid 247
+2018-08-15 14:32:20,841 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:21,841 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:22,843 INFO spawned: 'cassandra' with pid 250
+2018-08-15 14:32:23,852 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:24,855 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:25,858 INFO spawned: 'cassandra' with pid 253
+2018-08-15 14:32:26,863 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:27,864 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:28,868 INFO spawned: 'cassandra' with pid 263
+2018-08-15 14:32:29,888 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:30,891 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:31,897 INFO spawned: 'cassandra' with pid 266
+2018-08-15 14:32:32,913 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:33,917 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:34,919 INFO spawned: 'cassandra' with pid 269
+2018-08-15 14:32:35,931 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:36,934 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:37,940 INFO spawned: 'cassandra' with pid 278
+2018-08-15 14:32:38,964 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:39,967 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:40,969 INFO spawned: 'cassandra' with pid 281
+2018-08-15 14:32:41,976 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:42,980 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:43,983 INFO spawned: 'cassandra' with pid 284
+2018-08-15 14:32:44,997 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:45,999 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:47,002 INFO spawned: 'cassandra' with pid 294
+2018-08-15 14:32:48,021 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:49,023 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:50,026 INFO spawned: 'cassandra' with pid 297
+2018-08-15 14:32:51,047 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:52,050 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:53,054 INFO spawned: 'cassandra' with pid 300
+2018-08-15 14:32:54,075 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:55,080 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:56,084 INFO spawned: 'cassandra' with pid 303
+2018-08-15 14:32:57,097 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:32:58,098 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:32:59,104 INFO spawned: 'cassandra' with pid 314
+2018-08-15 14:33:00,123 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:01,123 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:02,129 INFO spawned: 'cassandra' with pid 317
+2018-08-15 14:33:03,140 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:04,149 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:05,154 INFO spawned: 'cassandra' with pid 320
+2018-08-15 14:33:06,177 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:07,178 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:08,182 INFO spawned: 'cassandra' with pid 329
+2018-08-15 14:33:09,206 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:10,205 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:11,209 INFO spawned: 'cassandra' with pid 332
+2018-08-15 14:33:12,219 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:13,220 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:14,226 INFO spawned: 'cassandra' with pid 336
+2018-08-15 14:33:15,244 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:16,251 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:17,254 INFO spawned: 'cassandra' with pid 348
+2018-08-15 14:33:18,259 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:19,259 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:20,263 INFO spawned: 'cassandra' with pid 351
+2018-08-15 14:33:21,282 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:22,286 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:23,287 INFO spawned: 'cassandra' with pid 354
+2018-08-15 14:33:24,292 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:25,295 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:26,298 INFO spawned: 'cassandra' with pid 362
+2018-08-15 14:33:27,318 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:28,319 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:29,321 INFO spawned: 'cassandra' with pid 365
+2018-08-15 14:33:30,327 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:31,328 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:32,331 INFO spawned: 'cassandra' with pid 368
+2018-08-15 14:33:33,349 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:34,356 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:35,358 INFO spawned: 'cassandra' with pid 371
+2018-08-15 14:33:36,364 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:37,364 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:38,367 INFO spawned: 'cassandra' with pid 380
+2018-08-15 14:33:39,389 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:40,393 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:41,399 INFO spawned: 'cassandra' with pid 383
+2018-08-15 14:33:42,422 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:43,424 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:44,430 INFO spawned: 'cassandra' with pid 386
+2018-08-15 14:33:45,441 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:46,443 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:47,445 INFO spawned: 'cassandra' with pid 395
+2018-08-15 14:33:48,452 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:49,452 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:50,454 INFO spawned: 'cassandra' with pid 398
+2018-08-15 14:33:51,463 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:52,464 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:53,467 INFO spawned: 'cassandra' with pid 401
+2018-08-15 14:33:54,477 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:55,478 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:56,483 INFO spawned: 'cassandra' with pid 411
+2018-08-15 14:33:57,488 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:33:58,490 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:33:59,492 INFO spawned: 'cassandra' with pid 414
+2018-08-15 14:34:00,497 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:34:01,500 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:34:02,505 INFO spawned: 'cassandra' with pid 417
+2018-08-15 14:34:03,523 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:34:04,526 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:34:05,530 INFO spawned: 'cassandra' with pid 420
+2018-08-15 14:34:06,535 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:34:07,536 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:34:08,541 INFO spawned: 'cassandra' with pid 429
+2018-08-15 14:34:09,563 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:34:10,567 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:34:11,572 INFO spawned: 'cassandra' with pid 432
+2018-08-15 14:34:12,591 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:34:13,593 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:34:14,597 INFO spawned: 'cassandra' with pid 435
+2018-08-15 14:34:15,603 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:34:16,604 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:34:17,608 INFO spawned: 'cassandra' with pid 446
+2018-08-15 14:34:18,626 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:34:19,631 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:34:20,634 INFO spawned: 'cassandra' with pid 456
+2018-08-15 14:34:21,643 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:34:22,643 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:34:23,646 INFO spawned: 'cassandra' with pid 512
+2018-08-15 14:34:23,682 CRIT reaped unknown pid 529)
+2018-08-15 14:34:24,050 CRIT reaped unknown pid 530)
+2018-08-15 14:34:25,052 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:34:41,929 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:34:42,226 INFO spawned: 'cassandra' with pid 1083
+2018-08-15 14:34:42,226 CRIT reaped unknown pid 577)
+2018-08-15 14:34:42,256 CRIT reaped unknown pid 1098)
+2018-08-15 14:34:42,586 CRIT reaped unknown pid 1100)
+2018-08-15 14:34:43,589 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:35:02,573 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:35:02,897 INFO spawned: 'cassandra' with pid 1735
+2018-08-15 14:35:02,897 CRIT reaped unknown pid 1145)
+2018-08-15 14:35:02,941 CRIT reaped unknown pid 1751)
+2018-08-15 14:35:03,340 CRIT reaped unknown pid 1752)
+2018-08-15 14:35:04,342 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:35:22,632 CRIT reaped unknown pid 1798)
+2018-08-15 14:35:22,674 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:35:23,677 INFO spawned: 'cassandra' with pid 2390
+2018-08-15 14:35:23,720 CRIT reaped unknown pid 2405)
+2018-08-15 14:35:24,126 CRIT reaped unknown pid 2406)
+2018-08-15 14:35:25,128 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:35:43,486 CRIT reaped unknown pid 2453)
+2018-08-15 14:35:43,600 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:35:44,603 INFO spawned: 'cassandra' with pid 3044
+2018-08-15 14:35:44,650 CRIT reaped unknown pid 3059)
+2018-08-15 14:35:45,128 CRIT reaped unknown pid 3060)
+2018-08-15 14:35:46,128 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-08-15 14:36:02,745 CRIT reaped unknown pid 3106)
+2018-08-15 14:36:02,867 INFO exited: cassandra (exit status 232; not expected)
+2018-08-15 14:36:03,869 INFO spawned: 'cassandra' with pid 3643
+2018-08-15 14:36:03,946 CRIT reaped unknown pid 3658)
+2018-08-15 14:36:04,497 CRIT reaped unknown pid 3659)
+2018-08-15 14:36:05,498 INFO success: cassandra entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+
+The logs for etcd is:
+
+ 2018-08-15 14:31:41.683108 I | etcdmain: etcd Version: 2.2.5
+2018-08-15 14:31:41.683372 I | etcdmain: Git SHA: bc9ddf2
+2018-08-15 14:31:41.683393 I | etcdmain: Go Version: go1.5.3
+2018-08-15 14:31:41.683452 I | etcdmain: Go OS/Arch: linux/amd64
+2018-08-15 14:31:41.683521 I | etcdmain: setting maximum number of CPUs to 3, total number of available CPUs is 3
+2018-08-15 14:31:41.683590 W | etcdmain: no data-dir provided, using default data-dir ./etcd-7954884d7-84jr7.etcd
+2018-08-15 14:31:41.683740 I | etcdmain: listening for peers on http://0.0.0.0:2380
+2018-08-15 14:31:41.683848 I | etcdmain: listening for client requests on http://0.0.0.0:2379
+2018-08-15 14:31:41.683937 I | etcdmain: listening for client requests on http://0.0.0.0:4001
+2018-08-15 14:31:41.684172 I | etcdserver: name = etcd-7954884d7-84jr7
+2018-08-15 14:31:41.684204 I | etcdserver: data dir = etcd-7954884d7-84jr7.etcd
+2018-08-15 14:31:41.684268 I | etcdserver: member dir = etcd-7954884d7-84jr7.etcd/member
+2018-08-15 14:31:41.684308 I | etcdserver: heartbeat = 100ms
+2018-08-15 14:31:41.684340 I | etcdserver: election = 1000ms
+2018-08-15 14:31:41.684371 I | etcdserver: snapshot count = 10000
+2018-08-15 14:31:41.684408 I | etcdserver: advertise client URLs = http://172.17.0.14:2379,http://172.17.0.14:4001
+2018-08-15 14:31:41.684447 I | etcdserver: initial advertise peer URLs = http://172.17.0.14:2380
+2018-08-15 14:31:41.684484 I | etcdserver: initial cluster = etcd-7954884d7-84jr7=http://172.17.0.14:2380
+2018-08-15 14:31:41.690385 I | etcdserver: starting member a93655729080770c in cluster b43922894bcbe68b
+2018-08-15 14:31:41.690643 I | raft: a93655729080770c became follower at term 0
+2018-08-15 14:31:41.690729 I | raft: newRaft a93655729080770c [peers: [], term: 0, commit: 0, applied: 0, lastindex: 0, lastterm: 0]
+2018-08-15 14:31:41.690809 I | raft: a93655729080770c became follower at term 1
+2018-08-15 14:31:41.692539 I | etcdserver: starting server... [version: 2.2.5, cluster version: to_be_decided]
+2018-08-15 14:31:41.695384 N | etcdserver: added local member a93655729080770c [http://172.17.0.14:2380] to cluster b43922894bcbe68b
+2018-08-15 14:31:41.992667 I | raft: a93655729080770c is starting a new election at term 1
+2018-08-15 14:31:41.992758 I | raft: a93655729080770c became candidate at term 2
+2018-08-15 14:31:41.992775 I | raft: a93655729080770c received vote from a93655729080770c at term 2
+2018-08-15 14:31:41.992794 I | raft: a93655729080770c became leader at term 2
+2018-08-15 14:31:41.992802 I | raft: raft.node: a93655729080770c elected leader a93655729080770c at term 2
+2018-08-15 14:31:41.993316 I | etcdserver: published {Name:etcd-7954884d7-84jr7 ClientURLs:[http://172.17.0.14:2379 http://172.17.0.14:4001]} to cluster b43922894bcbe68b
+2018-08-15 14:31:41.993514 I | etcdserver: setting up the initial cluster version to 2.2
+2018-08-15 14:31:41.999251 N | etcdserver: set the initial cluster version to 2.2
+
+This is the information about the kubernetes version
+
+Client Version: version.Info{Major:"1", Minor:"11", GitVersion:"v1.11.0", GitCommit:"91e7b4fd31fcd3d5f436da26c980becec37ceefe", GitTreeState:"clean", BuildDate:"2018-06-27T20:17:28Z", GoVersion:"go1.10.2", Compiler:"gc", Platform:"linux/amd64"}
+Server Version: version.Info{Major:"1", Minor:"10", GitVersion:"v1.10.0", GitCommit:"fc32d2f3698e36b93322a3465f63a14e9f0eaead", GitTreeState:"clean", BuildDate:"2018-03-26T16:44:10Z", GoVersion:"go1.9.3", Compiler:"gc", Platform:"linux/amd64"}
+
+And I'm using minikube 0.28.0
+
+Also, all the steps that we were followed are from the readme in github
+
+
+Thanks so much for your help.
+
+Att: Gabriel Orozco
+
+El mar., 11 sept. 2018 a las 22:46, Davis, Matthew (<Matthew.Davis.2 at team.telstra.com<mailto:Matthew.Davis.2 at team.telstra.com>>) escribi?:
+Hi Gabriel,
+
+Yes there are of course some differences in networking configuration.
+I don?t know much about the details of etcd. However I do know that when working with Kubernetes (and presumably other container orchestrators) you do not want to ever hard code IP addresses. Those change. So etcd is referenced through DNS, and it points to a service which distributes requests across the cluster of etcd notes.
+
+The end result is the same.
+
+Regards,
+
+Matt
+Technical Specialist
+Telstra | CTO | Cloud SDN NFV
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>] On Behalf Of GABRIEL DAVID OROZCO URRUTIA
+Sent: Wednesday, 12 September 2018 1:39 PM
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] Difference between source code of Clearwater over containers and Virtual Machines
+
+Thanks so much for your help, Matthew.
+
+But, It makes me question another thing: what about the local_config file?
+Because there are differences between the deploy over VM and containers.
+
+Local_config file over containers:
+# Local IP configuration
+local_ip=172.17.0.2
+public_ip=172.17.0.2
+public_hostname=172.17.0.2
+
+# Only keep 50MB of logs
+max_log_directory_size=52428800
+etcd_proxy=etcd0=http://etcd:2380
+
+Local file over Virtual Machines:
+local_ip=<privateIP>
+public_ip=<publicIP>
+public_hostname=<hostname>
+etcd_cluster="<comma separated list of private IPs>"
+
+The differences are in the usage of etcd_proxy, right? But, where is the configuration file for the automatic change when it is deployed over containers?
+
+Again, thanks so much for your help
+
+Att: Gabriel Orozco (University of Cauca Student)
+
+El mar., 11 sept. 2018 a las 18:09, Davis, Matthew (<Matthew.Davis.2 at team.telstra.com<mailto:Matthew.Davis.2 at team.telstra.com>>) escribi?:
+Hi,
+
+Yes the code is the same for both.
+
+The Dockerfiles just do `apt-get install $MODULE`
+e.g. here?s the one for homestead: https://github.com/Metaswitch/clearwater-docker/blob/83d9519c34bdf52c2e5eb4bd74ceeed1be8f2a15/homestead/Dockerfile#L4
+
+Yes there?s something funny about homestead-prov. I don?t know the answer to that one.
+
+Regards,
+
+Matthew Davis
+Technical Specialist
+Telstra | CTO | Cloud SDN NFV
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>] On Behalf Of GABRIEL DAVID OROZCO URRUTIA
+Sent: Wednesday, 12 September 2018 2:30 AM
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Difference between source code of Clearwater over containers and Virtual Machines
+
+Hello
+
+We?re working on a performance test of clearwater over containers. We want to know if the source code of the components (eg., bono, sprout) over containers are the same for the deploy over virtual machines.
+Also, we want to know where is the source code of homestead-prov. Because we found all the other components codes in the metaswitch github repository(eg., ralf, homestead, cassandra) but not the one of homestead-prov.
+
+Thanks for the help
+
+________________________________
+
+Hacia una Universidad comprometida con la Paz Territorial
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+________________________________
+
+Hacia una Universidad comprometida con la Paz Territorial
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+________________________________
+
+Hacia una Universidad comprometida con la Paz Territorial
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180912/917a99a2/attachment.html>
+
+From gabrielorozco20 at unicauca.edu.co  Thu Sep 13 19:51:20 2018
+From: gabrielorozco20 at unicauca.edu.co (GABRIEL DAVID OROZCO URRUTIA)
+Date: Thu, 13 Sep 2018 18:51:20 -0500
+Subject: [Project Clearwater] Troubles shutting down CW with Compose
+Message-ID: <CAGy+FH+A=MEMMg0w2ej8YA7ogfiZWuA2behRjH3PDTEx6PRSQg@mail.gmail.com>
+
+Hello Everyone
+
+I have a issue with the deployment of CW using Compose. I followed the
+steps in the meta switch gitgub, and everything okay the first time. But,
+when I stop all the containers and then I try to rerun it all with docker
+restart and I try to create a number for a user in ellis I have the next
+issue:
+
+Failed to update the server (see detailed diagnostics in developer
+console). Please refresh the page.
+
+How should I rerun all containers to avoid this issue?
+Thanks so much for your help!
+
+Gabriel David Orozco
+Presidente Rama estudiantil IEEE Universidad del Cauca
+(57) 3004351630
+
+-- 
+
+
+*Hacia una
+Universidad comprometida con la Paz Territorial*
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180913/f17796cb/attachment.html>
+
+From Matthew.Davis.2 at team.telstra.com  Thu Sep 13 20:18:38 2018
+From: Matthew.Davis.2 at team.telstra.com (Davis, Matthew)
+Date: Fri, 14 Sep 2018 00:18:38 +0000
+Subject: [Project Clearwater] Troubles shutting down CW with Compose
+In-Reply-To: <CAGy+FH+A=MEMMg0w2ej8YA7ogfiZWuA2behRjH3PDTEx6PRSQg@mail.gmail.com>
+References: <CAGy+FH+A=MEMMg0w2ej8YA7ogfiZWuA2behRjH3PDTEx6PRSQg@mail.gmail.com>
+Message-ID: <SYBPR01MB413983B3C29B7A62B405EC02C2190@SYBPR01MB4139.ausprd01.prod.outlook.com>
+
+Try doing an exec into an ellis container and then run the command here:
+https://clearwater.readthedocs.io/en/stable/Manual_Install.html?highlight=available%20numbers#provision-telephone-numbers-in-ellis
+
+
+
+Matthew Davis
+Technical Specialist
+Telstra | CTO | Cloud SDN NFV
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of GABRIEL DAVID OROZCO URRUTIA
+Sent: Friday, 14 September 2018 9:51 AM
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Troubles shutting down CW with Compose
+
+Hello Everyone
+
+I have a issue with the deployment of CW using Compose. I followed the steps in the meta switch gitgub, and everything okay the first time. But, when I stop all the containers and then I try to rerun it all with docker restart and I try to create a number for a user in ellis I have the next issue:
+
+Failed to update the server (see detailed diagnostics in developer console). Please refresh the page.
+
+How should I rerun all containers to avoid this issue?
+Thanks so much for your help!
+
+Gabriel David Orozco
+Presidente Rama estudiantil IEEE Universidad del Cauca
+(57) 3004351630
+
+
+________________________________
+
+Hacia una Universidad comprometida con la Paz Territorial
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180914/16f9f609/attachment.html>
+
+From gabrielorozco20 at unicauca.edu.co  Fri Sep 14 10:38:35 2018
+From: gabrielorozco20 at unicauca.edu.co (GABRIEL DAVID OROZCO URRUTIA)
+Date: Fri, 14 Sep 2018 09:38:35 -0500
+Subject: [Project Clearwater] Troubles shutting down CW with Compose
+In-Reply-To: <SYBPR01MB413983B3C29B7A62B405EC02C2190@SYBPR01MB4139.ausprd01.prod.outlook.com>
+References: <CAGy+FH+A=MEMMg0w2ej8YA7ogfiZWuA2behRjH3PDTEx6PRSQg@mail.gmail.com>
+	<SYBPR01MB413983B3C29B7A62B405EC02C2190@SYBPR01MB4139.ausprd01.prod.outlook.com>
+Message-ID: <CAGy+FHJbvM23z_JPtAKzgVni3m2BvQmot3P411BqtzYKBceLEQ@mail.gmail.com>
+
+Hi Matthew
+
+I tried, but is still not working. The numbers already existed:
+
+in:$PATH ;aafa13f:/# sudo bash -c "export
+PATH=/usr/share/clearwater/ellis/env/b
+>               cd /usr/share/clearwater/ellis/src/metaswitch/ellis/tools/ ;
+>               python create_numbers.py --start 6505550000 --count 1000"
+Created 0 numbers, 1000 already present in database
+root at ef911aafa13f:/#
+
+And the result in the ellis is still the same:
+
+Failed to update the server (see detailed diagnostics in developer
+console). Please refresh the page.
+
+Thanks again for your help.
+
+
+
+
+El jue., 13 sept. 2018 a las 19:19, Davis, Matthew (<
+Matthew.Davis.2 at team.telstra.com>) escribi?:
+
+> Try doing an exec into an ellis container and then run the command here:
+>
+>
+> https://clearwater.readthedocs.io/en/stable/Manual_Install.html?highlight=available%20numbers#provision-telephone-numbers-in-ellis
+>
+>
+>
+>
+>
+>
+>
+> *Matthew Davis*
+>
+> Technical Specialist
+>
+> Telstra | CTO | Cloud SDN NFV
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *GABRIEL DAVID OROZCO URRUTIA
+> *Sent:* Friday, 14 September 2018 9:51 AM
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Project Clearwater] Troubles shutting down CW with Compose
+>
+>
+>
+> Hello Everyone
+>
+>
+>
+> I have a issue with the deployment of CW using Compose. I followed the
+> steps in the meta switch gitgub, and everything okay the first time. But,
+> when I stop all the containers and then I try to rerun it all with docker
+> restart and I try to create a number for a user in ellis I have the next
+> issue:
+>
+>
+>
+> Failed to update the server (see detailed diagnostics in developer
+> console). Please refresh the page.
+>
+>
+>
+> How should I rerun all containers to avoid this issue?
+>
+> Thanks so much for your help!
+>
+>
+> Gabriel David Orozco
+>
+> Presidente Rama estudiantil IEEE Universidad del Cauca
+>
+> (57) 3004351630
+>
+>
+>
+>
+> ------------------------------
+>
+> *Hacia una Universidad comprometida con la Paz Territorial*
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+
+-- 
+
+
+*Hacia una
+Universidad comprometida con la Paz Territorial*
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180914/17f87f05/attachment.html>
+
+From Mark.Perryman at metaswitch.com  Fri Sep 14 11:04:35 2018
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Fri, 14 Sep 2018 15:04:35 +0000
+Subject: [Project Clearwater] Bug Report -
+ +g.gsma.rcs.botversion="#=0.92" causes parse error
+Message-ID: <BYAPR02MB4247428450D626A975AD94BE8F190@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+Trey,
+
+Thanks for the email.
+
+To get the patch included then please email contributor-agreement at metaswitch.com<mailto:contributor-agreement at metaswitch.com> to get a contributor's agreement to sign.  We will then be able to accept a pull request.
+
+Thanks again.
+
+Mark.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180914/9dee7f37/attachment.html>
+
+From trey.ormsbee at interoptechnologies.com  Fri Sep 14 11:53:14 2018
+From: trey.ormsbee at interoptechnologies.com (Trey Ormsbee)
+Date: Fri, 14 Sep 2018 10:53:14 -0500
+Subject: [Project Clearwater] Bug Report -
+ +g.gsma.rcs.botversion="#=0.92" causes parse error
+In-Reply-To: <BYAPR02MB4247428450D626A975AD94BE8F190@BYAPR02MB4247.namprd02.prod.outlook.com>
+References: <BYAPR02MB4247428450D626A975AD94BE8F190@BYAPR02MB4247.namprd02.prod.outlook.com>
+Message-ID: <1536940394.787.13.camel@interoptechnologies.com>
+
+We should already have that,??do we just fork,??patch and submit the
+pull request?
+-----Original Message-----
+Date: Fri, 14 Sep 2018 11:04:35 -0400Subject: Re: [Project Clearwater]
+Bug Report - +g.gsma.rcs.botversion="#=0.92" causes parse errorTo: clea
+rwater at lists.projectclearwater.org <clearwater at lists.projectclearwater.
+org>Reply-to: "clearwater at lists.projectclearwater.org"
+	<clearwater at lists.projectclearwater.org>From: Mark Perryman <Ma
+rk.Perryman at metaswitch.com>
+
+
+<!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Lucida Console";
+	panose-1:2 11 6 9 4 5 4 2 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:EN-US;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.Monospace
+	{mso-style-name:Monospace;
+	mso-style-priority:1;
+	font-family:"Lucida Console";
+	color:black;}
+span.EmailStyle18
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:#833C0B;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:EN-US;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+
+
+
+Trey,
+?
+Thanks for the email.
+?
+To get the patch included then please email
+contributor-agreement at metaswitch.com to get a contributor?s agreement
+to sign.? We will then be able to accept a pull request.
+?
+Thanks again.
+?
+Mark.
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180914/7d3b3767/attachment.html>
+
+From CT00548828 at TechMahindra.com  Mon Sep 17 01:54:59 2018
+From: CT00548828 at TechMahindra.com (Chandrashekhar Thakare)
+Date: Mon, 17 Sep 2018 05:54:59 +0000
+Subject: [Project Clearwater] Clearwater VNF support to Ansible
+Message-ID: <BM1PR0101MB1460A24BD00D4A73E58CFD42A71E0@BM1PR0101MB1460.INDPRD01.PROD.OUTLOOK.COM>
+
+Hi ,
+I am new to project clearwater. We are trying to execute Ansible playbook via ONAP on the Clearwater VNF.  But query is Does Clearwater VNF supports Ansible and playbook execution over SSH?
+============================================================================================================================
+
+Disclaimer:  This message and the information contained herein is proprietary and confidential and subject to the Tech Mahindra policy statement, you may review the policy at http://www.techmahindra.com/Disclaimer.html <http://www.techmahindra.com/Disclaimer.html> externally http://tim.techmahindra.com/tim/disclaimer.html <http://tim.techmahindra.com/tim/disclaimer.html> internally within TechMahindra.
+
+============================================================================================================================
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180917/ccdb7eed/attachment.html>
+
+From Matthew.Davis.2 at team.telstra.com  Tue Sep 18 20:05:07 2018
+From: Matthew.Davis.2 at team.telstra.com (Davis, Matthew)
+Date: Wed, 19 Sep 2018 00:05:07 +0000
+Subject: [Project Clearwater] Troubles shutting down CW with Compose
+In-Reply-To: <CAGy+FHJbvM23z_JPtAKzgVni3m2BvQmot3P411BqtzYKBceLEQ@mail.gmail.com>
+References: <CAGy+FH+A=MEMMg0w2ej8YA7ogfiZWuA2behRjH3PDTEx6PRSQg@mail.gmail.com>
+	<SYBPR01MB413983B3C29B7A62B405EC02C2190@SYBPR01MB4139.ausprd01.prod.outlook.com>
+	<CAGy+FHJbvM23z_JPtAKzgVni3m2BvQmot3P411BqtzYKBceLEQ@mail.gmail.com>
+Message-ID: <SYBPR01MB413982A862F9AA0E263D4338C21C0@SYBPR01MB4139.ausprd01.prod.outlook.com>
+
+Hmm,
+
+> see detailed diagnostics in developer console
+
+What happens when you open ellis in a browser and try to register an account, while looking at the developer console?  (right click on the page, click ?inspect element?, then look at ?console? and ?network?)
+
+Regards,
+
+Matthew Davis
+Technical Specialist
+Telstra | CTO | Cloud SDN NFV
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of GABRIEL DAVID OROZCO URRUTIA
+Sent: Saturday, 15 September 2018 12:39 AM
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Troubles shutting down CW with Compose
+
+Hi Matthew
+
+I tried, but is still not working. The numbers already existed:
+
+in:$PATH ;aafa13f:/# sudo bash -c "export PATH=/usr/share/clearwater/ellis/env/b
+>               cd /usr/share/clearwater/ellis/src/metaswitch/ellis/tools/ ;
+>               python create_numbers.py --start 6505550000 --count 1000"
+Created 0 numbers, 1000 already present in database
+root at ef911aafa13f:/#
+
+And the result in the ellis is still the same:
+
+Failed to update the server (see detailed diagnostics in developer console). Please refresh the page.
+
+Thanks again for your help.
+
+
+
+
+El jue., 13 sept. 2018 a las 19:19, Davis, Matthew (<Matthew.Davis.2 at team.telstra.com<mailto:Matthew.Davis.2 at team.telstra.com>>) escribi?:
+Try doing an exec into an ellis container and then run the command here:
+https://clearwater.readthedocs.io/en/stable/Manual_Install.html?highlight=available%20numbers#provision-telephone-numbers-in-ellis
+
+
+
+Matthew Davis
+Technical Specialist
+Telstra | CTO | Cloud SDN NFV
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>] On Behalf Of GABRIEL DAVID OROZCO URRUTIA
+Sent: Friday, 14 September 2018 9:51 AM
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Troubles shutting down CW with Compose
+
+Hello Everyone
+
+I have a issue with the deployment of CW using Compose. I followed the steps in the meta switch gitgub, and everything okay the first time. But, when I stop all the containers and then I try to rerun it all with docker restart and I try to create a number for a user in ellis I have the next issue:
+
+Failed to update the server (see detailed diagnostics in developer console). Please refresh the page.
+
+How should I rerun all containers to avoid this issue?
+Thanks so much for your help!
+
+Gabriel David Orozco
+Presidente Rama estudiantil IEEE Universidad del Cauca
+(57) 3004351630
+
+
+________________________________
+
+Hacia una Universidad comprometida con la Paz Territorial
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+________________________________
+
+Hacia una Universidad comprometida con la Paz Territorial
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180919/f59f8d08/attachment.html>
+
+From CT00548828 at TechMahindra.com  Wed Sep 19 02:29:10 2018
+From: CT00548828 at TechMahindra.com (Chandrashekhar Thakare)
+Date: Wed, 19 Sep 2018 06:29:10 +0000
+Subject: [Project Clearwater] Clearwater VNF support to Ansible
+Message-ID: <BM1PR0101MB146015218AC531AD16DD9B72A71C0@BM1PR0101MB1460.INDPRD01.PROD.OUTLOOK.COM>
+
+Hi ,
+I am new to project clearwater. We are trying to execute Ansible playbook via ONAP on the Clearwater VNF.  But query is Does Clearwater VNF supports Ansible and playbook execution over SSH?
+
+============================================================================================================================
+
+Disclaimer:  This message and the information contained herein is proprietary and confidential and subject to the Tech Mahindra policy statement, you may review the policy at http://www.techmahindra.com/Disclaimer.html <http://www.techmahindra.com/Disclaimer.html> externally http://tim.techmahindra.com/tim/disclaimer.html <http://tim.techmahindra.com/tim/disclaimer.html> internally within TechMahindra.
+
+============================================================================================================================
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180919/8e27b86f/attachment.html>
+
+From William.Yates at metaswitch.com  Thu Sep 20 04:35:19 2018
+From: William.Yates at metaswitch.com (William Yates)
+Date: Thu, 20 Sep 2018 08:35:19 +0000
+Subject: [Project Clearwater] Clearwater VNF support to Ansible
+In-Reply-To: <BM1PR0101MB146015218AC531AD16DD9B72A71C0@BM1PR0101MB1460.INDPRD01.PROD.OUTLOOK.COM>
+References: <BM1PR0101MB146015218AC531AD16DD9B72A71C0@BM1PR0101MB1460.INDPRD01.PROD.OUTLOOK.COM>
+Message-ID: <BL0PR02MB46414D237FBFFECB507A15BC95130@BL0PR02MB4641.namprd02.prod.outlook.com>
+
+Chandrashekhar,
+
+Thanks for your interest in Project Clearwater.
+
+> But query is Does Clearwater VNF supports Ansible and playbook execution over SSH?
+I'm sorry, but we've not tried that with the Project Clearwater VNFs - so not supported.
+
+Cheers,
+Will
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of Chandrashekhar Thakare
+Sent: 19 September 2018 07:29
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Clearwater VNF support to Ansible
+
+Hi ,
+I am new to project clearwater. We are trying to execute Ansible playbook via ONAP on the Clearwater VNF.  But query is Does Clearwater VNF supports Ansible and playbook execution over SSH?
+
+============================================================================================================================
+Disclaimer:  This message and the information contained herein is proprietary and confidential and subject to the Tech Mahindra policy statement, you may review the policy at http://www.techmahindra.com/Disclaimer.html externally http://tim.techmahindra.com/tim/disclaimer.html internally within TechMahindra.
+============================================================================================================================
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180920/0af46348/attachment.html>
+
+From arvindas at hpe.com  Thu Sep 27 08:20:18 2018
+From: arvindas at hpe.com (Shirabur, Aravind Ashok (CMS))
+Date: Thu, 27 Sep 2018 12:20:18 +0000
+Subject: [Project Clearwater] How to change the Ellis port number to 8080
+Message-ID: <AT5PR8401MB08201C08E6BA4F90DA0F6BEDDC140@AT5PR8401MB0820.NAMPRD84.PROD.OUTLOOK.COM>
+
+Hi,
+
+We would like to change the Ellis provisioning portal listening port number from 80 to 8080, please suggest how to change ?
+
+Thanks
+Aravind
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180927/d68ecce9/attachment.html>
+

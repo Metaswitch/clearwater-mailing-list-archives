@@ -1,0 +1,2652 @@
+From afriyie.abraham at gmail.com  Wed Nov  1 09:45:05 2017
+From: afriyie.abraham at gmail.com (Afriyie Abraham Kwabena)
+Date: Wed, 1 Nov 2017 15:45:05 +0200
+Subject: [Project Clearwater] Installation from source
+Message-ID: <5AFDDE0B-0A2C-4FB7-AD47-EDDFBE235F00@gmail.com>
+
+Hi,
+
+I would like to install Clearwater from source. 
+Can anyone give me some guidelines as to how to do it. Apart from compiling the source code of the nodes in the installation instruction what else do I need to install or add. 
+
+Thanks in advance. 
+
+BR
+Abraham
+
+Sent from my iPhone
+
+
+From Adam.Lindley at metaswitch.com  Thu Nov  2 07:10:20 2017
+From: Adam.Lindley at metaswitch.com (Adam Lindley)
+Date: Thu, 2 Nov 2017 11:10:20 +0000
+Subject: [Project Clearwater] only homestead_process and
+ homestead-prov_process status is not running
+In-Reply-To: <CALs6Zhw6k=Kqe7tw_7TcH9rVU9v8fS8Dq9pMBTysuS+4c5AxrQ@mail.gmail.com>
+References: <CALs6Zhw6k=Kqe7tw_7TcH9rVU9v8fS8Dq9pMBTysuS+4c5AxrQ@mail.gmail.com>
+Message-ID: <BY2PR02MB2037B133467AC75526191AF6E25C0@BY2PR02MB2037.namprd02.prod.outlook.com>
+
+Hi Devendra,
+
+Have you taken a look in the process logs?
+Our processes will write logs under /var/log/, generally in a directory under their process name, such as /var/log/homestead/homestead_<timestamp>. These should give you a much clearer idea of what is causing your processes to fail. If that doesn?t get you very far, you should take a look in the monit logs at /var/log/monit.log, and see if there are any telling errors being logged in there. I?d suggest taking a look at our basic troubleshooting guide at https://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html#
+
+Just by looking at your config I can?t tell what is causing the processes to fail. I do see a couple of odd things though; you have the line ?sprout_registration_store=sprout.172.16.4.195?. The sprout_registration_store config option must be resolvable, and this doesn?t look like it would be. It should point to the vellum node in your deployment.
+You also have the public_hostname in your local_config set to just ?dime?. This should also be resolvable. For information on our config options, take a look at https://clearwater.readthedocs.io/en/stable/Clearwater_Configuration_Options_Reference.html
+
+Hopefully you can use this to dig into what?s causing your failures.
+If you do solve your problems, do share what the issue was with the list.
+
+Cheers,
+Adam
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Devendra Singh
+Sent: 30 October 2017 16:02
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] only homestead_process and homestead-prov_process status is not running
+
+coHi,
+I am getting below error in manual installation on six machine on Dime Component.
+All other components are working fine and getting healthy status.
+
+[cassandra-homestead-ralf]ist at dime:~$ sudo monit summary
+[sudo] password for ist:
+Monit 5.18.1 uptime: 10h 17m
+ Service Name                        Status                      Type
+ node-dime                             Running                     System
+ snmpd_process                     Running                     Process
+ ntp_process                           Running                     Process
+ nginx_process                       Running                     Process
+ homestead_process                Execution failed | Does...  Process
+ homestead-prov_process           Execution failed | Does...  Process
+ clearwater_queue_manager_pro...  Running                     Process
+ etcd_process                              Running                     Process
+ clearwater_diags_monitor_pro...  Running                     Process
+ clearwater_config_manager_pr...  Running                     Process
+ clearwater_cluster_manager_p...  Running                     Process
+ cassandra_process                Running                     Process
+ nginx_ping                               Status ok                   Program
+ nginx_uptime                        Status ok                   Program
+ monit_uptime                     Status ok                   Program
+ homestead_uptime                 Wait parent                 Program
+ poll_homestead                   Wait parent                 Program
+ check_cx_health                  Wait parent                 Program
+ poll_homestead-prov              Wait parent                 Program
+ clearwater_queue_manager_uptime  Status ok                   Program
+ etcd_uptime                      Status ok                   Program
+ poll_etcd_cluster                Status failed               Program
+ poll_etcd                        Status ok                   Program
+ cassandra_uptime                 Status ok                   Program
+ poll_cassandra                   Status ok                   Program
+ poll_cqlsh                             Status ok                   Program
+
+
+shared_config
+---------------------------------------------
+# Deployment definitions
+home_domain=example.com<http://example.com>
+sprout_hostname=sprout.example.com<http://sprout.example.com>
+chronos_hostname=vellum.example.com:7253<http://vellum.example.com:7253>
+hs_hostname=hs.example.com:8888<http://hs.example.com:8888>
+hs_provisioning_hostname=hs.example.com:8889<http://hs.example.com:8889>
+sprout_impi_store=vellum.example.com<http://vellum.example.com>
+cassandra_hostname=vellum.example.com:7000<http://vellum.example.com:7000>
+xdms_hostname=homer.example.com:7888<http://homer.example.com:7888>
+dime_session_store=vellum.example.com<http://vellum.example.com>
+upstream_port=0
+sprout_registration_store=sprout.172.16.4.195
+# Email server configuration
+smtp_smarthost=localhost
+smtp_username=username
+smtp_password=password
+email_recovery_sender=clearwater at example.org<mailto:clearwater at example.org>
+
+# Keys (you can change this secret to something else)
+signup_key=secret
+turn_workaround=secret
+ellis_api_key=secret
+ellis_cookie_key=secret
+
+local_config
+--------------------------------------------------
+#Local IP configuration
+
+local_ip=172.16.4.37
+public_ip=103.231.44.90
+public_hostname=dime
+#public_hostname=103.231.44.90
+etcd_cluster="172.16.1.23,172.16.4.195,172.16.4.37,172.16.1.142,172.16.2.133,172.16.5.22"
+
+# Only keep 50MB of logs
+
+max_log_directory_size=52428800
+-----------------------------------------------------
+
+Please let us know if more information you need.
+
+Waiting for your response .
+
+Thanks & Regards,
+Devendra
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171102/66c6d2c8/attachment.html>
+
+From Adam.Lindley at metaswitch.com  Thu Nov  2 07:32:34 2017
+From: Adam.Lindley at metaswitch.com (Adam Lindley)
+Date: Thu, 2 Nov 2017 11:32:34 +0000
+Subject: [Project Clearwater] Installation from source
+In-Reply-To: <5AFDDE0B-0A2C-4FB7-AD47-EDDFBE235F00@gmail.com>
+References: <5AFDDE0B-0A2C-4FB7-AD47-EDDFBE235F00@gmail.com>
+Message-ID: <BY2PR02MB2037DE91C84C41CBF6560EFDE25C0@BY2PR02MB2037.namprd02.prod.outlook.com>
+
+Hi Abraham,
+
+In a way, it is just as simple as building all of the code, and running a manual install. However, as we do have a fair number of different components, you will need to make sure you've built all of the different packages you need.
+We have basic installation documentation at https://clearwater.readthedocs.io/en/stable/Installation_Instructions.html , and each of our code repositories should have instructions in their documentation on installing dependencies, and building the code into debian files. I would recommend setting up your own package repository as well; if you add the REPO_SERVER=<repo> flag when running make deb, the packages from most of our repositories will be automatically pushed to the repo, and the repo updated.
+
+To work out the full list of repositories you need to build to install, you can look at the 'depends' lines for in the debian/control files for the packages we guide users to install in the manual install instructions (https://clearwater.readthedocs.io/en/stable/Manual_Install.html). For example, the sprout node installation packages are "sprout" and "clearwater-management"; the sprout repo debian/control file then contains the following detail for the sprout package:
+Package: sprout
+Architecture: any
+Depends: sprout-base, sprout-scscf, sprout-icscf, sprout-bgcf, sprout-mmtel-as
+Suggests: sprout-dbg, clearwater-logging, clearwater-snmp-alarm-agent
+Description: sprout, the SIP Router
+
+So you can see that to install "sprout", you will need to have built the packages " sprout-base, sprout-scscf, sprout-icscf, sprout-bgcf, sprout-mmtel-as". Looking further down the control file you should be able to find these, and their dependencies.
+To go from code to installed system, you will need to clone the code repositories, install build dependencies, compile the code to debian files, and install the debians on your machines following the install instructions.
+
+Hope this helps, and let us know how it goes,
+Cheers,
+Adam
+
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Afriyie Abraham Kwabena
+Sent: 01 November 2017 13:45
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Installation from source
+
+Hi,
+
+I would like to install Clearwater from source. 
+Can anyone give me some guidelines as to how to do it. Apart from compiling the source code of the nodes in the installation instruction what else do I need to install or add. 
+
+Thanks in advance. 
+
+BR
+Abraham
+
+Sent from my iPhone
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+
+
+From Adam.Lindley at metaswitch.com  Thu Nov  2 07:40:52 2017
+From: Adam.Lindley at metaswitch.com (Adam Lindley)
+Date: Thu, 2 Nov 2017 11:40:52 +0000
+Subject: [Project Clearwater] RFC 2617 - nextnonce parameter support
+ (3.2.3)
+In-Reply-To: <1509391733.3531.17.camel@interoptechnologies.com>
+References: <1509391733.3531.17.camel@interoptechnologies.com>
+Message-ID: <BY2PR02MB20373491BF6AC91643201601E25C0@BY2PR02MB2037.namprd02.prod.outlook.com>
+
+Hi Trey,
+
+Project Clearwater currently does not support the nextnonce parameter in Authentication-Info Headers.
+Though of course there?s nothing stopping you adding support for it yourself; let us know if you are working on this!
+
+Cheers,
+Adam
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Trey Ormsbee
+Sent: 30 October 2017 19:29
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] RFC 2617 - nextnonce parameter support (3.2.3)
+
+Does project clearwater support the Authentication-Info Header with nextnonce value for the registration 200ok?
+
+It does not look like it does, but asking to be sure.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171102/bf48b0cb/attachment.html>
+
+From Adam.Lindley at metaswitch.com  Thu Nov  2 08:04:48 2017
+From: Adam.Lindley at metaswitch.com (Adam Lindley)
+Date: Thu, 2 Nov 2017 12:04:48 +0000
+Subject: [Project Clearwater] Installation of ClearWater vIMS via
+ OSM/OpenStack
+In-Reply-To: <CAKHfQt44k-eCnX0p-4DqcD_hn23F8H7ySO2tjKOZvhm6qY9jxw@mail.gmail.com>
+References: <CAKHfQt44k-eCnX0p-4DqcD_hn23F8H7ySO2tjKOZvhm6qY9jxw@mail.gmail.com>
+Message-ID: <BY2PR02MB2037294E4B3F0DC3C891F261E25C0@BY2PR02MB2037.namprd02.prod.outlook.com>
+
+Hi Joe,
+Sorry we?re so late to respond here.
+
+We haven?t done anything using OSM here ourselves; though it does look interesting.
+We did see a demo of the capabilities of OpenMano at MWC 2016 though, and you should be able to see a write up of this at https://www.metaswitch.com/the-switch/open-source-mano-group-gets-to-work, with some links through to videos of the demo itself. Hopefully that serves as a useful step in getting started with this.
+If you?re just interested in capabilities on Openstack, we have done some work using Heat Templates, which you can find at: https://github.com/Metaswitch/clearwater-heat .
+
+Do let us know if you get something interesting up and running, and there may be others on the list who?ve investigated this before, so may be able to help as well.
+Also, please consider signing up to the mailing list. This will allow you to join conversation on here without a moderator needing to approve your messages.
+
+Cheers,
+Adam
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of joehary ar
+Sent: 13 September 2017 08:15
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Installation of ClearWater vIMS via OSM/OpenStack
+
+Hi,
+
+May I know if there is any tutorial on how to deploy/onboarding vIMS clearwater using OSM and OpenStack.
+
+I've seen it has been done over Cloudify and got good tutorial on it. I my case i want to try using OSM.
+
+Please assist further.
+
+Thanks.
+
+Regards,
+Joe
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171102/69ceddca/attachment.html>
+
+From Adam.Lindley at metaswitch.com  Thu Nov  2 08:26:19 2017
+From: Adam.Lindley at metaswitch.com (Adam Lindley)
+Date: Thu, 2 Nov 2017 12:26:19 +0000
+Subject: [Project Clearwater] Installation of ClearWater vIMS via
+ OSM/OpenStack
+In-Reply-To: <BY2PR02MB2037294E4B3F0DC3C891F261E25C0@BY2PR02MB2037.namprd02.prod.outlook.com>
+References: <CAKHfQt44k-eCnX0p-4DqcD_hn23F8H7ySO2tjKOZvhm6qY9jxw@mail.gmail.com>
+	<BY2PR02MB2037294E4B3F0DC3C891F261E25C0@BY2PR02MB2037.namprd02.prod.outlook.com>
+Message-ID: <BY2PR02MB2037EF0E3F836A767113F080E25C0@BY2PR02MB2037.namprd02.prod.outlook.com>
+
+Adding a little more clarification:
+
+I said we haven?t done anything with OSM, where I mean is that we haven?t got an OSM setup in house.
+As you?ll see from the linked write ups, we have worked closely with the project, and we have our Juju project (https://github.com/Metaswitch/clearwater-juju) that was used as an interface for OSM to deploy Project Clearwater.
+So, we haven?t got a full project that you can just clone and run, but Project Clearwater has been deployed with OSM successfully.
+
+Hopefully you find the linked information useful. Do let us know how it goes,
+
+Cheers,
+Adam
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Adam Lindley
+Sent: 02 November 2017 12:05
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Installation of ClearWater vIMS via OSM/OpenStack
+
+Hi Joe,
+Sorry we?re so late to respond here.
+
+We haven?t done anything using OSM here ourselves; though it does look interesting.
+We did see a demo of the capabilities of OpenMano at MWC 2016 though, and you should be able to see a write up of this at https://www.metaswitch.com/the-switch/open-source-mano-group-gets-to-work, with some links through to videos of the demo itself. Hopefully that serves as a useful step in getting started with this.
+If you?re just interested in capabilities on Openstack, we have done some work using Heat Templates, which you can find at: https://github.com/Metaswitch/clearwater-heat .
+
+Do let us know if you get something interesting up and running, and there may be others on the list who?ve investigated this before, so may be able to help as well.
+Also, please consider signing up to the mailing list. This will allow you to join conversation on here without a moderator needing to approve your messages.
+
+Cheers,
+Adam
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of joehary ar
+Sent: 13 September 2017 08:15
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Installation of ClearWater vIMS via OSM/OpenStack
+
+Hi,
+
+May I know if there is any tutorial on how to deploy/onboarding vIMS clearwater using OSM and OpenStack.
+
+I've seen it has been done over Cloudify and got good tutorial on it. I my case i want to try using OSM.
+
+Please assist further.
+
+Thanks.
+
+Regards,
+Joe
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171102/22033cff/attachment.html>
+
+From Adam.Lindley at metaswitch.com  Fri Nov  3 06:51:45 2017
+From: Adam.Lindley at metaswitch.com (Adam Lindley)
+Date: Fri, 3 Nov 2017 10:51:45 +0000
+Subject: [Project Clearwater] Making calls: cannot get two-way media
+In-Reply-To: <CADS3bmaBh6ymA=QW01HG9-gAToeXZ5dVPxHv-9D49eYgJtaouQ@mail.gmail.com>
+References: <CADS3bmaBh6ymA=QW01HG9-gAToeXZ5dVPxHv-9D49eYgJtaouQ@mail.gmail.com>
+Message-ID: <BY2PR02MB2037F4B6AE73C74A76334296E25D0@BY2PR02MB2037.namprd02.prod.outlook.com>
+
+Hey Alice,
+
+I?m not sure what?s causing the issue from just the wireshark trace, though I think the record-route header `<sip:2FLuF4m0qB at cw-aio:5060;transport=TCP;lr>` looks unusual.
+Can you enable debug logging, and then get the bono and sprout debug logs from the node when you try to run the call?
+Also, can you let us know where you are running the wireshark trace?
+
+If you need some guidance on enabling debug logs, check out https://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html
+
+Cheers,
+Adam
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of ???
+Sent: 31 October 2017 04:05
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Making calls: cannot get two-way media
+
+Hi,
+
+I'm using AIO on VirtualBox. For clients, I'm using Zoiper on Android phones.
+
+Both clients can successfully sending out REGISTER, INVITE, 100 TRYING, 180 RINGING......
+
+When Caller makes a call to Callee, Callee can successfully send out a 200 OK to Caller.
+
+But Caller didn't send back a 200 OK to Callee, and that makes Callee keep showing the interface of incoming call.
+
+The Wireshark trace and the snapshot for sip packets is attached.
+
+**********************************************************
+Caller IP: 192.168.208.202
+Callee IP: 192.168.208.48
+PC IP: 192.168.104.121
+**********************************************************
+
+There is a similar problem in archive April 2016, but the answer there says that it is the problem in client part.
+
+If it is Zoiper's problem, may I ask what kind of softphone apps do you use?
+
+Cause I look through all the Clearwater archives, but it seems every one can use Zoiper successfully.
+
+As for X-Lite, Bria, Blink and Jitsi, some of them can not set up your own SIP account, and some even don't exist now.
+
+Best regards,
+Alice
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171103/077f64c2/attachment.html>
+
+From case at gci.com  Mon Nov  6 20:52:57 2017
+From: case at gci.com (Roger Case)
+Date: Tue, 7 Nov 2017 01:52:57 +0000
+Subject: [Project Clearwater] enum.json for +1 numbers
+Message-ID: <A7E1158244C52C428F0B61BDC9CF760C016D80F69A@ex-mbx-prd02.gci.com>
+
+Dear Clearwater,
+
+The ENUM DOCS show an entry in enum.json for +1 dialed internal numbers of:
+
+{   "name" : "Clearwater internal numbers dialled with +1 prefix",
+            "prefix" : "+1650555",
+           "regex" : "!^+1(.*$)!sip:\\1 at ngv.example.com!"
+        }
+
+This underlined piece of the expression is shown later in the document, inside a NAPTR record, as:
+
+
+naptr-record=5.5.5.0.5.6.1.e164.arpa,1,1,U,E2U+SIP,!^\+1(.*$)!sip:\1 at ngv.example.com!
+
+
+
+
+
+
+
+
+The second expression contains an extra \ before the +1.
+
+Which is correct, or are both correct?
+
+I ask because neither seem to work in my enum.json file.
+
+Also, is there a way in the enum.json file expressions to remove the + or 1+, before sending the Invite to the internal or IBCF domain?
+
+
+
+Thanks very much,
+
+Roger Case
+GCI, Alaska
+
+(old telephone guy trying to understand new telephone technology)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171107/38ab2c3e/attachment.html>
+
+From aj211y at gmail.com  Mon Nov  6 03:04:37 2017
+From: aj211y at gmail.com (=?UTF-8?B?5ZCz5a2f5bqt?=)
+Date: Mon, 6 Nov 2017 16:04:37 +0800
+Subject: [Project Clearwater] Making calls: cannot get two-way media
+In-Reply-To: <BY2PR02MB2037F4B6AE73C74A76334296E25D0@BY2PR02MB2037.namprd02.prod.outlook.com>
+References: <CADS3bmaBh6ymA=QW01HG9-gAToeXZ5dVPxHv-9D49eYgJtaouQ@mail.gmail.com>
+	<BY2PR02MB2037F4B6AE73C74A76334296E25D0@BY2PR02MB2037.namprd02.prod.outlook.com>
+Message-ID: <CADS3bmavfa_+9fNJWOc929uf8+W+q21=Ls0jnYVmrn+h7u-K6w@mail.gmail.com>
+
+Hi Adam,
+
+Thanks for your replying.
+
+I'm running the wireshark trace on Windows 7.
+
+I've attached the bono and sprout debug logs. Also the wireshark trace for
+this time and the txt file is some record for this experiment, like IP
+address for my host and clients.
+
+Best regards,
+Alice
+
+2017-11-03 18:51 GMT+08:00 Adam Lindley <Adam.Lindley at metaswitch.com>:
+
+> Hey Alice,
+>
+>
+>
+> I?m not sure what?s causing the issue from just the wireshark trace,
+> though I think the record-route header `<sip:2FLuF4m0qB at cw-aio:5060;transport=TCP;lr>`
+> looks unusual.
+>
+> Can you enable debug logging, and then get the bono and sprout debug logs
+> from the node when you try to run the call?
+>
+> Also, can you let us know where you are running the wireshark trace?
+>
+>
+>
+> If you need some guidance on enabling debug logs, check out
+> https://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.
+> html
+>
+>
+>
+> Cheers,
+>
+> Adam
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *???
+> *Sent:* 31 October 2017 04:05
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Project Clearwater] Making calls: cannot get two-way media
+>
+>
+>
+> Hi,
+>
+>
+>
+> I'm using AIO on VirtualBox. For clients, I'm using Zoiper on Android
+> phones.
+>
+>
+>
+> Both clients can successfully sending out REGISTER, INVITE, 100 TRYING,
+> 180 RINGING......
+>
+>
+>
+> When Caller makes a call to Callee, Callee can successfully send out a 200
+> OK to Caller.
+>
+>
+>
+> But Caller didn't send back a 200 OK to Callee, and that makes Callee keep
+> showing the interface of incoming call.
+>
+>
+>
+> The Wireshark trace and the snapshot for sip packets is attached.
+>
+>
+>
+> **********************************************************
+>
+> Caller IP: 192.168.208.202
+>
+> Callee IP: 192.168.208.48
+>
+> PC IP: 192.168.104.121
+>
+> **********************************************************
+>
+>
+>
+> There is a similar problem in archive April 2016, but the answer there
+> says that it is the problem in client part.
+>
+>
+>
+> If it is Zoiper's problem, may I ask what kind of softphone apps do you
+> use?
+>
+> Cause I look through all the Clearwater archives, but it seems every one
+> can use Zoiper successfully.
+>
+>
+>
+> As for X-Lite, Bria, Blink and Jitsi, some of them can not set up your own
+> SIP account, and some even don't exist now.
+>
+>
+>
+> Best regards,
+>
+> Alice
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.
+> projectclearwater.org
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171106/7cf5a6f9/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: making_calls_issue.rar
+Type: application/rar
+Size: 1281294 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171106/7cf5a6f9/attachment.bin>
+
+From Ying.Huang at metaswitch.com  Wed Nov  8 17:02:45 2017
+From: Ying.Huang at metaswitch.com (Ying Huang)
+Date: Wed, 8 Nov 2017 22:02:45 +0000
+Subject: [Project Clearwater] enum.json for +1 numbers
+In-Reply-To: <A7E1158244C52C428F0B61BDC9CF760C016D80F69A@ex-mbx-prd02.gci.com>
+References: <A7E1158244C52C428F0B61BDC9CF760C016D80F69A@ex-mbx-prd02.gci.com>
+Message-ID: <DM5PR02MB2475CFBCA3CBB1EDCBD272C5F8560@DM5PR02MB2475.namprd02.prod.outlook.com>
+
+Hi Roger,
+
+Both regex should work fine, while the second expression with extra \ is more correct and I suggest you use that. To turn on debug logging for Sprout, writie log_level=5 to /etc/clearwater/user_settings (creating it if it doesn?t exist already), then restart Sprout (by running sudo service sprout stop - it will be restarted by monit). Then you can check /var/log/sprout/sprout_current.txt while performing the operations. For more suggestions, see http://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html?highlight=debug
+
+The regex is doing what you expect ? it matches on the entire number but takes out the bit in (.*$) to put it in the \\1 part. So +1333666 will be replaced by sip:333666 at ngv.com, where the +1 has been stripped off. You can modify the second part of the regex to be how you want the number to be sent to the internal domain.
+
+If anything unclear you can come back to this thread.
+
+
+Thanks,
+Ying
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Roger Case
+Sent: 07 November 2017 01:53
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] enum.json for +1 numbers
+
+Dear Clearwater,
+
+The ENUM DOCS show an entry in enum.json for +1 dialed internal numbers of:
+
+{   "name" : "Clearwater internal numbers dialled with +1 prefix",
+            "prefix" : "+1650555",
+           "regex" : "!^+1(.*$)!sip:\\1 at ngv.example.com!"
+        }
+
+This underlined piece of the expression is shown later in the document, inside a NAPTR record, as:
+
+
+naptr-record=5.5.5.0.5.6.1.e164.arpa,1,1,U,E2U+SIP,!^\+1(.*$)!sip:\1 at ngv.example.com!
+
+
+
+
+
+
+
+
+The second expression contains an extra \ before the +1.
+
+Which is correct, or are both correct?
+
+I ask because neither seem to work in my enum.json file.
+
+Also, is there a way in the enum.json file expressions to remove the + or 1+, before sending the Invite to the internal or IBCF domain?
+
+
+
+Thanks very much,
+
+Roger Case
+GCI, Alaska
+
+(old telephone guy trying to understand new telephone technology)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171108/d25f21c5/attachment.html>
+
+From case at gci.com  Wed Nov  8 19:58:29 2017
+From: case at gci.com (Roger Case)
+Date: Thu, 9 Nov 2017 00:58:29 +0000
+Subject: [Project Clearwater] enum.json for +1 numbers
+In-Reply-To: <DM5PR02MB2475CFBCA3CBB1EDCBD272C5F8560@DM5PR02MB2475.namprd02.prod.outlook.com>
+References: <A7E1158244C52C428F0B61BDC9CF760C016D80F69A@ex-mbx-prd02.gci.com>
+	<DM5PR02MB2475CFBCA3CBB1EDCBD272C5F8560@DM5PR02MB2475.namprd02.prod.outlook.com>
+Message-ID: <A7E1158244C52C428F0B61BDC9CF760C016D8114CD@ex-mbx-prd02.gci.com>
+
+Hi Ying,
+
+Thanks very much for answering.
+
+With the extra \ in the expression the whole load of the enum.json file fails:
+
+08-11-2017 23:38:07.350 UTC Error enumservice.cpp:167: Failed to read ENUM configuration data: {
+    "number_blocks" : [
+{   "name" : "+1907-644 internal",
+            "prefix" : "+1907644",
+            "regex" : "!^\+1(.*$)!sip:\\1 at example.com!"
+        }    ]
+}
+
+Error: Invalid escape character in string.
+
+--------------------------------------------------------------------------------------------------------
+
+Without the \, as written in the enum.json docs, the entry is not matched at all, as Clearwater declares the expression ?badly formed?.
+
+09-11-2017 00:40:50.419 UTC Debug enumservice.cpp:192: Found valid number prefix block +1907644
+09-11-2017 00:40:50.419 UTC Debug enumservice.cpp:99: Split regex into match=^+1(.*$), replace=sip:\1 at example.com
+09-11-2017 00:40:50.419 UTC Warning enumservice.cpp:205: Badly formed regular expression in ENUM number block !^+1(.*$)!sip:\1 at example.com!
+
+This is for:
+
+{   "name" : "+1907-644 internal",
+            "prefix" : "+1907644",
+            "regex" : "!^+1(.*$)!sip:\\1 at example.com!"
+        }    ]
+
+
+I?m confused!
+
+Thanks,
+
+Roger
+
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Ying Huang
+Sent: Wednesday, November 08, 2017 1:03 PM
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] enum.json for +1 numbers
+
+[External Email]
+Hi Roger,
+
+Both regex should work fine, while the second expression with extra \ is more correct and I suggest you use that. To turn on debug logging for Sprout, writie log_level=5 to /etc/clearwater/user_settings (creating it if it doesn?t exist already), then restart Sprout (by running sudo service sprout stop - it will be restarted by monit). Then you can check /var/log/sprout/sprout_current.txt while performing the operations. For more suggestions, see http://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html?highlight=debug
+
+The regex is doing what you expect ? it matches on the entire number but takes out the bit in (.*$) to put it in the \\1<file:///\\1> part. So +1333666 will be replaced by sip:333666 at ngv.com, where the +1 has been stripped off. You can modify the second part of the regex to be how you want the number to be sent to the internal domain.
+
+If anything unclear you can come back to this thread.
+
+
+Thanks,
+Ying
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Roger Case
+Sent: 07 November 2017 01:53
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] enum.json for +1 numbers
+
+Dear Clearwater,
+
+The ENUM DOCS show an entry in enum.json for +1 dialed internal numbers of:
+
+{   "name" : "Clearwater internal numbers dialled with +1 prefix",
+            "prefix" : "+1650555",
+           "regex" : "!^+1(.*$)!sip:\\1 at ngv.example.com!"
+        }
+
+This underlined piece of the expression is shown later in the document, inside a NAPTR record, as:
+
+
+naptr-record=5.5.5.0.5.6.1.e164.arpa,1,1,U,E2U+SIP,!^\+1(.*$)!sip:\1 at ngv.example.com!
+
+
+
+
+
+
+
+
+The second expression contains an extra \ before the +1.
+
+Which is correct, or are both correct?
+
+I ask because neither seem to work in my enum.json file.
+
+Also, is there a way in the enum.json file expressions to remove the + or 1+, before sending the Invite to the internal or IBCF domain?
+
+
+
+Thanks very much,
+
+Roger Case
+GCI, Alaska
+
+(old telephone guy trying to understand new telephone technology)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171109/c47874f7/attachment.html>
+
+From case at gci.com  Thu Nov  9 17:46:36 2017
+From: case at gci.com (Roger Case)
+Date: Thu, 9 Nov 2017 22:46:36 +0000
+Subject: [Project Clearwater] enum.json for +1 numbers
+References: <A7E1158244C52C428F0B61BDC9CF760C016D80F69A@ex-mbx-prd02.gci.com>
+	<DM5PR02MB2475CFBCA3CBB1EDCBD272C5F8560@DM5PR02MB2475.namprd02.prod.outlook.com>
+Message-ID: <A7E1158244C52C428F0B61BDC9CF760C016D8121C2@ex-mbx-prd02.gci.com>
+
+Hi Ying,
+
+Mystery is solved.
+
+The problem with the enum.json regex expression to remove part of a telephone prefix is that ?+? is a regular expression special character.   Any other digits may be removed just like shown in the ENUM documentation.  In order to remove the +1 from a number like +16505551234, the expression must be entered into the enum.json file as :
+
+{   "name" : "Clearwater internal numbers dialed with +1 prefix",
+            "prefix" : "+1650555",
+           "regex" : "!^\\+1(.*$)!sip:\\1 at example.com!"
+        }
+
+The TWO backslashes prior to the + make it interpreted not as a special character, but as part of the telephone prefix.
+
+When Sprout loads the file he displays just one backslash in the result:
+
+09-11-2017 22:11:31.887 UTC Status enumservice.cpp:200:   Adding number prefix +1650555, regex=!^\+1(.*$)!sip:\1 at example.com!
+
+
+Thanks for helping me on to the correct troubleshooting path for this problem.
+
+Best regards,
+
+Roger Case
+GCI Alaska
+
+From: Roger Case
+Sent: Wednesday, November 08, 2017 3:58 PM
+To: clearwater at lists.projectclearwater.org
+Subject: RE: enum.json for +1 numbers
+
+Hi Ying,
+
+Thanks very much for answering.
+
+With the extra \ in the expression the whole load of the enum.json file fails:
+
+08-11-2017 23:38:07.350 UTC Error enumservice.cpp:167: Failed to read ENUM configuration data: {
+    "number_blocks" : [
+{   "name" : "+1907-644 internal",
+            "prefix" : "+1907644",
+            "regex" : "!^\+1(.*$)!sip:\\1 at example.com!"
+        }    ]
+}
+
+Error: Invalid escape character in string.
+
+--------------------------------------------------------------------------------------------------------
+
+Without the \, as written in the enum.json docs, the entry is not matched at all, as Clearwater declares the expression ?badly formed?.
+
+09-11-2017 00:40:50.419 UTC Debug enumservice.cpp:192: Found valid number prefix block +1907644
+09-11-2017 00:40:50.419 UTC Debug enumservice.cpp:99: Split regex into match=^+1(.*$), replace=sip:\1 at example.com
+09-11-2017 00:40:50.419 UTC Warning enumservice.cpp:205: Badly formed regular expression in ENUM number block !^+1(.*$)!sip:\1 at example.com!
+
+This is for:
+
+{   "name" : "+1907-644 internal",
+            "prefix" : "+1907644",
+            "regex" : "!^+1(.*$)!sip:\\1 at example.com!"
+        }    ]
+
+
+I?m confused!
+
+Thanks,
+
+Roger
+
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Ying Huang
+Sent: Wednesday, November 08, 2017 1:03 PM
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] enum.json for +1 numbers
+
+[External Email]
+Hi Roger,
+
+Both regex should work fine, while the second expression with extra \ is more correct and I suggest you use that. To turn on debug logging for Sprout, writie log_level=5 to /etc/clearwater/user_settings (creating it if it doesn?t exist already), then restart Sprout (by running sudo service sprout stop - it will be restarted by monit). Then you can check /var/log/sprout/sprout_current.txt while performing the operations. For more suggestions, see http://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html?highlight=debug
+
+The regex is doing what you expect ? it matches on the entire number but takes out the bit in (.*$) to put it in the \\1<file:///\\1> part. So +1333666 will be replaced by sip:333666 at ngv.com, where the +1 has been stripped off. You can modify the second part of the regex to be how you want the number to be sent to the internal domain.
+
+If anything unclear you can come back to this thread.
+
+
+Thanks,
+Ying
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Roger Case
+Sent: 07 November 2017 01:53
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] enum.json for +1 numbers
+
+Dear Clearwater,
+
+The ENUM DOCS show an entry in enum.json for +1 dialed internal numbers of:
+
+{   "name" : "Clearwater internal numbers dialled with +1 prefix",
+            "prefix" : "+1650555",
+           "regex" : "!^+1(.*$)!sip:\\1 at ngv.example.com!"
+        }
+
+This underlined piece of the expression is shown later in the document, inside a NAPTR record, as:
+
+
+naptr-record=5.5.5.0.5.6.1.e164.arpa,1,1,U,E2U+SIP,!^\+1(.*$)!sip:\1 at ngv.example.com!
+
+
+
+
+
+
+
+
+The second expression contains an extra \ before the +1.
+
+Which is correct, or are both correct?
+
+I ask because neither seem to work in my enum.json file.
+
+Also, is there a way in the enum.json file expressions to remove the + or 1+, before sending the Invite to the internal or IBCF domain?
+
+
+
+Thanks very much,
+
+Roger Case
+GCI, Alaska
+
+(old telephone guy trying to understand new telephone technology)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171109/6e931e84/attachment.html>
+
+From Ying.Huang at metaswitch.com  Fri Nov 10 11:55:07 2017
+From: Ying.Huang at metaswitch.com (Ying Huang)
+Date: Fri, 10 Nov 2017 16:55:07 +0000
+Subject: [Project Clearwater] enum.json for +1 numbers
+In-Reply-To: <A7E1158244C52C428F0B61BDC9CF760C016D8121C2@ex-mbx-prd02.gci.com>
+References: <A7E1158244C52C428F0B61BDC9CF760C016D80F69A@ex-mbx-prd02.gci.com>
+	<DM5PR02MB2475CFBCA3CBB1EDCBD272C5F8560@DM5PR02MB2475.namprd02.prod.outlook.com>
+	<A7E1158244C52C428F0B61BDC9CF760C016D8121C2@ex-mbx-prd02.gci.com>
+Message-ID: <DM5PR02MB2475E55EB0326DAEE24B4CBAF8540@DM5PR02MB2475.namprd02.prod.outlook.com>
+
+Hi Roger,
+
+Wow this is new information for me, thanks for writing up the details. In common regex usage only one backslash is required to escape a special character, so the usage is slightly different here. I will update the docs. Did the number in your example become updated to sip:650555 at example.com then?
+
+Thanks,
+Ying
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Roger Case
+Sent: 09 November 2017 22:47
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] enum.json for +1 numbers
+
+Hi Ying,
+
+Mystery is solved.
+
+The problem with the enum.json regex expression to remove part of a telephone prefix is that ?+? is a regular expression special character.   Any other digits may be removed just like shown in the ENUM documentation.  In order to remove the +1 from a number like +16505551234, the expression must be entered into the enum.json file as :
+
+{   "name" : "Clearwater internal numbers dialed with +1 prefix",
+            "prefix" : "+1650555",
+           "regex" : "!^\\+1(.*$)!sip:\\1 at example.com!"
+        }
+
+The TWO backslashes prior to the + make it interpreted not as a special character, but as part of the telephone prefix.
+
+When Sprout loads the file he displays just one backslash in the result:
+
+09-11-2017 22:11:31.887 UTC Status enumservice.cpp:200:   Adding number prefix +1650555, regex=!^\+1(.*$)!sip:\1 at example.com!
+
+
+Thanks for helping me on to the correct troubleshooting path for this problem.
+
+Best regards,
+
+Roger Case
+GCI Alaska
+
+From: Roger Case
+Sent: Wednesday, November 08, 2017 3:58 PM
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: RE: enum.json for +1 numbers
+
+Hi Ying,
+
+Thanks very much for answering.
+
+With the extra \ in the expression the whole load of the enum.json file fails:
+
+08-11-2017 23:38:07.350 UTC Error enumservice.cpp:167: Failed to read ENUM configuration data: {
+    "number_blocks" : [
+{   "name" : "+1907-644 internal",
+            "prefix" : "+1907644",
+            "regex" : "!^\+1(.*$)!sip:\\1 at example.com!"
+        }    ]
+}
+
+Error: Invalid escape character in string.
+
+--------------------------------------------------------------------------------------------------------
+
+Without the \, as written in the enum.json docs, the entry is not matched at all, as Clearwater declares the expression ?badly formed?.
+
+09-11-2017 00:40:50.419 UTC Debug enumservice.cpp:192: Found valid number prefix block +1907644
+09-11-2017 00:40:50.419 UTC Debug enumservice.cpp:99: Split regex into match=^+1(.*$), replace=sip:\1 at example.com
+09-11-2017 00:40:50.419 UTC Warning enumservice.cpp:205: Badly formed regular expression in ENUM number block !^+1(.*$)!sip:\1 at example.com!
+
+This is for:
+
+{   "name" : "+1907-644 internal",
+            "prefix" : "+1907644",
+            "regex" : "!^+1(.*$)!sip:\\1 at example.com!"
+        }    ]
+
+
+I?m confused!
+
+Thanks,
+
+Roger
+
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Ying Huang
+Sent: Wednesday, November 08, 2017 1:03 PM
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] enum.json for +1 numbers
+
+[External Email]
+Hi Roger,
+
+Both regex should work fine, while the second expression with extra \ is more correct and I suggest you use that. To turn on debug logging for Sprout, writie log_level=5 to /etc/clearwater/user_settings (creating it if it doesn?t exist already), then restart Sprout (by running sudo service sprout stop - it will be restarted by monit). Then you can check /var/log/sprout/sprout_current.txt while performing the operations. For more suggestions, see http://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html?highlight=debug
+
+The regex is doing what you expect ? it matches on the entire number but takes out the bit in (.*$) to put it in the \\1<file://1> part. So +1333666 will be replaced by sip:333666 at ngv.com, where the +1 has been stripped off. You can modify the second part of the regex to be how you want the number to be sent to the internal domain.
+
+If anything unclear you can come back to this thread.
+
+
+Thanks,
+Ying
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Roger Case
+Sent: 07 November 2017 01:53
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] enum.json for +1 numbers
+
+Dear Clearwater,
+
+The ENUM DOCS show an entry in enum.json for +1 dialed internal numbers of:
+
+{   "name" : "Clearwater internal numbers dialled with +1 prefix",
+            "prefix" : "+1650555",
+           "regex" : "!^+1(.*$)!sip:\\1 at ngv.example.com!"
+        }
+
+This underlined piece of the expression is shown later in the document, inside a NAPTR record, as:
+
+
+naptr-record=5.5.5.0.5.6.1.e164.arpa,1,1,U,E2U+SIP,!^\+1(.*$)!sip:\1 at ngv.example.com!
+
+
+
+
+
+
+
+
+The second expression contains an extra \ before the +1.
+
+Which is correct, or are both correct?
+
+I ask because neither seem to work in my enum.json file.
+
+Also, is there a way in the enum.json file expressions to remove the + or 1+, before sending the Invite to the internal or IBCF domain?
+
+
+
+Thanks very much,
+
+Roger Case
+GCI, Alaska
+
+(old telephone guy trying to understand new telephone technology)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171110/f5034753/attachment.html>
+
+From Ying.Huang at metaswitch.com  Fri Nov 10 13:16:36 2017
+From: Ying.Huang at metaswitch.com (Ying Huang)
+Date: Fri, 10 Nov 2017 18:16:36 +0000
+Subject: [Project Clearwater] Making calls: cannot get two-way media
+In-Reply-To: <CADS3bmavfa_+9fNJWOc929uf8+W+q21=Ls0jnYVmrn+h7u-K6w@mail.gmail.com>
+References: <CADS3bmaBh6ymA=QW01HG9-gAToeXZ5dVPxHv-9D49eYgJtaouQ@mail.gmail.com>
+	<BY2PR02MB2037F4B6AE73C74A76334296E25D0@BY2PR02MB2037.namprd02.prod.outlook.com>
+	<CADS3bmavfa_+9fNJWOc929uf8+W+q21=Ls0jnYVmrn+h7u-K6w@mail.gmail.com>
+Message-ID: <DM5PR02MB2475FDBB782EA0F35C3C08C9F8540@DM5PR02MB2475.namprd02.prod.outlook.com>
+
+Hi Alice,
+
+Looking through your wireshark trace, INVITE and 200OK are going through fine, but it?s missing an ACK from callee. Looking into debug log, there isn?t any ERROR, but no ACK is being routed through. So I believe the clearwater deployment is working fine, but the client isn?t configured in the right way and fails to send the ACK. Here is some instruction on setting up the client, it will be good if you double check all the fields. https://clearwater.readthedocs.io/en/stable/Making_your_first_call.html
+
+
+If any question feel free to come back to this thread.
+
+
+Thanks,
+Ying
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of ???
+Sent: 06 November 2017 08:05
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Making calls: cannot get two-way media
+
+Hi Adam,
+
+Thanks for your replying.
+
+I'm running the wireshark trace on Windows 7.
+
+I've attached the bono and sprout debug logs. Also the wireshark trace for this time and the txt file is some record for this experiment, like IP address for my host and clients.
+
+Best regards,
+Alice
+
+2017-11-03 18:51 GMT+08:00 Adam Lindley <Adam.Lindley at metaswitch.com<mailto:Adam.Lindley at metaswitch.com>>:
+Hey Alice,
+
+I?m not sure what?s causing the issue from just the wireshark trace, though I think the record-route header `<sip:2FLuF4m0qB at cw-aio:5060;transport=TCP;lr>` looks unusual.
+Can you enable debug logging, and then get the bono and sprout debug logs from the node when you try to run the call?
+Also, can you let us know where you are running the wireshark trace?
+
+If you need some guidance on enabling debug logs, check out https://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html
+
+Cheers,
+Adam
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>] On Behalf Of ???
+Sent: 31 October 2017 04:05
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Making calls: cannot get two-way media
+
+Hi,
+
+I'm using AIO on VirtualBox. For clients, I'm using Zoiper on Android phones.
+
+Both clients can successfully sending out REGISTER, INVITE, 100 TRYING, 180 RINGING......
+
+When Caller makes a call to Callee, Callee can successfully send out a 200 OK to Caller.
+
+But Caller didn't send back a 200 OK to Callee, and that makes Callee keep showing the interface of incoming call.
+
+The Wireshark trace and the snapshot for sip packets is attached.
+
+**********************************************************
+Caller IP: 192.168.208.202
+Callee IP: 192.168.208.48
+PC IP: 192.168.104.121
+**********************************************************
+
+There is a similar problem in archive April 2016, but the answer there says that it is the problem in client part.
+
+If it is Zoiper's problem, may I ask what kind of softphone apps do you use?
+
+Cause I look through all the Clearwater archives, but it seems every one can use Zoiper successfully.
+
+As for X-Lite, Bria, Blink and Jitsi, some of them can not set up your own SIP account, and some even don't exist now.
+
+Best regards,
+Alice
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171110/31d27950/attachment.html>
+
+From case at gci.com  Fri Nov 10 13:23:42 2017
+From: case at gci.com (Roger Case)
+Date: Fri, 10 Nov 2017 18:23:42 +0000
+Subject: [Project Clearwater] enum.json for +1 numbers
+In-Reply-To: <DM5PR02MB2475E55EB0326DAEE24B4CBAF8540@DM5PR02MB2475.namprd02.prod.outlook.com>
+References: <A7E1158244C52C428F0B61BDC9CF760C016D80F69A@ex-mbx-prd02.gci.com>
+	<DM5PR02MB2475CFBCA3CBB1EDCBD272C5F8560@DM5PR02MB2475.namprd02.prod.outlook.com>
+	<A7E1158244C52C428F0B61BDC9CF760C016D8121C2@ex-mbx-prd02.gci.com>
+	<DM5PR02MB2475E55EB0326DAEE24B4CBAF8540@DM5PR02MB2475.namprd02.prod.outlook.com>
+Message-ID: <A7E1158244C52C428F0B61BDC9CF760C016D812C56@ex-mbx-prd02.gci.com>
+
+Hi Ying,
+
+650555 was just the prefix, my numbers were 650555XXXX, and yes, they route correctly to 650555XXXX at example.com<mailto:650555XXXX at example.com>, when received as +1650555XXXX.  I also experimented with some numbers that go off the core via the BGCF and IBCF, and their format correctly removed the +1 as well.
+
+Once again, thank you very much for getting me on the correct troubleshooting path!
+
+Best regards,
+
+Roger
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Ying Huang
+Sent: Friday, November 10, 2017 7:55 AM
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] enum.json for +1 numbers
+
+[External Email]
+Hi Roger,
+
+Wow this is new information for me, thanks for writing up the details. In common regex usage only one backslash is required to escape a special character, so the usage is slightly different here. I will update the docs. Did the number in your example become updated to sip:650555 at example.com then?
+
+Thanks,
+Ying
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Roger Case
+Sent: 09 November 2017 22:47
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] enum.json for +1 numbers
+
+Hi Ying,
+
+Mystery is solved.
+
+The problem with the enum.json regex expression to remove part of a telephone prefix is that ?+? is a regular expression special character.   Any other digits may be removed just like shown in the ENUM documentation.  In order to remove the +1 from a number like +16505551234, the expression must be entered into the enum.json file as :
+
+{   "name" : "Clearwater internal numbers dialed with +1 prefix",
+            "prefix" : "+1650555",
+           "regex" : "!^\\+1(.*$)!sip:\\1 at example.com!"
+        }
+
+The TWO backslashes prior to the + make it interpreted not as a special character, but as part of the telephone prefix.
+
+When Sprout loads the file he displays just one backslash in the result:
+
+09-11-2017 22:11:31.887 UTC Status enumservice.cpp:200:   Adding number prefix +1650555, regex=!^\+1(.*$)!sip:\1 at example.com!
+
+
+Thanks for helping me on to the correct troubleshooting path for this problem.
+
+Best regards,
+
+Roger Case
+GCI Alaska
+
+From: Roger Case
+Sent: Wednesday, November 08, 2017 3:58 PM
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: RE: enum.json for +1 numbers
+
+Hi Ying,
+
+Thanks very much for answering.
+
+With the extra \ in the expression the whole load of the enum.json file fails:
+
+08-11-2017 23:38:07.350 UTC Error enumservice.cpp:167: Failed to read ENUM configuration data: {
+    "number_blocks" : [
+{   "name" : "+1907-644 internal",
+            "prefix" : "+1907644",
+            "regex" : "!^\+1(.*$)!sip:\\1 at example.com!"
+        }    ]
+}
+
+Error: Invalid escape character in string.
+
+--------------------------------------------------------------------------------------------------------
+
+Without the \, as written in the enum.json docs, the entry is not matched at all, as Clearwater declares the expression ?badly formed?.
+
+09-11-2017 00:40:50.419 UTC Debug enumservice.cpp:192: Found valid number prefix block +1907644
+09-11-2017 00:40:50.419 UTC Debug enumservice.cpp:99: Split regex into match=^+1(.*$), replace=sip:\1 at example.com
+09-11-2017 00:40:50.419 UTC Warning enumservice.cpp:205: Badly formed regular expression in ENUM number block !^+1(.*$)!sip:\1 at example.com!
+
+This is for:
+
+{   "name" : "+1907-644 internal",
+            "prefix" : "+1907644",
+            "regex" : "!^+1(.*$)!sip:\\1 at example.com!"
+        }    ]
+
+
+I?m confused!
+
+Thanks,
+
+Roger
+
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Ying Huang
+Sent: Wednesday, November 08, 2017 1:03 PM
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] enum.json for +1 numbers
+
+[External Email]
+Hi Roger,
+
+Both regex should work fine, while the second expression with extra \ is more correct and I suggest you use that. To turn on debug logging for Sprout, writie log_level=5 to /etc/clearwater/user_settings (creating it if it doesn?t exist already), then restart Sprout (by running sudo service sprout stop - it will be restarted by monit). Then you can check /var/log/sprout/sprout_current.txt while performing the operations. For more suggestions, see http://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html?highlight=debug
+
+The regex is doing what you expect ? it matches on the entire number but takes out the bit in (.*$) to put it in the \\1<file:///\\1> part. So +1333666 will be replaced by sip:333666 at ngv.com, where the +1 has been stripped off. You can modify the second part of the regex to be how you want the number to be sent to the internal domain.
+
+If anything unclear you can come back to this thread.
+
+
+Thanks,
+Ying
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Roger Case
+Sent: 07 November 2017 01:53
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] enum.json for +1 numbers
+
+Dear Clearwater,
+
+The ENUM DOCS show an entry in enum.json for +1 dialed internal numbers of:
+
+{   "name" : "Clearwater internal numbers dialled with +1 prefix",
+            "prefix" : "+1650555",
+           "regex" : "!^+1(.*$)!sip:\\1 at ngv.example.com!"
+        }
+
+This underlined piece of the expression is shown later in the document, inside a NAPTR record, as:
+
+
+naptr-record=5.5.5.0.5.6.1.e164.arpa,1,1,U,E2U+SIP,!^\+1(.*$)!sip:\1 at ngv.example.com!
+
+
+
+
+
+
+
+
+The second expression contains an extra \ before the +1.
+
+Which is correct, or are both correct?
+
+I ask because neither seem to work in my enum.json file.
+
+Also, is there a way in the enum.json file expressions to remove the + or 1+, before sending the Invite to the internal or IBCF domain?
+
+
+
+Thanks very much,
+
+Roger Case
+GCI, Alaska
+
+(old telephone guy trying to understand new telephone technology)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171110/ecab993b/attachment.html>
+
+From case at gci.com  Fri Nov 10 13:49:16 2017
+From: case at gci.com (Roger Case)
+Date: Fri, 10 Nov 2017 18:49:16 +0000
+Subject: [Project Clearwater] Making calls: cannot get two-way media
+In-Reply-To: <DM5PR02MB2475FDBB782EA0F35C3C08C9F8540@DM5PR02MB2475.namprd02.prod.outlook.com>
+References: <CADS3bmaBh6ymA=QW01HG9-gAToeXZ5dVPxHv-9D49eYgJtaouQ@mail.gmail.com>
+	<BY2PR02MB2037F4B6AE73C74A76334296E25D0@BY2PR02MB2037.namprd02.prod.outlook.com>
+	<CADS3bmavfa_+9fNJWOc929uf8+W+q21=Ls0jnYVmrn+h7u-K6w@mail.gmail.com>
+	<DM5PR02MB2475FDBB782EA0F35C3C08C9F8540@DM5PR02MB2475.namprd02.prod.outlook.com>
+Message-ID: <A7E1158244C52C428F0B61BDC9CF760C016D812CCC@ex-mbx-prd02.gci.com>
+
+Hi Alice, Ying,
+
+This exact issue I had in the beginning of experimenting with the all-in-one was caused by the client (in my case Cisco 7960 phones, and PacketCable eMTAs) needing to be able to resolve cw-aio via DNS.  Without this they could not respond with the required ACK.
+
+Also, Alice, your RTP connections may be interesting.  I?m not sure we are clear on your network architecture.  Your client RTP ports seem to be in 10.X.X.X address space.
+
+Best of luck!
+
+Roger
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Ying Huang
+Sent: Friday, November 10, 2017 9:17 AM
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Making calls: cannot get two-way media
+
+[External Email]
+Hi Alice,
+
+Looking through your wireshark trace, INVITE and 200OK are going through fine, but it?s missing an ACK from callee. Looking into debug log, there isn?t any ERROR, but no ACK is being routed through. So I believe the clearwater deployment is working fine, but the client isn?t configured in the right way and fails to send the ACK. Here is some instruction on setting up the client, it will be good if you double check all the fields. https://clearwater.readthedocs.io/en/stable/Making_your_first_call.html
+
+
+If any question feel free to come back to this thread.
+
+
+Thanks,
+Ying
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of ???
+Sent: 06 November 2017 08:05
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] Making calls: cannot get two-way media
+
+Hi Adam,
+
+Thanks for your replying.
+
+I'm running the wireshark trace on Windows 7.
+
+I've attached the bono and sprout debug logs. Also the wireshark trace for this time and the txt file is some record for this experiment, like IP address for my host and clients.
+
+Best regards,
+Alice
+
+2017-11-03 18:51 GMT+08:00 Adam Lindley <Adam.Lindley at metaswitch.com<mailto:Adam.Lindley at metaswitch.com>>:
+Hey Alice,
+
+I?m not sure what?s causing the issue from just the wireshark trace, though I think the record-route header `<sip:2FLuF4m0qB at cw-aio:5060;transport=TCP;lr>` looks unusual.
+Can you enable debug logging, and then get the bono and sprout debug logs from the node when you try to run the call?
+Also, can you let us know where you are running the wireshark trace?
+
+If you need some guidance on enabling debug logs, check out https://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html
+
+Cheers,
+Adam
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>] On Behalf Of ???
+Sent: 31 October 2017 04:05
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Making calls: cannot get two-way media
+
+Hi,
+
+I'm using AIO on VirtualBox. For clients, I'm using Zoiper on Android phones.
+
+Both clients can successfully sending out REGISTER, INVITE, 100 TRYING, 180 RINGING......
+
+When Caller makes a call to Callee, Callee can successfully send out a 200 OK to Caller.
+
+But Caller didn't send back a 200 OK to Callee, and that makes Callee keep showing the interface of incoming call.
+
+The Wireshark trace and the snapshot for sip packets is attached.
+
+**********************************************************
+Caller IP: 192.168.208.202
+Callee IP: 192.168.208.48
+PC IP: 192.168.104.121
+**********************************************************
+
+There is a similar problem in archive April 2016, but the answer there says that it is the problem in client part.
+
+If it is Zoiper's problem, may I ask what kind of softphone apps do you use?
+
+Cause I look through all the Clearwater archives, but it seems every one can use Zoiper successfully.
+
+As for X-Lite, Bria, Blink and Jitsi, some of them can not set up your own SIP account, and some even don't exist now.
+
+Best regards,
+Alice
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171110/7a9a6056/attachment.html>
+
+From williamscomey at gmail.com  Mon Nov 13 23:39:23 2017
+From: williamscomey at gmail.com (Williams Comey)
+Date: Tue, 14 Nov 2017 05:39:23 +0100
+Subject: [Project Clearwater] I have also written an earlier mail to you 2
+ days ago without response from you??
+Message-ID: <CAHRbq4HqGkH77z0qczHVhU9onp+F14tMdbqQLdXMWqvUjpAB_w@mail.gmail.com>
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171114/0d2d7924/attachment.html>
+
+From Ying.Huang at metaswitch.com  Tue Nov 14 06:00:14 2017
+From: Ying.Huang at metaswitch.com (Ying Huang)
+Date: Tue, 14 Nov 2017 11:00:14 +0000
+Subject: [Project Clearwater] I have also written an earlier mail to you
+ 2 days ago without response from you??
+In-Reply-To: <CAHRbq4HqGkH77z0qczHVhU9onp+F14tMdbqQLdXMWqvUjpAB_w@mail.gmail.com>
+References: <CAHRbq4HqGkH77z0qczHVhU9onp+F14tMdbqQLdXMWqvUjpAB_w@mail.gmail.com>
+Message-ID: <DM5PR02MB2475C9DE42012EA4B85D87B6F8280@DM5PR02MB2475.namprd02.prod.outlook.com>
+
+Hey Williams,
+
+I am very sorry to have missed your email. Would you mind sending it again? Also, to speed up our response, I would suggest you subscribe to our mailing list at http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+My apologies for the confusion.
+
+Thanks,
+Ying
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Williams Comey
+Sent: 14 November 2017 04:39
+Subject: [Project Clearwater] I have also written an earlier mail to you 2 days ago without response from you??
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171114/bb2f38c4/attachment.html>
+
+From tolawuyi at mideteklinks.com  Mon Nov 20 09:14:26 2017
+From: tolawuyi at mideteklinks.com (tolawuyi at mideteklinks.com)
+Date: Mon, 20 Nov 2017 15:14:26 +0100
+Subject: [Project Clearwater] Application In clear water
+Message-ID: <20171120151426.Horde.vg9U2W1AZGJK5QX30FUg6Oz@mail.mideteklinks.com>
+
+
+Hello All,
+
+Can someone help me with a sample of how to define Application server  
+in clear water using  
+/usr/share/clearwater/ellis/web-content/js/app-servers.json file.
+
+I have put the Json file here.
+
+{
+"MMTEL" : "<InitialFilterCriteria><Priority>0</Priority><TriggerPoint>
+??<ConditionTypeCNF></ConditionTypeCNF><SPT><ConditionNegated>0</ConditionNegated>
+??<Group>0</Group><Method>INVITE</Method><Extension></Extension></SPT></TriggerPoint>
+??<ApplicationServer><ServerName>sip:mmtel.example.com</ServerName><DefaultHandling>0
+??</DefaultHandling></ApplicationServer></InitialFilterCriteria>",
+"Voicemail" : "<InitialFilterCriteria><Priority>1</Priority><TriggerPoint>
+??<ConditionTypeCNF></ConditionTypeCNF><SPT><ConditionNegated>0</ConditionNegated>
+??<Group>0</Group><Method>INVITE</Method><Extension></Extension></SPT></TriggerPoint>
+??<ApplicationServer><ServerName>sip:vm.example.com</ServerName><DefaultHandling>0</
+??DefaultHandling></ApplicationServer></InitialFilterCriteria>"
+}
+
+
+Thanks in Advance
+
+Timothy
+
+
+
+
+
+From Ying.Huang at metaswitch.com  Tue Nov 21 12:35:33 2017
+From: Ying.Huang at metaswitch.com (Ying Huang)
+Date: Tue, 21 Nov 2017 17:35:33 +0000
+Subject: [Project Clearwater] Application In clear water
+In-Reply-To: <20171120151426.Horde.vg9U2W1AZGJK5QX30FUg6Oz@mail.mideteklinks.com>
+References: <20171120151426.Horde.vg9U2W1AZGJK5QX30FUg6Oz@mail.mideteklinks.com>
+Message-ID: <DM5PR0201MB3623763DC159C003D4D88968F8230@DM5PR0201MB3623.namprd02.prod.outlook.com>
+
+Hi Timothy,
+
+I imagine you are (rightly) following the example at https://clearwater.readthedocs.io/en/stable/Configuring_an_Application_Server.html. Unfortunately the JSON file has an error that ConditionTypeCNF is missing its value. It can be set to 0 or 1 in the format of <ConditionTypeCNF>0</ConditionTypeCNF>.
+
+The iFC matches on the request by checking if each SPT condition is satisfied. When the CNF is set to 1, the logic is to OR all SPT within a group to get group result, and then AND all group result within this iFC to decide if it's an overall match. When CNF is 0 it's the other way round. When the iFC is an overall match, the request will be forwarded to the AS specified. A good explanation of iFC can be found at https://docs.opencloud.com/ocdoc/books/sentinel-volte-documentation/2.5.0/sentinel-volte-public-administration-guide/session-processing/initial-filter-criteria.html#mmtel-conferencing-service-point-triggers.
+
+Also, how do you check that the AS has/hasn't been setup correctly? 
+
+
+Thanks,
+Ying
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of tolawuyi at mideteklinks.com
+Sent: 20 November 2017 14:14
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Application In clear water
+
+
+Hello All,
+
+Can someone help me with a sample of how to define Application server in clear water using /usr/share/clearwater/ellis/web-content/js/app-servers.json file.
+
+I have put the Json file here.
+
+{
+"MMTEL" : "<InitialFilterCriteria><Priority>0</Priority><TriggerPoint>
+??<ConditionTypeCNF></ConditionTypeCNF><SPT><ConditionNegated>0</ConditionNegated>
+??<Group>0</Group><Method>INVITE</Method><Extension></Extension></SPT></TriggerPoint>
+??<ApplicationServer><ServerName>sip:mmtel.example.com</ServerName><DefaultHandling>0
+??</DefaultHandling></ApplicationServer></InitialFilterCriteria>",
+"Voicemail" : "<InitialFilterCriteria><Priority>1</Priority><TriggerPoint>
+??<ConditionTypeCNF></ConditionTypeCNF><SPT><ConditionNegated>0</ConditionNegated>
+??<Group>0</Group><Method>INVITE</Method><Extension></Extension></SPT></TriggerPoint>
+??<ApplicationServer><ServerName>sip:vm.example.com</ServerName><DefaultHandling>0</
+??DefaultHandling></ApplicationServer></InitialFilterCriteria>"
+}
+
+
+Thanks in Advance
+
+Timothy
+
+
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+From case at gci.com  Tue Nov 21 15:33:19 2017
+From: case at gci.com (Roger Case)
+Date: Tue, 21 Nov 2017 20:33:19 +0000
+Subject: [Project Clearwater] Application In clear water
+In-Reply-To: <DM5PR0201MB3623763DC159C003D4D88968F8230@DM5PR0201MB3623.namprd02.prod.outlook.com>
+References: <20171120151426.Horde.vg9U2W1AZGJK5QX30FUg6Oz@mail.mideteklinks.com>
+	<DM5PR0201MB3623763DC159C003D4D88968F8230@DM5PR0201MB3623.namprd02.prod.outlook.com>
+Message-ID: <A7E1158244C52C428F0B61BDC9CF760C016D822B0E@ex-mbx-prd02.gci.com>
+
+Interesting.  I had the exact error in my cw-aio app-servers.json file, as I too started with the docs example, missing the ConditionTypeCNF value.  The triggers worked, however, with two SPTs within a group being AND'd, resulting in an overall match only when both SPTs were matched, just as though there was a 0 in the CNF value.  I had also tested with my SPTs in different groups, and they were OR'd, matching on either SPT.  I've added the CNF value 0 now, and it works the same.  No value must somehow default to 0.
+
+On another similar note, it seems that if changes are made to app-servers.json without first removing all application server check boxes from the lines in Ellis, the IFCs previously assigned to lines by the file, are stuck there forever.  My solution has been to delete the lines that I fouled up.  Maybe there is a way to edit something in Homestead, to get rid of the old IFCs?  Is this a cw-aio bug, maybe?
+
+Thanks!
+
+Roger
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Ying Huang
+Sent: Tuesday, November 21, 2017 8:36 AM
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Application In clear water
+
+[External Email]
+
+Hi Timothy,
+
+I imagine you are (rightly) following the example at https://clearwater.readthedocs.io/en/stable/Configuring_an_Application_Server.html. Unfortunately the JSON file has an error that ConditionTypeCNF is missing its value. It can be set to 0 or 1 in the format of <ConditionTypeCNF>0</ConditionTypeCNF>.
+
+The iFC matches on the request by checking if each SPT condition is satisfied. When the CNF is set to 1, the logic is to OR all SPT within a group to get group result, and then AND all group result within this iFC to decide if it's an overall match. When CNF is 0 it's the other way round. When the iFC is an overall match, the request will be forwarded to the AS specified. A good explanation of iFC can be found at https://docs.opencloud.com/ocdoc/books/sentinel-volte-documentation/2.5.0/sentinel-volte-public-administration-guide/session-processing/initial-filter-criteria.html#mmtel-conferencing-service-point-triggers.
+
+Also, how do you check that the AS has/hasn't been setup correctly? 
+
+
+Thanks,
+Ying
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of tolawuyi at mideteklinks.com
+Sent: 20 November 2017 14:14
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Application In clear water
+
+
+Hello All,
+
+Can someone help me with a sample of how to define Application server in clear water using /usr/share/clearwater/ellis/web-content/js/app-servers.json file.
+
+I have put the Json file here.
+
+{
+"MMTEL" : "<InitialFilterCriteria><Priority>0</Priority><TriggerPoint>
+??<ConditionTypeCNF></ConditionTypeCNF><SPT><ConditionNegated>0</ConditionNegated>
+??<Group>0</Group><Method>INVITE</Method><Extension></Extension></SPT></TriggerPoint>
+??<ApplicationServer><ServerName>sip:mmtel.example.com</ServerName><DefaultHandling>0
+??</DefaultHandling></ApplicationServer></InitialFilterCriteria>",
+"Voicemail" : "<InitialFilterCriteria><Priority>1</Priority><TriggerPoint>
+??<ConditionTypeCNF></ConditionTypeCNF><SPT><ConditionNegated>0</ConditionNegated>
+??<Group>0</Group><Method>INVITE</Method><Extension></Extension></SPT></TriggerPoint>
+??<ApplicationServer><ServerName>sip:vm.example.com</ServerName><DefaultHandling>0</
+??DefaultHandling></ApplicationServer></InitialFilterCriteria>"
+}
+
+
+Thanks in Advance
+
+Timothy
+
+
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+
+From Ying.Huang at metaswitch.com  Wed Nov 22 05:52:27 2017
+From: Ying.Huang at metaswitch.com (Ying Huang)
+Date: Wed, 22 Nov 2017 10:52:27 +0000
+Subject: [Project Clearwater] Application In clear water
+In-Reply-To: <A7E1158244C52C428F0B61BDC9CF760C016D822B0E@ex-mbx-prd02.gci.com>
+References: <20171120151426.Horde.vg9U2W1AZGJK5QX30FUg6Oz@mail.mideteklinks.com>
+	<DM5PR0201MB3623763DC159C003D4D88968F8230@DM5PR0201MB3623.namprd02.prod.outlook.com>
+	<A7E1158244C52C428F0B61BDC9CF760C016D822B0E@ex-mbx-prd02.gci.com>
+Message-ID: <DM5PR0201MB36237C94C56890174FFCC89BF8200@DM5PR0201MB3623.namprd02.prod.outlook.com>
+
+Hi Roger,
+
+Thanks for another piece of practical information! This enables me to keep updating the docs for future user. As for configuration in homestead, check out https://clearwater.readthedocs.io/en/stable/Provisioning_Subscribers.html You can create an ifc1.xml and run `sudo cw-update_user <number> <domain>  --ifc  ifc1.xml` to override existing ones, and use `sudo cw-display_user --full` to see all users with their iFCs. 
+
+I am a bit confused by "first removing all application server check boxes from the lines in Ellis". Did you need to delete some Application Server configuration from Ellis Web UI? When I tried out (not using AIO though), the configuration tab started as empty.
+
+Cheers,
+Ying
+
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Roger Case
+Sent: 21 November 2017 20:33
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Application In clear water
+
+Interesting.  I had the exact error in my cw-aio app-servers.json file, as I too started with the docs example, missing the ConditionTypeCNF value.  The triggers worked, however, with two SPTs within a group being AND'd, resulting in an overall match only when both SPTs were matched, just as though there was a 0 in the CNF value.  I had also tested with my SPTs in different groups, and they were OR'd, matching on either SPT.  I've added the CNF value 0 now, and it works the same.  No value must somehow default to 0.
+
+On another similar note, it seems that if changes are made to app-servers.json without first removing all application server check boxes from the lines in Ellis, the IFCs previously assigned to lines by the file, are stuck there forever.  My solution has been to delete the lines that I fouled up.  Maybe there is a way to edit something in Homestead, to get rid of the old IFCs?  Is this a cw-aio bug, maybe?
+
+Thanks!
+
+Roger
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Ying Huang
+Sent: Tuesday, November 21, 2017 8:36 AM
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Application In clear water
+
+[External Email]
+
+Hi Timothy,
+
+I imagine you are (rightly) following the example at https://clearwater.readthedocs.io/en/stable/Configuring_an_Application_Server.html. Unfortunately the JSON file has an error that ConditionTypeCNF is missing its value. It can be set to 0 or 1 in the format of <ConditionTypeCNF>0</ConditionTypeCNF>.
+
+The iFC matches on the request by checking if each SPT condition is satisfied. When the CNF is set to 1, the logic is to OR all SPT within a group to get group result, and then AND all group result within this iFC to decide if it's an overall match. When CNF is 0 it's the other way round. When the iFC is an overall match, the request will be forwarded to the AS specified. A good explanation of iFC can be found at https://docs.opencloud.com/ocdoc/books/sentinel-volte-documentation/2.5.0/sentinel-volte-public-administration-guide/session-processing/initial-filter-criteria.html#mmtel-conferencing-service-point-triggers.
+
+Also, how do you check that the AS has/hasn't been setup correctly? 
+
+
+Thanks,
+Ying
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of tolawuyi at mideteklinks.com
+Sent: 20 November 2017 14:14
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Application In clear water
+
+
+Hello All,
+
+Can someone help me with a sample of how to define Application server in clear water using /usr/share/clearwater/ellis/web-content/js/app-servers.json file.
+
+I have put the Json file here.
+
+{
+"MMTEL" : "<InitialFilterCriteria><Priority>0</Priority><TriggerPoint>
+??<ConditionTypeCNF></ConditionTypeCNF><SPT><ConditionNegated>0</ConditionNegated>
+??<Group>0</Group><Method>INVITE</Method><Extension></Extension></SPT></TriggerPoint>
+??<ApplicationServer><ServerName>sip:mmtel.example.com</ServerName><DefaultHandling>0
+??</DefaultHandling></ApplicationServer></InitialFilterCriteria>",
+"Voicemail" : "<InitialFilterCriteria><Priority>1</Priority><TriggerPoint>
+??<ConditionTypeCNF></ConditionTypeCNF><SPT><ConditionNegated>0</ConditionNegated>
+??<Group>0</Group><Method>INVITE</Method><Extension></Extension></SPT></TriggerPoint>
+??<ApplicationServer><ServerName>sip:vm.example.com</ServerName><DefaultHandling>0</
+??DefaultHandling></ApplicationServer></InitialFilterCriteria>"
+}
+
+
+Thanks in Advance
+
+Timothy
+
+
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+From case at gci.com  Wed Nov 22 14:11:26 2017
+From: case at gci.com (Roger Case)
+Date: Wed, 22 Nov 2017 19:11:26 +0000
+Subject: [Project Clearwater] Application In clear water
+In-Reply-To: <DM5PR0201MB36237C94C56890174FFCC89BF8200@DM5PR0201MB3623.namprd02.prod.outlook.com>
+References: <20171120151426.Horde.vg9U2W1AZGJK5QX30FUg6Oz@mail.mideteklinks.com>
+	<DM5PR0201MB3623763DC159C003D4D88968F8230@DM5PR0201MB3623.namprd02.prod.outlook.com>
+	<A7E1158244C52C428F0B61BDC9CF760C016D822B0E@ex-mbx-prd02.gci.com>
+	<DM5PR0201MB36237C94C56890174FFCC89BF8200@DM5PR0201MB3623.namprd02.prod.outlook.com>
+Message-ID: <A7E1158244C52C428F0B61BDC9CF760C016D823929@ex-mbx-prd02.gci.com>
+
+Hi Ying,
+
+Sorry my statement was confusing.  I should have said "first removing all checks from the application server check boxes for the lines in Ellis".  Not the boxes themselves! The problem seems to be that if an application server box is checked for a given line, and the app-servers.json file is edited, the iFCs described by app-servers.json, prior to the edit, are permanently attached to the line.  If the box is then unchecked, the original iFCs are still applied.  I'll try to get a better understanding of what'd happening, with the Homestead tools you have pointed out.
+
+Thank you!
+
+Roger
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Ying Huang
+Sent: Wednesday, November 22, 2017 1:52 AM
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Application In clear water
+
+[External Email]
+
+Hi Roger,
+
+Thanks for another piece of practical information! This enables me to keep updating the docs for future user. As for configuration in homestead, check out https://clearwater.readthedocs.io/en/stable/Provisioning_Subscribers.html You can create an ifc1.xml and run `sudo cw-update_user <number> <domain>  --ifc  ifc1.xml` to override existing ones, and use `sudo cw-display_user --full` to see all users with their iFCs. 
+
+I am a bit confused by "first removing all application server check boxes from the lines in Ellis". Did you need to delete some Application Server configuration from Ellis Web UI? When I tried out (not using AIO though), the configuration tab started as empty.
+
+Cheers,
+Ying
+
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Roger Case
+Sent: 21 November 2017 20:33
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Application In clear water
+
+Interesting.  I had the exact error in my cw-aio app-servers.json file, as I too started with the docs example, missing the ConditionTypeCNF value.  The triggers worked, however, with two SPTs within a group being AND'd, resulting in an overall match only when both SPTs were matched, just as though there was a 0 in the CNF value.  I had also tested with my SPTs in different groups, and they were OR'd, matching on either SPT.  I've added the CNF value 0 now, and it works the same.  No value must somehow default to 0.
+
+On another similar note, it seems that if changes are made to app-servers.json without first removing all application server check boxes from the lines in Ellis, the IFCs previously assigned to lines by the file, are stuck there forever.  My solution has been to delete the lines that I fouled up.  Maybe there is a way to edit something in Homestead, to get rid of the old IFCs?  Is this a cw-aio bug, maybe?
+
+Thanks!
+
+Roger
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Ying Huang
+Sent: Tuesday, November 21, 2017 8:36 AM
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Application In clear water
+
+[External Email]
+
+Hi Timothy,
+
+I imagine you are (rightly) following the example at https://clearwater.readthedocs.io/en/stable/Configuring_an_Application_Server.html. Unfortunately the JSON file has an error that ConditionTypeCNF is missing its value. It can be set to 0 or 1 in the format of <ConditionTypeCNF>0</ConditionTypeCNF>.
+
+The iFC matches on the request by checking if each SPT condition is satisfied. When the CNF is set to 1, the logic is to OR all SPT within a group to get group result, and then AND all group result within this iFC to decide if it's an overall match. When CNF is 0 it's the other way round. When the iFC is an overall match, the request will be forwarded to the AS specified. A good explanation of iFC can be found at https://docs.opencloud.com/ocdoc/books/sentinel-volte-documentation/2.5.0/sentinel-volte-public-administration-guide/session-processing/initial-filter-criteria.html#mmtel-conferencing-service-point-triggers.
+
+Also, how do you check that the AS has/hasn't been setup correctly? 
+
+
+Thanks,
+Ying
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of tolawuyi at mideteklinks.com
+Sent: 20 November 2017 14:14
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Application In clear water
+
+
+Hello All,
+
+Can someone help me with a sample of how to define Application server in clear water using /usr/share/clearwater/ellis/web-content/js/app-servers.json file.
+
+I have put the Json file here.
+
+{
+"MMTEL" : "<InitialFilterCriteria><Priority>0</Priority><TriggerPoint>
+??<ConditionTypeCNF></ConditionTypeCNF><SPT><ConditionNegated>0</ConditionNegated>
+??<Group>0</Group><Method>INVITE</Method><Extension></Extension></SPT></TriggerPoint>
+??<ApplicationServer><ServerName>sip:mmtel.example.com</ServerName><DefaultHandling>0
+??</DefaultHandling></ApplicationServer></InitialFilterCriteria>",
+"Voicemail" : "<InitialFilterCriteria><Priority>1</Priority><TriggerPoint>
+??<ConditionTypeCNF></ConditionTypeCNF><SPT><ConditionNegated>0</ConditionNegated>
+??<Group>0</Group><Method>INVITE</Method><Extension></Extension></SPT></TriggerPoint>
+??<ApplicationServer><ServerName>sip:vm.example.com</ServerName><DefaultHandling>0</
+??DefaultHandling></ApplicationServer></InitialFilterCriteria>"
+}
+
+
+Thanks in Advance
+
+Timothy
+
+
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+
+From aj211y at gmail.com  Thu Nov 23 03:41:35 2017
+From: aj211y at gmail.com (=?UTF-8?B?5ZCz5a2f5bqt?=)
+Date: Thu, 23 Nov 2017 16:41:35 +0800
+Subject: [Project Clearwater] Making calls: cannot get two-way media
+In-Reply-To: <A7E1158244C52C428F0B61BDC9CF760C016D812CCC@ex-mbx-prd02.gci.com>
+References: <CADS3bmaBh6ymA=QW01HG9-gAToeXZ5dVPxHv-9D49eYgJtaouQ@mail.gmail.com>
+	<BY2PR02MB2037F4B6AE73C74A76334296E25D0@BY2PR02MB2037.namprd02.prod.outlook.com>
+	<CADS3bmavfa_+9fNJWOc929uf8+W+q21=Ls0jnYVmrn+h7u-K6w@mail.gmail.com>
+	<DM5PR02MB2475FDBB782EA0F35C3C08C9F8540@DM5PR02MB2475.namprd02.prod.outlook.com>
+	<A7E1158244C52C428F0B61BDC9CF760C016D812CCC@ex-mbx-prd02.gci.com>
+Message-ID: <CADS3bmbw9uM+abgTXFrJ0ANodeYW4AQ_7E20aQbLW=6Dd_c3gA@mail.gmail.com>
+
+Hi Ying, Roger,
+
+Thanks for your replying.
+
+I've double checked all the settings, and I attached two snapshots of my
+account settings.
+
+For Host part I put "example.com" and Outbound Proxy part I put "
+192.168.104.8:8060" where 192.168.104.8 is the ip address of my
+computer(Windows).
+
+Roger, I'm not quite understand your meaning of "able to resolve cw-aio via
+DNS".
+
+Both of the phones can get and receive SIP message like INVITE, TRYING,
+RINGING......e.t.c.
+I thought this means they can already resolve cw-aio, doesn't it?
+
+As for my network architecture, my cw-aio in VirtualBox is using NAT.
+
+
+I'm still failing on making calls through two clients.
+Do you have any idea what should I do?
+
+Many thanks for your time and replying.
+
+Best regard,
+Alice
+
+2017-11-11 2:49 GMT+08:00 Roger Case <case at gci.com>:
+
+> Hi Alice, Ying,
+>
+>
+>
+> This exact issue I had in the beginning of experimenting with the
+> all-in-one was caused by the client (in my case Cisco 7960 phones, and
+> PacketCable eMTAs) needing to be able to resolve cw-aio via DNS.  Without
+> this they could not respond with the required ACK.
+>
+>
+>
+> Also, Alice, your RTP connections may be interesting.  I?m not sure we are
+> clear on your network architecture.  Your client RTP ports seem to be in
+> 10.X.X.X address space.
+>
+>
+>
+> Best of luck!
+>
+>
+>
+> Roger
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *Ying Huang
+> *Sent:* Friday, November 10, 2017 9:17 AM
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Project Clearwater] Making calls: cannot get two-way media
+>
+>
+>
+> [External Email]
+>
+> Hi Alice,
+>
+>
+>
+> Looking through your wireshark trace, INVITE and 200OK are going through
+> fine, but it?s missing an ACK from callee. Looking into debug log, there
+> isn?t any ERROR, but no ACK is being routed through. So I believe the
+> clearwater deployment is working fine, but the client isn?t configured in
+> the right way and fails to send the ACK. Here is some instruction on
+> setting up the client, it will be good if you double check all the fields.
+> https://clearwater.readthedocs.io/en/stable/Making_your_first_call.html
+>
+>
+>
+>
+>
+> If any question feel free to come back to this thread.
+>
+>
+>
+>
+>
+> Thanks,
+>
+> Ying
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org
+> <clearwater-bounces at lists.projectclearwater.org>] *On Behalf Of *???
+> *Sent:* 06 November 2017 08:05
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Project Clearwater] Making calls: cannot get two-way media
+>
+>
+>
+> Hi Adam,
+>
+>
+>
+> Thanks for your replying.
+>
+>
+>
+> I'm running the wireshark trace on Windows 7.
+>
+>
+>
+> I've attached the bono and sprout debug logs. Also the wireshark trace for
+> this time and the txt file is some record for this experiment, like IP
+> address for my host and clients.
+>
+>
+>
+> Best regards,
+>
+> Alice
+>
+>
+>
+> 2017-11-03 18:51 GMT+08:00 Adam Lindley <Adam.Lindley at metaswitch.com>:
+>
+> Hey Alice,
+>
+>
+>
+> I?m not sure what?s causing the issue from just the wireshark trace,
+> though I think the record-route header `<sip:2FLuF4m0qB at cw-aio:5060;
+> transport=TCP;lr>` looks unusual.
+>
+> Can you enable debug logging, and then get the bono and sprout debug logs
+> from the node when you try to run the call?
+>
+> Also, can you let us know where you are running the wireshark trace?
+>
+>
+>
+> If you need some guidance on enabling debug logs, check out
+> https://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.
+> html
+>
+>
+>
+> Cheers,
+>
+> Adam
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *???
+> *Sent:* 31 October 2017 04:05
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Project Clearwater] Making calls: cannot get two-way media
+>
+>
+>
+> Hi,
+>
+>
+>
+> I'm using AIO on VirtualBox. For clients, I'm using Zoiper on Android
+> phones.
+>
+>
+>
+> Both clients can successfully sending out REGISTER, INVITE, 100 TRYING,
+> 180 RINGING......
+>
+>
+>
+> When Caller makes a call to Callee, Callee can successfully send out a 200
+> OK to Caller.
+>
+>
+>
+> But Caller didn't send back a 200 OK to Callee, and that makes Callee keep
+> showing the interface of incoming call.
+>
+>
+>
+> The Wireshark trace and the snapshot for sip packets is attached.
+>
+>
+>
+> **********************************************************
+>
+> Caller IP: 192.168.208.202
+>
+> Callee IP: 192.168.208.48
+>
+> PC IP: 192.168.104.121
+>
+> **********************************************************
+>
+>
+>
+> There is a similar problem in archive April 2016, but the answer there
+> says that it is the problem in client part.
+>
+>
+>
+> If it is Zoiper's problem, may I ask what kind of softphone apps do you
+> use?
+>
+> Cause I look through all the Clearwater archives, but it seems every one
+> can use Zoiper successfully.
+>
+>
+>
+> As for X-Lite, Bria, Blink and Jitsi, some of them can not set up your own
+> SIP account, and some even don't exist now.
+>
+>
+>
+> Best regards,
+>
+> Alice
+>
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.
+> projectclearwater.org
+>
+>
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.
+> projectclearwater.org
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171123/0301f122/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: account_setting.png
+Type: image/png
+Size: 294804 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171123/0301f122/attachment.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: account_setting2.png
+Type: image/png
+Size: 310060 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171123/0301f122/attachment-0001.png>
+
+From doantunghust at gmail.com  Fri Nov 24 17:44:24 2017
+From: doantunghust at gmail.com (=?UTF-8?B?VMO5bmcgxJBvw6Bu?=)
+Date: Fri, 24 Nov 2017 23:44:24 +0100
+Subject: [Project Clearwater] How to make a call when using only OpenStack
+ Heat
+Message-ID: <CAAMZSSafbQ+=S5hfOJ53y+Gih2bU9cGwqxo5aoM41JrtLG+5tQ@mail.gmail.com>
+
+Hi all,
+
+Currently, I can deploy clearwater using clearwater-heat. Heat stack
+created successfully but I cannot figure out how to test vIMS in OpenStack.
+I know that the deployment of clearwater is mainly based on Cloudify. Do we
+have any guide to test this function with pure OpenStack?
+
+Thanks,
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171124/7c14028e/attachment.html>
+
+From mimran.646726 at gmail.com  Mon Nov 27 03:45:13 2017
+From: mimran.646726 at gmail.com (Muhammad Imran)
+Date: Mon, 27 Nov 2017 09:45:13 +0100
+Subject: [Project Clearwater] Clearwater Failing with Docker Swarm on
+ Single/Multiple Machine(s)
+Message-ID: <CAOVf8C0nCtHk9fHdW+Bq9OZ9Cv=mxgA1KJBOQqCT-Ued8U-uVA@mail.gmail.com>
+
+Hi,
+
+
+
+I am trying to deploy Clearwater project on Docker Swarm. However,  it
+fails to start the services of Clearwater components inside the container.
+I tested it by deploying the services on a single machine as well as
+multiple machines. The issues are the same.
+
+
+*Steps (on multiple machines):*
+Executed the following on swarm leader machine.
+
+
+
+sudo docker swarm init
+
+*(joined swarm on nodes and set *node.labels.comp=<componentname>*  on each
+node so that each component must run on separate machine.)*
+
+sudo docker network create  -d overlay --subnet=10.254.0.0/16 clearwater_nw
+--attachable
+
+sudo docker service create --name etcd  --constraint
+'node.labels.comp==etcd' --mode=global  --hostname etcd --network
+clearwater_nw -p 4001:4001 -p 2379:2379 -p 2380:2380
+quay.io/coreos/etcd:v2.2.5 -name etcd0 -advertise-client-urls
+http://etcd:2379,http://etcd:4001 -listen-client-urls http://0.0.0.0:2379,
+http://0.0.0.0:4001 -initial-advertise-peer-urls http://etcd:2380
+-listen-peer-urls http://0.0.0.0:2380  -initial-cluster etcd0=
+http://etcd:2380 -initial-cluster-state new
+
+sudo docker service create --name astaire  --constraint
+'node.labels.comp==astaire' --mode=global --network clearwater_nw  -e
+ADDITIONAL_SHARED_CONFIG  -p 22 clearwater/astaire
+
+sudo docker service create --name cassandra  --constraint
+'node.labels.comp==cassandra' --mode=global --network clearwater_nw  -e
+ADDITIONAL_SHARED_CONFIG  -p 22  clearwater/cassandra
+
+sudo docker service create --name chronos  --constraint
+'node.labels.comp==chronos' --mode=global --network clearwater_nw  -e
+ADDITIONAL_SHARED_CONFIG  -p 22 clearwater/chronos
+
+sudo docker service create --name homestead  --constraint
+'node.labels.comp==homestead' --mode=global --network clearwater_nw  -e
+ADDITIONAL_SHARED_CONFIG -p 22 clearwater/homestead
+
+sudo docker service create --name homestead-prov  --constraint
+'node.labels.comp==homesteadprov' --mode=global --network clearwater_nw
+ -e ADDITIONAL_SHARED_CONFIG   -p 22 clearwater/homestead-prov
+
+sudo docker service create --name homer  --constraint
+'node.labels.comp==homer' --mode=global --network clearwater_nw   -e
+ADDITIONAL_SHARED_CONFIG  -p 22 clearwater/homer
+
+sudo docker service create --name ralf  --constraint
+'node.labels.comp==ralf' --mode=global --network clearwater_nw  -e
+ADDITIONAL_SHARED_CONFIG   -p 22 clearwater/ralf
+
+sudo docker service create --name sprout  --constraint
+'node.labels.comp==sprout'  --network name=clearwater_nw,alias=
+scscf.sprout,alias=icscf.sprout --mode=global -e ADDITIONAL_SHARED_CONFIG
+-p 22 clearwater/sprout
+
+sudo docker service create --name bono   --constraint
+'node.labels.comp==bono' --mode=global --env-file .env --network
+clearwater_nw -e ADDITIONAL_SHARED_CONFIG -p 22 -p 3478:3478 -p
+3478:3478/udp -p 5060:5060 -p 5060:5060/udp -p 5062:5062 clearwater/bono
+
+sudo docker service create --name ellis  --constraint
+'node.labels.comp==ellis' --mode=globtachableal --network clearwater_nw -e
+ADDITIONAL_SHARED_CONFIG  -p 22 -p 80:80 clearwater/ellis
+
+
+After that, when I enter inside the container, services of ellis, bono,
+sprout, and others are not started, so no logs are available.
+
+
+
+*Environment:*
+
+- I am using Openstack instances with ubuntu 16.04 (kernel version
+4.10.0.28).
+- Clearwater docker project stable (also tried with latest and some older
+images available on docker hub)
+- Docker version 17.09.0-ce
+
+
+*Steps (on a single machines):*
+The commands are same as above, but no constraints and mode(by default
+replicated) are used.
+
+
+I tested Clearwater project without swarm on a single machine, and it's
+working fine and clearwater live tests are passing.
+
+
+*My question is: Has the clearwater tested with Docker swarm? OR does it
+work with swarm for someone? OR am I doing something wrong?*
+
+
+
+Please let me know if you need further clarifications from me.
+
+
+
+Thanks a lot!
+
+
+Best Regards,
+Muhammad Imran
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171127/2fec1adb/attachment.html>
+
+From Ying.Huang at metaswitch.com  Mon Nov 27 13:43:14 2017
+From: Ying.Huang at metaswitch.com (Ying Huang)
+Date: Mon, 27 Nov 2017 18:43:14 +0000
+Subject: [Project Clearwater] How to make a call when using only
+ OpenStack Heat
+In-Reply-To: <CAAMZSSafbQ+=S5hfOJ53y+Gih2bU9cGwqxo5aoM41JrtLG+5tQ@mail.gmail.com>
+References: <CAAMZSSafbQ+=S5hfOJ53y+Gih2bU9cGwqxo5aoM41JrtLG+5tQ@mail.gmail.com>
+Message-ID: <DM5PR0201MB3623D392B97F125B36136384F8250@DM5PR0201MB3623.namprd02.prod.outlook.com>
+
+Hi Tung,
+
+Heat is an orchestrator that takes in a yaml file specifying the deployment and calls Openstack API to create and run the deployment on the Openstack platform. By running the clearwater-heat command, you have created a deployment of Clearwater nodes on Openstack, and you would like to test if those nodes are running successfully? We provide a suite of live tests for this, check out http://clearwater.readthedocs.io/en/stable/Running_the_live_tests.html?highlight=live%20testing#running-the-tests-against-a-full-deployment. The domain and signup key can be viewed in /etc/clearwater/shared_config on any node.
+
+While using Heat is easier and generally preferable, it?s possible to create Openstack instances and manually install packages on them to form a Clearwater deployment. You may find brief instructions at http://clearwater.readthedocs.io/en/stable/Manual_Install.html
+
+If anything unclear pls feel free to come back to this thread.
+
+Thanks,
+Ying
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of T?ng ?o?n
+Sent: 24 November 2017 22:44
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] How to make a call when using only OpenStack Heat
+
+Hi all,
+
+Currently, I can deploy clearwater using clearwater-heat. Heat stack created successfully but I cannot figure out how to test vIMS in OpenStack. I know that the deployment of clearwater is mainly based on Cloudify. Do we have any guide to test this function with pure OpenStack?
+
+Thanks,
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171127/2a7aaa6c/attachment.html>
+
+From Ying.Huang at metaswitch.com  Tue Nov 28 11:49:12 2017
+From: Ying.Huang at metaswitch.com (Ying Huang)
+Date: Tue, 28 Nov 2017 16:49:12 +0000
+Subject: [Project Clearwater] Making calls: cannot get two-way media
+In-Reply-To: <CADS3bmbw9uM+abgTXFrJ0ANodeYW4AQ_7E20aQbLW=6Dd_c3gA@mail.gmail.com>
+References: <CADS3bmaBh6ymA=QW01HG9-gAToeXZ5dVPxHv-9D49eYgJtaouQ@mail.gmail.com>
+	<BY2PR02MB2037F4B6AE73C74A76334296E25D0@BY2PR02MB2037.namprd02.prod.outlook.com>
+	<CADS3bmavfa_+9fNJWOc929uf8+W+q21=Ls0jnYVmrn+h7u-K6w@mail.gmail.com>
+	<DM5PR02MB2475FDBB782EA0F35C3C08C9F8540@DM5PR02MB2475.namprd02.prod.outlook.com>
+	<A7E1158244C52C428F0B61BDC9CF760C016D812CCC@ex-mbx-prd02.gci.com>
+	<CADS3bmbw9uM+abgTXFrJ0ANodeYW4AQ_7E20aQbLW=6Dd_c3gA@mail.gmail.com>
+Message-ID: <DM5PR0201MB3623136EDD5E6618FDE5A523F83A0@DM5PR0201MB3623.namprd02.prod.outlook.com>
+
+Hi Alice,
+
+The missing step in your setup (as pointed out by Roger) seems to be this: when the phone sends a message to the Host, it calls on a DNS resolver, which should resolve the hostname to the IP address of your deployment. You may be using AWS Route 53 or your own DNS resolver, and it is currently missing this entry to map hostname to IP.
+
+The server/host name, as you are using an All-in-One node, should be <aio-identity>, which is ?cw-aio.com? for our aio image. When you are not using All-in-One node, the server name would be <domain_name>, which is ?example.com? as you put here.
+
+As for the IP address of the aio-identity, I believe you are using ?localhost? to find it out. And you have correctly put that IP as the outbound proxy and used port 8060.
+
+In summary, the missing entry should map ?cw-aio.com? to 192.168.104.8.
+
+
+Thanks,
+Ying
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of ???
+Sent: 23 November 2017 08:42
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Making calls: cannot get two-way media
+
+Hi Ying, Roger,
+
+Thanks for your replying.
+
+I've double checked all the settings, and I attached two snapshots of my account settings.
+
+For Host part I put "example.com<http://example.com>" and Outbound Proxy part I put "192.168.104.8:8060<http://192.168.104.8:8060>" where 192.168.104.8 is the ip address of my computer(Windows).
+
+Roger, I'm not quite understand your meaning of "able to resolve cw-aio via DNS".
+
+Both of the phones can get and receive SIP message like INVITE, TRYING, RINGING......e.t.c.
+I thought this means they can already resolve cw-aio, doesn't it?
+
+As for my network architecture, my cw-aio in VirtualBox is using NAT.
+
+
+I'm still failing on making calls through two clients.
+Do you have any idea what should I do?
+
+Many thanks for your time and replying.
+
+Best regard,
+Alice
+
+2017-11-11 2:49 GMT+08:00 Roger Case <case at gci.com<mailto:case at gci.com>>:
+Hi Alice, Ying,
+
+This exact issue I had in the beginning of experimenting with the all-in-one was caused by the client (in my case Cisco 7960 phones, and PacketCable eMTAs) needing to be able to resolve cw-aio via DNS.  Without this they could not respond with the required ACK.
+
+Also, Alice, your RTP connections may be interesting.  I?m not sure we are clear on your network architecture.  Your client RTP ports seem to be in 10.X.X.X address space.
+
+Best of luck!
+
+Roger
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>] On Behalf Of Ying Huang
+Sent: Friday, November 10, 2017 9:17 AM
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] Making calls: cannot get two-way media
+
+[External Email]
+Hi Alice,
+
+Looking through your wireshark trace, INVITE and 200OK are going through fine, but it?s missing an ACK from callee. Looking into debug log, there isn?t any ERROR, but no ACK is being routed through. So I believe the clearwater deployment is working fine, but the client isn?t configured in the right way and fails to send the ACK. Here is some instruction on setting up the client, it will be good if you double check all the fields. https://clearwater.readthedocs.io/en/stable/Making_your_first_call.html
+
+
+If any question feel free to come back to this thread.
+
+
+Thanks,
+Ying
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of ???
+Sent: 06 November 2017 08:05
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] Making calls: cannot get two-way media
+
+Hi Adam,
+
+Thanks for your replying.
+
+I'm running the wireshark trace on Windows 7.
+
+I've attached the bono and sprout debug logs. Also the wireshark trace for this time and the txt file is some record for this experiment, like IP address for my host and clients.
+
+Best regards,
+Alice
+
+2017-11-03 18:51 GMT+08:00 Adam Lindley <Adam.Lindley at metaswitch.com<mailto:Adam.Lindley at metaswitch.com>>:
+Hey Alice,
+
+I?m not sure what?s causing the issue from just the wireshark trace, though I think the record-route header `<sip:2FLuF4m0qB at cw-aio:5060;transport=TCP;lr>` looks unusual.
+Can you enable debug logging, and then get the bono and sprout debug logs from the node when you try to run the call?
+Also, can you let us know where you are running the wireshark trace?
+
+If you need some guidance on enabling debug logs, check out https://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html
+
+Cheers,
+Adam
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>] On Behalf Of ???
+Sent: 31 October 2017 04:05
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Making calls: cannot get two-way media
+
+Hi,
+
+I'm using AIO on VirtualBox. For clients, I'm using Zoiper on Android phones.
+
+Both clients can successfully sending out REGISTER, INVITE, 100 TRYING, 180 RINGING......
+
+When Caller makes a call to Callee, Callee can successfully send out a 200 OK to Caller.
+
+But Caller didn't send back a 200 OK to Callee, and that makes Callee keep showing the interface of incoming call.
+
+The Wireshark trace and the snapshot for sip packets is attached.
+
+**********************************************************
+Caller IP: 192.168.208.202
+Callee IP: 192.168.208.48
+PC IP: 192.168.104.121
+**********************************************************
+
+There is a similar problem in archive April 2016, but the answer there says that it is the problem in client part.
+
+If it is Zoiper's problem, may I ask what kind of softphone apps do you use?
+
+Cause I look through all the Clearwater archives, but it seems every one can use Zoiper successfully.
+
+As for X-Lite, Bria, Blink and Jitsi, some of them can not set up your own SIP account, and some even don't exist now.
+
+Best regards,
+Alice
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171128/2b9b005d/attachment.html>
+
+From Ying.Huang at metaswitch.com  Tue Nov 28 11:50:58 2017
+From: Ying.Huang at metaswitch.com (Ying Huang)
+Date: Tue, 28 Nov 2017 16:50:58 +0000
+Subject: [Project Clearwater] Application In clear water
+In-Reply-To: <A7E1158244C52C428F0B61BDC9CF760C016D823929@ex-mbx-prd02.gci.com>
+References: <20171120151426.Horde.vg9U2W1AZGJK5QX30FUg6Oz@mail.mideteklinks.com>
+	<DM5PR0201MB3623763DC159C003D4D88968F8230@DM5PR0201MB3623.namprd02.prod.outlook.com>
+	<A7E1158244C52C428F0B61BDC9CF760C016D822B0E@ex-mbx-prd02.gci.com>
+	<DM5PR0201MB36237C94C56890174FFCC89BF8200@DM5PR0201MB3623.namprd02.prod.outlook.com>
+	<A7E1158244C52C428F0B61BDC9CF760C016D823929@ex-mbx-prd02.gci.com>
+Message-ID: <DM5PR0201MB3623C866BC488D3507529474F83A0@DM5PR0201MB3623.namprd02.prod.outlook.com>
+
+Hi Roger,
+
+Ah I see...That the iFC will get stuck despite later changes, and without warning the user, looks like an error-prone design for users. I will check what we can do about it. Hope you find the Homestead tools easier to use!
+
+Ying
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Roger Case
+Sent: 22 November 2017 19:11
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Application In clear water
+
+Hi Ying,
+
+Sorry my statement was confusing.  I should have said "first removing all checks from the application server check boxes for the lines in Ellis".  Not the boxes themselves! The problem seems to be that if an application server box is checked for a given line, and the app-servers.json file is edited, the iFCs described by app-servers.json, prior to the edit, are permanently attached to the line.  If the box is then unchecked, the original iFCs are still applied.  I'll try to get a better understanding of what'd happening, with the Homestead tools you have pointed out.
+
+Thank you!
+
+Roger
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Ying Huang
+Sent: Wednesday, November 22, 2017 1:52 AM
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Application In clear water
+
+[External Email]
+
+Hi Roger,
+
+Thanks for another piece of practical information! This enables me to keep updating the docs for future user. As for configuration in homestead, check out https://clearwater.readthedocs.io/en/stable/Provisioning_Subscribers.html You can create an ifc1.xml and run `sudo cw-update_user <number> <domain>  --ifc  ifc1.xml` to override existing ones, and use `sudo cw-display_user --full` to see all users with their iFCs. 
+
+I am a bit confused by "first removing all application server check boxes from the lines in Ellis". Did you need to delete some Application Server configuration from Ellis Web UI? When I tried out (not using AIO though), the configuration tab started as empty.
+
+Cheers,
+Ying
+
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Roger Case
+Sent: 21 November 2017 20:33
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Application In clear water
+
+Interesting.  I had the exact error in my cw-aio app-servers.json file, as I too started with the docs example, missing the ConditionTypeCNF value.  The triggers worked, however, with two SPTs within a group being AND'd, resulting in an overall match only when both SPTs were matched, just as though there was a 0 in the CNF value.  I had also tested with my SPTs in different groups, and they were OR'd, matching on either SPT.  I've added the CNF value 0 now, and it works the same.  No value must somehow default to 0.
+
+On another similar note, it seems that if changes are made to app-servers.json without first removing all application server check boxes from the lines in Ellis, the IFCs previously assigned to lines by the file, are stuck there forever.  My solution has been to delete the lines that I fouled up.  Maybe there is a way to edit something in Homestead, to get rid of the old IFCs?  Is this a cw-aio bug, maybe?
+
+Thanks!
+
+Roger
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Ying Huang
+Sent: Tuesday, November 21, 2017 8:36 AM
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Application In clear water
+
+[External Email]
+
+Hi Timothy,
+
+I imagine you are (rightly) following the example at https://clearwater.readthedocs.io/en/stable/Configuring_an_Application_Server.html. Unfortunately the JSON file has an error that ConditionTypeCNF is missing its value. It can be set to 0 or 1 in the format of <ConditionTypeCNF>0</ConditionTypeCNF>.
+
+The iFC matches on the request by checking if each SPT condition is satisfied. When the CNF is set to 1, the logic is to OR all SPT within a group to get group result, and then AND all group result within this iFC to decide if it's an overall match. When CNF is 0 it's the other way round. When the iFC is an overall match, the request will be forwarded to the AS specified. A good explanation of iFC can be found at https://docs.opencloud.com/ocdoc/books/sentinel-volte-documentation/2.5.0/sentinel-volte-public-administration-guide/session-processing/initial-filter-criteria.html#mmtel-conferencing-service-point-triggers.
+
+Also, how do you check that the AS has/hasn't been setup correctly? 
+
+
+Thanks,
+Ying
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of tolawuyi at mideteklinks.com
+Sent: 20 November 2017 14:14
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Application In clear water
+
+
+Hello All,
+
+Can someone help me with a sample of how to define Application server in clear water using /usr/share/clearwater/ellis/web-content/js/app-servers.json file.
+
+I have put the Json file here.
+
+{
+"MMTEL" : "<InitialFilterCriteria><Priority>0</Priority><TriggerPoint>
+??<ConditionTypeCNF></ConditionTypeCNF><SPT><ConditionNegated>0</ConditionNegated>
+??<Group>0</Group><Method>INVITE</Method><Extension></Extension></SPT></TriggerPoint>
+??<ApplicationServer><ServerName>sip:mmtel.example.com</ServerName><DefaultHandling>0
+??</DefaultHandling></ApplicationServer></InitialFilterCriteria>",
+"Voicemail" : "<InitialFilterCriteria><Priority>1</Priority><TriggerPoint>
+??<ConditionTypeCNF></ConditionTypeCNF><SPT><ConditionNegated>0</ConditionNegated>
+??<Group>0</Group><Method>INVITE</Method><Extension></Extension></SPT></TriggerPoint>
+??<ApplicationServer><ServerName>sip:vm.example.com</ServerName><DefaultHandling>0</
+??DefaultHandling></ApplicationServer></InitialFilterCriteria>"
+}
+
+
+Thanks in Advance
+
+Timothy
+
+
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+From fescarosbuechs at vmware.com  Mon Nov 27 12:07:00 2017
+From: fescarosbuechs at vmware.com (Frank Escaros-Buechsel)
+Date: Mon, 27 Nov 2017 17:07:00 +0000
+Subject: [Project Clearwater] How to make a call when using only
+ OpenStack Heat
+In-Reply-To: <CAAMZSSafbQ+=S5hfOJ53y+Gih2bU9cGwqxo5aoM41JrtLG+5tQ@mail.gmail.com>
+References: <CAAMZSSafbQ+=S5hfOJ53y+Gih2bU9cGwqxo5aoM41JrtLG+5tQ@mail.gmail.com>
+Message-ID: <BN6PR05MB30740BD26491F79601939FD6B9250@BN6PR05MB3074.namprd05.prod.outlook.com>
+
+Openstack itself should just be a ?CMP? through which you manage the virtual machine containers.
+Once these are successfully deployed you would look for the public IP of Ellis (or private IP) and provision 2 new users.
+
+You can then configure your SIP clients to access the public IP of Bono to establish the calls like you would with a normal bare metal, virtual machine or container installation.
+That process shouldn?t change when deployed through Openstack and Heat.
+
+Kind Regards,
+Frank Escaros-Buechsel
+Consulting Architect NFV
+fescarosbuechs at vmware.com<mailto:fescarosbuechs at vmware.com>
+Parnell  House, Barrack Square, Ballincollig, Co. Cork, P31 PF68, IRL
++353 21 46 60359 Office
++353 87 709 5023 Mobile
+Twitter: @fbuechsel
+
+Advanced notice of absence:
+
+?          Dec 4th ? Dec 7th
+
+[VMwareLogo]
+
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of T?ng ?o?n
+Sent: Friday, November 24, 2017 22:44
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] How to make a call when using only OpenStack Heat
+
+Hi all,
+
+Currently, I can deploy clearwater using clearwater-heat. Heat stack created successfully but I cannot figure out how to test vIMS in OpenStack. I know that the deployment of clearwater is mainly based on Cloudify. Do we have any guide to test this function with pure OpenStack?
+
+Thanks,
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171127/d98c724d/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image001.gif
+Type: image/gif
+Size: 4572 bytes
+Desc: image001.gif
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20171127/d98c724d/attachment.gif>
+

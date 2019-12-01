@@ -1,0 +1,1501 @@
+From Sebastian.Rex at metaswitch.com  Thu Dec  1 04:58:20 2016
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Thu, 1 Dec 2016 09:58:20 +0000
+Subject: [Project Clearwater] Clearwater Integration with MRF
+In-Reply-To: <CANX2aNE8UwJwvjqT=saRMaM_yBb_-R-hG6qT2W+g8iVBEb8wNg@mail.gmail.com>
+References: <CANX2aNE8UwJwvjqT=saRMaM_yBb_-R-hG6qT2W+g8iVBEb8wNg@mail.gmail.com>
+Message-ID: <SN1PR02MB16646BB10BCEE2AB027E63368F8F0@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+Thanks for getting in touch. In answer to your questions:
+
+
+1)      Project Clearwater doesn?t integrate directly with an MRF, but you can configure an AS that can control the MRF, and we?ve successfully integrated with MRFs via an AS in the past.
+
+2)
+
+a.       See above ? once you have an AS that can control the MRF, you would configure the AS as normal (http://clearwater.readthedocs.io/en/latest/Configuring_an_Application_Server.html)
+
+b.      No, the built-in MMTEL TAS is not necessary. It will be installed on the Sprout node, but you don?t need to configure any calls to use it.
+
+
+
+3)      Not all of these are necessary ? which ones you use are up to you:
+
+a.       Ellis ? this is just to make provisioning easier. You don?t need to use it since you can also provision subscribers directly on Homestead (http://clearwater.readthedocs.io/en/latest/Provisioning_Subscribers.html)
+
+b.      Homer ? this is only required if you are using the built-in MMTEL TAS. If not, then Homer is not required.
+
+c.       Ralf ? this is used for billing, and is not required for calls to work.
+
+I hope that helps,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Marcello 300sx
+Sent: 29 November 2016 12:32
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Clearwater Integration with MRF
+
+Hi All,
+It is a plesure to discover an opensource free vIMS as Clearewater is. Very interesting VNF Cloud platform to get training and testing. I'm quite new on Clearwater vIMS on the Cloud. I manually installed it in my Openstack Lab  and I'd like to have the following information:
+
+1) Can Clearwater with MRF (Media Resource Function) be integrated ?
+2) if It can, how can it with a MRF with SIP and RTP interfaces be integrated? Is TAS (MMTEL sproutlet) necessary anyway ?
+3) Moreover, can Clearwater with only Bono, Sprout+TAS, Homestead,DNS/ENUM work properly ? Are Ellis, Homer and Ralf  necessary anyway ?
+Thank you very much!
+Have a nice day,
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161201/521b94a7/attachment.html>
+
+From morrisyan123 at gmail.com  Fri Dec  2 01:13:49 2016
+From: morrisyan123 at gmail.com (yan morris)
+Date: Fri, 2 Dec 2016 14:13:49 +0800
+Subject: [Project Clearwater] About clearwater application server
+In-Reply-To: <CAM_v+eRE2ZtZj3404HWY193mfuv1zD49FnUKVVt+209884wxNQ@mail.gmail.com>
+References: <CAM_v+eRE2ZtZj3404HWY193mfuv1zD49FnUKVVt+209884wxNQ@mail.gmail.com>
+Message-ID: <CAM_v+eSb1wuwBwY1zOa6o+=4iQHNdvm=QmeNAcDDnEgxLQHQxw@mail.gmail.com>
+
+Hi,
+I tried to find a opensource IMS application server to test my IMS system.
+But I found nothing!!!
+Could you please supply some opensource Functional IMS application for me?
+(486 Call forwarding or Voice Mail)
+I don't want just a proxy function IMS AS.
+I will really appreciate.
+
+2016-12-02 14:10 GMT+08:00 yan morris <morrisyan123 at gmail.com>:
+
+> Hi,
+> I tried to find a opensource IMS application server to test my IMS system.
+> But I found nothing!!!
+> Could you please supply some opensource Functional IMS application for me?
+> (486 Call forwarding or Voice Mail)
+> I don't want just a proxy function IMS AS.
+> I will really appreciate.
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161202/cc79ec43/attachment.html>
+
+From morrisyan123 at gmail.com  Fri Dec  2 01:14:16 2016
+From: morrisyan123 at gmail.com (yan morris)
+Date: Fri, 2 Dec 2016 14:14:16 +0800
+Subject: [Project Clearwater] About clearwater application server
+Message-ID: <CAM_v+eQnGpd5ZJpktGCrJii9ThzzWK4qtB7RN9z7vHonGB2qbg@mail.gmail.com>
+
+Hi,
+I tried to find a opensource IMS application server to test my IMS system.
+But I found nothing!!!
+Could you please supply some opensource Functional IMS application for me?
+(486 Call forwarding or Voice Mail)
+I don't want just a proxy function IMS AS.
+I will really appreciate.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161202/03e7baf2/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Fri Dec  2 07:56:54 2016
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Fri, 2 Dec 2016 12:56:54 +0000
+Subject: [Project Clearwater] About clearwater application server
+In-Reply-To: <CAM_v+eQnGpd5ZJpktGCrJii9ThzzWK4qtB7RN9z7vHonGB2qbg@mail.gmail.com>
+References: <CAM_v+eQnGpd5ZJpktGCrJii9ThzzWK4qtB7RN9z7vHonGB2qbg@mail.gmail.com>
+Message-ID: <SN1PR02MB16647D2A939564276786657A8F8E0@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+Project Clearwater?s built-in MMTEL TAS can do various types of call forwarding, including Call Forwarding on Busy. See http://clearwater.readthedocs.io/en/latest/IR.92_Supplementary_Services.html for the list of services that the MMTEL TAS can provide.
+
+As for voicemail ? we don?t provide an AS that can do voicemail. However, we?ve experimented with using Plivo (https://www.plivo.com/open-source/, http://docs.plivo.org/get-started/) and produced a prototype voicemail server. We don?t actively support it, but it may be a useful starting point for you. You can find the prototype at: https://github.com/Metaswitch/plivo-apps/
+
+I hope that helps.
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of yan morris
+Sent: 02 December 2016 06:14
+To: Clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] About clearwater application server
+
+Hi,
+I tried to find a opensource IMS application server to test my IMS system.
+But I found nothing!!!
+Could you please supply some opensource Functional IMS application for me? (486 Call forwarding or Voice Mail)
+I don't want just a proxy function IMS AS.
+I will really appreciate.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161202/fb0cd6cc/attachment.html>
+
+From Parwinder.Singh at aricent.com  Mon Dec  5 08:36:55 2016
+From: Parwinder.Singh at aricent.com (Parwinder Singh)
+Date: Mon, 5 Dec 2016 13:36:55 +0000
+Subject: [Project Clearwater] Kubernetes deployment: Issue Homestead
+Message-ID: <MAXPR01MB03486A1D435030AD871933E0E6830@MAXPR01MB0348.INDPRD01.PROD.OUTLOOK.COM>
+
+Hi CW Team,
+
+
+*         We are deploying Clearwater using Kubernetes pods, container and services environment.
+
+*         We adapted the environment of Kubernetes from docker compose environment as provided under https://github.com/Metaswitch/clearwater-docker.
+
+*         We have written yaml templates for each of the 10 modules. Each module is getting deployed as one container per pod.
+
+*         Services are exposed for each of the pod as needed according to the docker-file exposed ports.
+
+*         We have observed few of the containers are not working. These containers are homestead, homer and bono.
+
+*         After debugging in to logs we found that the homestead is not able to resolve Cassandra DNS and thus not able to contact cassandra. Hence homestead service keeps on restarting.  Below is the error messages (/var/log/homestead/homestead_current)which keeps on repeating
+
+05-12-2016 12:59:59.426 UTC Warning (Net-SNMP): Warning: Failed to connect to the agentx master agent ([NIL]):
+05-12-2016 12:59:59.499 UTC Status load_monitor.cpp:105: Constructing LoadMonitor
+05-12-2016 12:59:59.500 UTC Status load_monitor.cpp:106:    Target latency (usecs)   : 100000
+05-12-2016 12:59:59.500 UTC Status load_monitor.cpp:107:    Max bucket size          : 1000
+05-12-2016 12:59:59.500 UTC Status load_monitor.cpp:108:    Initial token fill rate/s: 100.000000
+05-12-2016 12:59:59.500 UTC Status load_monitor.cpp:109:    Min token fill rate/s    : 10.000000
+05-12-2016 12:59:59.500 UTC Status dnscachedresolver.cpp:150: Creating Cached Resolver using servers:
+05-12-2016 12:59:59.500 UTC Status dnscachedresolver.cpp:160:     10.96.0.10
+05-12-2016 12:59:59.500 UTC Status a_record_resolver.cpp:54: Created ARecordResolver
+05-12-2016 12:59:59.500 UTC Status a_record_resolver.cpp:54: Created ARecordResolver
+05-12-2016 12:59:59.500 UTC Status cassandra_store.cpp:181: Configuring store connection
+05-12-2016 12:59:59.500 UTC Status cassandra_store.cpp:182:   Hostname:  cassandra
+05-12-2016 12:59:59.500 UTC Status cassandra_store.cpp:183:   Port:      9160
+05-12-2016 12:59:59.500 UTC Status cassandra_store.cpp:211: Configuring store worker pool
+05-12-2016 12:59:59.500 UTC Status cassandra_store.cpp:212:   Threads:   10
+05-12-2016 12:59:59.500 UTC Status cassandra_store.cpp:213:   Max Queue: 0
+05-12-2016 12:59:59.573 UTC Error dnscachedresolver.cpp:846: Failed to retrieve record for cassandra: Could not contact DNS servers
+05-12-2016 12:59:59.578 UTC Error main.cpp:744: Failed to initialize the Cassandra cache with error code 5.
+05-12-2016 12:59:59.578 UTC Status main.cpp:745: Homestead is shutting down
+
+
+>From the tcpump we could see the first DNS request(between Homestead pod and Kube DNS pod) somehow gets failed. But subsequent messages are able to resolve the response but still this messages are coming up. It seems as they caught in some loop.
+
+As a workaround we tried to use Cassandra Ip directly in /etc/Clearwater/shared_config unser cassandra_hostname. Now the error gets removed.
+However sometimes it keeps on giving the Failed to initialize the Cassandra cache with error code 3. So the behavior of working (homestead and Cassandra connection) is very random.
+
+
+# Deployment definitions
+home_domain=example.com
+sprout_hostname=sprout
+hs_hostname=homestead:8888
+hs_provisioning_hostname=homestead:8889
+xdms_hostname=homer:7888
+ralf_hostname=ralf:10888
+chronos_hostname=chronos
+cassandra_hostname= 10.108.6.190
+
+# Email server configuration
+smtp_smarthost=127.0.0.1
+smtp_username=username
+smtp_password=password
+email_recovery_sender=clearwater at example.com<mailto:email_recovery_sender=clearwater at example.com>
+
+# I-CSCF/S-CSCF configuration
+upstream_hostname=sprout
+
+# Keys
+signup_key=secret
+turn_workaround=secret
+ellis_api_key=secret
+ellis_cookie_key=secret
+
+reduce_cassandra_mem_usage=Y
+signaling_dns_server=10.96.0.10
+
+
+BR
+Parwinder
+"DISCLAIMER: This message is proprietary to Aricent and is intended solely for the use of the individual to whom it is addressed. It may contain privileged or confidential information and should not be circulated or used for any purpose other than for what it is intended. If you have received this message in error, please notify the originator immediately. If you are not the intended recipient, you are notified that you are strictly prohibited from using, copying, altering, or disclosing the contents of this message. Aricent accepts no responsibility for loss or damage arising from the use of the information transmitted by this email including damage from virus."
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161205/5998dab4/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Tue Dec  6 11:54:55 2016
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Tue, 6 Dec 2016 16:54:55 +0000
+Subject: [Project Clearwater] Sprint Sandslash Release Note
+Message-ID: <SN1PR02MB1664FCA1D86E30CCEB03EC558F820@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+The release for Project Clearwater sprint "Sandslash" has been cut. The code for this release is tagged as release-112 in GitHub.
+This release includes the following bug fixes:
+
+*         Sprout will incorrectly fail AKA authentication if the RES/XRES contains an 0x00 byte (https://github.com/Metaswitch/sprout/issues/1599)
+
+*         Homestead requires a DNS entry for localhost (https://github.com/Metaswitch/homestead/issues/386)
+
+*         Ralf has poor overload behaviour.  (https://github.com/Metaswitch/ralf/issues/58)
+
+*         Chronos defaults include localhost as a staying node erroneously (https://github.com/Metaswitch/chronos/issues/315)
+
+*         Chronos resync never ends if active timer is out of date and there is also informational timer (https://github.com/Metaswitch/chronos/issues/314)
+
+*         Chronos callback treats HTTP failure responses as OK (https://github.com/Metaswitch/chronos/issues/312)
+
+*         Chronos does not provide adequate diags for invalid config file (https://github.com/Metaswitch/chronos/issues/266)
+
+*         Ellis generates nginx configuration with duplicate server names. (https://github.com/Metaswitch/ellis/issues/170)
+
+*         In some scenarios Monit doesn't start (https://github.com/Metaswitch/clearwater-monit/issues/44)
+
+*         We have a mmonit script in place, despite not using mmonit (https://github.com/Metaswitch/clearwater-monit/issues/40)
+
+*         Updating shared config on all in one node fails the first time (https://github.com/Metaswitch/clearwater-etcd-plugins/issues/16)
+To upgrade to this release, follow the instructions at http://docs.projectclearwater.org/en/stable/Upgrading_a_Clearwater_deployment.html. If you are deploying an all-in-one node, the standard image (http://vm-images.cw-ngv.com/cw-aio.ova) has been updated for this release.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161206/99b2705c/attachment.html>
+
+From marcello300sx at gmail.com  Mon Dec  5 10:19:36 2016
+From: marcello300sx at gmail.com (Marcello 300sx)
+Date: Mon, 5 Dec 2016 16:19:36 +0100
+Subject: [Project Clearwater] Clearwater Integration with MRF
+Message-ID: <CANX2aNFEQDOPf-f6LDFN7Cu=WsLP6e8B9anAMjXAMJkODCLsCw@mail.gmail.com>
+
+*Hi Sebastian, *
+*thank you very much for your clarification. At this point I'd have other
+related questions by answering to your reply: *
+
+1)  Project Clearwater doesn?t integrate directly with an MRF, but you can
+
+configure an AS that can control the MRF, and we?ve successfully integrated
+with MRFs via an AS in the past.
+
+-
+
+
+
+
+*-> So what is a suitable TAS to integrate a RFC and 3GPP MRF    for
+Clearwater Rapidash release ? if it is Telestax Restcomm    Media
+Server, are the following docs and softwares valid     for Clearwater
+release yet?     https://github.com/RestComm/mediaserver
+<https://github.com/RestComm/mediaserver>
+http://telestax.com/wp-content/uploads/2013/12/ClearWater-RestComm-Integration-2013.pdf
+<http://telestax.com/wp-content/uploads/2013/12/ClearWater-RestComm-Integration-2013.pdf>*
+
+*- - > Definitively, can I consider the following requirements in order to
+integrate a    MRF with Clearwater and AS? (coming from Clearwater
+documentation): *
+MRFC control (RFC 4240 <http://www.ietf.org/rfc/rfc4240.txt>, RFC 5552
+<http://www.ietf.org/rfc/rfc5552.txt>, RFC 6230
+<http://www.ietf.org/rfc/rfc6230.txt>, RFC 6231
+<http://www.ietf.org/rfc/rfc6231.txt>, RFC 6505
+<http://www.ietf.org/rfc/rfc6505.txt>)
+
+   - These RFCs define three different ways of controlling the function of
+   an MRFC from an AS. RFC 4240 <http://www.ietf.org/rfc/rfc4240.txt> is a
+   simple ?play an announcement? service, RFC 5552
+   <http://www.ietf.org/rfc/rfc5552.txt> uses VoiceXML and RFC 6230
+   <http://www.ietf.org/rfc/rfc6230.txt>/RFC 6231
+   <http://www.ietf.org/rfc/rfc6231.txt>/RFC 6505
+   <http://www.ietf.org/rfc/rfc6505.txt> use SIP/SDP to establish a two-way
+   control channel between the AS and MRFC.
+   - IMS allows any of the three mechanisms to be used, or combinations
+   depending on circumstances.
+   - All three mechanisms are transparent to proxy components, so supported
+   by Clearwater.
+
+
+2)
+
+b.      No, the built-in MMTEL TAS is not necessary. It will be installed on
+the Sprout node, but you don?t need to configure any calls to use it.
+
+-->
+*so it is confirmed with Clearwater Rapidash Built-in MMTEL AS*
+
+*    cannot be configured to integrate a MRF, isn't it ?*
+
+Thank you very much for your availability!
+Have a nice day,
+/Marcello
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161205/375a4a73/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Wed Dec  7 04:54:44 2016
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Wed, 7 Dec 2016 09:54:44 +0000
+Subject: [Project Clearwater] Kubernetes deployment: Issue Homestead
+In-Reply-To: <MAXPR01MB03486A1D435030AD871933E0E6830@MAXPR01MB0348.INDPRD01.PROD.OUTLOOK.COM>
+References: <MAXPR01MB03486A1D435030AD871933E0E6830@MAXPR01MB0348.INDPRD01.PROD.OUTLOOK.COM>
+Message-ID: <SN1PR02MB1664B876FC80C6B01C49D0048F850@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+For the first issue (the cassandra hostname not being resolvable) - from what you've written it sounds like your homestead pod is unable to get a DNS record for "cassandra" from your DNS server (10.96.0.10). Have you tried testing the DNS resolution from the homestead pod manually (using something like nslookup)? That may help you troubleshoot why it's not working. As you've found, however, you can specify an IP directly if you want.
+
+As for your second issue, it sounds like you may be hitting issue: https://github.com/Metaswitch/homestead/issues/387. This has been fixed in the latest release ("Sandslash", release 112), so you may want to try upgrading to that release and seeing if it resolves your issue.
+
+Thanks,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Parwinder Singh
+Sent: 05 December 2016 13:37
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Kubernetes deployment: Issue Homestead
+
+Hi CW Team,
+
+
+*         We are deploying Clearwater using Kubernetes pods, container and services environment.
+
+*         We adapted the environment of Kubernetes from docker compose environment as provided under https://github.com/Metaswitch/clearwater-docker.
+
+*         We have written yaml templates for each of the 10 modules. Each module is getting deployed as one container per pod.
+
+*         Services are exposed for each of the pod as needed according to the docker-file exposed ports.
+
+*         We have observed few of the containers are not working. These containers are homestead, homer and bono.
+
+*         After debugging in to logs we found that the homestead is not able to resolve Cassandra DNS and thus not able to contact cassandra. Hence homestead service keeps on restarting.  Below is the error messages (/var/log/homestead/homestead_current)which keeps on repeating
+
+05-12-2016 12:59:59.426 UTC Warning (Net-SNMP): Warning: Failed to connect to the agentx master agent ([NIL]):
+05-12-2016 12:59:59.499 UTC Status load_monitor.cpp:105: Constructing LoadMonitor
+05-12-2016 12:59:59.500 UTC Status load_monitor.cpp:106:    Target latency (usecs)   : 100000
+05-12-2016 12:59:59.500 UTC Status load_monitor.cpp:107:    Max bucket size          : 1000
+05-12-2016 12:59:59.500 UTC Status load_monitor.cpp:108:    Initial token fill rate/s: 100.000000
+05-12-2016 12:59:59.500 UTC Status load_monitor.cpp:109:    Min token fill rate/s    : 10.000000
+05-12-2016 12:59:59.500 UTC Status dnscachedresolver.cpp:150: Creating Cached Resolver using servers:
+05-12-2016 12:59:59.500 UTC Status dnscachedresolver.cpp:160:     10.96.0.10
+05-12-2016 12:59:59.500 UTC Status a_record_resolver.cpp:54: Created ARecordResolver
+05-12-2016 12:59:59.500 UTC Status a_record_resolver.cpp:54: Created ARecordResolver
+05-12-2016 12:59:59.500 UTC Status cassandra_store.cpp:181: Configuring store connection
+05-12-2016 12:59:59.500 UTC Status cassandra_store.cpp:182:   Hostname:  cassandra
+05-12-2016 12:59:59.500 UTC Status cassandra_store.cpp:183:   Port:      9160
+05-12-2016 12:59:59.500 UTC Status cassandra_store.cpp:211: Configuring store worker pool
+05-12-2016 12:59:59.500 UTC Status cassandra_store.cpp:212:   Threads:   10
+05-12-2016 12:59:59.500 UTC Status cassandra_store.cpp:213:   Max Queue: 0
+05-12-2016 12:59:59.573 UTC Error dnscachedresolver.cpp:846: Failed to retrieve record for cassandra: Could not contact DNS servers
+05-12-2016 12:59:59.578 UTC Error main.cpp:744: Failed to initialize the Cassandra cache with error code 5.
+05-12-2016 12:59:59.578 UTC Status main.cpp:745: Homestead is shutting down
+
+
+>From the tcpump we could see the first DNS request(between Homestead pod and Kube DNS pod) somehow gets failed. But subsequent messages are able to resolve the response but still this messages are coming up. It seems as they caught in some loop.
+
+As a workaround we tried to use Cassandra Ip directly in /etc/Clearwater/shared_config unser cassandra_hostname. Now the error gets removed.
+However sometimes it keeps on giving the Failed to initialize the Cassandra cache with error code 3. So the behavior of working (homestead and Cassandra connection) is very random.
+
+
+# Deployment definitions
+home_domain=example.com
+sprout_hostname=sprout
+hs_hostname=homestead:8888
+hs_provisioning_hostname=homestead:8889
+xdms_hostname=homer:7888
+ralf_hostname=ralf:10888
+chronos_hostname=chronos
+cassandra_hostname= 10.108.6.190
+
+# Email server configuration
+smtp_smarthost=127.0.0.1
+smtp_username=username
+smtp_password=password
+email_recovery_sender=clearwater at example.com<mailto:email_recovery_sender=clearwater at example.com>
+
+# I-CSCF/S-CSCF configuration
+upstream_hostname=sprout
+
+# Keys
+signup_key=secret
+turn_workaround=secret
+ellis_api_key=secret
+ellis_cookie_key=secret
+
+reduce_cassandra_mem_usage=Y
+signaling_dns_server=10.96.0.10
+
+
+BR
+Parwinder
+"DISCLAIMER: This message is proprietary to Aricent and is intended solely for the use of the individual to whom it is addressed. It may contain privileged or confidential information and should not be circulated or used for any purpose other than for what it is intended. If you have received this message in error, please notify the originator immediately. If you are not the intended recipient, you are notified that you are strictly prohibited from using, copying, altering, or disclosing the contents of this message. Aricent accepts no responsibility for loss or damage arising from the use of the information transmitted by this email including damage from virus."
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161207/789b9d22/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Wed Dec  7 05:01:00 2016
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Wed, 7 Dec 2016 10:01:00 +0000
+Subject: [Project Clearwater] Clearwater Integration with MRF
+In-Reply-To: <CANX2aNFEQDOPf-f6LDFN7Cu=WsLP6e8B9anAMjXAMJkODCLsCw@mail.gmail.com>
+References: <CANX2aNFEQDOPf-f6LDFN7Cu=WsLP6e8B9anAMjXAMJkODCLsCw@mail.gmail.com>
+Message-ID: <SN1PR02MB1664DEAE5A8ED314CC37331A8F850@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+in answer to your questions:
+
+?So what is a suitable TAS??
+We don?t recommend a TAS to integrate with an MRF, but (as you point out) the docs at http://clearwater.readthedocs.io/en/latest/SIP_Interface_Specifications.html#mrfc-control-rfc-4240-rfc-5552-rfc-6230-rfc-6231-rfc-6505 should hopefully give you what you need to establish whether a TAS will work. (As those docs say, all 3 methods of controlling the function of an MRFC from an AS are transparent to proxy components, and so all 3 are supported by Clearwater).
+
+?Is it confirmed that the built-in MMTEL AS cannot integrate directly with an MRF??
+Correct, the built-in MMTEL AS is Project Clearwater cannot integrate directly with an MRF.
+
+Hope this helps,
+Seb.
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Marcello 300sx
+Sent: 05 December 2016 15:20
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Clearwater Integration with MRF
+
+Hi Sebastian,
+thank you very much for your clarification. At this point I'd have other related questions by answering to your reply:
+1)  Project Clearwater doesn?t integrate directly with an MRF, but you can
+
+configure an AS that can control the MRF, and we?ve successfully integrated
+
+with MRFs via an AS in the past.
+
+--> So what is a suitable TAS to integrate a RFC and 3GPP MRF
+    for Clearwater Rapidash release ? if it is Telestax Restcomm
+    Media Server, are the following docs and softwares valid
+    for Clearwater release yet?
+    https://github.com/RestComm/mediaserver
+    http://telestax.com/wp-content/uploads/2013/12/ClearWater-RestComm-Integration-2013.pdf
+- - > Definitively, can I consider the following requirements in order to integrate a    MRF with Clearwater and AS? (coming from Clearwater documentation):
+MRFC control (RFC 4240<http://www.ietf.org/rfc/rfc4240.txt>, RFC 5552<http://www.ietf.org/rfc/rfc5552.txt>, RFC 6230<http://www.ietf.org/rfc/rfc6230.txt>, RFC 6231<http://www.ietf.org/rfc/rfc6231.txt>, RFC 6505<http://www.ietf.org/rfc/rfc6505.txt>)
+
+  *   These RFCs define three different ways of controlling the function of an MRFC from an AS. RFC 4240<http://www.ietf.org/rfc/rfc4240.txt> is a simple ?play an announcement? service, RFC 5552<http://www.ietf.org/rfc/rfc5552.txt> uses VoiceXML and RFC 6230<http://www.ietf.org/rfc/rfc6230.txt>/RFC 6231<http://www.ietf.org/rfc/rfc6231.txt>/RFC 6505<http://www.ietf.org/rfc/rfc6505.txt> use SIP/SDP to establish a two-way control channel between the AS and MRFC.
+  *   IMS allows any of the three mechanisms to be used, or combinations depending on circumstances.
+  *   All three mechanisms are transparent to proxy components, so supported by Clearwater.
+
+
+2)
+
+
+
+b.      No, the built-in MMTEL TAS is not necessary. It will be installed on
+
+the Sprout node, but you don?t need to configure any calls to use it.
+
+--> so it is confirmed with Clearwater Rapidash Built-in MMTEL AS
+
+    cannot be configured to integrate a MRF, isn't it ?
+Thank you very much for your availability!
+Have a nice day,
+/Marcello
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161207/bb0cec18/attachment.html>
+
+From pratap.txt at gmail.com  Wed Dec  7 17:04:31 2016
+From: pratap.txt at gmail.com (Pratap Singh)
+Date: Wed, 7 Dec 2016 17:04:31 -0500
+Subject: [Project Clearwater] Call failed with 480 user not available
+Message-ID: <CAFOaLrDNDUdC7Tsdvhv3aUVgHJHOvcSPYqX+7fhuzuQ07pm0Kg@mail.gmail.com>
+
+Hi All,
+
+                I have used aio clearwater in openstack using qcow2 image
+and registerd two users to it using two xlite phone.
+
+
+
+                Users are getting registered but while calling getting
+error like 480 User Not available.
+
+
+
+                Just started to use this project so might be done some
+silly mistakes. Please enlighten with your knowledge .
+
+
+
+                Thanks
+
+                Pratap
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161207/cd7356b9/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Fri Dec  9 11:34:06 2016
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Fri, 9 Dec 2016 16:34:06 +0000
+Subject: [Project Clearwater] Call failed with 480 user not available
+In-Reply-To: <CAFOaLrDNDUdC7Tsdvhv3aUVgHJHOvcSPYqX+7fhuzuQ07pm0Kg@mail.gmail.com>
+References: <CAFOaLrDNDUdC7Tsdvhv3aUVgHJHOvcSPYqX+7fhuzuQ07pm0Kg@mail.gmail.com>
+Message-ID: <SN1PR02MB166472359AF3A9EC727542FF8F870@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi Pratap,
+
+The easiest way to diagnose what?s going wrong will be to turn on debug logging for sprout on your node and take a look at the logs you get.
+
+The steps for turning on debug logging are (as detailed here: http://clearwater.readthedocs.io/en/latest/Troubleshooting_and_Recovery.html#sprout):
+
+-          write log_level=5 to /etc/clearwater/user_settings
+
+-          restart Sprout
+
+Once you?ve done that, reproduce the problem, then collect the sprout logs from /var/log/sprout/sprout_current.txt
+
+If it?s not obvious to you what the problem is from looking at the logs, feel free to send them to us and we?ll take a look.
+
+Thanks,
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Pratap Singh
+Sent: 07 December 2016 22:05
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Call failed with 480 user not available
+
+Hi All,
+                I have used aio clearwater in openstack using qcow2 image and registerd two users to it using two xlite phone.
+
+                Users are getting registered but while calling getting error like 480 User Not available.
+
+                Just started to use this project so might be done some silly mistakes. Please enlighten with your knowledge .
+
+                Thanks
+                Pratap
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161209/746d3978/attachment.html>
+
+From morrisyan123 at gmail.com  Tue Dec 13 23:03:21 2016
+From: morrisyan123 at gmail.com (yan morris)
+Date: Wed, 14 Dec 2016 12:03:21 +0800
+Subject: [Project Clearwater] How to compile clearwater Sprout source code
+Message-ID: <CAM_v+eQ9vwLtik2JgjC7Pt7KaCqFubhquPOECfw-kcpQ6i0LZg@mail.gmail.com>
+
+Hi,
+
+I have finished the clearwater installation in seperate 6 VMs,
+and clearwater runs correctly.
+
+But I want to re-compile my sprout srouce code, especially icscf part.
+
+1.How can I re-compile sprout  ?
+
+2.Does it have to clone all of source code to Sprout VM?
+Or I can compile the src code of finished Sprout VM after twisting the
+icscf config file of Sprout VM and re-compile again.
+
+3.Where is the i-cscf src code file after I installed Sprout VMs?
+
+Thanks
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161214/87cbadb1/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Wed Dec 14 04:55:56 2016
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Wed, 14 Dec 2016 09:55:56 +0000
+Subject: [Project Clearwater] How to compile clearwater Sprout source
+	code
+In-Reply-To: <CAM_v+eQ9vwLtik2JgjC7Pt7KaCqFubhquPOECfw-kcpQ6i0LZg@mail.gmail.com>
+References: <CAM_v+eQ9vwLtik2JgjC7Pt7KaCqFubhquPOECfw-kcpQ6i0LZg@mail.gmail.com>
+Message-ID: <SN1PR02MB16644453D51D7C3877096BAA8F9A0@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi,
+
+If you want to compile sprout from source, you can find the instructions here: https://github.com/Metaswitch/sprout/blob/dev/docs/Development.md. This should give you what you need to get started.
+
+But you talk about changing a config file too ? if it?s just configuration options that you want to change, you may not need to re-compile sprout from source at all. Have you checked the config options guide at http://clearwater.readthedocs.io/en/latest/Modifying_Clearwater_settings.html#modifying-sprout-json-configuration and http://clearwater.readthedocs.io/en/latest/Clearwater_Configuration_Options_Reference.html? It may be that what you?re trying to do is easier done by just changing some config files.
+
+If you do decide to re-compile sprout, then yes, you will need to clone the Github repo, as the source is not included in the installed Sprout node.
+
+Hope that helps,
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of yan morris
+Sent: 14 December 2016 04:03
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] How to compile clearwater Sprout source code
+
+Hi,
+
+I have finished the clearwater installation in seperate 6 VMs,
+and clearwater runs correctly.
+
+But I want to re-compile my sprout srouce code, especially icscf part.
+
+1.How can I re-compile sprout  ?
+
+2.Does it have to clone all of source code to Sprout VM?
+Or I can compile the src code of finished Sprout VM after twisting the icscf config file of Sprout VM and re-compile again.
+
+3.Where is the i-cscf src code file after I installed Sprout VMs?
+
+Thanks
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161214/eb92a4d7/attachment.html>
+
+From morrisyan123 at gmail.com  Wed Dec 14 22:30:51 2016
+From: morrisyan123 at gmail.com (yan morris)
+Date: Thu, 15 Dec 2016 11:30:51 +0800
+Subject: [Project Clearwater] How to compile clearwater Sprout source
+	code
+In-Reply-To: <CAM_v+eQ9vwLtik2JgjC7Pt7KaCqFubhquPOECfw-kcpQ6i0LZg@mail.gmail.com>
+References: <CAM_v+eQ9vwLtik2JgjC7Pt7KaCqFubhquPOECfw-kcpQ6i0LZg@mail.gmail.com>
+Message-ID: <CAM_v+eShX3HO-cPH92nB9ThQXuWgtnD0X__bYLZLFZ55ZDG7Jw@mail.gmail.com>
+
+Hi Seb,
+thanks for your response,
+
+I'm interested in change config, and I find the following description :
+/etc/clearwater/s-cscf.json - contains information to allow the Sprout
+I-CSCF to select an appropriate S-CSCF to handle some requests.
+
+The capabilities of s-cscf.json seem like billing funciton or others.
+Can I route the request to the specific sprout according to method type by
+chaging s-cscf.json ?
+e.g.
+Register method to sprout1
+
+grades,
+
+Morris
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161215/70ea936f/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Thu Dec 15 10:49:23 2016
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Thu, 15 Dec 2016 15:49:23 +0000
+Subject: [Project Clearwater] How to compile clearwater Sprout
+	source	code
+In-Reply-To: <CAM_v+eShX3HO-cPH92nB9ThQXuWgtnD0X__bYLZLFZ55ZDG7Jw@mail.gmail.com>
+References: <CAM_v+eQ9vwLtik2JgjC7Pt7KaCqFubhquPOECfw-kcpQ6i0LZg@mail.gmail.com>
+	<CAM_v+eShX3HO-cPH92nB9ThQXuWgtnD0X__bYLZLFZ55ZDG7Jw@mail.gmail.com>
+Message-ID: <SN1PR02MB16643D94DD58D88F6594AACA8F9D0@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+No, you can?t use that config file to route requests to a different S-CSCF based on the request method, as the S-CSCF is selected on a per-subscriber basis (using the info provided by the HSS).
+
+What are you trying to achieve by doing this? It may be that there?s some other way to do what you?re trying to do.
+
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of yan morris
+Sent: 15 December 2016 03:31
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] How to compile clearwater Sprout source code
+
+Hi Seb,
+thanks for your response,
+
+I'm interested in change config, and I find the following description :
+/etc/clearwater/s-cscf.json - contains information to allow the Sprout I-CSCF to select an appropriate S-CSCF to handle some requests.
+
+The capabilities of s-cscf.json seem like billing funciton or others.
+Can I route the request to the specific sprout according to method type by chaging s-cscf.json ?
+e.g.
+Register method to sprout1
+
+grades,
+
+Morris
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161215/1dd508f0/attachment.html>
+
+From silvestro.ciampoli at hcl.com  Tue Dec 20 05:33:47 2016
+From: silvestro.ciampoli at hcl.com (Silvestro Ciampoli)
+Date: Tue, 20 Dec 2016 10:33:47 +0000
+Subject: [Project Clearwater] Error stack.cpp:325: Failed to start UDP
+ transport for port 172 (Permission denied)
+Message-ID: <HK2PR04MB09310BA825413A1F49B789B79F900@HK2PR04MB0931.apcprd04.prod.outlook.com>
+
+
+Hi,
+
+
+I'm trying to deploy Clearwater on an Openstack environment. I'm encountering an issue on the sprout node.
+
+
+[sprout]ubuntu at sprout-1z1voi:~$ sudo monit summary
+Monit 5.18.1 uptime: 18h 18m
+ Service Name                     Status                      Type
+ node-sprout-1z1voi.clearwate...  Running                     System
+ sprout_process                   Execution failed | Does...  Process
+ ntp_process                      Running                     Process
+ nginx_process                    Running                     Process
+ clearwater_queue_manager_pro...  Running                     Process
+ etcd_process                     Running                     Process
+ clearwater_diags_monitor_pro...  Running                     Process
+ clearwater_config_manager        Running                     Process
+ clearwater_cluster_manager       Running                     Process
+ sprout_uptime                    Not monitored               Program
+ poll_sprout_sip                  Not monitored               Program
+ poll_sprout_http                 Not monitored               Program
+ nginx_uptime                     Status ok                   Program
+ monit_uptime                     Status ok                   Program
+ clearwater_queue_manager_uptime  Status ok                   Program
+ etcd_uptime                      Status ok                   Program
+ poll_etcd_cluster                Status ok                   Program
+ poll_etcd                        Status ok                   Program
+
+
+Looking at the log, I see the error below. It seems it is trying to configure port 172; it's not clear to me why it is trying to use this low port number. Do you have any suggestions? Please you can find more details on the log provided in attachment.
+
+
+thanks in advance,
+
+Silvestro
+
+
+------------------------
+
+
+..
+
+..
+
+0-12-2016 10:09:57.235 UTC Debug pjsip: sip_endpoint.c Creating endpoint instance...
+20-12-2016 10:09:57.238 UTC Debug alarm.cpp:241: Started reraising alarms every 30 seconds
+20-12-2016 10:09:57.238 UTC Debug alarm.cpp:253: Reraising all alarms with a known state
+20-12-2016 10:09:57.255 UTC Verbose pjsip:          pjlib epoll I/O Queue created (0x7fb1594f34c0)
+20-12-2016 10:09:57.255 UTC Verbose pjsip: sip_endpoint.c Module "mod-msg-print" registered
+20-12-2016 10:09:57.255 UTC Debug pjsip: sip_transport. Transport manager created.
+20-12-2016 10:09:57.255 UTC Verbose pjsip: sip_endpoint.c Module "mod-tsx-layer" registered
+20-12-2016 10:09:57.255 UTC Verbose pjsip: sip_endpoint.c Module "mod-stateful-util" registered
+20-12-2016 10:09:57.255 UTC Verbose pjsip: sip_endpoint.c Module "mod-sprout-util" registered
+20-12-2016 10:09:57.255 UTC Error stack.cpp:325: Failed to start UDP transport for port 172 (Permission denied)
+20-12-2016 10:09:57.255 UTC Error pjsip: Assert failed: stack.cpp:767 status == 0
+20-12-2016 10:09:57.256 UTC Error main.cpp:1771: Error initializing stack Permission denied
+..
+..
+
+-----
+
+
+::DISCLAIMER::
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+The contents of this e-mail and any attachment(s) are confidential and intended for the named recipient(s) only.
+E-mail transmission is not guaranteed to be secure or error-free as information could be intercepted, corrupted,
+lost, destroyed, arrive late or incomplete, or may contain viruses in transmission. The e mail and its contents
+(with or without referred errors) shall therefore not attach any liability on the originator or HCL or its affiliates.
+Views or opinions, if any, presented in this email are solely those of the author and may not necessarily reflect the
+views or opinions of HCL or its affiliates. Any form of reproduction, dissemination, copying, disclosure, modification,
+distribution and / or publication of this message without the prior written consent of authorized representative of
+HCL is strictly prohibited. If you have received this email in error please delete it and notify the sender immediately.
+Before opening any email and/or attachments, please check them for viruses and other defects.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161220/842ec91c/attachment.html>
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: sprout_current.txt
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161220/842ec91c/attachment.txt>
+
+From eleanor at projectclearwater.org  Tue Dec 20 05:57:59 2016
+From: eleanor at projectclearwater.org (Eleanor Merry (projectclearwater.org))
+Date: Tue, 20 Dec 2016 10:57:59 +0000
+Subject: [Project Clearwater] Error stack.cpp:325: Failed to start UDP
+ transport for port 172 (Permission denied)
+In-Reply-To: <HK2PR04MB09310BA825413A1F49B789B79F900@HK2PR04MB0931.apcprd04.prod.outlook.com>
+References: <HK2PR04MB09310BA825413A1F49B789B79F900@HK2PR04MB0931.apcprd04.prod.outlook.com>
+Message-ID: <BL2PR02MB2084783467FFAC04B5833F499B900@BL2PR02MB2084.namprd02.prod.outlook.com>
+
+Hi Silvestro,
+
+What version of Clearwater are you using? I'm wondering if you've got different versions of the base Sprout component and the Sproutlets, and this is causing the error. What's the output of running '/usr/share/clearwater/bin/clearwater-version'?
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Silvestro Ciampoli
+Sent: 20 December 2016 10:34
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Error stack.cpp:325: Failed to start UDP transport for port 172 (Permission denied)
+
+
+
+
+Hi,
+
+
+
+I'm trying to deploy Clearwater on an Openstack environment. I'm encountering an issue on the sprout node.
+
+
+[sprout]ubuntu at sprout-1z1voi:~$ sudo monit summary
+Monit 5.18.1 uptime: 18h 18m
+ Service Name                     Status                      Type
+ node-sprout-1z1voi.clearwate...  Running                     System
+ sprout_process                   Execution failed | Does...  Process
+ ntp_process                      Running                     Process
+ nginx_process                    Running                     Process
+ clearwater_queue_manager_pro...  Running                     Process
+ etcd_process                     Running                     Process
+ clearwater_diags_monitor_pro...  Running                     Process
+ clearwater_config_manager        Running                     Process
+ clearwater_cluster_manager       Running                     Process
+ sprout_uptime                    Not monitored               Program
+ poll_sprout_sip                  Not monitored               Program
+ poll_sprout_http                 Not monitored               Program
+ nginx_uptime                     Status ok                   Program
+ monit_uptime                     Status ok                   Program
+ clearwater_queue_manager_uptime  Status ok                   Program
+ etcd_uptime                      Status ok                   Program
+ poll_etcd_cluster                Status ok                   Program
+ poll_etcd                        Status ok                   Program
+
+
+Looking at the log, I see the error below. It seems it is trying to configure port 172; it's not clear to me why it is trying to use this low port number. Do you have any suggestions? Please you can find more details on the log provided in attachment.
+
+
+
+thanks in advance,
+
+Silvestro
+
+
+
+------------------------
+
+
+
+..
+
+..
+0-12-2016 10:09:57.235 UTC Debug pjsip: sip_endpoint.c Creating endpoint instance...
+20-12-2016 10:09:57.238 UTC Debug alarm.cpp:241: Started reraising alarms every 30 seconds
+20-12-2016 10:09:57.238 UTC Debug alarm.cpp:253: Reraising all alarms with a known state
+20-12-2016 10:09:57.255 UTC Verbose pjsip:          pjlib epoll I/O Queue created (0x7fb1594f34c0)
+20-12-2016 10:09:57.255 UTC Verbose pjsip: sip_endpoint.c Module "mod-msg-print" registered
+20-12-2016 10:09:57.255 UTC Debug pjsip: sip_transport. Transport manager created.
+20-12-2016 10:09:57.255 UTC Verbose pjsip: sip_endpoint.c Module "mod-tsx-layer" registered
+20-12-2016 10:09:57.255 UTC Verbose pjsip: sip_endpoint.c Module "mod-stateful-util" registered
+20-12-2016 10:09:57.255 UTC Verbose pjsip: sip_endpoint.c Module "mod-sprout-util" registered
+20-12-2016 10:09:57.255 UTC Error stack.cpp:325: Failed to start UDP transport for port 172 (Permission denied)
+20-12-2016 10:09:57.255 UTC Error pjsip: Assert failed: stack.cpp:767 status == 0
+20-12-2016 10:09:57.256 UTC Error main.cpp:1771: Error initializing stack Permission denied
+..
+..
+
+-----
+
+
+::DISCLAIMER::
+----------------------------------------------------------------------------------------------------------------------------------------------------
+The contents of this e-mail and any attachment(s) are confidential and intended for the named recipient(s) only.
+E-mail transmission is not guaranteed to be secure or error-free as information could be intercepted, corrupted,
+lost, destroyed, arrive late or incomplete, or may contain viruses in transmission. The e mail and its contents
+(with or without referred errors) shall therefore not attach any liability on the originator or HCL or its affiliates.
+Views or opinions, if any, presented in this email are solely those of the author and may not necessarily reflect the
+views or opinions of HCL or its affiliates. Any form of reproduction, dissemination, copying, disclosure, modification,
+distribution and / or publication of this message without the prior written consent of authorized representative of
+HCL is strictly prohibited. If you have received this email in error please delete it and notify the sender immediately.
+Before opening any email and/or attachments, please check them for viruses and other defects.
+----------------------------------------------------------------------------------------------------------------------------------------------------
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161220/c76ea3f6/attachment.html>
+
+From matt at projectclearwater.org  Tue Dec 20 10:07:26 2016
+From: matt at projectclearwater.org (Matt Williams (projectclearwater.org))
+Date: Tue, 20 Dec 2016 15:07:26 +0000
+Subject: [Project Clearwater] Release note for Tauros
+Message-ID: <CY4PR02MB2872CFB6EB47CDC20D8042E190900@CY4PR02MB2872.namprd02.prod.outlook.com>
+
+The release for Project Clearwater sprint "Tauros" has been cut.  The code for this release is tagged as release-113 in GitHub.
+
+This release includes the following bug fixes:
+
+
+*         REGISTER expires 0 gets 401 Unauthorized rather than deregistering (https://github.com/Metaswitch/sprout/issues/1640)
+
+*         AKAv2 authentication is not thread-safe (https://github.com/Metaswitch/sprout/issues/1600)
+
+*         Deregistration in GR deployment causes sprout to send 2 deregistration HTTP requests to homestead (https://github.com/Metaswitch/sprout/issues/1555)
+
+*         scary red cassandra logs when upgrading (https://github.com/Metaswitch/homestead/issues/396)
+
+*         Homestead returns inconsistent HTTP errors (500 and 503) for the same underlying error (THRIFT_EAGAIN) (https://github.com/Metaswitch/homestead/issues/389)
+
+*         SAS logs for Cassandra database failures are too low-level (https://github.com/Metaswitch/homestead/issues/388)
+
+*         Errors reported when upgrading the Clearwater packages (https://github.com/Metaswitch/homestead/issues/333)
+
+*         Homestead provides no useful indication why it fails for a MAA with an unsupported authentication scheme (https://github.com/Metaswitch/homestead/issues/308)
+
+*         Misleading SAS log when running non-FT deployment (https://github.com/Metaswitch/homestead/issues/293)
+
+*         Homestead-prov/Homer are spamming ping handler errors to syslog (https://github.com/Metaswitch/crest/issues/313)
+
+*         Log spam in Crest (https://github.com/Metaswitch/crest/issues/297)
+
+*         Crest based processes will sometimes not recovery properly if Cassandra fails (https://github.com/Metaswitch/crest/issues/283)
+
+*         SyntaxWarning Error when installing Homer/Homestead (https://github.com/Metaswitch/crest/issues/216)
+
+*         Running run-in-signaling-namespace not as sudo gives a misspelt error message (https://github.com/Metaswitch/clearwater-infrastructure/issues/398)
+
+*         config-manager crashes if /etc/clearwater/shared_config contains non-ASCII content (https://github.com/Metaswitch/clearwater-infrastructure/issues/344)
+
+*         Error log in syslog when cluster manager is restarted (https://github.com/Metaswitch/clearwater-etcd/issues/372)
+
+*         check_cluster_state shows the clusters in a different order when run several times (https://github.com/Metaswitch/clearwater-etcd/issues/365)
+
+*         In a 4-node deployment, etcd failed to start on one node and couldn't be trivially fixed (https://github.com/Metaswitch/clearwater-etcd/issues/359)
+
+*         Cluster manager logs repeated errors in normal operation (https://github.com/Metaswitch/clearwater-etcd/issues/324)
+
+*         Warning text when installing pyzmq (https://github.com/Metaswitch/clearwater-etcd/issues/258)
+
+*         Mark node failed hangs when run on one of several failed nodes (https://github.com/Metaswitch/clearwater-etcd/issues/250)
+
+To upgrade to this release, follow the instructions at http://docs.projectclearwater.org/en/stable/Upgrading_a_Clearwater_deployment.html.  If you are deploying an all-in-one node, the standard image (http://vm-images.cw-ngv.com/cw-aio.ova) has been updated for this release.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161220/7ecd4b57/attachment.html>
+
+From silvestro.ciampoli at hcl.com  Wed Dec 21 06:22:00 2016
+From: silvestro.ciampoli at hcl.com (Silvestro Ciampoli)
+Date: Wed, 21 Dec 2016 11:22:00 +0000
+Subject: [Project Clearwater] Error stack.cpp:325: Failed to start UDP
+ transport for port 172 (Permission denied)
+In-Reply-To: <mailman.231.1482246497.69206.clearwater_lists.projectclearwater.org@lists.projectclearwater.org>
+References: <mailman.231.1482246497.69206.clearwater_lists.projectclearwater.org@lists.projectclearwater.org>
+Message-ID: <HK2PR04MB0931C60A84B4CD51BA8E0F4A9F930@HK2PR04MB0931.apcprd04.prod.outlook.com>
+
+
+Hi Ellie,
+
+
+below the output of the clearwater-version command. Please consider that I'm deploying Clearwater by Cloudify. The deployment seems to be completed but checking the status I see the error on Sprout node.
+
+
+Thank you for your support.
+
+
+BR,
+
+Silvestro
+
+
+-------
+
+
+[sprout]ubuntu at sprout-1z1voi:~$ /usr/share/clearwater/bin/clearwater-version
+clearwater-cluster-manager               1.0-161202.152523
+clearwater-config-manager                1.0-161202.152523
+clearwater-diags-monitor                 1.0-161202.130810
+clearwater-etcd                          1.0-161202.152523
+clearwater-infrastructure                1.0-161202.130810
+clearwater-log-cleanup                   1.0-161202.130810
+clearwater-management                    1.0-161202.152523
+clearwater-monit                         5.18-161123.110109
+clearwater-nginx                         1.0-161109.130509
+clearwater-queue-manager                 1.0-161202.152523
+clearwater-socket-factory                1.0-161202.130810
+clearwater-tcp-scalability               1.0-161202.130810
+sprout                                   1.0-161202.163421
+sprout-base                              1.0-161202.163421
+sprout-bgcf                              1.0-161202.163421
+sprout-icscf                             1.0-161202.163421
+sprout-mmtel-as                          1.0-161202.163421
+sprout-scscf                             1.0-161202.163421
+
+
+
+----------------------------------------------------------------------
+
+Message: 1
+Date: Tue, 20 Dec 2016 10:57:59 +0000
+From: "Eleanor Merry (projectclearwater.org)"
+        <eleanor at projectclearwater.org>
+To: "clearwater at lists.projectclearwater.org"
+        <clearwater at lists.projectclearwater.org>
+Subject: Re: [Project Clearwater] Error stack.cpp:325: Failed to start
+        UDP transport for port 172 (Permission denied)
+Message-ID:
+        <BL2PR02MB2084783467FFAC04B5833F499B900 at BL2PR02MB2084.namprd02.prod.outlook.com>
+
+Content-Type: text/plain; charset="us-ascii"
+
+Hi Silvestro,
+
+What version of Clearwater are you using? I'm wondering if you've got different versions of the base Sprout component and the Sproutlets, and this is causing the error. What's the output of running '/usr/share/clearwater/bin/clearwater-version'?
+
+Ellie
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Silvestro Ciampoli
+Sent: 20 December 2016 10:34
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Error stack.cpp:325: Failed to start UDP transport for port 172 (Permission denied)
+
+
+
+
+Hi,
+
+
+
+I'm trying to deploy Clearwater on an Openstack environment. I'm encountering an issue on the sprout node.
+
+
+[sprout]ubuntu at sprout-1z1voi:~$ sudo monit summary
+Monit 5.18.1 uptime: 18h 18m
+ Service Name                     Status                      Type
+ node-sprout-1z1voi.clearwate...  Running                     System
+ sprout_process                   Execution failed | Does...  Process
+ ntp_process                      Running                     Process
+ nginx_process                    Running                     Process
+ clearwater_queue_manager_pro...  Running                     Process
+ etcd_process                     Running                     Process
+ clearwater_diags_monitor_pro...  Running                     Process
+ clearwater_config_manager        Running                     Process
+ clearwater_cluster_manager       Running                     Process
+ sprout_uptime                    Not monitored               Program
+ poll_sprout_sip                  Not monitored               Program
+ poll_sprout_http                 Not monitored               Program
+ nginx_uptime                     Status ok                   Program
+ monit_uptime                     Status ok                   Program
+ clearwater_queue_manager_uptime  Status ok                   Program
+ etcd_uptime                      Status ok                   Program
+ poll_etcd_cluster                Status ok                   Program
+ poll_etcd                        Status ok                   Program
+
+
+Looking at the log, I see the error below. It seems it is trying to configure port 172; it's not clear to me why it is trying to use this low port number. Do you have any suggestions? Please you can find more details on the log provided in attachment.
+
+
+
+thanks in advance,
+
+Silvestro
+
+
+
+------------------------
+
+
+
+..
+
+..
+0-12-2016 10:09:57.235 UTC Debug pjsip: sip_endpoint.c Creating endpoint instance...
+20-12-2016 10:09:57.238 UTC Debug alarm.cpp:241: Started reraising alarms every 30 seconds
+20-12-2016 10:09:57.238 UTC Debug alarm.cpp:253: Reraising all alarms with a known state
+20-12-2016 10:09:57.255 UTC Verbose pjsip:          pjlib epoll I/O Queue created (0x7fb1594f34c0)
+20-12-2016 10:09:57.255 UTC Verbose pjsip: sip_endpoint.c Module "mod-msg-print" registered
+20-12-2016 10:09:57.255 UTC Debug pjsip: sip_transport. Transport manager created.
+20-12-2016 10:09:57.255 UTC Verbose pjsip: sip_endpoint.c Module "mod-tsx-layer" registered
+20-12-2016 10:09:57.255 UTC Verbose pjsip: sip_endpoint.c Module "mod-stateful-util" registered
+20-12-2016 10:09:57.255 UTC Verbose pjsip: sip_endpoint.c Module "mod-sprout-util" registered
+20-12-2016 10:09:57.255 UTC Error stack.cpp:325: Failed to start UDP transport for port 172 (Permission denied)
+20-12-2016 10:09:57.255 UTC Error pjsip: Assert failed: stack.cpp:767 status == 0
+20-12-2016 10:09:57.256 UTC Error main.cpp:1771: Error initializing stack Permission denied
+..
+..
+
+-----
+
+
+::DISCLAIMER::
+----------------------------------------------------------------------------------------------------------------------------------------------------
+The contents of this e-mail and any attachment(s) are confidential and intended for the named recipient(s) only.
+E-mail transmission is not guaranteed to be secure or error-free as information could be intercepted, corrupted,
+lost, destroyed, arrive late or incomplete, or may contain viruses in transmission. The e mail and its contents
+(with or without referred errors) shall therefore not attach any liability on the originator or HCL or its affiliates.
+Views or opinions, if any, presented in this email are solely those of the author and may not necessarily reflect the
+views or opinions of HCL or its affiliates. Any form of reproduction, dissemination, copying, disclosure, modification,
+distribution and / or publication of this message without the prior written consent of authorized representative of
+HCL is strictly prohibited. If you have received this email in error please delete it and notify the sender immediately.
+Before opening any email and/or attachments, please check them for viruses and other defects.
+----------------------------------------------------------------------------------------------------------------------------------------------------
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161220/c76ea3f6/attachment-0001.html>
+
+------------------------------
+
+Message: 2
+Date: Tue, 20 Dec 2016 15:07:26 +0000
+From: "Matt Williams (projectclearwater.org)"
+        <matt at projectclearwater.org>
+To: "clearwater at lists.projectclearwater.org"
+        <clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Release note for Tauros
+Message-ID:
+        <CY4PR02MB2872CFB6EB47CDC20D8042E190900 at CY4PR02MB2872.namprd02.prod.outlook.com>
+
+Content-Type: text/plain; charset="us-ascii"
+
+The release for Project Clearwater sprint "Tauros" has been cut.  The code for this release is tagged as release-113 in GitHub.
+
+This release includes the following bug fixes:
+
+
+*         REGISTER expires 0 gets 401 Unauthorized rather than deregistering (https://github.com/Metaswitch/sprout/issues/1640)
+
+*         AKAv2 authentication is not thread-safe (https://github.com/Metaswitch/sprout/issues/1600)
+
+*         Deregistration in GR deployment causes sprout to send 2 deregistration HTTP requests to homestead (https://github.com/Metaswitch/sprout/issues/1555)
+
+*         scary red cassandra logs when upgrading (https://github.com/Metaswitch/homestead/issues/396)
+
+*         Homestead returns inconsistent HTTP errors (500 and 503) for the same underlying error (THRIFT_EAGAIN) (https://github.com/Metaswitch/homestead/issues/389)
+
+*         SAS logs for Cassandra database failures are too low-level (https://github.com/Metaswitch/homestead/issues/388)
+
+*         Errors reported when upgrading the Clearwater packages (https://github.com/Metaswitch/homestead/issues/333)
+
+*         Homestead provides no useful indication why it fails for a MAA with an unsupported authentication scheme (https://github.com/Metaswitch/homestead/issues/308)
+
+*         Misleading SAS log when running non-FT deployment (https://github.com/Metaswitch/homestead/issues/293)
+
+*         Homestead-prov/Homer are spamming ping handler errors to syslog (https://github.com/Metaswitch/crest/issues/313)
+
+*         Log spam in Crest (https://github.com/Metaswitch/crest/issues/297)
+
+*         Crest based processes will sometimes not recovery properly if Cassandra fails (https://github.com/Metaswitch/crest/issues/283)
+
+*         SyntaxWarning Error when installing Homer/Homestead (https://github.com/Metaswitch/crest/issues/216)
+
+*         Running run-in-signaling-namespace not as sudo gives a misspelt error message (https://github.com/Metaswitch/clearwater-infrastructure/issues/398)
+
+*         config-manager crashes if /etc/clearwater/shared_config contains non-ASCII content (https://github.com/Metaswitch/clearwater-infrastructure/issues/344)
+
+*         Error log in syslog when cluster manager is restarted (https://github.com/Metaswitch/clearwater-etcd/issues/372)
+
+*         check_cluster_state shows the clusters in a different order when run several times (https://github.com/Metaswitch/clearwater-etcd/issues/365)
+
+*         In a 4-node deployment, etcd failed to start on one node and couldn't be trivially fixed (https://github.com/Metaswitch/clearwater-etcd/issues/359)
+
+*         Cluster manager logs repeated errors in normal operation (https://github.com/Metaswitch/clearwater-etcd/issues/324)
+
+*         Warning text when installing pyzmq (https://github.com/Metaswitch/clearwater-etcd/issues/258)
+
+*         Mark node failed hangs when run on one of several failed nodes (https://github.com/Metaswitch/clearwater-etcd/issues/250)
+
+To upgrade to this release, follow the instructions at http://docs.projectclearwater.org/en/stable/Upgrading_a_Clearwater_deployment.html.  If you are deploying an all-in-one node, the standard image (http://vm-images.cw-ngv.com/cw-aio.ova) has been updated for this release.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161220/7ecd4b57/attachment.html>
+
+------------------------------
+
+Subject: Digest Footer
+
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+
+------------------------------
+
+End of Clearwater Digest, Vol 44, Issue 11
+******************************************
+________________________________
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161221/96f2675f/attachment.html>
+
+From stevena at opencloud.com  Wed Dec 21 11:26:10 2016
+From: stevena at opencloud.com (Steven Adams)
+Date: Wed, 21 Dec 2016 16:26:10 +0000
+Subject: [Project Clearwater] Sprout fails to send REGISTER requests to app
+	server
+Message-ID: <CAFVTNVzuSxRd1P-FRTPF9LMR=3_PDdNyngmMeh8p_jZu10xLQA@mail.gmail.com>
+
+Hi,
+
+I have a situation where Sprout claims that it's sending a REGISTER packet
+to my app server, but the packet never actually hits the wire, eventually
+leading to a timeout.  Everything up to that point appears to be working
+correctly.  This is the relevant part of the log, and it all looks fine:
+
+21-12-2016 16:04:44.114 UTC Info pjutils.cpp:938: Resolved destination URI
+> sip:xyz002.test-instance.mydomain.com;transport=tcp;mode=mmtel to 1
+> servers
+> 21-12-2016 16:04:44.114 UTC Debug pjsip: tsx0x7efd9041c Transaction
+> created for Request msg REGISTER/cseq=1 (tdta0x7efd903a0d30)
+> 21-12-2016 16:04:44.114 UTC Debug pjutils.cpp:1224: Sending request
+> 21-12-2016 16:04:44.114 UTC Debug pjsip: tsx0x7efd9041c Sending Request
+> msg REGISTER/cseq=1 (tdta0x7efd903a0d30) in state Null
+> 21-12-2016 16:04:44.114 UTC Debug pjsip:       endpoint Request msg
+> REGISTER/cseq=1 (tdta0x7efd903a0d30): skipping target resolution because
+> address is already set
+> 21-12-2016 16:04:44.114 UTC Verbose pjsip: tcpc0x7efd9041 TCP client
+> transport created
+> 21-12-2016 16:04:44.114 UTC Verbose pjsip: tcpc0x7efd9041 TCP transport
+> 172.31.xx.xx:59739 is connecting to 172.16.0.42:5101...
+> 21-12-2016 16:04:44.114 UTC Verbose common_sip_processing.cpp:136: TX 2894
+> bytes Request msg REGISTER/cseq=1 (tdta0x7efd903a0d30) to TCP
+> 172.16.0.42:5101:
+> --start msg--
+>
+> REGISTER sip:xyz002.test-instance.mydomain.com;transport=tcp;mode=mmtel
+> SIP/2.0^M
+> Via: SIP/2.0/TCP
+> 172.31.xx.xx:59739;rport;branch=z9hG4bKPjwlXMqSj4uLIW3rq6vSs14jUYBgF2Okw5^M
+> Max-Forwards: 70^M
+> From: <sip:scscf.ec2-xx-xx-xx-xx.eu-west-1.compute.amazonaws.com
+> >;tag=eYh3aPqYus73O95cOyIptXcCGRJKHNNd^M
+> To: <sip:+6505550205 at example.com>^M
+> Contact: <sip:scscf.ec2-xx-xx-xx-xx.eu-west-1.compute.amazonaws.com:5054
+> >;transport=TCP^M
+> Call-ID: 831M8e9sLA6p56rIp3ljhaI3q16qSLjX^M
+> CSeq: 1 REGISTER^M
+> Expires: 60^M
+> P-Visited-Network-ID: example.com^M
+> P-Charging-Function-Addresses: ccf=pri_ccf_address^M
+> Content-Type: multipart/mixed;boundary="Mbh3iM5WF5XkgRsmXZaAleiBNod4cPT9"^M
+> Content-Length:  2186^M
+> ^M
+> ^M
+> --Mbh3iM5WF5XkgRsmXZaAleiBNod4cPT9^M
+> ^M
+> REGISTER sip:scscf.ec2-xx-xx-xx-xx.eu-west-1.compute.amazonaws.com:5054;transport=TCP
+> SIP/2.0^M
+> Via: SIP/2.0/TCP
+> 172.31.xx.xx:35157;rport=35157;received=172.31.xx.xx;branch=z9hG4bKPjulgKKi4fabLsCXLLfro-NNpwTrQBpW8H^M
+> Via: SIP/2.0/TCP
+> 172.31.xx.xx:39660;rport=39660;received=172.31.xx.xx;branch=z9hG4bKPjTs.q-46EoIXQp85hUbN6f3nkfAwpLHdJ^M
+> Path: <sip:8vgwPTbL06 at clearwater-instance:5058;transport=TCP;lr;ob>^M
+> Via: SIP/2.0/UDP
+> 176.252.xx.xx:5060;rport=5060;received=176.252.xx.xx;branch=z9hG4bK529669122^M
+> From: <sip:+6505550205 at example.com>;tag=822670698^M
+> To: <sip:+6505550205 at example.com>^M
+> ...etc
+>
+> --end msg--
+> 21-12-2016 16:04:44.130 UTC Debug pjutils.cpp:1660: Logging SAS Call-ID
+> marker, Call-ID 712457068
+> ...
+> 21-12-2016 16:04:46.114 UTC Verbose pjsip: tcpc0x7efd9041 TCP transport
+> connect timeout timed out
+>
+
+
+The destination address - 172.16.0.42:5101 - is correct.  From the host
+where sprout is running I can ping this IP address and a telnet to that
+host:port successfully connects to the app server, so there doesn't appear
+to be anything prohibiting the connection.  Unfortunately, a packet capture
+doesn't detect that this REGISTER packet is actually being sent on any
+network interface.
+
+Can anyone suggest what might be the problem or how I may be able to debug
+this?
+
+I'm using Far'Fetched in case it matters.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161221/a29be308/attachment.html>
+
+From afriyie.abraham at hotmail.com  Thu Dec 22 05:44:26 2016
+From: afriyie.abraham at hotmail.com (Afriyie Abraham)
+Date: Thu, 22 Dec 2016 10:44:26 +0000
+Subject: [Project Clearwater] Clearwater-ims in SDN
+Message-ID: <HE1PR05MB1467EEF3DC2AB99F5D93BAE9FC920@HE1PR05MB1467.eurprd05.prod.outlook.com>
+
+I have been using clearwater in my small network for some time now which has been working very well and am very happy about it. 
+Currently i have decided to change my network components to SDN components. I currently have a 2 SDN switches and an SDN controller connected to them. 
+My problem now is to be able to let clearwater communicate to the SDN controller for resource reservation for call setup. That is how to integrate clearwater-ims into my SDN. 
+I need help or guide about how to do this. 
+Thank you in advance.  
+
+Regards
+Abraham
+
+
+
+
+From afriyie.abraham at hotmail.com  Thu Dec 22 17:00:47 2016
+From: afriyie.abraham at hotmail.com (Afriyie Abraham)
+Date: Thu, 22 Dec 2016 22:00:47 +0000
+Subject: [Project Clearwater] Clearwater integration into SDN network
+Message-ID: <VI1PR05MB1471F3DA16A3B940003A2D40FC920@VI1PR05MB1471.eurprd05.prod.outlook.com>
+
+Hi,
+
+I have been using clearwater in my small network for some time now which has been working very well and am very happy about it. 
+Currently i have decided to change my network components to SDN components. I currently have a 2 SDN switches and an SDN controller connected to them. 
+My problem now is to be able to let clearwater communicate to the SDN controller for resource reservation for call setup. That is how to integrate clearwater-ims into my SDN. 
+I need help or guide about how to do this. 
+Thank you in advance.  
+
+Regards
+Abraham
+
+
+From Jace.Liang at itri.org.tw  Thu Dec 22 21:38:02 2016
+From: Jace.Liang at itri.org.tw (Jace.Liang at itri.org.tw)
+Date: Fri, 23 Dec 2016 02:38:02 +0000
+Subject: [Project Clearwater] Clearwater integration into SDN network
+In-Reply-To: <VI1PR05MB1471F3DA16A3B940003A2D40FC920@VI1PR05MB1471.eurprd05.prod.outlook.com>
+References: <VI1PR05MB1471F3DA16A3B940003A2D40FC920@VI1PR05MB1471.eurprd05.prod.outlook.com>
+Message-ID: <b8941af622c0489fab4582beddc979af@EXMB03.ITRI.DS>
+
+Hi, Abraham
+
+Although I'm not the developer of Clearwater, I think Clearwater is not integrated with any SDN controller now.
+If you want to make your Clearwater system to communicate to SDN controller.
+You can use rest-ful api, if your SDN controller supports so.
+But in this way, you have to alter the source code of Clearwater to do this.
+Or you can implement your own application to use rest-ful api to control to the SDN controller based on the vIMS status.
+
+Regards
+Jace.
+
+
+
+-----Original Message-----
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Afriyie Abraham
+Sent: Friday, December 23, 2016 6:01 AM
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Clearwater integration into SDN network
+
+Hi,
+
+I have been using clearwater in my small network for some time now which has been working very well and am very happy about it.
+Currently i have decided to change my network components to SDN components. I currently have a 2 SDN switches and an SDN controller connected to them.
+My problem now is to be able to let clearwater communicate to the SDN controller for resource reservation for call setup. That is how to integrate clearwater-ims into my SDN.
+I need help or guide about how to do this.
+Thank you in advance.
+
+Regards
+Abraham
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+
+
+--
+???????????????????????????????????????????? This email may contain confidential information. Please do not use or disclose it in any way and delete it if you are not the intended recipient.
+
+From fmalka at modulo.co.il  Tue Dec 27 08:08:42 2016
+From: fmalka at modulo.co.il (Franck Malka)
+Date: Tue, 27 Dec 2016 15:08:42 +0200
+Subject: [Project Clearwater] Clearwater ISC Interface with IP-SM-GW
+Message-ID: <1c7e13d3e91e1038a917db17db56c701@mail.gmail.com>
+
+Hi,
+
+
+
+In the case where a SIP MESSAGE is sent to the IP-SM-GW over the ISC
+Interface and the destination subscriber is not available.
+
+When the terminating subscriber is Registering again, the IP-SM-GW shall
+generate a SIP MESSAGE toward Clearwater.
+
+This is a mobile terminated message it is not generated by a subscriber.
+
+
+
+How do we allow the IP-SM-GW to sends these messages to the Clearwater.
+
+Today Clearwater replies with a Forbidden message.
+
+
+
+Configuration guidelines or/and call trace for such a case would be helpful.
+
+
+
+B.R.
+
+
+
+*Franck Malka*
+
+[image: cid:image003.jpg at 01CFF8F3.C92A2EC0]
+<http://www.facebook.com/modulocs>[image:
+cid:image004.jpg at 01CFF8F3.C92A2EC0] <http://www.twitter.com/modulocs>[image:
+cid:image005.jpg at 01CFF8F3.C92A2EC0]
+<http://www.linkedin.com/company/modulo-communications-systems-ltd.>
+
+
+
+
+
+Mobile   +972 54 488 9090
+
+Tel        +972 72 274 4002
+Fax       +972   3 774 1114
+
+Skype   franck.malka
+
+
+
+
+
+http://www.modulo.co.il/
+
+14 Imber St. Kyriat Arie,
+
+PO Box 4098,
+
+Petah Tikva 49514
+
+[image: cid:image002.jpg at 01CFF8F3.C92A2EC0]
+
+
+
+[image: cid:image007.png at 01CFF8F3.C92A2EC0]
+
+NOTE: The contents of this email and any attachments are confidential. They
+are intended for the named recipient(s) only. If you have received this
+email in error, please notify the system manager or the sender immediately
+and do not disclose the contents to anyone or make copies thereof.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161227/b0f8b8ea/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image001.jpg
+Type: image/jpeg
+Size: 856 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161227/b0f8b8ea/attachment.jpg>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image002.jpg
+Type: image/jpeg
+Size: 827 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161227/b0f8b8ea/attachment-0001.jpg>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image003.jpg
+Type: image/jpeg
+Size: 861 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161227/b0f8b8ea/attachment-0002.jpg>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image004.jpg
+Type: image/jpeg
+Size: 3786 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161227/b0f8b8ea/attachment-0003.jpg>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image005.png
+Type: image/png
+Size: 877 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161227/b0f8b8ea/attachment.png>
+
+From 719867650 at qq.com  Mon Dec 26 20:38:20 2016
+From: 719867650 at qq.com (=?gb18030?B?w8DT8abIzt662w==?=)
+Date: Tue, 27 Dec 2016 09:38:20 +0800
+Subject: [Project Clearwater] Clearwater video call will be hang up after 30
+	secondes
+Message-ID: <tencent_13A2A8B87ED3E92D7829BA4C@qq.com>
+
+We try Clearwater video call with X-lite, but we found video call will be hang up after 30 secondes .
+Is there any param to controll ?
+Thanks .
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20161227/acc0af7b/attachment.html>
+

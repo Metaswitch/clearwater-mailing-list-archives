@@ -1,0 +1,483 @@
+From bosism at gmail.com  Mon Mar 18 09:00:05 2019
+From: bosism at gmail.com (matvey bossis)
+Date: Mon, 18 Mar 2019 15:00:05 +0200
+Subject: [Project Clearwater] correct OID for Cacti
+Message-ID: <CADbuDzxVtxcCt+Z+85igBMJFTTnibk7=ffVOKjFYjKLAYbzS1g@mail.gmail.com>
+
+My OIDs seem to be different from the ones in the Cacti templates, for
+Bono, Sprout etc. Am I doing something wrong?
+
+
+
+Does anyone have the correct templates? Maybe a screenshot of your Cacti
+graphs, please?
+
+
+
+Thank you
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190318/458f8f78/attachment.html>
+
+From junaidaliyahya at gmail.com  Tue Mar 19 07:24:18 2019
+From: junaidaliyahya at gmail.com (Junaid Ali)
+Date: Tue, 19 Mar 2019 11:24:18 +0000
+Subject: [Project Clearwater] correct OID for Cacti
+In-Reply-To: <CADbuDzxVtxcCt+Z+85igBMJFTTnibk7=ffVOKjFYjKLAYbzS1g@mail.gmail.com>
+References: <CADbuDzxVtxcCt+Z+85igBMJFTTnibk7=ffVOKjFYjKLAYbzS1g@mail.gmail.com>
+Message-ID: <CA+kT6RVvAyn_nmg2dOzFbTYsyxB3do_nkxA9X=DO7u-scGAM0A@mail.gmail.com>
+
+Matvey,
+I see the same issue for Sprout OIDs in Cloudify Clearwater template file:
+https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/blob/master/types/clearwater.yaml#L137
+and bono OIDs which are being used for visualization using Grafana. I can
+share you the correct OIDs for that file if that helps (don't have access
+to the correct Cloudify template at the moment but can share you
+today/tomorrow).
+
+Kind Regards,
+Junaid
+
+On Mon, Mar 18, 2019 at 1:01 PM matvey bossis <bosism at gmail.com> wrote:
+
+> My OIDs seem to be different from the ones in the Cacti templates, for
+> Bono, Sprout etc. Am I doing something wrong?
+>
+>
+>
+> Does anyone have the correct templates? Maybe a screenshot of your Cacti
+> graphs, please?
+>
+>
+>
+> Thank you
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190319/c209d40f/attachment.html>
+
+From Mark.Perryman at metaswitch.com  Tue Mar 19 09:11:53 2019
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Tue, 19 Mar 2019 13:11:53 +0000
+Subject: [Project Clearwater] correct OID for Cacti
+In-Reply-To: <CADbuDzxVtxcCt+Z+85igBMJFTTnibk7=ffVOKjFYjKLAYbzS1g@mail.gmail.com>
+References: <CADbuDzxVtxcCt+Z+85igBMJFTTnibk7=ffVOKjFYjKLAYbzS1g@mail.gmail.com>
+Message-ID: <BYAPR02MB42476AFB95E96EFA4286F7D68F400@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+Thanks, yes it appears the Cacti templates haven?t been kept up to date.
+
+Instructions for using the correct MIB is at:  https://clearwater.readthedocs.io/en/stable/Clearwater_SNMP_Statistics.html
+
+If you do create an up to date cacti template, please submit a Pull Request with it (you would need to sign our contributors agreement).
+
+Thanks,
+
+Mark Perryman.
+
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of matvey bossis
+Sent: 18 March 2019 13:00
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] correct OID for Cacti
+
+
+NOTE: Message is from an external sender
+
+My OIDs seem to be different from the ones in the Cacti templates, for Bono, Sprout etc. Am I doing something wrong?
+
+Does anyone have the correct templates? Maybe a screenshot of your Cacti graphs, please?
+
+Thank you
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190319/3a647a34/attachment.html>
+
+From bosism at gmail.com  Tue Mar 19 11:04:04 2019
+From: bosism at gmail.com (matvey bossis)
+Date: Tue, 19 Mar 2019 17:04:04 +0200
+Subject: [Project Clearwater] correct OID for Cacti
+In-Reply-To: <BYAPR02MB42476AFB95E96EFA4286F7D68F400@BYAPR02MB4247.namprd02.prod.outlook.com>
+References: <CADbuDzxVtxcCt+Z+85igBMJFTTnibk7=ffVOKjFYjKLAYbzS1g@mail.gmail.com>
+	<BYAPR02MB42476AFB95E96EFA4286F7D68F400@BYAPR02MB4247.namprd02.prod.outlook.com>
+Message-ID: <CADbuDzyKWjhZU7YerDb2fyh7LOMi75U-xxTE_4Ex=1TaAnwA4w@mail.gmail.com>
+
+Thanks,
+so for example:
+> *snmpwalk -v2c -c clearwater 192.168.37.17:25565
+<http://192.168.37.17:25565> 1.2.826.0.1.1578918.9.3.1.1.3*
+produces:
+PROJECT-CLEARWATER-MIB::sproutLatencyAverage.scopePrevious5SecondPeriod."node"
+= Gauge32: 148
+PROJECT-CLEARWATER-MIB::sproutLatencyAverage.scopeCurrent5MinutePeriod."node"
+= Gauge32: 161
+PROJECT-CLEARWATER-MIB::sproutLatencyAverage.scopePrevious5MinutePeriod."node"
+= Gauge32: 139
+Am I right to infer, that the *.3* in the end, replaces the deprecated *.2*
+(or .2.1) in the end ?
+(And that the .2 was a single metric, while the new one comes in 3
+aggregations?)
+
+The above seems to be translated from:
+*.1.2.826.0.1.1578918.9.3.1.1.3*.1.4.110.111.100.101 = Gauge32: 148
+*.1.2.826.0.1.1578918.9.3.1.1.3*.2.4.110.111.100.101 = Gauge32: 161
+*.1.2.826.0.1.1578918.9.3.1.1.3*.3.4.110.111.100.101 = Gauge32: 139
+
+So the logic to change the OIDs of the metrics must have been, that they
+are not 100% backwards compatible?
+
+On Tue, 19 Mar 2019 at 15:13, Mark Perryman <Mark.Perryman at metaswitch.com>
+wrote:
+
+> Thanks, yes it appears the Cacti templates haven?t been kept up to date.
+>
+>
+>
+> Instructions for using the correct MIB is at:
+> https://clearwater.readthedocs.io/en/stable/Clearwater_SNMP_Statistics.html
+>
+>
+>
+> If you do create an up to date cacti template, please submit a Pull
+> Request with it (you would need to sign our contributors agreement).
+>
+>
+>
+> Thanks,
+>
+>
+>
+> Mark Perryman.
+>
+>
+>
+>
+>
+> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+> Behalf Of *matvey bossis
+> *Sent:* 18 March 2019 13:00
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Project Clearwater] correct OID for Cacti
+>
+>
+>
+> NOTE: Message is from an external sender
+>
+> My OIDs seem to be different from the ones in the Cacti templates, for
+> Bono, Sprout etc. Am I doing something wrong?
+>
+>
+>
+> Does anyone have the correct templates? Maybe a screenshot of your Cacti
+> graphs, please?
+>
+>
+>
+> Thank you
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190319/081704ac/attachment.html>
+
+From Mark.Perryman at metaswitch.com  Tue Mar 19 11:09:33 2019
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Tue, 19 Mar 2019 15:09:33 +0000
+Subject: [Project Clearwater] correct OID for Cacti
+In-Reply-To: <CADbuDzyKWjhZU7YerDb2fyh7LOMi75U-xxTE_4Ex=1TaAnwA4w@mail.gmail.com>
+References: <CADbuDzxVtxcCt+Z+85igBMJFTTnibk7=ffVOKjFYjKLAYbzS1g@mail.gmail.com>
+	<BYAPR02MB42476AFB95E96EFA4286F7D68F400@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CADbuDzyKWjhZU7YerDb2fyh7LOMi75U-xxTE_4Ex=1TaAnwA4w@mail.gmail.com>
+Message-ID: <BYAPR02MB4247E8D57F85D2A8AAA86E5D8F400@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+Yes.
+
+It looks like the OIDs were changed here: https://github.com/Metaswitch/clearwater-snmp-handlers/pull/168/files
+
+Hope that helps,
+
+Mark.
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of matvey bossis
+Sent: 19 March 2019 15:04
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] correct OID for Cacti
+
+
+NOTE: Message is from an external sender
+
+Thanks,
+so for example:
+> snmpwalk -v2c -c clearwater 192.168.37.17:25565<http://192.168.37.17:25565> 1.2.826.0.1.1578918.9.3.1.1.3
+produces:
+PROJECT-CLEARWATER-MIB::sproutLatencyAverage.scopePrevious5SecondPeriod."node" = Gauge32: 148
+PROJECT-CLEARWATER-MIB::sproutLatencyAverage.scopeCurrent5MinutePeriod."node" = Gauge32: 161
+PROJECT-CLEARWATER-MIB::sproutLatencyAverage.scopePrevious5MinutePeriod."node" = Gauge32: 139
+Am I right to infer, that the .3 in the end, replaces the deprecated .2 (or .2.1) in the end ?
+(And that the .2 was a single metric, while the new one comes in 3 aggregations?)
+
+The above seems to be translated from:
+.1.2.826.0.1.1578918.9.3.1.1.3.1.4.110.111.100.101 = Gauge32: 148
+.1.2.826.0.1.1578918.9.3.1.1.3.2.4.110.111.100.101 = Gauge32: 161
+.1.2.826.0.1.1578918.9.3.1.1.3.3.4.110.111.100.101 = Gauge32: 139
+
+So the logic to change the OIDs of the metrics must have been, that they are not 100% backwards compatible?
+
+On Tue, 19 Mar 2019 at 15:13, Mark Perryman <Mark.Perryman at metaswitch.com<mailto:Mark.Perryman at metaswitch.com>> wrote:
+Thanks, yes it appears the Cacti templates haven?t been kept up to date.
+
+Instructions for using the correct MIB is at:  https://clearwater.readthedocs.io/en/stable/Clearwater_SNMP_Statistics.html
+
+If you do create an up to date cacti template, please submit a Pull Request with it (you would need to sign our contributors agreement).
+
+Thanks,
+
+Mark Perryman.
+
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org<mailto:clearwater-bounces at lists.projectclearwater.org>> On Behalf Of matvey bossis
+Sent: 18 March 2019 13:00
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] correct OID for Cacti
+
+
+NOTE: Message is from an external sender
+
+My OIDs seem to be different from the ones in the Cacti templates, for Bono, Sprout etc. Am I doing something wrong?
+
+Does anyone have the correct templates? Maybe a screenshot of your Cacti graphs, please?
+
+Thank you
+_______________________________________________
+Clearwater mailing list
+Clearwater at lists.projectclearwater.org<mailto:Clearwater at lists.projectclearwater.org>
+http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190319/426bbf3a/attachment.html>
+
+From bosism at gmail.com  Tue Mar 19 11:14:17 2019
+From: bosism at gmail.com (matvey bossis)
+Date: Tue, 19 Mar 2019 17:14:17 +0200
+Subject: [Project Clearwater] correct OID for Cacti
+In-Reply-To: <CA+kT6RVvAyn_nmg2dOzFbTYsyxB3do_nkxA9X=DO7u-scGAM0A@mail.gmail.com>
+References: <CADbuDzxVtxcCt+Z+85igBMJFTTnibk7=ffVOKjFYjKLAYbzS1g@mail.gmail.com>
+	<CA+kT6RVvAyn_nmg2dOzFbTYsyxB3do_nkxA9X=DO7u-scGAM0A@mail.gmail.com>
+Message-ID: <CADbuDzwD5=5odsERGwbJ-02ALaZdGjGzGUDfGqq5hevEuiw84A@mail.gmail.com>
+
+Thanks, Junaid, much appreciated!
+
+
+On Tue, 19 Mar 2019 at 13:26, Junaid Ali <junaidaliyahya at gmail.com> wrote:
+
+> Matvey,
+> I see the same issue for Sprout OIDs in Cloudify Clearwater template file:
+> https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/blob/master/types/clearwater.yaml#L137
+> and bono OIDs which are being used for visualization using Grafana. I can
+> share you the correct OIDs for that file if that helps (don't have access
+> to the correct Cloudify template at the moment but can share you
+> today/tomorrow).
+>
+> Kind Regards,
+> Junaid
+>
+> On Mon, Mar 18, 2019 at 1:01 PM matvey bossis <bosism at gmail.com> wrote:
+>
+>> My OIDs seem to be different from the ones in the Cacti templates, for
+>> Bono, Sprout etc. Am I doing something wrong?
+>>
+>>
+>>
+>> Does anyone have the correct templates? Maybe a screenshot of your Cacti
+>> graphs, please?
+>>
+>>
+>>
+>> Thank you
+>> _______________________________________________
+>> Clearwater mailing list
+>> Clearwater at lists.projectclearwater.org
+>>
+>> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190319/aa07159a/attachment.html>
+
+From bosism at gmail.com  Mon Mar 25 08:32:44 2019
+From: bosism at gmail.com (matvey bossis)
+Date: Mon, 25 Mar 2019 14:32:44 +0200
+Subject: [Project Clearwater] correct OID for Cacti
+In-Reply-To: <BYAPR02MB4247E8D57F85D2A8AAA86E5D8F400@BYAPR02MB4247.namprd02.prod.outlook.com>
+References: <CADbuDzxVtxcCt+Z+85igBMJFTTnibk7=ffVOKjFYjKLAYbzS1g@mail.gmail.com>
+	<BYAPR02MB42476AFB95E96EFA4286F7D68F400@BYAPR02MB4247.namprd02.prod.outlook.com>
+	<CADbuDzyKWjhZU7YerDb2fyh7LOMi75U-xxTE_4Ex=1TaAnwA4w@mail.gmail.com>
+	<BYAPR02MB4247E8D57F85D2A8AAA86E5D8F400@BYAPR02MB4247.namprd02.prod.outlook.com>
+Message-ID: <CADbuDzz5i7KcR=F_HLY+K3fp1vUvYs=isho0kjmk8111Agn_vA@mail.gmail.com>
+
+So maybe someone has an up-to-date monitoring setup and willing to share?
+
+BTW, looks like "Chronos" metrics were removed from Sprout. Perhaps
+completely renamed? Or irrelevant?
+
+Didn't figure out yet, what is the best way to graph the additional Sprout
+metrics, not present in the template. So maybe someone has a setup, or
+screenshots...
+
+What about SNMP for SIPp? The Cacti template uses zero-mq, and nothing
+interesting in SNMP there. Should it work? Or zero-mq only?
+
+Mark, maybe you know: some of the OIDs, which were changed in the above
+commit, seem to need an additional ".4.110.111.100.101" suffix. Does it
+have something to do with the commit? Or where could it come from? (For
+example: .1.2.826.0.1.1578918.9.3.1.1.3.2*.4.110.111.100.101*. Those which
+didn't change, don't need this suffix.)
+
+Thanks
+
+On Tue, 19 Mar 2019 at 17:10, Mark Perryman <Mark.Perryman at metaswitch.com>
+wrote:
+
+> Yes.
+>
+>
+>
+> It looks like the OIDs were changed here:
+> https://github.com/Metaswitch/clearwater-snmp-handlers/pull/168/files
+>
+>
+>
+> Hope that helps,
+>
+>
+>
+> Mark.
+>
+>
+>
+> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+> Behalf Of *matvey bossis
+> *Sent:* 19 March 2019 15:04
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Project Clearwater] correct OID for Cacti
+>
+>
+>
+> NOTE: Message is from an external sender
+>
+> Thanks,
+>
+> so for example:
+>
+> > *snmpwalk -v2c -c clearwater 192.168.37.17:25565
+> <http://192.168.37.17:25565> 1.2.826.0.1.1578918.9.3.1.1**.3*
+>
+> produces:
+>
+> PROJECT-CLEARWATER-MIB::sproutLatencyAverage.scopePrevious5SecondPeriod."node"
+> = Gauge32: 148
+> PROJECT-CLEARWATER-MIB::sproutLatencyAverage.scopeCurrent5MinutePeriod."node"
+> = Gauge32: 161
+> PROJECT-CLEARWATER-MIB::sproutLatencyAverage.scopePrevious5MinutePeriod."node"
+> = Gauge32: 139
+>
+> Am I right to infer, that the *.3* in the end, replaces the deprecated
+> *.2* (or .2.1) in the end ?
+>
+> (And that the .2 was a single metric, while the new one comes in 3
+> aggregations?)
+>
+>
+>
+> The above seems to be translated from:
+>
+> *.1.2.826.0.1.1578918.9.3.1.1.3*.1.4.110.111.100.101 = Gauge32: 148
+> *.1.2.826.0.1.1578918.9.3.1.1.3*.2.4.110.111.100.101 = Gauge32: 161
+> *.1.2.826.0.1.1578918.9.3.1.1.3*.3.4.110.111.100.101 = Gauge32: 139
+>
+>
+>
+> So the logic to change the OIDs of the metrics must have been, that they
+> are not 100% backwards compatible?
+>
+>
+>
+> On Tue, 19 Mar 2019 at 15:13, Mark Perryman <Mark.Perryman at metaswitch.com>
+> wrote:
+>
+> Thanks, yes it appears the Cacti templates haven?t been kept up to date.
+>
+>
+>
+> Instructions for using the correct MIB is at:
+> https://clearwater.readthedocs.io/en/stable/Clearwater_SNMP_Statistics.html
+>
+>
+>
+> If you do create an up to date cacti template, please submit a Pull
+> Request with it (you would need to sign our contributors agreement).
+>
+>
+>
+> Thanks,
+>
+>
+>
+> Mark Perryman.
+>
+>
+>
+>
+>
+> *From:* Clearwater <clearwater-bounces at lists.projectclearwater.org> *On
+> Behalf Of *matvey bossis
+> *Sent:* 18 March 2019 13:00
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* [Project Clearwater] correct OID for Cacti
+>
+>
+>
+> NOTE: Message is from an external sender
+>
+> My OIDs seem to be different from the ones in the Cacti templates, for
+> Bono, Sprout etc. Am I doing something wrong?
+>
+>
+>
+> Does anyone have the correct templates? Maybe a screenshot of your Cacti
+> graphs, please?
+>
+>
+>
+> Thank you
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+>
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.projectclearwater.org
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190325/feed4dc8/attachment.html>
+

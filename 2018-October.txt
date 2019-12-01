@@ -1,0 +1,822 @@
+From Benjamin.Laing at metaswitch.com  Tue Oct  2 04:32:01 2018
+From: Benjamin.Laing at metaswitch.com (Benjamin Laing)
+Date: Tue, 2 Oct 2018 08:32:01 +0000
+Subject: [Project Clearwater] How to change the Ellis port number to 8080
+Message-ID: <BYAPR02MB4374D6EE1E8863D29511AFAAF1E80@BYAPR02MB4374.namprd02.prod.outlook.com>
+
+Hi Aravind,
+
+To change the port, you will need to tweak the nginx config created by https://github.com/Metaswitch/ellis/blob/9f9b2785b9460aeaa367b8f9aa2ffb4648d1b38f/root/usr/share/clearwater/infrastructure/scripts/create-ellis-nginx-config.
+
+Once you've made these changes, restart Ellis (use 'service ellis stop', and it's restarted by monit).
+
+Many thanks,
+
+Ben
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181002/fab07e84/attachment.html>
+
+From michaelkatsoulis88 at gmail.com  Fri Oct  5 05:22:37 2018
+From: michaelkatsoulis88 at gmail.com (=?UTF-8?B?zpzOuc+HzqzOu863z4IgzprOsc+Ez4POv8+NzrvOt8+C?=)
+Date: Fri, 5 Oct 2018 12:22:37 +0300
+Subject: [Project Clearwater]  Measuring Latency
+Message-ID: <CAJG3f9P3PGBs_H7grjB-YmWo_VBYtS7HZ0Vv7D1PdSwHtJ9QSQ@mail.gmail.com>
+
+Hi,
+I am running clearwater-docker project and testing it via
+clearwater-live-test project.
+What would be the recommended way to measure latency of packets sent
+towards the
+IMS ?
+
+Thank you in advance,
+Michael Katsoulis
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181005/a5f44ad7/attachment.html>
+
+From gabrielorozco20 at unicauca.edu.co  Sun Oct  7 23:43:08 2018
+From: gabrielorozco20 at unicauca.edu.co (GABRIEL DAVID OROZCO URRUTIA)
+Date: Sun, 7 Oct 2018 22:43:08 -0500
+Subject: [Project Clearwater] Understanding communication between components
+Message-ID: <CAGy+FHJR37WfreBefv-nsinhtkKSx7q8iuVXRsmu_yLAQ-VZOA@mail.gmail.com>
+
+Hello Everyone
+
+I'm trying to understand how do clearwater components communicate each
+other. I don't understand how do each component know the IP address for
+every other component for the first time.
+I sniffed the packages of every component with wireshark when I run
+
+"cw-config download shared_config"
+and
+"cw-config upload shared_config"
+But it doesn't seem to show the packages in which the communication take
+into
+
+How do the components share the shared_config file?
+And What happens in the commands  "cw-config download shared_config" and
+"cw-config upload shared_config"?
+
+Thanks so much for your help!
+Gabriel David Orozco
+Presidente Rama estudiantil IEEE Universidad del Cauca
+(57) 3004351630
+<http://ieee.unicauca.edu.co/>
+
+-- 
+
+
+*Hacia una
+Universidad comprometida con la Paz Territorial*
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181007/af203d95/attachment.html>
+
+From gabrielorozco20 at unicauca.edu.co  Mon Oct  8 12:56:53 2018
+From: gabrielorozco20 at unicauca.edu.co (GABRIEL DAVID OROZCO URRUTIA)
+Date: Mon, 8 Oct 2018 11:56:53 -0500
+Subject: [Project Clearwater] Scalability Sprout, bono, homestead
+Message-ID: <CAGy+FHKXLarGV=nDr-JOq1349gvVGXCzKswBALCbaQg_ABMEeQ@mail.gmail.com>
+
+*Hello everyone*
+
+I'm trying to run stress test regarding the manual scalability of the
+components running in docker manually. I obtain good results with chronos,
+but, when I try to Scale-out Sprout the packages doesn't seem to forward
+towards new sprout instance. How do I should scale out sprout?
+And, It is possible to scale out bono, homestead and the others?
+
+Thanks so much for your attention!
+
+Gabriel David Orozco
+Presidente Rama estudiantil IEEE Universidad del Cauca
+(57) 3004351630
+<http://ieee.unicauca.edu.co/>
+
+-- 
+
+
+*Hacia una
+Universidad comprometida con la Paz Territorial*
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181008/957272fa/attachment.html>
+
+From Anne.Boffey at metaswitch.com  Tue Oct  9 06:10:46 2018
+From: Anne.Boffey at metaswitch.com (Anne Boffey)
+Date: Tue, 9 Oct 2018 10:10:46 +0000
+Subject: [Project Clearwater] Measuring Latency
+Message-ID: <CY1PR0201MB14980A328E16AB173AB90F0381E70@CY1PR0201MB1498.namprd02.prod.outlook.com>
+
+Hi Gabriel,
+
+To upload shared configuration between nodes you need to have a healthy etcd cluster.
+You can run clearwater-etcdctl cluster-health on a node to check on this.
+
+When you install the first set of nodes in a Project Clearwater deployment, you need to make sure that each of the nodes in the deployment has the correct value of etcd_cluster in /etc/clearwater/local_settings. It should be set to a comma separated list that contains the IP address of each of the nodes in the cluster. You should put this local_config in place on each of your nodes before installing any of the software packages using apt-get.
+
+You will find more information on how nodes automatically form clusters and share configuration with each other at https://clearwater.readthedocs.io/en/stable/Automatic_Clustering_Config_Sharing.html
+
+I hope this helps.
+
+Yours,
+Anne
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181009/278087d3/attachment.html>
+
+From Anne.Boffey at metaswitch.com  Tue Oct  9 08:18:32 2018
+From: Anne.Boffey at metaswitch.com (Anne Boffey)
+Date: Tue, 9 Oct 2018 12:18:32 +0000
+Subject: [Project Clearwater] Understanding communication between
+ components
+Message-ID: <CY1PR0201MB14989F937579A671CAEE450C81E70@CY1PR0201MB1498.namprd02.prod.outlook.com>
+
+Hi Gabriel,
+
+To upload shared configuration between nodes you need to have a healthy etcd cluster.
+You can run clearwater-etcdctl cluster-health on a node to check on this.
+
+When you install the first set of nodes in a Project Clearwater deployment, you need to make sure that each of the nodes in the deployment has the correct value of etcd_cluster in /etc/clearwater/local_settings. It should be set to a comma separated list that contains the IP address of each of the nodes in the cluster. You should put this local_config in place on each of your nodes before installing any of the software packages using apt-get.
+
+You will find more information on how nodes automatically form clusters and share configuration with each other at https://clearwater.readthedocs.io/en/stable/Automatic_Clustering_Config_Sharing.html
+
+I hope this helps.
+
+Yours,
+Anne
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181009/117c5562/attachment.html>
+
+From Anne.Boffey at metaswitch.com  Tue Oct  9 08:58:47 2018
+From: Anne.Boffey at metaswitch.com (Anne Boffey)
+Date: Tue, 9 Oct 2018 12:58:47 +0000
+Subject: [Project Clearwater] Measuring Latency
+Message-ID: <CY1PR0201MB14985C8B3D67EEAA00DA121481E70@CY1PR0201MB1498.namprd02.prod.outlook.com>
+
+Hi Michael,
+
+Have you looked at our call latency stats - this will give you average call latency over a 5 second period.  Details of our stats are at https://clearwater.readthedocs.io/en/stable/Clearwater_SNMP_Statistics.html?highlight=snmp%20stats, and there are some scripts at https://github.com/Metaswitch/cpp-common/tree/master/scripts/stats.
+
+Cheers,
+Anne
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181009/d22057eb/attachment.html>
+
+From Anne.Boffey at metaswitch.com  Tue Oct  9 09:31:10 2018
+From: Anne.Boffey at metaswitch.com (Anne Boffey)
+Date: Tue, 9 Oct 2018 13:31:10 +0000
+Subject: [Project Clearwater] Scalability Sprout, bono, homestead
+Message-ID: <CY1PR0201MB1498CE8CAF82950D04C0A48281E70@CY1PR0201MB1498.namprd02.prod.outlook.com>
+
+Hi Gabriel,
+
+You will find information on scaling out nodes at https://clearwater.readthedocs.io/en/stable/Clearwater_Elastic_Scaling.html?highlight=scaling
+
+The same process can be followed for all node types.
+
+I hope this helps.
+
+Cheers,
+Anne
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181009/6d86725e/attachment.html>
+
+From alijavai.1996 at gmail.com  Fri Oct 12 16:19:10 2018
+From: alijavai.1996 at gmail.com (Ali Javadi)
+Date: Fri, 12 Oct 2018 23:49:10 +0330
+Subject: [Project Clearwater] poll_homer failure
+Message-ID: <CABwk_J+qkug980r6LSMKqmuuu5L6er1caf0HGGP3anWo2cvWhQ@mail.gmail.com>
+
+Hi Everybody
+I've installed cw on 7 vm. when I run 'monit status' or 'monit summary',
+ellis, bono, sprout and vellum are healthy but in homer node I see :
+pool_homer failure. by running 'sh pool_homer.sh', I get the message: HTTP
+failed to http://127.0.0.1:7888/ping. although, I checked the firewall
+allows this port. how can I solve this problem? I have the same problem in
+homestead_process & poll_homestead-prov
+
+with Regards
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181012/15e12fef/attachment.html>
+
+From Mark.Perryman at metaswitch.com  Mon Oct 15 09:33:02 2018
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Mon, 15 Oct 2018 13:33:02 +0000
+Subject: [Project Clearwater] poll_homer failure
+Message-ID: <BYAPR02MB424786F3805FAE34B43A45D48FFD0@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+Hi Ali,
+
+It sounds like the Nginx config has not been set up correctly.  Could you let me know the contents of /etc/nginx/sites-available/ on the homer node.
+
+Thanks,
+
+Mark Perryman.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181015/2736d50a/attachment.html>
+
+From jake at dccllc.net  Tue Oct 16 09:29:07 2018
+From: jake at dccllc.net (Jake Brown)
+Date: Tue, 16 Oct 2018 13:29:07 +0000
+Subject: [Project Clearwater] USSI capture or examples
+Message-ID: <MWHPR18MB1151B9D0C18586BB65BD1336A9FE0@MWHPR18MB1151.namprd18.prod.outlook.com>
+
+Does anyone have a USSI SIP dialog capture, or know where I can get one?  We are trying to implement this and can't seem to get the last part working.
+
+Thanks
+
+Jake Brown
+Principal Engineer/Owner
+920-351-4054 x1001
+jake at dccllc.net<mailto:jake at dccllc.net>
+www.dccllc.net<http://www.dccllc.net/>
+
+[Signature-1]
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181016/4b3860b1/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image003.jpg
+Type: image/jpeg
+Size: 2630 bytes
+Desc: image003.jpg
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181016/4b3860b1/attachment.jpg>
+
+From arvindas at hpe.com  Tue Oct 16 11:02:35 2018
+From: arvindas at hpe.com (Shirabur, Aravind Ashok (CMS))
+Date: Tue, 16 Oct 2018 15:02:35 +0000
+Subject: [Project Clearwater] Replacing the hostname to IP address in
+ Record-Route
+Message-ID: <AT5PR8401MB08203AF1DF5567229E60A328DCFE0@AT5PR8401MB0820.NAMPRD84.PROD.OUTLOOK.COM>
+
+Hi,
+
+S-CSCF and P-CSCF nodes are inserting the Record-Route header with hostname (as shown below), which is difficult to resolve at soft-client; will it be possible to replace the hostname to IP address ?
+
+
+SIP/2.0 200 OK
+CSeq: 1 INVITE
+Call-ID: udy3vSoVmpBZvUhhjPMfOg..
+From: <sip:6505550462 at example.com>;tag=056a893a
+To: <sip:6505550706 at example.com>;tag=85c3bde1
+Via: SIP/2.0/UDP 192.168.1.105:32763;received=192.168.1.105;branch=z9hG4bK-524287-1---6b0e0acf0b789fc7
+Record-Route: <sip:scscf.cw-aio:5054;transport=TCP;lr;billing-role=charge-orig>
+Record-Route: <sip:192.168.1.103:5058;transport=TCP;lr>
+Record-Route: <sip:+EKj/JHJGQ at cw-aio:5060;transport=UDP;lr>
+Contact: <sip:HP-NGIN at 192.168.1.101:5060;transport=tcp>
+Allow: NOTIFY, ACK, BYE, INVITE, REFER, INFO, OPTIONS, SUBSCRIBE, CANCEL
+Session-Expires: 600;refresher=uas
+User-Agent: X-Lite release 5.3.3 stamp 92990
+Supported: replaces, timer
+Content-Type: application/sdp
+Content-Length:   211
+
+v=0
+o=HPE-AS 2369302738 3 IN IP4 192.168.1.104
+s=X-Lite release 5.3.3 stamp 92990
+c=IN IP4 192.168.1.104
+t=0 0
+m=audio 58270 RTP/AVP 8 0 101
+a=rtpmap:101 telephone-event/8000
+a=fmtp:101 0-15
+a=sendrecv
+
+Thanks
+Aravind
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181016/aacab89c/attachment.html>
+
+From mayurkoshal at gmail.com  Wed Oct 17 10:29:44 2018
+From: mayurkoshal at gmail.com (Mayur Koshal)
+Date: Wed, 17 Oct 2018 19:59:44 +0530
+Subject: [Project Clearwater] GPG error : Signatures were invalid during the
+ apt-get update step while configuring the apt software sources
+Message-ID: <CAAEbxXUgcBW7tV+cFU0kavF9CW9hA5naM=BeuQgK1EaXcNkrig@mail.gmail.com>
+
+Hi,
+
+I am doing manual installation of Clearwater vIMS on Openstack .
+I have created nodes using  Ubuntu 14.04 Image. When i configure each node
+so that apt can use clearwater repository ,I do get an error during the
+sudo apt-get update step.
+It shows  GPG error: http://repo.cw-ngv.com binary/ Release: The following
+signatures were invalid: BADSIG.
+
+Error message : *W: GPG error: http://repo.cw-ngv.com
+<http://repo.cw-ngv.com> binary/ Release: The following signatures were
+invalid: BADSIG 111DBE4722B97904 Project Clearwater Maintainers
+<maintainers at projectclearwater.org <maintainers at projectclearwater.org>>*
+
+
+Could you please help with the same..
+
+Logs below :
+
+
+ubuntu at bono:/etc$ cd apt/sources.list.d/
+ubuntu at bono:/etc/apt/sources.list.d$ vi clearwater.list
+ubuntu at bono:/etc/apt/sources.list.d$ curl -L http://repo.cw-ngv.com/repo_key
+| sudo apt-key add -
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time
+Current
+                                 Dload  Upload   Total   Spent    Left
+Speed
+100  3149  100  3149    0     0   4485      0 --:--:-- --:--:-- --:--:--
+4485
+OK
+ubuntu at bono:/etc/apt/sources.list.d$ sudo apt-key finger
+/etc/apt/trusted.gpg
+--------------------
+pub   1024D/437D05B5 2004-09-12
+      Key fingerprint = 6302 39CC 130E 1A7F D81A  27B1 4097 6EAF 437D 05B5
+uid                  Ubuntu Archive Automatic Signing Key <
+ftpmaster at ubuntu.com>
+sub   2048g/79164387 2004-09-12
+
+pub   1024D/FBB75451 2004-12-30
+      Key fingerprint = C598 6B4F 1257 FFA8 6632  CBA7 4618 1433 FBB7 5451
+uid                  Ubuntu CD Image Automatic Signing Key <
+cdimage at ubuntu.com>
+
+pub   4096R/C0B21F32 2012-05-11
+      Key fingerprint = 790B C727 7767 219C 42C8  6F93 3B4F E6AC C0B2 1F32
+uid                  Ubuntu Archive Automatic Signing Key (2012) <
+ftpmaster at ubuntu.com>
+
+pub   4096R/EFE21092 2012-05-11
+      Key fingerprint = 8439 38DF 228D 22F7 B374  2BC0 D94A A3F0 EFE2 1092
+uid                  Ubuntu CD Image Automatic Signing Key (2012) <
+cdimage at ubuntu.com>
+
+pub   4096R/22B97904 2013-04-30
+      Key fingerprint = 9213 4604 DE32 7DF7 FEB7  2026 111D BE47 22B9 7904
+uid                  Project Clearwater Maintainers <
+maintainers at projectclearwater.org>
+sub   4096R/46EC5B7F 2013-04-30
+
+ubuntu at bono:/etc/apt/sources.list.d$
+ubuntu at bono:/etc/apt/sources.list.d$ sudo apt-get update
+Ign http://nova.clouds.archive.ubuntu.com trusty InRelease
+Get:1 http://security.ubuntu.com trusty-security InRelease [65.9 kB]
+Ign http://repo.cw-ngv.com binary/ InRelease
+
+Get:2 http://nova.clouds.archive.ubuntu.com trusty-updates InRelease [65.9
+kB]
+Get:3 http://repo.cw-ngv.com binary/ Release.gpg [819 B]
+
+Hit http://repo.cw-ngv.com binary/ Release
+
+Ign http://repo.cw-ngv.com binary/ Release
+
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports InRelease
+
+Hit http://nova.clouds.archive.ubuntu.com trusty Release.gpg
+
+Ign http://repo.cw-ngv.com binary/ Packages/DiffIndex
+Get:4 http://nova.clouds.archive.ubuntu.com trusty-updates/main Sources
+[425 kB]
+Get:5 http://security.ubuntu.com trusty-security/main Sources [165 kB]
+
+Get:6 http://nova.clouds.archive.ubuntu.com trusty-updates/restricted
+Sources [6,322 B]
+Get:7 http://security.ubuntu.com trusty-security/universe Sources [84.6
+kB]
+Get:8 http://nova.clouds.archive.ubuntu.com trusty-updates/universe Sources
+[213 kB]
+Get:9 http://nova.clouds.archive.ubuntu.com trusty-updates/multiverse
+Sources [7,443 B]
+Get:10 http://security.ubuntu.com trusty-security/main amd64 Packages [777
+kB]
+Get:11 http://nova.clouds.archive.ubuntu.com trusty-updates/main amd64
+Packages [1,112 kB]
+Get:12 http://nova.clouds.archive.ubuntu.com trusty-updates/restricted
+amd64 Packages [17.2 kB]
+Get:13 http://nova.clouds.archive.ubuntu.com trusty-updates/universe amd64
+Packages [494 kB]
+Get:14 http://security.ubuntu.com trusty-security/universe amd64 Packages
+[263 kB]
+Get:15 http://nova.clouds.archive.ubuntu.com trusty-updates/multiverse
+amd64 Packages [14.6 kB]
+Get:16 http://security.ubuntu.com trusty-security/main Translation-en [418
+kB]
+Get:17 http://nova.clouds.archive.ubuntu.com trusty-updates/main
+Translation-en [553 kB]
+Get:18 http://security.ubuntu.com trusty-security/universe Translation-en
+[142 kB]
+Get:19 http://nova.clouds.archive.ubuntu.com trusty-updates/multiverse
+Translation-en [7,616 B]
+Get:20 http://nova.clouds.archive.ubuntu.com trusty-updates/restricted
+Translation-en [4,021 B]
+Get:21 http://nova.clouds.archive.ubuntu.com trusty-updates/universe
+Translation-en [263 kB]
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/main Sources
+
+Hit http://repo.cw-ngv.com binary/ Packages
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/restricted
+Sources
+Ign http://repo.cw-ngv.com binary/ Translation-en_US
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/universe Sources
+Ign http://repo.cw-ngv.com binary/ Translation-en
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/multiverse
+Sources
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/main amd64
+Packages
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/restricted amd64
+Packages
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/universe amd64
+Packages
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/multiverse amd64
+Packages
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/main
+Translation-en
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/multiverse
+Translation-en
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/restricted
+Translation-en
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/universe
+Translation-en
+Hit http://nova.clouds.archive.ubuntu.com trusty Release
+
+Hit http://nova.clouds.archive.ubuntu.com trusty/main Sources
+
+Hit http://nova.clouds.archive.ubuntu.com trusty/restricted Sources
+
+Hit http://nova.clouds.archive.ubuntu.com trusty/universe Sources
+
+Hit http://nova.clouds.archive.ubuntu.com trusty/multiverse Sources
+
+Hit http://nova.clouds.archive.ubuntu.com trusty/main amd64 Packages
+
+Hit http://nova.clouds.archive.ubuntu.com trusty/restricted amd64 Packages
+
+Hit http://nova.clouds.archive.ubuntu.com trusty/universe amd64 Packages
+
+Hit http://nova.clouds.archive.ubuntu.com trusty/multiverse amd64 Packages
+
+Hit http://nova.clouds.archive.ubuntu.com trusty/main Translation-en
+
+Hit http://nova.clouds.archive.ubuntu.com trusty/multiverse Translation-en
+
+Hit http://nova.clouds.archive.ubuntu.com trusty/restricted Translation-en
+
+Hit http://nova.clouds.archive.ubuntu.com trusty/universe Translation-en
+
+Ign http://nova.clouds.archive.ubuntu.com trusty/main Translation-en_US
+
+Ign http://nova.clouds.archive.ubuntu.com trusty/multiverse
+Translation-en_US
+Ign http://nova.clouds.archive.ubuntu.com trusty/restricted
+Translation-en_US
+Ign http://nova.clouds.archive.ubuntu.com trusty/universe
+Translation-en_US
+Fetched 5,100 kB in 13s (389 kB/s)
+
+Reading package lists... Done
+*W: GPG error: http://repo.cw-ngv.com <http://repo.cw-ngv.com> binary/
+Release: The following signatures were invalid: BADSIG 111DBE4722B97904
+Project Clearwater Maintainers <maintainers at projectclearwater.org
+<maintainers at projectclearwater.org>>*
+*ubuntu at bono:/etc/apt/sources.list.d$ *
+
+
+
+
+Regards
+Mayur
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181017/3ac9c2d4/attachment.html>
+
+From Mark.Perryman at metaswitch.com  Wed Oct 17 10:37:02 2018
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Wed, 17 Oct 2018 14:37:02 +0000
+Subject: [Project Clearwater] Badsign warning
+In-Reply-To: <BLUPR0201MB1489149EF99FC421C3CF29F081FD0@BLUPR0201MB1489.namprd02.prod.outlook.com>
+References: <MWHPR20MB12933EDBB9C52FD84A9C7144D7E20@MWHPR20MB1293.namprd20.prod.outlook.com>
+	<BN7PR02MB504104D31DD86DDAF71F659990FD0@BN7PR02MB5041.namprd02.prod.outlook.com>
+	<BLUPR0201MB1489149EF99FC421C3CF29F081FD0@BLUPR0201MB1489.namprd02.prod.outlook.com>
+Message-ID: <BYAPR02MB4247A4BE960ECD882D0C7C678FFF0@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+Hi Jester,
+
+To get into a clean state, try running:
+
+sudo apt-get clean
+sudo mv /var/lib/apt/lists /tmp
+sudo mkdir -p /var/lib/apt/lists/partial
+sudo apt-get clean
+sudo apt-get update
+
+If this doesn't help or you have any further questions, please direct them to the community mailing list.  See http://www.projectclearwater.org/mailing-list-support/ for details.
+
+Thanks,
+Mark Perryman
+
+
+From: Jester Purtteman <jester at optimerainc.com<mailto:jester at optimerainc.com>>
+Sent: 12 October 2018 23:54
+Subject: Badsign warning
+
+Hello,
+
+I am following the docs: https://clearwater.readthedocs.io/en/latest/Manual_Install.html and have run 'sudo apt-get update' after installing the key per the instructions, and I checked the hash of the key but I am still getting the following:
+
+Reading package lists... Done
+W: GPG error: http://repo.cw-ngv.com binary/ Release: The following signatures were invalid: BADSIG 111DBE4722B97904 Project Clearwater Maintainers maintainers at projectclearwater.org<mailto:maintainers at projectclearwater.org>
+
+Any tips on that?
+
+Jester Purtteman, CTO
+OptimERA Inc
+907-581-4983 (Office)
+360-701-7875 (Cell)
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181017/5bf447bc/attachment.html>
+
+From Mark.Perryman at metaswitch.com  Wed Oct 17 12:39:58 2018
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Wed, 17 Oct 2018 16:39:58 +0000
+Subject: [Project Clearwater] GPG error : Signatures were invalid during
+ the apt-get update step while configuring the apt software sources
+In-Reply-To: <CAAEbxXUgcBW7tV+cFU0kavF9CW9hA5naM=BeuQgK1EaXcNkrig@mail.gmail.com>
+References: <CAAEbxXUgcBW7tV+cFU0kavF9CW9hA5naM=BeuQgK1EaXcNkrig@mail.gmail.com>
+Message-ID: <BYAPR02MB4247B956EBA35032A0215EB28FFF0@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+Mayur,
+
+Thanks for this.  We are investigating this issue and will let you know when it is resolved.
+
+Mark Perryman
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of Mayur Koshal
+Sent: 17 October 2018 15:30
+To: Clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] GPG error : Signatures were invalid during the apt-get update step while configuring the apt software sources
+
+
+Hi,
+
+I am doing manual installation of Clearwater vIMS on Openstack .
+I have created nodes using  Ubuntu 14.04 Image. When i configure each node so that apt can use clearwater repository ,I do get an error during the sudo apt-get update step.
+It shows  GPG error: http://repo.cw-ngv.com binary/ Release: The following signatures were invalid: BADSIG.
+
+Error message : W: GPG error: http://repo.cw-ngv.com binary/ Release: The following signatures were invalid: BADSIG 111DBE4722B97904 Project Clearwater Maintainers <maintainers at projectclearwater.org<mailto:maintainers at projectclearwater.org>>
+
+
+Could you please help with the same..
+
+Logs below :
+
+
+ubuntu at bono:/etc$ cd apt/sources.list.d/
+ubuntu at bono:/etc/apt/sources.list.d$<mailto:ubuntu at bono:/etc/apt/sources.list.d$> vi clearwater.list
+ubuntu at bono:/etc/apt/sources.list.d$<mailto:ubuntu at bono:/etc/apt/sources.list.d$> curl -L http://repo.cw-ngv.com/repo_key | sudo apt-key add -
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  3149  100  3149    0     0   4485      0 --:--:-- --:--:-- --:--:--  4485
+OK
+ubuntu at bono:/etc/apt/sources.list.d$<mailto:ubuntu at bono:/etc/apt/sources.list.d$> sudo apt-key finger
+/etc/apt/trusted.gpg
+--------------------
+pub   1024D/437D05B5 2004-09-12
+      Key fingerprint = 6302 39CC 130E 1A7F D81A  27B1 4097 6EAF 437D 05B5
+uid                  Ubuntu Archive Automatic Signing Key <ftpmaster at ubuntu.com<mailto:ftpmaster at ubuntu.com>>
+sub   2048g/79164387 2004-09-12
+
+pub   1024D/FBB75451 2004-12-30
+      Key fingerprint = C598 6B4F 1257 FFA8 6632  CBA7 4618 1433 FBB7 5451
+uid                  Ubuntu CD Image Automatic Signing Key <cdimage at ubuntu.com<mailto:cdimage at ubuntu.com>>
+
+pub   4096R/C0B21F32 2012-05-11
+      Key fingerprint = 790B C727 7767 219C 42C8  6F93 3B4F E6AC C0B2 1F32
+uid                  Ubuntu Archive Automatic Signing Key (2012) <ftpmaster at ubuntu.com<mailto:ftpmaster at ubuntu.com>>
+
+pub   4096R/EFE21092 2012-05-11
+      Key fingerprint = 8439 38DF 228D 22F7 B374  2BC0 D94A A3F0 EFE2 1092
+uid                  Ubuntu CD Image Automatic Signing Key (2012) <cdimage at ubuntu.com<mailto:cdimage at ubuntu.com>>
+
+pub   4096R/22B97904 2013-04-30
+      Key fingerprint = 9213 4604 DE32 7DF7 FEB7  2026 111D BE47 22B9 7904
+uid                  Project Clearwater Maintainers <maintainers at projectclearwater.org<mailto:maintainers at projectclearwater.org>>
+sub   4096R/46EC5B7F 2013-04-30
+
+ubuntu at bono:/etc/apt/sources.list.d$<mailto:ubuntu at bono:/etc/apt/sources.list.d$>
+ubuntu at bono:/etc/apt/sources.list.d$<mailto:ubuntu at bono:/etc/apt/sources.list.d$> sudo apt-get update
+Ign http://nova.clouds.archive.ubuntu.com trusty InRelease
+Get:1 http://security.ubuntu.com trusty-security InRelease [65.9 kB]
+Ign http://repo.cw-ngv.com binary/ InRelease
+Get:2 http://nova.clouds.archive.ubuntu.com trusty-updates InRelease [65.9 kB]
+Get:3 http://repo.cw-ngv.com binary/ Release.gpg [819 B]
+Hit http://repo.cw-ngv.com binary/ Release
+Ign http://repo.cw-ngv.com binary/ Release
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports InRelease
+Hit http://nova.clouds.archive.ubuntu.com trusty Release.gpg
+Ign http://repo.cw-ngv.com binary/ Packages/DiffIndex
+Get:4 http://nova.clouds.archive.ubuntu.com trusty-updates/main Sources [425 kB]
+Get:5 http://security.ubuntu.com trusty-security/main Sources [165 kB]
+Get:6 http://nova.clouds.archive.ubuntu.com trusty-updates/restricted Sources [6,322 B]
+Get:7 http://security.ubuntu.com trusty-security/universe Sources [84.6 kB]
+Get:8 http://nova.clouds.archive.ubuntu.com trusty-updates/universe Sources [213 kB]
+Get:9 http://nova.clouds.archive.ubuntu.com trusty-updates/multiverse Sources [7,443 B]
+Get:10 http://security.ubuntu.com trusty-security/main amd64 Packages [777 kB]
+Get:11 http://nova.clouds.archive.ubuntu.com trusty-updates/main amd64 Packages [1,112 kB]
+Get:12 http://nova.clouds.archive.ubuntu.com trusty-updates/restricted amd64 Packages [17.2 kB]
+Get:13 http://nova.clouds.archive.ubuntu.com trusty-updates/universe amd64 Packages [494 kB]
+Get:14 http://security.ubuntu.com trusty-security/universe amd64 Packages [263 kB]
+Get:15 http://nova.clouds.archive.ubuntu.com trusty-updates/multiverse amd64 Packages [14.6 kB]
+Get:16 http://security.ubuntu.com trusty-security/main Translation-en [418 kB]
+Get:17 http://nova.clouds.archive.ubuntu.com trusty-updates/main Translation-en [553 kB]
+Get:18 http://security.ubuntu.com trusty-security/universe Translation-en [142 kB]
+Get:19 http://nova.clouds.archive.ubuntu.com trusty-updates/multiverse Translation-en [7,616 B]
+Get:20 http://nova.clouds.archive.ubuntu.com trusty-updates/restricted Translation-en [4,021 B]
+Get:21 http://nova.clouds.archive.ubuntu.com trusty-updates/universe Translation-en [263 kB]
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/main Sources
+Hit http://repo.cw-ngv.com binary/ Packages
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/restricted Sources
+Ign http://repo.cw-ngv.com binary/ Translation-en_US
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/universe Sources
+Ign http://repo.cw-ngv.com binary/ Translation-en
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/multiverse Sources
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/main amd64 Packages
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/restricted amd64 Packages
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/universe amd64 Packages
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/multiverse amd64 Packages
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/main Translation-en
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/multiverse Translation-en
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/restricted Translation-en
+Hit http://nova.clouds.archive.ubuntu.com trusty-backports/universe Translation-en
+Hit http://nova.clouds.archive.ubuntu.com trusty Release
+Hit http://nova.clouds.archive.ubuntu.com trusty/main Sources
+Hit http://nova.clouds.archive.ubuntu.com trusty/restricted Sources
+Hit http://nova.clouds.archive.ubuntu.com trusty/universe Sources
+Hit http://nova.clouds.archive.ubuntu.com trusty/multiverse Sources
+Hit http://nova.clouds.archive.ubuntu.com trusty/main amd64 Packages
+Hit http://nova.clouds.archive.ubuntu.com trusty/restricted amd64 Packages
+Hit http://nova.clouds.archive.ubuntu.com trusty/universe amd64 Packages
+Hit http://nova.clouds.archive.ubuntu.com trusty/multiverse amd64 Packages
+Hit http://nova.clouds.archive.ubuntu.com trusty/main Translation-en
+Hit http://nova.clouds.archive.ubuntu.com trusty/multiverse Translation-en
+Hit http://nova.clouds.archive.ubuntu.com trusty/restricted Translation-en
+Hit http://nova.clouds.archive.ubuntu.com trusty/universe Translation-en
+Ign http://nova.clouds.archive.ubuntu.com trusty/main Translation-en_US
+Ign http://nova.clouds.archive.ubuntu.com trusty/multiverse Translation-en_US
+Ign http://nova.clouds.archive.ubuntu.com trusty/restricted Translation-en_US
+Ign http://nova.clouds.archive.ubuntu.com trusty/universe Translation-en_US
+Fetched 5,100 kB in 13s (389 kB/s)
+Reading package lists... Done
+W: GPG error: http://repo.cw-ngv.com binary/ Release: The following signatures were invalid: BADSIG 111DBE4722B97904 Project Clearwater Maintainers <maintainers at projectclearwater.org<mailto:maintainers at projectclearwater.org>>
+ubuntu at bono:/etc/apt/sources.list.d$<mailto:ubuntu at bono:/etc/apt/sources.list.d$>
+
+
+
+
+Regards
+Mayur
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181017/090c0e59/attachment.html>
+
+From Anne.Boffey at metaswitch.com  Thu Oct 18 05:20:15 2018
+From: Anne.Boffey at metaswitch.com (Anne Boffey)
+Date: Thu, 18 Oct 2018 09:20:15 +0000
+Subject: [Project Clearwater] Replacing the hostname to IP address in
+ Record-Route
+Message-ID: <BLUPR0201MB148944A39EF147B775BC56F181F80@BLUPR0201MB1489.namprd02.prod.outlook.com>
+
+Hi Aravind,
+
+If you are using BONO for your P-CSCF then public_hostname in local_config is used in the record_route. This can be set to public_ip if necessary.
+However the S-CSCF used the '<sproutlet>_uri' in the Record-Route header where we recommend that you do not set this yourself but use the defaults provided.
+
+You will find more information on both Local Config and Sproutlet options at https://clearwater.readthedocs.io/en/latest/Clearwater_Configuration_Options_Reference.html
+
+I hope this helps
+
+Anne
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181018/c37aa863/attachment.html>
+
+From Mark.Perryman at metaswitch.com  Fri Oct 19 12:30:38 2018
+From: Mark.Perryman at metaswitch.com (Mark Perryman)
+Date: Fri, 19 Oct 2018 16:30:38 +0000
+Subject: [Project Clearwater] GPG error : Signatures were invalid during
+ the apt-get update step while configuring the apt software sources
+In-Reply-To: <CAAEbxXUgcBW7tV+cFU0kavF9CW9hA5naM=BeuQgK1EaXcNkrig@mail.gmail.com>
+References: <CAAEbxXUgcBW7tV+cFU0kavF9CW9hA5naM=BeuQgK1EaXcNkrig@mail.gmail.com>
+Message-ID: <BYAPR02MB424777739ECB64647CBDDC638FF90@BYAPR02MB4247.namprd02.prod.outlook.com>
+
+To all who have been having problems running ?apt-get update? with the following error ?W: GPG error: http://repo.cw-ngv.com binary/ Release: The following signatures were invalid?,
+
+I believe that the issue has been fixed.
+
+Please let me know if you have any further issues.
+
+Mark Perryman.
+
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of Mayur Koshal
+Sent: 17 October 2018 15:30
+To: Clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] GPG error : Signatures were invalid during the apt-get update step while configuring the apt software sources
+
+
+Hi,
+
+I am doing manual installation of Clearwater vIMS on Openstack .
+I have created nodes using  Ubuntu 14.04 Image. When i configure each node so that apt can use clearwater repository ,I do get an error during the sudo apt-get update step.
+It shows  GPG error: http://repo.cw-ngv.com binary/ Release: The following signatures were invalid: BADSIG.
+
+Error message : W: GPG error: http://repo.cw-ngv.com binary/ Release: The following signatures were invalid: BADSIG 111DBE4722B97904 Project Clearwater Maintainers <maintainers at projectclearwater.org<mailto:maintainers at projectclearwater.org>>
+
+Regards
+Mayur
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181019/69bb8554/attachment.html>
+
+From Anne.Boffey at metaswitch.com  Mon Oct 22 04:42:24 2018
+From: Anne.Boffey at metaswitch.com (Anne Boffey)
+Date: Mon, 22 Oct 2018 08:42:24 +0000
+Subject: [Project Clearwater] USSI capture or examples
+Message-ID: <BLUPR0201MB14893C4D4A1BFCF305D0456C81F40@BLUPR0201MB1489.namprd02.prod.outlook.com>
+
+Hi Jake,
+
+Sorry you are having problems getting the USSI working. I'm afraid we don't have any USSI SIP dialog captures available.
+There may be others on the list who've investigated this before, so may be able to help.
+
+Do let us know if you get this working.
+
+Thanks,
+
+Anne
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181022/96c338f9/attachment.html>
+
+From jake at dccllc.net  Mon Oct 22 15:50:35 2018
+From: jake at dccllc.net (Jake Brown)
+Date: Mon, 22 Oct 2018 19:50:35 +0000
+Subject: [Project Clearwater] USSI capture or examples
+In-Reply-To: <BLUPR0201MB14893C4D4A1BFCF305D0456C81F40@BLUPR0201MB1489.namprd02.prod.outlook.com>
+References: <BLUPR0201MB14893C4D4A1BFCF305D0456C81F40@BLUPR0201MB1489.namprd02.prod.outlook.com>
+Message-ID: <DM5PR18MB1145E643EC0CB4D2E51C744EA9F40@DM5PR18MB1145.namprd18.prod.outlook.com>
+
+Anne,
+
+Thank you for the thoughtful response.  I was able to get this resolved just yesterday.  It works beautifully now.  I had neglected to insert a linespace in part of the sip response.
+
+Thanks again.
+
+Jake Brown
+Principal Engineer/Owner
+920-351-4054 x1001
+jake at dccllc.net<mailto:jake at dccllc.net>
+www.dccllc.net<http://www.dccllc.net/>
+
+[Signature-1]
+
+From: Clearwater <clearwater-bounces at lists.projectclearwater.org> On Behalf Of Anne Boffey
+Sent: Monday, October 22, 2018 3:42 AM
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] USSI capture or examples
+
+Hi Jake,
+
+Sorry you are having problems getting the USSI working. I'm afraid we don't have any USSI SIP dialog captures available.
+There may be others on the list who've investigated this before, so may be able to help.
+
+Do let us know if you get this working.
+
+Thanks,
+
+Anne
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181022/31fba0fc/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image003.jpg
+Type: image/jpeg
+Size: 2635 bytes
+Desc: image003.jpg
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20181022/31fba0fc/attachment.jpg>
+

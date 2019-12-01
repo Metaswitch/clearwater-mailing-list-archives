@@ -1,0 +1,2142 @@
+From Anne.Boffey at metaswitch.com  Wed Aug  1 06:44:48 2018
+From: Anne.Boffey at metaswitch.com (Anne Boffey)
+Date: Wed, 1 Aug 2018 10:44:48 +0000
+Subject: [Project Clearwater] Back-to-Back Registration Agent
+Message-ID: <BLUPR0201MB14894F67BDD72917EB5FEFB5812D0@BLUPR0201MB1489.namprd02.prod.outlook.com>
+
+Hi Aravind,
+
+That sounds like an interesting topology to try out.
+
+You might be able to configure this by setting upstream_hostname and upstream_port options on Bono (see Clearwater Configuration Options Reference doc), but this isn't a scenario we've tested. Let us know how you get on!
+
+I hope that helps.
+
+Yours,
+
+Anne
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180801/1ecc17c9/attachment.html>
+
+From Anne.Boffey at metaswitch.com  Wed Aug  1 10:48:31 2018
+From: Anne.Boffey at metaswitch.com (Anne Boffey)
+Date: Wed, 1 Aug 2018 14:48:31 +0000
+Subject: [Project Clearwater] issues with sipml5 connection to clearwater
+Message-ID: <BLUPR0201MB1489F04EBE64454E3FA2F53F812D0@BLUPR0201MB1489.namprd02.prod.outlook.com>
+
+Hi Mario,
+
+First, I would like to confirm that Project Clearwater should work with WebRTC when using sipml5.
+
+The first thing to check is that you are using a browser that supports the sipml5 demo using websockets. We have found that calls do not work when we use Chrome, but they do work with recent versions of Firefox.
+
+The second thing that I would look at is whether the websocket request is reaching Bono. I suggest running a packet capture on Bono e.g. using tcpdump, then checking to see whether the packets are making it through your network. You should be able to filter on port 5062. If nothing shows up, then it is worth checking that your firewall is configured correctly.
+
+If that does not identify the problem, can you send us debug logs from Bono showing a call? You can find instructions for setting the log level to 5 at http://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html#bono<http://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html%23bono>.
+
+I know you tried to send some screenshots initially, but unfortunately the attachment was removed. Can you please include any log information in the main body of your response in future.
+I hope that helps.
+Yours,
+
+Anne
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180801/5f494657/attachment.html>
+
+From gabrielorozco20 at unicauca.edu.co  Fri Aug  3 17:36:58 2018
+From: gabrielorozco20 at unicauca.edu.co (GABRIEL DAVID OROZCO URRUTIA)
+Date: Fri, 3 Aug 2018 16:36:58 -0500
+Subject: [Project Clearwater] Issue With homestead-prov and Cassandra in
+ kubernetes deployment
+Message-ID: <CAGy+FHLaTSuwYCEHjw8qFXESZQVEEA1Wp-hLJkRspoLBEd6bwg@mail.gmail.com>
+
+Hi
+I'm a student of electronic and Telecommunications Engineering, currently
+working on my degree project. I'm using testing the performance of
+Clearwater Kubernetes deployment.
+But I have troubles with the deployment, exactly in the Cassandra and
+Homestead-prov entities.
+
+*When running the command  for the pods, this is the result:*
+
+astaire-778bc84754-n9nxg         2/2       Running   0          8m
+bono-5bcc97f696-ct7m5            2/2       Running   0          8m
+cassandra-757bfd8c68-566jx       0/1       Running   0          7m
+cassandra-757bfd8c68-hwwhx       0/1       Running   0          7m
+cassandra-757bfd8c68-st56c       0/1       Running   0          7m
+chronos-94c95964b-k8lpb          2/2       Running   0          8m
+ellis-5769fc8bd5-wwjcl           1/1       Running   0          8m
+etcd-7954884d7-6zvbs             1/1       Running   0          8m
+homer-74b7bf5878-vxpm8           1/1       Running   0          8m
+homestead-6489ccbf6f-hgsh8       2/2       Running   0          8m
+homestead-prov-89dc6f9c9-c92r4   0/1       Running   6          8m
+ralf-74dc869579-lhg52            2/2       Running   0          8m
+
+*The logs for Cassandra are:*
+
+2018-08-03 21:02:15,743 CRIT Supervisor running as root (no user in config
+file)
+2018-08-03 21:02:15,744 WARN Included extra file
+"/etc/supervisor/conf.d/clearwater-group.conf" during parsing
+2018-08-03 21:02:15,744 WARN Included extra file
+"/etc/supervisor/conf.d/cassandra.conf" during parsing
+2018-08-03 21:02:15,744 WARN Included extra file
+"/etc/supervisor/conf.d/snmpd.conf" during parsing
+2018-08-03 21:02:15,744 WARN Included extra file
+"/etc/supervisor/conf.d/clearwater-infrastructure.conf" during parsing
+2018-08-03 21:02:15,744 WARN Included extra file
+"/etc/supervisor/conf.d/supervisord.conf" during parsing
+2018-08-03 21:02:15,759 INFO RPC interface 'supervisor' initialized
+2018-08-03 21:02:15,759 CRIT Server 'unix_http_server' running without any
+HTTP authentication checking
+2018-08-03 21:02:15,759 INFO supervisord started with pid 1
+2018-08-03 21:02:16,760 INFO spawned: 'snmpd' with pid 8
+2018-08-03 21:02:16,762 INFO spawned: 'clearwater-infrastructure' with pid 9
+2018-08-03 21:02:16,765 INFO success: snmpd entered RUNNING state, process
+has stayed up for > than 0 seconds (startsecs)
+2018-08-03 21:02:16,765 INFO success: clearwater-infrastructure entered
+RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2018-08-03 21:02:17,092 INFO exited: snmpd (exit status 0; expected)
+2018-08-03 21:02:17,092 CRIT reaped unknown pid 49)
+2018-08-03 21:02:19,146 CRIT reaped unknown pid 60)
+2018-08-03 21:02:19,146 CRIT reaped unknown pid 59)
+2018-08-03 21:02:19,263 CRIT reaped unknown pid 121)
+2018-08-03 21:02:19,263 CRIT reaped unknown pid 120)
+2018-08-03 21:02:19,276 CRIT reaped unknown pid 146)
+2018-08-03 21:02:20,397 CRIT reaped unknown pid 181)
+2018-08-03 21:02:20,442 INFO spawned: 'cassandra' with pid 187
+2018-08-03 21:02:21,447 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:02:21,454 INFO exited: clearwater-infrastructure (exit status
+0; expected)
+2018-08-03 21:02:22,447 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:02:23,451 INFO spawned: 'cassandra' with pid 190
+2018-08-03 21:02:24,457 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:02:25,461 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:02:26,465 INFO spawned: 'cassandra' with pid 193
+2018-08-03 21:02:27,487 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:02:28,491 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:02:29,494 INFO spawned: 'cassandra' with pid 203
+2018-08-03 21:02:30,504 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:02:31,506 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:02:32,508 INFO spawned: 'cassandra' with pid 206
+2018-08-03 21:02:33,513 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:02:34,513 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:02:35,515 INFO spawned: 'cassandra' with pid 209
+2018-08-03 21:02:36,524 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:02:37,525 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:02:38,528 INFO spawned: 'cassandra' with pid 212
+2018-08-03 21:02:39,535 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:02:40,537 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:02:41,539 INFO spawned: 'cassandra' with pid 221
+2018-08-03 21:02:42,543 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:02:43,545 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:02:44,548 INFO spawned: 'cassandra' with pid 224
+2018-08-03 21:02:45,570 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:02:46,572 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:02:47,576 INFO spawned: 'cassandra' with pid 227
+2018-08-03 21:02:48,597 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:02:49,603 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:02:50,607 INFO spawned: 'cassandra' with pid 239
+2018-08-03 21:02:51,632 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:02:52,634 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:02:53,638 INFO spawned: 'cassandra' with pid 242
+2018-08-03 21:02:54,658 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:02:55,662 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:02:56,666 INFO spawned: 'cassandra' with pid 245
+2018-08-03 21:02:57,684 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:02:58,688 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:02:59,692 INFO spawned: 'cassandra' with pid 255
+2018-08-03 21:03:00,710 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:03:01,714 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:03:02,719 INFO spawned: 'cassandra' with pid 258
+2018-08-03 21:03:03,739 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:03:04,741 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:03:05,745 INFO spawned: 'cassandra' with pid 261
+2018-08-03 21:03:06,766 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:03:07,768 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:03:08,771 INFO spawned: 'cassandra' with pid 264
+2018-08-03 21:03:09,777 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:03:10,778 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:03:11,780 INFO spawned: 'cassandra' with pid 273
+2018-08-03 21:03:12,786 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:03:13,789 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:03:14,791 INFO spawned: 'cassandra' with pid 276
+2018-08-03 21:03:15,796 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:03:16,798 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:03:17,802 INFO spawned: 'cassandra' with pid 279
+2018-08-03 21:03:18,822 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:03:19,826 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:03:20,830 INFO spawned: 'cassandra' with pid 294
+2018-08-03 21:03:21,851 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:03:22,853 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:03:23,854 INFO spawned: 'cassandra' with pid 356
+2018-08-03 21:03:23,895 CRIT reaped unknown pid 373)
+2018-08-03 21:03:24,248 CRIT reaped unknown pid 375)
+2018-08-03 21:03:25,248 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:03:41,622 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:03:41,647 INFO spawned: 'cassandra' with pid 874
+2018-08-03 21:03:41,647 CRIT reaped unknown pid 421)
+2018-08-03 21:03:41,672 CRIT reaped unknown pid 889)
+2018-08-03 21:03:41,871 CRIT reaped unknown pid 890)
+2018-08-03 21:03:42,872 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:04:01,018 CRIT reaped unknown pid 937)
+2018-08-03 21:04:01,024 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:04:02,027 INFO spawned: 'cassandra' with pid 1463
+2018-08-03 21:04:02,048 CRIT reaped unknown pid 1478)
+2018-08-03 21:04:02,314 CRIT reaped unknown pid 1479)
+2018-08-03 21:04:03,315 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:04:21,740 CRIT reaped unknown pid 1526)
+2018-08-03 21:04:21,788 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:04:22,792 INFO spawned: 'cassandra' with pid 2110
+2018-08-03 21:04:22,835 CRIT reaped unknown pid 2125)
+2018-08-03 21:04:23,342 CRIT reaped unknown pid 2127)
+2018-08-03 21:04:24,345 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:04:42,481 CRIT reaped unknown pid 2172)
+2018-08-03 21:04:42,598 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:04:43,599 INFO spawned: 'cassandra' with pid 2710
+2018-08-03 21:04:43,618 CRIT reaped unknown pid 2725)
+2018-08-03 21:04:43,881 CRIT reaped unknown pid 2726)
+2018-08-03 21:04:44,883 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:05:04,337 CRIT reaped unknown pid 2772)
+2018-08-03 21:05:04,382 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:05:05,386 INFO spawned: 'cassandra' with pid 3330
+2018-08-03 21:05:05,444 CRIT reaped unknown pid 3345)
+2018-08-03 21:05:05,864 CRIT reaped unknown pid 3347)
+2018-08-03 21:05:06,865 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:05:24,756 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:05:24,833 INFO spawned: 'cassandra' with pid 4001
+2018-08-03 21:05:24,834 CRIT reaped unknown pid 3419)
+2018-08-03 21:05:24,879 CRIT reaped unknown pid 4016)
+2018-08-03 21:05:25,680 CRIT reaped unknown pid 4018)
+2018-08-03 21:05:26,681 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:05:44,175 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:05:44,250 INFO spawned: 'cassandra' with pid 4626
+2018-08-03 21:05:44,250 CRIT reaped unknown pid 4063)
+2018-08-03 21:05:44,319 CRIT reaped unknown pid 4641)
+2018-08-03 21:05:44,986 CRIT reaped unknown pid 4642)
+2018-08-03 21:05:45,987 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:06:02,635 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:06:03,002 INFO spawned: 'cassandra' with pid 5242
+2018-08-03 21:06:03,003 CRIT reaped unknown pid 4688)
+2018-08-03 21:06:03,098 CRIT reaped unknown pid 5257)
+2018-08-03 21:06:03,518 CRIT reaped unknown pid 5258)
+2018-08-03 21:06:04,519 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:06:21,385 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:06:21,597 INFO spawned: 'cassandra' with pid 5836
+2018-08-03 21:06:21,601 CRIT reaped unknown pid 5305)
+2018-08-03 21:06:21,676 CRIT reaped unknown pid 5851)
+2018-08-03 21:06:22,065 CRIT reaped unknown pid 5853)
+2018-08-03 21:06:23,067 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:06:39,903 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:06:39,983 INFO spawned: 'cassandra' with pid 6437
+2018-08-03 21:06:39,983 CRIT reaped unknown pid 5899)
+2018-08-03 21:06:40,034 CRIT reaped unknown pid 6452)
+2018-08-03 21:06:40,284 CRIT reaped unknown pid 6454)
+2018-08-03 21:06:41,285 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:06:57,723 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:06:58,028 INFO spawned: 'cassandra' with pid 7041
+2018-08-03 21:06:58,029 CRIT reaped unknown pid 6499)
+2018-08-03 21:06:58,076 CRIT reaped unknown pid 7056)
+2018-08-03 21:06:58,321 CRIT reaped unknown pid 7057)
+2018-08-03 21:06:59,323 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:07:15,750 CRIT reaped unknown pid 7104)
+2018-08-03 21:07:15,833 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:07:16,836 INFO spawned: 'cassandra' with pid 7639
+2018-08-03 21:07:16,897 CRIT reaped unknown pid 7654)
+2018-08-03 21:07:17,415 CRIT reaped unknown pid 7656)
+2018-08-03 21:07:18,415 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:07:35,056 CRIT reaped unknown pid 7701)
+2018-08-03 21:07:35,186 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:07:36,188 INFO spawned: 'cassandra' with pid 8244
+2018-08-03 21:07:36,226 CRIT reaped unknown pid 8259)
+2018-08-03 21:07:36,643 CRIT reaped unknown pid 8260)
+2018-08-03 21:07:37,644 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:07:55,961 CRIT reaped unknown pid 8318)
+2018-08-03 21:07:56,125 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:07:57,126 INFO spawned: 'cassandra' with pid 8908
+2018-08-03 21:07:57,179 CRIT reaped unknown pid 8923)
+2018-08-03 21:07:57,503 CRIT reaped unknown pid 8924)
+2018-08-03 21:07:58,504 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:08:14,937 CRIT reaped unknown pid 8970)
+2018-08-03 21:08:15,011 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:08:16,014 INFO spawned: 'cassandra' with pid 9502
+2018-08-03 21:08:16,037 CRIT reaped unknown pid 9517)
+2018-08-03 21:08:16,398 CRIT reaped unknown pid 9519)
+2018-08-03 21:08:17,399 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:08:34,141 CRIT reaped unknown pid 9564)
+2018-08-03 21:08:34,251 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:08:35,256 INFO spawned: 'cassandra' with pid 10123
+2018-08-03 21:08:35,275 CRIT reaped unknown pid 10138)
+2018-08-03 21:08:35,536 CRIT reaped unknown pid 10139)
+2018-08-03 21:08:36,537 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:08:53,592 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:08:53,602 INFO spawned: 'cassandra' with pid 10744
+2018-08-03 21:08:53,604 CRIT reaped unknown pid 10185)
+2018-08-03 21:08:53,618 CRIT reaped unknown pid 10760)
+2018-08-03 21:08:53,857 CRIT reaped unknown pid 10761)
+2018-08-03 21:08:54,859 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:09:11,732 CRIT reaped unknown pid 10807)
+2018-08-03 21:09:11,884 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:09:12,887 INFO spawned: 'cassandra' with pid 11286
+2018-08-03 21:09:12,913 CRIT reaped unknown pid 11301)
+2018-08-03 21:09:13,242 CRIT reaped unknown pid 11303)
+2018-08-03 21:09:14,243 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:09:29,147 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:09:29,472 INFO spawned: 'cassandra' with pid 11879
+2018-08-03 21:09:29,472 CRIT reaped unknown pid 11369)
+2018-08-03 21:09:29,500 CRIT reaped unknown pid 11895)
+2018-08-03 21:09:29,724 CRIT reaped unknown pid 11897)
+2018-08-03 21:09:30,725 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:09:46,218 INFO exited: cassandra (exit status 232; not
+expected)
+2018-08-03 21:09:46,522 INFO spawned: 'cassandra' with pid 12422
+2018-08-03 21:09:46,522 CRIT reaped unknown pid 11942)
+2018-08-03 21:09:46,553 CRIT reaped unknown pid 12437)
+2018-08-03 21:09:46,782 CRIT reaped unknown pid 12438)
+2018-08-03 21:09:47,783 INFO success: cassandra entered RUNNING state,
+process has stayed up for > than 1 seconds (startsecs)
+
+*And the homestead-prov logs are:*
+
+2018-08-03 21:08:58,112 CRIT Supervisor running as root (no user in config
+file)
+2018-08-03 21:08:58,112 WARN Included extra file
+"/etc/supervisor/conf.d/socket-factory.supervisord.conf" during parsing
+2018-08-03 21:08:58,112 WARN Included extra file
+"/etc/supervisor/conf.d/clearwater-group.conf" during parsing
+2018-08-03 21:08:58,112 WARN Included extra file
+"/etc/supervisor/conf.d/nginx.conf" during parsing
+2018-08-03 21:08:58,112 WARN Included extra file
+"/etc/supervisor/conf.d/homestead-prov.conf" during parsing
+2018-08-03 21:08:58,112 WARN Included extra file
+"/etc/supervisor/conf.d/snmpd.conf" during parsing
+2018-08-03 21:08:58,112 WARN Included extra file
+"/etc/supervisor/conf.d/clearwater-infrastructure.conf" during parsing
+2018-08-03 21:08:58,113 WARN Included extra file
+"/etc/supervisor/conf.d/supervisord.conf" during parsing
+2018-08-03 21:08:58,127 INFO RPC interface 'supervisor' initialized
+2018-08-03 21:08:58,127 CRIT Server 'unix_http_server' running without any
+HTTP authentication checking
+2018-08-03 21:08:58,127 INFO supervisord started with pid 1
+2018-08-03 21:08:59,129 INFO spawned: 'snmpd' with pid 7
+2018-08-03 21:08:59,132 INFO spawnerr: can't find command
+'/usr/share/clearwater/bin/clearwater-socket-factory-sig-wrapper'
+2018-08-03 21:08:59,133 INFO spawned: 'clearwater-infrastructure' with pid 9
+2018-08-03 21:08:59,135 INFO spawnerr: can't find command
+'/usr/share/clearwater/bin/clearwater-socket-factory-mgmt-wrapper'
+2018-08-03 21:08:59,135 INFO success: snmpd entered RUNNING state, process
+has stayed up for > than 0 seconds (startsecs)
+2018-08-03 21:08:59,137 INFO success: clearwater-infrastructure entered
+RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2018-08-03 21:08:59,681 INFO exited: snmpd (exit status 0; expected)
+2018-08-03 21:08:59,682 CRIT reaped unknown pid 48)
+2018-08-03 21:09:00,684 INFO spawnerr: can't find command
+'/usr/share/clearwater/bin/clearwater-socket-factory-sig-wrapper'
+2018-08-03 21:09:00,684 INFO spawnerr: can't find command
+'/usr/share/clearwater/bin/clearwater-socket-factory-mgmt-wrapper'
+2018-08-03 21:09:02,027 CRIT reaped unknown pid 53)
+2018-08-03 21:09:02,028 CRIT reaped unknown pid 52)
+2018-08-03 21:09:03,029 INFO spawnerr: can't find command
+'/usr/share/clearwater/bin/clearwater-socket-factory-sig-wrapper'
+2018-08-03 21:09:03,030 INFO spawnerr: can't find command
+'/usr/share/clearwater/bin/clearwater-socket-factory-mgmt-wrapper'
+2018-08-03 21:09:03,380 CRIT reaped unknown pid 184)
+2018-08-03 21:09:03,384 CRIT reaped unknown pid 183)
+2018-08-03 21:09:03,418 CRIT reaped unknown pid 209)
+2018-08-03 21:09:04,768 INFO spawned: 'homestead-prov' with pid 246
+2018-08-03 21:09:04,769 INFO spawned: 'nginx' with pid 247
+2018-08-03 21:09:05,214 INFO exited: homestead-prov (exit status 0; not
+expected)
+2018-08-03 21:09:06,215 INFO spawned: 'homestead-prov' with pid 262
+2018-08-03 21:09:06,216 INFO success: nginx entered RUNNING state, process
+has stayed up for > than 1 seconds (startsecs)
+2018-08-03 21:09:06,216 INFO spawnerr: can't find command
+'/usr/share/clearwater/bin/clearwater-socket-factory-sig-wrapper'
+2018-08-03 21:09:06,216 INFO gave up: socket-factory-sig entered FATAL
+state, too many start retries too quickly
+2018-08-03 21:09:06,216 INFO spawnerr: can't find command
+'/usr/share/clearwater/bin/clearwater-socket-factory-mgmt-wrapper'
+2018-08-03 21:09:06,216 INFO gave up: socket-factory-mgmt entered FATAL
+state, too many start retries too quickly
+2018-08-03 21:09:06,440 INFO exited: clearwater-infrastructure (exit status
+0; expected)
+2018-08-03 21:09:06,568 INFO exited: homestead-prov (exit status 0; not
+expected)
+2018-08-03 21:09:08,571 INFO spawned: 'homestead-prov' with pid 285
+2018-08-03 21:09:08,955 INFO exited: homestead-prov (exit status 0; not
+expected)
+2018-08-03 21:09:11,959 INFO spawned: 'homestead-prov' with pid 296
+2018-08-03 21:09:12,265 INFO exited: homestead-prov (exit status 0; not
+expected)
+2018-08-03 21:09:13,266 INFO gave up: homestead-prov entered FATAL state,
+too many start retries too quickly
+
+This is the information about the kubernetes version
+
+Client Version: version.Info{Major:"1", Minor:"11", GitVersion:"v1.11.0",
+GitCommit:"91e7b4fd31fcd3d5f436da26c980becec37ceefe", GitTreeState:"clean",
+BuildDate:"2018-06-27T20:17:28Z", GoVersion:"go1.10.2", Compiler:"gc",
+Platform:"linux/amd64"}
+Server Version: version.Info{Major:"1", Minor:"10", GitVersion:"v1.10.0",
+GitCommit:"fc32d2f3698e36b93322a3465f63a14e9f0eaead", GitTreeState:"clean",
+BuildDate:"2018-03-26T16:44:10Z", GoVersion:"go1.9.3", Compiler:"gc",
+Platform:"linux/amd64"}
+
+And I'm using minikube 0.28.0
+
+Thanks so much for your help.
+
+-- 
+
+
+*Hacia una
+Universidad comprometida con la Paz Territorial*
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180803/8d58c8c2/attachment.html>
+
+From amirhatami1000 at gmail.com  Mon Aug  6 01:31:49 2018
+From: amirhatami1000 at gmail.com (Amir Moahammad Hatami)
+Date: Mon, 6 Aug 2018 10:01:49 +0430
+Subject: [Project Clearwater] Is clearwater (generally IMS) a peer to peer
+ system?
+Message-ID: <CAEtN4MBiN5ekycxKi5PNY0m_X+KQ8zaPGu75GWiYUmA6vejkuw@mail.gmail.com>
+
+Hi,
+
+I was looking for a general question that weather the voice packets flow
+through IMS or just the control signals (registration, ... )go into the
+IMS.
+
+If the voice itself goes to the clearwater (IMS) which modules does it pass
+from?
+
+Thanks
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180806/3e5701cb/attachment.html>
+
+From Anne.Boffey at metaswitch.com  Mon Aug  6 06:20:05 2018
+From: Anne.Boffey at metaswitch.com (Anne Boffey)
+Date: Mon, 6 Aug 2018 10:20:05 +0000
+Subject: [Project Clearwater] Is clearwater (generally IMS) a peer to
+ peer system?
+Message-ID: <BLUPR0201MB1489CC652D57028976DC088E81200@BLUPR0201MB1489.namprd02.prod.outlook.com>
+
+Hi Amir,
+
+Clearwater does not get involved with the media flows in a deployment, only the SIP signalling.
+
+Yours,
+
+Anne
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180806/f5bf3bec/attachment.html>
+
+From Anne.Boffey at metaswitch.com  Mon Aug  6 10:55:44 2018
+From: Anne.Boffey at metaswitch.com (Anne Boffey)
+Date: Mon, 6 Aug 2018 14:55:44 +0000
+Subject: [Project Clearwater] Issue With homestead-prov and Cassandra in
+ kubernetes deployment
+Message-ID: <BLUPR0201MB1489415CAD1EC561BB3D2FD481200@BLUPR0201MB1489.namprd02.prod.outlook.com>
+
+Hi Gabriel,
+
+I think the key issue is that you the Cassandra node keeps failing and without that you won't be able to get the Homestead-prov service running.
+
+Can you confirm that you have got your etcd cluster up and running healthily.  Are you following our setup steps from the README. If not, can you give us some more details on the steps you are following and how you are deploying all of this.
+
+If your etcd cluster is up and healthy, then we can look at why other pods are unable to reach it. If you are on one of your Cassandra pods, try taking a look in /var/log/clearwater-cluster-manager/ to see if this has any more informative logs.
+
+As background here, we have a number of configuration files that are auto-generated based on information that is stored in the etcd cluster. The clearwater cluster manager is the process responsible for getting this information from etcd, and correctly building the configuration up. If your etcd cluster is unhealthy, or unreachable, the other processes won't be able to get the configuration they need to boot up successfully, as you're seeing here.
+
+I hope this helps.
+
+Yours,
+
+Anne
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180806/86ee8462/attachment.html>
+
+From Matthew.Davis.2 at team.telstra.com  Mon Aug 13 20:16:59 2018
+From: Matthew.Davis.2 at team.telstra.com (Davis, Matthew)
+Date: Tue, 14 Aug 2018 00:16:59 +0000
+Subject: [Project Clearwater] Issue With homestead-prov and Cassandra in
+ kubernetes deployment
+In-Reply-To: <BLUPR0201MB1489415CAD1EC561BB3D2FD481200@BLUPR0201MB1489.namprd02.prod.outlook.com>
+References: <BLUPR0201MB1489415CAD1EC561BB3D2FD481200@BLUPR0201MB1489.namprd02.prod.outlook.com>
+Message-ID: <SYBPR01MB41392C7A82781210FF9E2BA5C2380@SYBPR01MB4139.ausprd01.prod.outlook.com>
+
+Hi Gabriel,
+
+That `kubectl get pods` output shows that Cassandra is only 7 minutes old. Sometimes Cassandra can take a very long time to start up. What happens if you wait for 30 minutes?
+
+Regards,
+Matt
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180814/857f8f1e/attachment.html>
+
+From Matthew.Davis.2 at team.telstra.com  Tue Aug 14 03:02:17 2018
+From: Matthew.Davis.2 at team.telstra.com (Davis, Matthew)
+Date: Tue, 14 Aug 2018 07:02:17 +0000
+Subject: [Project Clearwater] Issues with clearwater-docker homestead
+ and homestead-prov under Kubernetes
+References: <ME2PR01MB288482217665730202DF424BC2990@ME2PR01MB2884.ausprd01.prod.outlook.com>
+	<MEAPR01MB2885A5ED130E79B45AF062A3C29C0@MEAPR01MB2885.ausprd01.prod.outlook.com>
+	<BN6PR02MB336224794DE7A1D3CE31E8B9F0930@BN6PR02MB3362.namprd02.prod.outlook.com>
+	<ME2PR01MB2884B5A1DECF5FDD45218873C2920@ME2PR01MB2884.ausprd01.prod.outlook.com>
+	<CY1PR0201MB0971F106A46CE86F83CE39B6E2920@CY1PR0201MB0971.namprd02.prod.outlook.com>
+	<ME2PR01MB2884A19B45AC25AB2289E099C2910@ME2PR01MB2884.ausprd01.prod.outlook.com>
+	<CY1PR0201MB09711902974D45A75AFB8096E2910@CY1PR0201MB0971.namprd02.prod.outlook.com>
+	<ME2PR01MB28847583A00768B0F905195CC2900@ME2PR01MB2884.ausprd01.prod.outlook.com>
+	<CY1PR0201MB0971545314ED91FB7F233AC1E2900@CY1PR0201MB0971.namprd02.prod.outlook.com>
+	<ME2PR01MB288450EF460A39FEA9E1D724C2940@ME2PR01MB2884.ausprd01.prod.outlook.com>
+	<BY1PR0201MB09689BB9A1645396B16AE810E2940@BY1PR0201MB0968.namprd02.prod.outlook.com>
+	<ME2PR01MB2884F01278DC1CD5F7831DFEC26A0@ME2PR01MB2884.ausprd01.prod.outlook.com>
+	<CY1PR0201MB09710B4690B23BC5F7E8F786E26A0@CY1PR0201MB0971.namprd02.prod.outlook.com>
+	<ME2PR01MB2884BAB776270D40A8B06347C2690@ME2PR01MB2884.ausprd01.prod.outlook.com>
+	<CY1PR0201MB0971049DFED6D952FFC21DE1E2690@CY1PR0201MB0971.namprd02.prod.outlook.com>
+	<MEAPR01MB2885D6C8E38E9D4E26723D4EC26C0@MEAPR01MB2885.ausprd01.prod.outlook.com>
+	<CY1PR0201MB0971E10C3CE7DB95C3CDBF08E2630@CY1PR0201MB0971.namprd02.prod.outlook.com>
+	<ME2PR01MB2884BEA7F75746D055BB7329C2670@ME2PR01MB2884.ausprd01.prod.outlook.com>
+	<CY1PR0201MB09711B8CCD0D9D5870B6B8BFE2670@CY1PR0201MB0971.namprd02.prod.outlook.com>
+Message-ID: <SYBPR01MB4139443E4014EDFDB1F0D20CC2380@SYBPR01MB4139.ausprd01.prod.outlook.com>
+
+Hi Adam,
+I have managed to deploy it on Azure and make a call.
+
+
+*        It's not fully functional though. After about a minute or two the call always ends without me actively hanging up. One device notices but the other doesn't.
+
+*        If I hang up the call on one end, the other end doesn't notice
+
+*        There's a big delay in the audio. I'm wondering, is this because the client is configured to use TCP not UDP<https://clearwater.readthedocs.io/en/latest/Making_your_first_call.html#configure-your-client>?
+
+I'm just wondering, how is state stored? I thought it was stored in Cassandra, but Cassandra has no persistent volumes. If I restart the Cassandra pods, do my accounts all get deleted? It seems so. I suspect that this may have caused some of my troubles.
+
+A summary of the changes I made:
+
+*        Bono and ellis services need to be load balancers. Why are they NodePorts by default? I don't understand how NodePorts could possibly work in any use case.
+
+*        I did not enable HTTP Application Routing in Azure
+
+*        Instead of configuring bono and ellis as subdomains of a common parent domain, I assigned separate DNS records for each of them. (For some reason Azure won't let you create a subdomain off one of their domains, only individual hosts. Unless you do it through HTTP Application Routing. Odd) I followed the relevant parts of these instructions for  that. https://docs.microsoft.com/en-us/azure/aks/ingress
+
+*        The dependency issue with homestead-prov turned out to not matter
+
+*        The test command that works is: rake test[default.svc.cluster.local] PROXY=bono-aks-cw-01.australiaeast.cloudapp.azure.com SIGNUP_CODE=secret ELLIS=ellis-aks-cw-01.australiaeast.cloudapp.azure.com
+
+*        The SIP client I was using (Twinkle, on Ubuntu) is broken. Don't use that
+
+*        The SIP client recommended by the docs (Zoiper) is also broken. Audio (in and out) cuts out often. This is a known bug with Zoiper. You need to restart your phone for this to work. Also, Zoiper can't cope with Android/Windows phone's power saving settings. You must have the device unlocked with the app in the foreground.
+
+*        I could not get Linphone to work. (It says "authorisation error"), or any other SIP client.
+
+*        Just wondering, are there any SIP clients out there which:
+
+o   Work
+
+o   Are free
+
+o   Don't require every permission under the sun
+I couldn't find any.
+
+*        The .env file is at the root of the git repo: https://github.com/Metaswitch/clearwater-docker/blob/master/.env . I did not need to change it in the end.
+
+*         I've found that in some of my deployments, when I try to manually create a user in the web GUI, I get an error. The POST request payload is '{"status": 503, "message": "Service Unavailable", "reason": "No available numbers", "detail": {}, "error": true}'. I followed these<https://clearwater.readthedocs.io/en/stable/Manual_Install.html?highlight=available%20numbers#provision-telephone-numbers-in-ellis> instructions to fix that. But perhaps that's why I've had some "403: RestClient::Forbidden" failures with rake recently.
+
+*        The Making a Call<https://clearwater.readthedocs.io/en/latest/Making_your_first_call.html#configure-your-client> docs say "STUN/TURN/ICE:". What is that line meant to be? Is that a typo? Is there a line break which shouldn't be there? If I try connecting with Linphone with ICE enabled it says "Authorisation error". If I want to enable STUN/TURN, I need some other fields which aren't specified by the docs.
+
+I'm trying to deploy it on Openstack Kubernetes now.
+The Cassandra pods won't come up, because etcd is failing. It's possibly a network issue.
+
+Regards,
+
+Matthew Davis
+Telstra Graduate Engineer
+CTO | Cloud SDN NFV
+
+From: Adam Lindley [mailto:Adam.Lindley at metaswitch.com]
+Sent: Tuesday, 5 June 2018 2:53 AM
+To: Davis, Matthew <Matthew.Davis.2 at team.telstra.com<mailto:Matthew.Davis.2 at team.telstra.com>>; clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: RE: [Project Clearwater] Issues with clearwater-docker homestead and homestead-prov under Kubernetes
+
+Hey Matthew,
+
+Quite a lot of questions, so hopefully all the answers are clear. Is the issue still the same Rest Client failure?
+At a high level, a lot of this looks like networking issues on the Kubernetes rig side, not the Clearwater side.  I don't have any experience with Weave, which I believe you said your set up was using for the overlay network, and so my ability to help there may be fairly limited. Definitely keen to get everything up and running, but especially without access to the rig to poke around it may be more difficult.
+
+Also, a couple of thoughts on diags:
+
+  *   At the moment I don't think there's much interesting in the clearwater logs, as there's no network traffic hitting the processes. I suspect at the moment you're just sending over short snippets as the rest of the log is nearly identical, however when we get past network related issues, it will be much more useful to have the full log, or much larger excerpts at least.
+  *   The tcpdump output you've sent over is pretty difficult to get anything from, with it both just being the CLI output and with no context on what the IPs involved are. If it's possible for future runs, can you grab the full packet ouput by having tcpdump write to a file? Something like `tcpdump -i any port xxxx -w dump.pcap` should do nicely. We can then open that up and see the full contents of all the messages. This will make debugging issues much easier
+
+
+So, to answer your questions:
+?  When I run ` nc 10.3.1.76 32060 -v` I see nothing (not success, not failure. Just no output and it hangs)
+Is the `32060` here just a bad copy-paste, as you've got `30060` below? If not, that's the issue.
+If not, then this seems a likely symptom of some network issue.
+On our rig, I see:
+```root at bono-2597123395-s919s:/# nc 10.230.16.1 -v 30060
+Connection to 10.230.16.1 30060 port [tcp/*] succeeded!```
+And my bono-depl says the same, and is working, so don't think that's the problem.
+If you're unable to get traffic to connect to the bono pod/process, we're not going to be able to get any further, so that'll be the thing to look into. You'll need to track the packets here, and see where they're hitting some issues.
+
+
+Changing the PUBLIC IP to match my rig IP.
+Where is this? In bono-deply.yaml? Anywhere else? (should I have it in .env?) Should this include the port number?
+I have only change the depl file here. Nowhere else.
+What is this `.env` file. I have not come across these, and don't think it's got any place here. Can you give some more info on what it is and how/where you're using it?
+
+Which IP should this be? Currently I have it equal to the Kubernetes API IP address.
+When I run ` kubectl config view | grep 10` I see `server: https://10.3.1.76:6443`<https://10.3.1.76:6443%60> so I set PUBLIC_IP to 10.3.1.76.
+What do you see? I think 6443 might be a non-standard port for Kubernetes. Could that be a source of the problem?
+I'm afraid I'm not entirely certain here. This may well be some of the answer a bit later on down the line.
+Looking at the network setup on our host, I have this IP as the IP of interface cbr0. As I mentioned before, our rig is set up with directly routable networking, rather than e.g. weave or flannel overlay networks. The IP I am using is of the default gateway on the pod network.
+However, I don't think this is the reason you are seeing nothing reach your bono pod. I've just run a test setting the public IP to the kubernetes host VM IP, and am seeing the same results as before, with the live tests passing.
+
+My .env file currently says "PUBLIC_IP=" (without an address)
+As above, I'm not really sure what this is, or what you're using it for.
+
+Changed the image pull source to our internal one: Hmm, maybe my images were built wrong? Once my pull requests are merged, I'll do a fresh clone and rebuild.
+I doubt this will help. The clearwater software is running fine, just receiving no data. If you aren't able to get packets routed into the bono pod, we won't be hitting any of the software in there, so images aren't the issue. If you're able to confirm traffic is reaching bono, but being rejected, then we can look at this
+
+Changed the zone in the config map to my own one, 'ajl.svc.cw-k8s.test': Why are you using the non-default zone ajl.svc.cw-k8s.test? Where did that come from? I thought my original Azure issue was because I used a zone which wasn't default.svc.cluster.local. What is that parameter? What does it mean? Why is the default what it is?
+Our rig is configured to allow multiple users running in their own namespaces. This simple stops my deployment clashing with any other.
+
+My test command is:
+rake test[default.svc.cw-k8s.test] PROXY=10.3.1.76 PROXY_PORT=30060 SIGNUP_CODE='secret' ELLIS=10.3.1.76:30080 TESTS="Basic call - mainline"
+
+I'm wrapping secret in single apostrophes. Without the apostrophes the result is the same.
+This looks reasonable. However, if you're still getting the Rest client error, I suspect something strange is happening. Would be very helpful to have full pcap files, possible on the test box, bono, and ellis all at the same time. Can you get these using a command like above?
+You should be able to open them up in Wireshark, and take a deeper look into them; see if you can find anything unusual in the messages between the test box and ellis.
+As I said before, a lot of this seems to be network related, and so even with diagnostics like these I'm going to be less able to help. You may well have better luck, and a faster turn around, digging in to them there, when you'll be able to see what's missing and grab that too. Follow the flow between test box and clearwater, and see when the message start dropping or getting error responses back, and you should be able to track it down a fair bit. If you're not sure how to go about that, ping back :)
+
+Every pod (except etcd) has a shared_config file which says:
+
+# Keys
+signup_key=secret
+turn_workaround=secret
+ellis_api_key=secret
+ellis_cookie_key=secret
+
+
+From: Davis, Matthew [mailto:Matthew.Davis.2 at team.telstra.com]
+Sent: 04 June 2018 09:24
+To: Adam Lindley <Adam.Lindley at metaswitch.com<mailto:Adam.Lindley at metaswitch.com>>; clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: RE: [Project Clearwater] Issues with clearwater-docker homestead and homestead-prov under Kubernetes
+
+I forgot to mention,
+
+When I run ` nc 10.3.1.76 32060 -v` I see nothing (not success, not failure. Just no output and it hangs)
+
+Also, my bono-depl.yaml file says "containerPort: 5060" not 30060. Is that right?
+
+
+
+When I run a tcp dump on the test machine I see dump.txt (attached)
+(I'm not sure how this mailing list will cope with attachments)
+
+The bono logs from that time are attached as bono_log.txt. (I inserted comments with ### to make it clear when the test was running.)
+
+For some reason there is no soft link called /var/log/ellis/ellis_current.txt
+The contents of ellis-err.log is "No handlers could be found for logger "metaswitch.utils"" I'm not sure whether that appeared during the test or not.
+ellis_20180604T070000Z.txt is empty. (No new entries during the test)
+
+I modified the log level on both ellis and bono, and restarted the bono and ellis service respectively, prior to running the test.
+
+Regards,
+Matt
+
+...
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180814/2c4cf270/attachment.html>
+
+From mike at kostersitz.me  Wed Aug 15 14:32:15 2018
+From: mike at kostersitz.me (michael kostersitz)
+Date: Wed, 15 Aug 2018 18:32:15 +0000
+Subject: [Project Clearwater] Repo Signing Key not valid
+Message-ID: <MWHPR08MB3342E637A1E08307161A41B1E23F0@MWHPR08MB3342.namprd08.prod.outlook.com>
+
+Hi I am trying to run through a manual install in Azure right now and apt-get update barfs on the repo key
+
+mike at cw-aio:~$ sudo apt-get update
+Hit:1 http://azure.archive.ubuntu.com/ubuntu bionic InRelease
+Get:2 http://azure.archive.ubuntu.com/ubuntu bionic-updates InRelease [88.7 kB]
+Get:3 http://azure.archive.ubuntu.com/ubuntu bionic-backports InRelease [74.6 kB]
+Ign:4 http://repo.cw-ngv.com/stable binary/ InRelease
+Get:5 http://repo.cw-ngv.com/stable binary/ Release [1219 B]
+Get:6 http://security.ubuntu.com/ubuntu bionic-security InRelease [83.2 kB]
+Get:7 http://repo.cw-ngv.com/stable binary/ Release.gpg [819 B]
+Ign:7 http://repo.cw-ngv.com/stable binary/ Release.gpg
+Reading package lists... Done
+W: GPG error: http://repo.cw-ngv.com/stable binary/ Release: The following signatures were invalid: 92134604DE327DF7FEB72026111DBE4722B97904
+E: The repository 'http://repo.cw-ngv.com/stable binary/ Release' is not signed.
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+
+Any pointers on how to get past this?
+
+Mike
+
+Sent from Mail<https://go.microsoft.com/fwlink/?LinkId=550986> for Windows 10
+[HxS - 18219 - 16.0.10730.20029]
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180815/613a39c7/attachment.html>
+
+From Adam.Lindley at metaswitch.com  Thu Aug 16 04:17:57 2018
+From: Adam.Lindley at metaswitch.com (Adam Lindley)
+Date: Thu, 16 Aug 2018 08:17:57 +0000
+Subject: [Project Clearwater] Issues with clearwater-docker homestead
+ and homestead-prov under Kubernetes
+In-Reply-To: <SYBPR01MB4139443E4014EDFDB1F0D20CC2380@SYBPR01MB4139.ausprd01.prod.outlook.com>
+References: <ME2PR01MB288482217665730202DF424BC2990@ME2PR01MB2884.ausprd01.prod.outlook.com>
+	<MEAPR01MB2885A5ED130E79B45AF062A3C29C0@MEAPR01MB2885.ausprd01.prod.outlook.com>
+	<BN6PR02MB336224794DE7A1D3CE31E8B9F0930@BN6PR02MB3362.namprd02.prod.outlook.com>
+	<ME2PR01MB2884B5A1DECF5FDD45218873C2920@ME2PR01MB2884.ausprd01.prod.outlook.com>
+	<CY1PR0201MB0971F106A46CE86F83CE39B6E2920@CY1PR0201MB0971.namprd02.prod.outlook.com>
+	<ME2PR01MB2884A19B45AC25AB2289E099C2910@ME2PR01MB2884.ausprd01.prod.outlook.com>
+	<CY1PR0201MB09711902974D45A75AFB8096E2910@CY1PR0201MB0971.namprd02.prod.outlook.com>
+	<ME2PR01MB28847583A00768B0F905195CC2900@ME2PR01MB2884.ausprd01.prod.outlook.com>
+	<CY1PR0201MB0971545314ED91FB7F233AC1E2900@CY1PR0201MB0971.namprd02.prod.outlook.com>
+	<ME2PR01MB288450EF460A39FEA9E1D724C2940@ME2PR01MB2884.ausprd01.prod.outlook.com>
+	<BY1PR0201MB09689BB9A1645396B16AE810E2940@BY1PR0201MB0968.namprd02.prod.outlook.com>
+	<ME2PR01MB2884F01278DC1CD5F7831DFEC26A0@ME2PR01MB2884.ausprd01.prod.outlook.com>
+	<CY1PR0201MB09710B4690B23BC5F7E8F786E26A0@CY1PR0201MB0971.namprd02.prod.outlook.com>
+	<ME2PR01MB2884BAB776270D40A8B06347C2690@ME2PR01MB2884.ausprd01.prod.outlook.com>
+	<CY1PR0201MB0971049DFED6D952FFC21DE1E2690@CY1PR0201MB0971.namprd02.prod.outlook.com>
+	<MEAPR01MB2885D6C8E38E9D4E26723D4EC26C0@MEAPR01MB2885.ausprd01.prod.outlook.com>
+	<CY1PR0201MB0971E10C3CE7DB95C3CDBF08E2630@CY1PR0201MB0971.namprd02.prod.outlook.com>
+	<ME2PR01MB2884BEA7F75746D055BB7329C2670@ME2PR01MB2884.ausprd01.prod.outlook.com>
+	<CY1PR0201MB09711B8CCD0D9D5870B6B8BFE2670@CY1PR0201MB0971.namprd02.prod.outlook.com>
+	<SYBPR01MB4139443E4014EDFDB1F0D20CC2380@SYBPR01MB4139.ausprd01.prod.outlook.com>
+Message-ID: <CY1PR0201MB097121C4E3FB7B49317CE55FE23E0@CY1PR0201MB0971.namprd02.prod.outlook.com>
+
+Hey there,
+
+Sounds like you've made great progress! Glad you were able to get past some of the problems you were seeing before.
+If you're making code changes to get it all working on Azure, or just some steps you could add to the documentation, we'd love for you to send that across to us in some PRs
+
+Because you've got a fairly long list of things below, I've interspersed comments and answers as best I can. Hope this helps :)
+
+Cheers,
+Adam
+
+
+From: Davis, Matthew [mailto:Matthew.Davis.2 at team.telstra.com]
+Sent: 14 August 2018 05:41
+To: Adam Lindley <Adam.Lindley at metaswitch.com<mailto:Adam.Lindley at metaswitch.com>>
+Subject: RE: [Project Clearwater] Issues with clearwater-docker homestead and homestead-prov under Kubernetes
+
+Hi Adam,
+I have managed to deploy it on Azure and make a call.
+
+
+  *   It's not fully functional though. After about a minute or two the call always ends without me actively hanging up. One device notices but the other doesn't.
+  *   If I hang up the call on one end, the other end doesn't notice
+  *   There's a big delay in the audio. I'm wondering, is this because the client is configured to use TCP not UDP<https://clearwater.readthedocs.io/en/latest/Making_your_first_call.html#configure-your-client>?
+[AJL] It sounds like some of the traffic may be disrupted. Have you tried running a packet capture on/near one of the devices, and making sure all of the messages are getting through?
+As for the audio delay, I'm not sure what the issue would be here. Project Clearwater doesn't handle media packets, so you would be best served taking a look at a packet capture maybe? It could be routing delays or something like that in your network.
+
+I'm just wondering, how is state stored? I thought it was stored in Cassandra, but Cassandra has no persistent volumes. If I restart the Cassandra pods, do my accounts all get deleted? It seems so. I suspect that this may have caused some of my troubles.
+[AJL] At the moment, the Project Clearwater clearwater-docker project doesn't configure Cassandra with persistent volumes, so yes, if you restart the pods the data will be lost. In other state stores, like Astaire, you'll see we have a pre-stop command that attempts to remove the node safely from the cluster. This is aimed at a single node being stopped and started though, not the whole set. If you're interested in prototyping that, we'd love to see it though :)
+
+
+A summary of the changes I made:
+
+  *   Bono and ellis services need to be load balancers. Why are they NodePorts by default? I don't understand how NodePorts could possibly work in any use case.
+[AJL] I don't think I follow your assertion that they need to be load balancers here? Is this down to some of the networking in Azure? If you can cover a bit more on what you don't understand I may be able to answer more.
+
+  *   I did not enable HTTP Application Routing in Azure
+  *   Instead of configuring bono and ellis as subdomains of a common parent domain, I assigned separate DNS records for each of them. (For some reason Azure won't let you create a subdomain off one of their domains, only individual hosts. Unless you do it through HTTP Application Routing. Odd) I followed the relevant parts of these instructions for  that. https://docs.microsoft.com/en-us/azure/aks/ingress
+[AJL] Interesting, and thanks for the link. Still haven't had time to try Azure myself yet, but I'll remember this for when I do
+
+  *   The dependency issue with homestead-prov turned out to not matter
+  *   The test command that works is: rake test[default.svc.cluster.local] PROXY=bono-aks-cw-01.australiaeast.cloudapp.azure.com SIGNUP_CODE=secret ELLIS=ellis-aks-cw-01.australiaeast.cloudapp.azure.com
+  *   The SIP client I was using (Twinkle, on Ubuntu) is broken. Don't use that
+  *   The SIP client recommended by the docs (Zoiper) is also broken. Audio (in and out) cuts out often. This is a known bug with Zoiper. You need to restart your phone for this to work. Also, Zoiper can't cope with Android/Windows phone's power saving settings. You must have the device unlocked with the app in the foreground.
+  *   I could not get Linphone to work. (It says "authorisation error"), or any other SIP client.
+  *   Just wondering, are there any SIP clients out there which:
+     *   Work
+     *   Are free
+     *   Don't require every permission under the sun
+I couldn't find any.
+[AJL] We haven't done much work with softclients running on android handsets, through Project Clearwater, so sadly I can't help here much, though others on the mailing list might be able to. Might be worth asking in a separate thread, as this is a bit buried here.
+
+  *   The .env file is at the root of the git repo: https://github.com/Metaswitch/clearwater-docker/blob/master/.env . I did not need to change it in the end.
+[AJL] Ah, yep. Found it now. Think it's more for docker based deployments, and it may be providing nothing atm. May look into that...
+
+  *    I've found that in some of my deployments, when I try to manually create a user in the web GUI, I get an error. The POST request payload is '{"status": 503, "message": "Service Unavailable", "reason": "No available numbers", "detail": {}, "error": true}'. I followed these<https://clearwater.readthedocs.io/en/stable/Manual_Install.html?highlight=available%20numbers#provision-telephone-numbers-in-ellis> instructions to fix that. But perhaps that's why I've had some "403: RestClient::Forbidden" failures with rake recently.
+[AJL] Interesting. Would be worth looking at the logs on ellis when this is happening. /var/log/ellis/ initially. If that looks all OK, the issue may be down the line in Homestead-prov. As for the 403s, I think that would likely be a different issue. Potentially something going wrong with the shared secret maybe? Hard to say. If you start by looking into logs on ellis and bono you may be able to track the issue down more/
+
+  *   The Making a Call<https://clearwater.readthedocs.io/en/latest/Making_your_first_call.html#configure-your-client> docs say "STUN/TURN/ICE:". What is that line meant to be? Is that a typo? Is there a line break which shouldn't be there? If I try connecting with Linphone with ICE enabled it says "Authorisation error". If I want to enable STUN/TURN, I need some other fields which aren't specified by the docs.
+[AJL] That looks like a bug in our auto-generation step. The original docs are all in markdown. If you look at https://github.com/Metaswitch/clearwater-readthedocs/blob/master/docs/Making_your_first_call.md#configure-your-client you'll see the proper indentation, which should make it a bit clearer for you.
+
+I'm trying to deploy it on Openstack Kubernetes now.
+The Cassandra pods won't come up, because etcd is failing. It's possibly a network issue.
+[AJL] Sounds possible. Good luck debugging, and let us know how it goes.
+
+Regards,
+
+Matthew Davis
+Telstra Graduate Engineer
+CTO | Cloud SDN NFV
+
+From: Adam Lindley [mailto:Adam.Lindley at metaswitch.com]
+Sent: Tuesday, 5 June 2018 2:53 AM
+To: Davis, Matthew <Matthew.Davis.2 at team.telstra.com<mailto:Matthew.Davis.2 at team.telstra.com>>; clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: RE: [Project Clearwater] Issues with clearwater-docker homestead and homestead-prov under Kubernetes
+
+Hey Matthew,
+
+Quite a lot of questions, so hopefully all the answers are clear. Is the issue still the same Rest Client failure?
+At a high level, a lot of this looks like networking issues on the Kubernetes rig side, not the Clearwater side.  I don't have any experience with Weave, which I believe you said your set up was using for the overlay network, and so my ability to help there may be fairly limited. Definitely keen to get everything up and running, but especially without access to the rig to poke around it may be more difficult.
+
+Also, a couple of thoughts on diags:
+
+  *   At the moment I don't think there's much interesting in the clearwater logs, as there's no network traffic hitting the processes. I suspect at the moment you're just sending over short snippets as the rest of the log is nearly identical, however when we get past network related issues, it will be much more useful to have the full log, or much larger excerpts at least.
+  *   The tcpdump output you've sent over is pretty difficult to get anything from, with it both just being the CLI output and with no context on what the IPs involved are. If it's possible for future runs, can you grab the full packet ouput by having tcpdump write to a file? Something like `tcpdump -i any port xxxx -w dump.pcap` should do nicely. We can then open that up and see the full contents of all the messages. This will make debugging issues much easier
+
+
+So, to answer your questions:
+
+  *   When I run ` nc 10.3.1.76 32060 -v` I see nothing (not success, not failure. Just no output and it hangs)
+Is the `32060` here just a bad copy-paste, as you've got `30060` below? If not, that's the issue.
+If not, then this seems a likely symptom of some network issue.
+On our rig, I see:
+```root at bono-2597123395-s919s:/# nc 10.230.16.1 -v 30060
+Connection to 10.230.16.1 30060 port [tcp/*] succeeded!```
+And my bono-depl says the same, and is working, so don't think that's the problem.
+If you're unable to get traffic to connect to the bono pod/process, we're not going to be able to get any further, so that'll be the thing to look into. You'll need to track the packets here, and see where they're hitting some issues.
+
+
+Changing the PUBLIC IP to match my rig IP.
+Where is this? In bono-deply.yaml? Anywhere else? (should I have it in .env?) Should this include the port number?
+I have only change the depl file here. Nowhere else.
+What is this `.env` file. I have not come across these, and don't think it's got any place here. Can you give some more info on what it is and how/where you're using it?
+
+Which IP should this be? Currently I have it equal to the Kubernetes API IP address.
+When I run ` kubectl config view | grep 10` I see `server: https://10.3.1.76:6443`<https://10.3.1.76:6443%60> so I set PUBLIC_IP to 10.3.1.76.
+What do you see? I think 6443 might be a non-standard port for Kubernetes. Could that be a source of the problem?
+I'm afraid I'm not entirely certain here. This may well be some of the answer a bit later on down the line.
+Looking at the network setup on our host, I have this IP as the IP of interface cbr0. As I mentioned before, our rig is set up with directly routable networking, rather than e.g. weave or flannel overlay networks. The IP I am using is of the default gateway on the pod network.
+However, I don't think this is the reason you are seeing nothing reach your bono pod. I've just run a test setting the public IP to the kubernetes host VM IP, and am seeing the same results as before, with the live tests passing.
+
+My .env file currently says "PUBLIC_IP=" (without an address)
+As above, I'm not really sure what this is, or what you're using it for.
+
+Changed the image pull source to our internal one: Hmm, maybe my images were built wrong? Once my pull requests are merged, I'll do a fresh clone and rebuild.
+I doubt this will help. The clearwater software is running fine, just receiving no data. If you aren't able to get packets routed into the bono pod, we won't be hitting any of the software in there, so images aren't the issue. If you're able to confirm traffic is reaching bono, but being rejected, then we can look at this
+
+Changed the zone in the config map to my own one, 'ajl.svc.cw-k8s.test': Why are you using the non-default zone ajl.svc.cw-k8s.test? Where did that come from? I thought my original Azure issue was because I used a zone which wasn't default.svc.cluster.local. What is that parameter? What does it mean? Why is the default what it is?
+Our rig is configured to allow multiple users running in their own namespaces. This simple stops my deployment clashing with any other.
+
+My test command is:
+rake test[default.svc.cw-k8s.test] PROXY=10.3.1.76 PROXY_PORT=30060 SIGNUP_CODE='secret' ELLIS=10.3.1.76:30080 TESTS="Basic call - mainline"
+
+I'm wrapping secret in single apostrophes. Without the apostrophes the result is the same.
+This looks reasonable. However, if you're still getting the Rest client error, I suspect something strange is happening. Would be very helpful to have full pcap files, possible on the test box, bono, and ellis all at the same time. Can you get these using a command like above?
+You should be able to open them up in Wireshark, and take a deeper look into them; see if you can find anything unusual in the messages between the test box and ellis.
+As I said before, a lot of this seems to be network related, and so even with diagnostics like these I'm going to be less able to help. You may well have better luck, and a faster turn around, digging in to them there, when you'll be able to see what's missing and grab that too. Follow the flow between test box and clearwater, and see when the message start dropping or getting error responses back, and you should be able to track it down a fair bit. If you're not sure how to go about that, ping back :)
+
+Every pod (except etcd) has a shared_config file which says:
+
+# Keys
+signup_key=secret
+turn_workaround=secret
+ellis_api_key=secret
+ellis_cookie_key=secret
+
+
+From: Davis, Matthew [mailto:Matthew.Davis.2 at team.telstra.com]
+Sent: 04 June 2018 09:24
+To: Adam Lindley <Adam.Lindley at metaswitch.com<mailto:Adam.Lindley at metaswitch.com>>; clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: RE: [Project Clearwater] Issues with clearwater-docker homestead and homestead-prov under Kubernetes
+
+I forgot to mention,
+
+When I run ` nc 10.3.1.76 32060 -v` I see nothing (not success, not failure. Just no output and it hangs)
+
+Also, my bono-depl.yaml file says "containerPort: 5060" not 30060. Is that right?
+
+
+
+When I run a tcp dump on the test machine I see dump.txt (attached)
+(I'm not sure how this mailing list will cope with attachments)
+
+The bono logs from that time are attached as bono_log.txt. (I inserted comments with ### to make it clear when the test was running.)
+
+For some reason there is no soft link called /var/log/ellis/ellis_current.txt
+The contents of ellis-err.log is "No handlers could be found for logger "metaswitch.utils"" I'm not sure whether that appeared during the test or not.
+ellis_20180604T070000Z.txt is empty. (No new entries during the test)
+
+I modified the log level on both ellis and bono, and restarted the bono and ellis service respectively, prior to running the test.
+
+Regards,
+Matt
+
+...
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180816/f4b78a5e/attachment.html>
+
+From Anne.Boffey at metaswitch.com  Fri Aug 17 08:38:15 2018
+From: Anne.Boffey at metaswitch.com (Anne Boffey)
+Date: Fri, 17 Aug 2018 12:38:15 +0000
+Subject: [Project Clearwater] Repo Signing Key not valid
+Message-ID: <BLUPR0201MB14897E8F22202E1F7FCDDBBF813D0@BLUPR0201MB1489.namprd02.prod.outlook.com>
+
+Hi Mike,
+
+Project Clearwater doesn't run in Ubuntu 18.04.  You need to use Ubuntu 14.04.
+
+Anne
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180817/f75c6a83/attachment.html>
+
+From nishank.trivedi at gmail.com  Tue Aug 21 04:41:33 2018
+From: nishank.trivedi at gmail.com (Nishank Trivedi)
+Date: Tue, 21 Aug 2018 14:11:33 +0530
+Subject: [Project Clearwater] Multi-VM setup + 408 Request timeout + Request
+ reaches Bono
+In-Reply-To: <CAN4rA95UmnaZYDdthhhRR+BrRkXLumdyiC5ajJstQ93hXRBtjg@mail.gmail.com>
+References: <CAN4rA95UmnaZYDdthhhRR+BrRkXLumdyiC5ajJstQ93hXRBtjg@mail.gmail.com>
+Message-ID: <CAN4rA9761N4-ZDqEth_7v1GSb1go+M7ivkAqt4zQu6kkstGSHw@mail.gmail.com>
+
+Hi Team,
+
+I have been trying to set up multi-VM Clearwater set up for some time now.
+Though the nodes seem to be running ok, the call is failing with 408
+request time out. I can see the 408 time out on bono node.
+
+(Was attaching the bono_current.txt file but got message from cleawaterlist
+as the size too big.)
+
+Below is the additional detailing:
+
+1. Used Cloudify blueprint to setup but had to make DNS entry manually due
+to connectivity issue.
+2. All the nodes can ping each other by <node-name>.clearwater.local ,
+<node-name>.clearwater.opnfv and by ip of course.
+3. All the nodes can also ping the bind node which has dns entries.
+4. The 2 Zoiper clients were able to Register and show ?Registered?
+5. Not 100 % sure on this, but I have seen the error change from 408
+Request timeout to 923 no DNS if outbound proxy and STUN is enabled and set
+on Zoiper.
+
+Thanks,
+Nishank
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180821/f68fa603/attachment.html>
+
+From Anne.Boffey at metaswitch.com  Tue Aug 21 05:04:08 2018
+From: Anne.Boffey at metaswitch.com (Anne Boffey)
+Date: Tue, 21 Aug 2018 09:04:08 +0000
+Subject: [Project Clearwater] Multi-VM setup + 408 Request timeout +
+ Request reaches Bono
+Message-ID: <BLUPR0201MB1489C544A70F8F8BCE29141581310@BLUPR0201MB1489.namprd02.prod.outlook.com>
+
+Hi Nishank,
+
+A 408 Request Timeout could be coming from Clearwater (because its requests upstream are timing out) or from Zoiper (because its requests to Clearwater are timing out).
+
+
+To help tell which is the case, could you turn on debug logging on Bono, by following the steps here:
+
+http://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html#bono and see if the SIP INVITE and 408 appear in Bono's logs.
+
+
+
+Then if you reproduce the problem, and send us the logs from the time of the reproduced problem (the logs are in /var/log/bono/bono*.txt) we can take a look at those and see if that shows where the problem is.
+
+
+
+Thanks,
+
+Anne.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180821/94a586b8/attachment.html>
+
+From nishank.trivedi at gmail.com  Tue Aug 21 06:09:31 2018
+From: nishank.trivedi at gmail.com (Nishank Trivedi)
+Date: Tue, 21 Aug 2018 15:39:31 +0530
+Subject: [Project Clearwater] Multi-VM setup + 408 Request timeout +
+ Request reaches Bono
+In-Reply-To: <BLUPR0201MB1489C544A70F8F8BCE29141581310@BLUPR0201MB1489.namprd02.prod.outlook.com>
+References: <BLUPR0201MB1489C544A70F8F8BCE29141581310@BLUPR0201MB1489.namprd02.prod.outlook.com>
+Message-ID: <CAN4rA97KQd5zYmqXAYUucpdqyBvQ-fdEccjBivLX_SA0xbej7w@mail.gmail.com>
+
+Hi Anne,
+
+Thanks for replying.
+
+Attaching the file for the relevant duration.
+
+Thanks,
+Nishank
+
+On Tue, Aug 21, 2018 at 2:34 PM, Anne Boffey <Anne.Boffey at metaswitch.com>
+wrote:
+
+> Hi Nishank,
+>
+>
+>
+> A 408 Request Timeout could be coming from Clearwater (because its
+> requests upstream are timing out) or from Zoiper (because its requests to
+> Clearwater are timing out).
+>
+>
+>
+> To help tell which is the case, could you turn on debug logging on Bono, by following the steps here:
+>
+> http://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html#bono and see if the SIP INVITE and 408 appear in Bono?s logs.
+>
+>
+>
+> Then if you reproduce the problem, and send us the logs from the time of the reproduced problem (the logs are in /var/log/bono/bono*.txt) we can take a look at those and see if that shows where the problem is.
+>
+>
+>
+> Thanks,
+>
+> Anne.
+>
+>
+>
+> _______________________________________________
+> Clearwater mailing list
+> Clearwater at lists.projectclearwater.org
+> http://lists.projectclearwater.org/mailman/listinfo/clearwater_lists.
+> projectclearwater.org
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180821/814f9f3f/attachment.html>
+-------------- next part --------------
+21-08-2018 10:01:25.608 UTC [7ffb047f0700] Debug baseresolver.cpp:587: 40.40.40.5:5052;transport=TCP has state: WHITE
+21-08-2018 10:01:25.608 UTC [7ffb047f0700] Debug baseresolver.cpp:587: 171.168.1.162:5052;transport=TCP has state: WHITE
+21-08-2018 10:01:25.608 UTC [7ffb047f0700] Debug baseresolver.cpp:883: Added a whitelisted server to targets, now have 1 of 1
+21-08-2018 10:01:25.608 UTC [7ffb047f0700] Debug sip_connection_pool.cpp:154: Successfully resolved icscf.sprout.clearwater.local to IPv4 address
+21-08-2018 10:01:25.608 UTC [7ffb047f0700] Verbose pjsip:  tcpc0x3d1ab38 tcp->base.local_name: 40.40.40.6
+21-08-2018 10:01:25.608 UTC [7ffb047f0700] Verbose pjsip:  tcpc0x3d1ab38 TCP client transport created
+21-08-2018 10:01:25.608 UTC [7ffb047f0700] Verbose pjsip:  tcpc0x3d1ab38 TCP transport 40.40.40.6:5058 is connecting to 171.168.1.162:5052...
+21-08-2018 10:01:25.608 UTC [7ffb047f0700] Debug sip_connection_pool.cpp:224: Created transport tcpc0x3d1ab38 in slot 37 (40.40.40.6:5058 to 171.168.1.162:5052)
+21-08-2018 10:01:25.619 UTC [7ffb027ec700] Verbose pjsip:  tcpc0x3d1ab38 TCP transport 40.40.40.6:5058 is connected to 171.168.1.162:5052
+21-08-2018 10:01:25.619 UTC [7ffb027ec700] Debug sip_connection_pool.cpp:317: Transport tcpc0x3d1ab38 in slot 37 has connected
+21-08-2018 10:01:29.094 UTC [7ffb288ad700] Status alarm.cpp:244: Reraising all alarms with a known state
+21-08-2018 10:01:29.094 UTC [7ffb288ad700] Debug alarm.cpp:303: AlarmReqAgent: queue overflowed
+21-08-2018 10:01:29.094 UTC [7ffb288ad700] Status alarm.cpp:37: sprout issued 1005.1 alarm
+21-08-2018 10:01:29.094 UTC [7ffb288ad700] Debug alarm.cpp:303: AlarmReqAgent: queue overflowed
+21-08-2018 10:01:29.094 UTC [7ffb288ad700] Status alarm.cpp:37: sprout issued 1012.3 alarm
+21-08-2018 10:01:29.094 UTC [7ffb288ad700] Debug alarm.cpp:303: AlarmReqAgent: queue overflowed
+21-08-2018 10:01:29.094 UTC [7ffb288ad700] Status alarm.cpp:37: sprout issued 1013.3 alarm
+21-08-2018 10:01:29.838 UTC [7ffb027ec700] Debug pjsip: sip_endpoint.c Processing incoming message: Request msg INVITE/cseq=1 (rdata0x3f51dc8)
+21-08-2018 10:01:29.838 UTC [7ffb027ec700] Verbose common_sip_processing.cpp:87: RX 986 bytes Request msg INVITE/cseq=1 (rdata0x3f51dc8) from UDP 171.168.1.1:53782:
+--start msg--
+
+INVITE sip:6505550596 at clearwater.opnfv;transport=UDP SIP/2.0
+Via: SIP/2.0/UDP 171.168.1.1:53782;branch=z9hG4bK-d8754z-6510dfc0584fdd17-1---d8754z-
+Max-Forwards: 70
+Route: <sip:scscf.sprout.clearwater.local;transport=TCP;lr;username="6505550288%40clearwater.opnfv";nonce="74d8483d78adebc7";orig>
+Contact: <sip:6505550288 at 171.168.1.1:53782;transport=UDP>
+To: <sip:6505550596 at clearwater.opnfv;transport=UDP>
+From: <sip:6505550288 at clearwater.opnfv;transport=UDP>;tag=d2855c60
+Call-ID: NTAxODE3ZjA5OWJkMzI3ZjFiMzEyMGE1NzA3ZDJmMWU.
+CSeq: 1 INVITE
+Allow: INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, MESSAGE, OPTIONS, INFO, SUBSCRIBE
+Content-Type: application/sdp
+Supported: replaces, norefersub, extended-refer, timer, X-cisco-serviceuri
+User-Agent: Z 3.3.25608 r25552
+Allow-Events: presence, kpml
+Content-Length: 161
+
+v=0
+o=Z 0 0 IN IP4 171.168.1.1
+s=Z
+c=IN IP4 171.168.1.1
+t=0 0
+m=audio 8000 RTP/AVP 8 0 101
+a=rtpmap:101 telephone-event/8000
+a=fmtp:101 0-15
+a=sendrecv
+
+--end msg--
+21-08-2018 10:01:29.838 UTC [7ffb027ec700] Debug pjutils.cpp:1882: Logging SAS Call-ID marker, Call-ID NTAxODE3ZjA5OWJkMzI3ZjFiMzEyMGE1NzA3ZDJmMWU.
+21-08-2018 10:01:29.838 UTC [7ffb027ec700] Debug thread_dispatcher.cpp:568: Received message 0x3f51dc8
+21-08-2018 10:01:29.838 UTC [7ffb027ec700] Debug thread_dispatcher.cpp:585: Admitted request 0x3f51dc8
+21-08-2018 10:01:29.838 UTC [7ffb027ec700] Debug thread_dispatcher.cpp:620: Incoming message 0x3f51dc8 cloned to 0x7ffaf401c888
+21-08-2018 10:01:29.838 UTC [7ffb027ec700] Debug thread_dispatcher.cpp:639: Queuing cloned received message 0x7ffaf401c888 for worker threads with priority 0
+21-08-2018 10:01:29.838 UTC [7ffb027ec700] Debug event_statistic_accumulator.cpp:32: Accumulate 0 for 0x3947a58
+21-08-2018 10:01:29.839 UTC [7ffb027ec700] Debug event_statistic_accumulator.cpp:32: Accumulate 0 for 0x3947ad0
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug utils.cpp:872: Added IOHook 0x7ffb02fecdf0 to stack. There are now 1 hooks
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:181: Worker thread dequeue message 0x7ffaf401c888
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:186: Request latency so far = 216us
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug pjsip: sip_endpoint.c Distributing rdata to modules: Request msg INVITE/cseq=1 (rdata0x7ffaf401c888)
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug uri_classifier.cpp:139: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug uri_classifier.cpp:173: Classified URI sip:6505550596 at clearwater.opnfv;transport=UDP as 4
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug bono.cpp:235: Proxy RX request
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug pjutils.cpp:727: Cloned Request msg INVITE/cseq=1 (rdata0x7ffaf401c888) to tdta0x7ffaf8088500
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug bono.cpp:775: Request received on non-trusted port 5060
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug bono.cpp:1017: Perform access proxy routing for INVITE request
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug uri_classifier.cpp:139: home domain: false, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug uri_classifier.cpp:173: Classified URI sip:scscf.sprout.clearwater.local;transport=TCP;lr;username="6505550288%40clearwater.opnfv";nonce="74d8483d78adebc7";orig as 5
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug pjutils.cpp:537: Found Route header, URI = sip:scscf.sprout.clearwater.local;transport=TCP;lr;username="6505550288%40clearwater.opnfv";nonce="74d8483d78adebc7";orig
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug bono.cpp:1154: Message received on non-trusted port 5060
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug flowtable.cpp:111: Find flow for transport udp0x3cfab70 (1), remote address 171.168.1.1:53782
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug flowtable.cpp:577: Dialog count now 2 for flow sip:6505550288 at clearwater.opnfv
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug flowtable.cpp:125: Found flow record 0x7ffaf806e200
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug bono.cpp:1206: Message received on known client flow
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug bono.cpp:1224: Request has no P-Preferred-Identity headers, so check for default identity on flow
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug pjutils.cpp:489: Adding P-Asserted-Identity header: sip:6505550288 at clearwater.opnfv
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug bono.cpp:1293: Routing initial request from client to upstream Sprout
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug uri_classifier.cpp:139: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug uri_classifier.cpp:173: Classified URI sip:6505550596 at clearwater.opnfv;transport=UDP as 4
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug bono.cpp:924: Request received on authentication flow - check for Service-Route
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug pjutils.cpp:302: Served user from P-Asserted-Identity header
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Verbose bono.cpp:931: Found Service-Route for served user sip:6505550288 at clearwater.opnfv - sip:scscf.sprout.clearwater.local;transport=TCP;lr;orig;username=6505550288%40clearwater.opnfv;nonce=74d8483d78adebc7
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Info bono.cpp:994: Route request to upstream proxy sip:scscf.sprout.clearwater.local;transport=TCP;lr;orig;username=6505550288%40clearwater.opnfv;nonce=74d8483d78adebc7
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug uri_classifier.cpp:139: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug uri_classifier.cpp:173: Classified URI sip:6505550596 at clearwater.opnfv;transport=UDP as 4
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug uri_classifier.cpp:139: home domain: false, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug uri_classifier.cpp:173: Classified URI sip:scscf.sprout.clearwater.local;transport=TCP;lr;username="6505550288%40clearwater.opnfv";nonce="74d8483d78adebc7";orig as 5
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug pjutils.cpp:537: Found Route header, URI = sip:scscf.sprout.clearwater.local;transport=TCP;lr;username="6505550288%40clearwater.opnfv";nonce="74d8483d78adebc7";orig
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug bono.cpp:1415: Add record route header(s)
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug bono.cpp:1420: Message received from client - double Record-Route
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug pjutils.cpp:578: Added Record-Route header, URI = sip:fRmE9KkKHY at bono-6u36f7.clearwater.local:5060;transport=UDP;lr
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug pjutils.cpp:578: Added Record-Route header, URI = sip:40.40.40.6:5058;transport=TCP;lr
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug flowtable.cpp:594: Dialog count now 1 for flow sip:6505550288 at clearwater.opnfv
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug acr.cpp:1797: Create RalfACR for node type P-CSCF with role Originating
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug acr.cpp:24: Created ACR (0x7ffaf815a6f0)
+21-08-2018 10:01:29.839 UTC [7ffb02fed700] Debug acr.cpp:170: Created P-CSCF Ralf ACR
+21-08-2018 10:01:29.840 UTC [7ffb02fed700] Debug uri_classifier.cpp:139: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+21-08-2018 10:01:29.840 UTC [7ffb02fed700] Debug uri_classifier.cpp:173: Classified URI sip:6505550596 at clearwater.opnfv;transport=UDP as 4
+21-08-2018 10:01:29.840 UTC [7ffb02fed700] Debug uri_classifier.cpp:139: home domain: false, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+21-08-2018 10:01:29.840 UTC [7ffb02fed700] Debug uri_classifier.cpp:173: Classified URI sip:scscf.sprout.clearwater.local;transport=TCP;lr;username="6505550288%40clearwater.opnfv";nonce="74d8483d78adebc7";orig as 5
+21-08-2018 10:01:29.840 UTC [7ffb02fed700] Debug pjutils.cpp:537: Found Route header, URI = sip:scscf.sprout.clearwater.local;transport=TCP;lr;username="6505550288%40clearwater.opnfv";nonce="74d8483d78adebc7";orig
+21-08-2018 10:01:29.840 UTC [7ffb02fed700] Debug acr.cpp:210: Set record type for P/S-CSCF
+21-08-2018 10:01:29.840 UTC [7ffb02fed700] Debug acr.cpp:237: Dialog-initiating INVITE => START_RECORD
+21-08-2018 10:01:29.840 UTC [7ffb02fed700] Debug acr.cpp:1518: Stored 0 subscription identifiers
+21-08-2018 10:01:29.840 UTC [7ffb02fed700] Debug bono.cpp:443: Trust mode INBOUND_EDGE_CLIENT(,-rsp,-pch), serving state None
+21-08-2018 10:01:29.840 UTC [7ffb02fed700] Debug pjsip: tsx0x7ffaf8039 Transaction created for Request msg INVITE/cseq=1 (rdata0x7ffaf401c888)
+21-08-2018 10:01:29.840 UTC [7ffb02fed700] Debug bono.cpp:1741: UASTransaction constructor (0x7ffaf8008000)
+21-08-2018 10:01:29.840 UTC [7ffb02fed700] Debug bono.cpp:1742: ACR (0x7ffaf815a6f0)
+21-08-2018 10:01:29.840 UTC [7ffb02fed700] Debug pjsip: tsx0x7ffaf8039 Incoming Request msg INVITE/cseq=1 (rdata0x7ffaf401c888) in state Null
+21-08-2018 10:01:29.840 UTC [7ffb02fed700] Debug pjsip: tsx0x7ffaf8039 State changed from Null to Trying, event=RX_MSG
+21-08-2018 10:01:29.840 UTC [7ffb02fed700] Debug bono.cpp:347: tsx0x7ffaf8039c88 - tu_on_tsx_state UAS, TSX_STATE RX_MSG state=Trying
+21-08-2018 10:01:29.840 UTC [7ffb02fed700] Debug pjsip:       endpoint Response msg 408/INVITE/cseq=1 (tdta0x7ffaf80b6f00) created
+21-08-2018 10:01:29.840 UTC [7ffb02fed700] Debug bono.cpp:2323: Report SAS start marker - trail (d3f0)
+21-08-2018 10:01:29.841 UTC [7ffb02fed700] Debug trustboundary.cpp:44: Add P-Charging headers
+21-08-2018 10:01:29.841 UTC [7ffb02fed700] Debug session_expires_helper.cpp:99: Set session expires to 600
+21-08-2018 10:01:29.841 UTC [7ffb02fed700] Debug bono.cpp:2397: Allocating transaction and data for target 0
+21-08-2018 10:01:29.841 UTC [7ffb02fed700] Debug bono.cpp:2654: Stripping loose routes from proxied message
+21-08-2018 10:01:29.841 UTC [7ffb02fed700] Debug bono.cpp:2661: Stripped a Route header from proxied message
+21-08-2018 10:01:29.841 UTC [7ffb02fed700] Debug bono.cpp:2681: Adding a Route header to sip:scscf.sprout.clearwater.local:0;transport=TCP
+21-08-2018 10:01:29.841 UTC [7ffb02fed700] Debug pjsip: tsx0x7ffaf8003 Transaction created for Request msg INVITE/cseq=1 (tdta0x7ffaf80fa300)
+21-08-2018 10:01:29.841 UTC [7ffb02fed700] Debug bono.cpp:2424: Adding trail identifier 54256 to UAC transaction
+21-08-2018 10:01:29.841 UTC [7ffb02fed700] Debug bono.cpp:2443: Updating request URI and route for target 0
+21-08-2018 10:01:29.841 UTC [7ffb02fed700] Debug bono.cpp:2731: Resolve next hop destination
+21-08-2018 10:01:29.841 UTC [7ffb02fed700] Debug pjutils.cpp:518: Next hop node is encoded in top route header
+21-08-2018 10:01:29.841 UTC [7ffb02fed700] Debug sipresolver.cpp:84: SIPResolver::resolve for name scscf.sprout.clearwater.local, port 0, transport 6, family 2
+21-08-2018 10:01:29.841 UTC [7ffb02fed700] Debug utils.cpp:446: Attempt to parse scscf.sprout.clearwater.local as IP address
+21-08-2018 10:01:29.842 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:250: Searching for DNS record matching _sip._tcp.scscf.sprout.clearwater.local in the static cache
+21-08-2018 10:01:29.842 UTC [7ffb02fed700] Debug static_dns_cache.cpp:303: No static records found matching _sip._tcp.scscf.sprout.clearwater.local
+21-08-2018 10:01:29.842 UTC [7ffb02fed700] Verbose static_dns_cache.cpp:327: No matching CNAME record found in static cache
+21-08-2018 10:01:29.842 UTC [7ffb02fed700] Debug static_dns_cache.cpp:303: No static records found matching _sip._tcp.scscf.sprout.clearwater.local
+21-08-2018 10:01:29.842 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:269: _sip._tcp.scscf.sprout.clearwater.local not found in the static cache
+21-08-2018 10:01:29.842 UTC [7ffb02fed700] Verbose dnscachedresolver.cpp:314: Check cache for _sip._tcp.scscf.sprout.clearwater.local type 33
+21-08-2018 10:01:29.842 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:320: No entry found in cache
+21-08-2018 10:01:29.842 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:323: Create cache entry pending query
+21-08-2018 10:01:29.842 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:371: Create and execute DNS query transaction
+21-08-2018 10:01:29.842 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:1074: Executing DNS lookup for _sip._tcp.scscf.sprout.clearwater.local (type SRV)
+21-08-2018 10:01:29.843 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:384: Wait for query responses
+21-08-2018 10:01:29.845 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:120: Pausing stopwatch due to DNS query
+21-08-2018 10:01:29.845 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:553: Received DNS response for _sip._tcp.scscf.sprout.clearwater.local type SRV - status is 4 (Domain name not found)
+21-08-2018 10:01:29.845 UTC [7ffb02fed700] Warning dnscachedresolver.cpp:698: Failed to retrieve record for _sip._tcp.scscf.sprout.clearwater.local: Domain name not found
+21-08-2018 10:01:29.845 UTC [7ffb02fed700] Debug dnsparser.cpp:65: Parsing DNS message
+000000: ec9c8583 00010000 00010000 045f7369 70045f74 63700573 63736366 06737072    .... .... .... ._si p._t cp.s cscf .spr 
+000020: 6f75740a 636c6561 72776174 6572056c 6f63616c 00002100 01c02300 06000100    out. clea rwat er.l ocal ..!. ..#. .... 
+000040: 00012c00 21026e73 c0230561 646d696e c023780b 5db00000 0e100000 0e100000    ..,. !.ns .#.a dmin .#x. ]... .... .... 
+000060: 0e100000 012c                                                              .... .,                                 
+
+21-08-2018 10:01:29.845 UTC [7ffb02fed700] Debug dnsparser.cpp:70: Parsing header at offset 0x0
+21-08-2018 10:01:29.845 UTC [7ffb02fed700] Debug dnsparser.cpp:73: 1 questions, 0 answers, 1 authorities, 0 additional records
+21-08-2018 10:01:29.845 UTC [7ffb02fed700] Debug dnsparser.cpp:78: Parsing question 1 at offset 0xc
+21-08-2018 10:01:29.845 UTC [7ffb02fed700] Debug dnsparser.cpp:204: Parsed domain name = _sip._tcp.scscf.sprout.clearwater.local, encoded length = 41
+21-08-2018 10:01:29.845 UTC [7ffb02fed700] Debug dnsparser.cpp:96: Parsing NS record 1 at offset 0x39
+21-08-2018 10:01:29.845 UTC [7ffb02fed700] Debug dnsparser.cpp:204: Parsed domain name = clearwater.local, encoded length = 2
+21-08-2018 10:01:29.846 UTC [7ffb02fed700] Debug dnsparser.cpp:257: Resource Record NAME=clearwater.local TYPE=SOA CLASS=IN TTL=300 RDLENGTH=33
+21-08-2018 10:01:29.846 UTC [7ffb02fed700] Debug dnsparser.cpp:117: Answer records
+
+21-08-2018 10:01:29.846 UTC [7ffb02fed700] Debug dnsparser.cpp:118: Authority records
+clearwater.local        300     IN      SOA    
+
+21-08-2018 10:01:29.846 UTC [7ffb02fed700] Debug dnsparser.cpp:119: Additional records
+
+21-08-2018 10:01:29.846 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:829: Adding _sip._tcp.scscf.sprout.clearwater.local to cache expiry list with deletion time of 1534846289
+21-08-2018 10:01:29.846 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:126: Resuming stopwatch after DNS query
+21-08-2018 10:01:29.846 UTC [7ffb027ec700] Info pjsip:      ioq_epoll The transport thread spent 6799 microseconds processing an event.
+21-08-2018 10:01:29.846 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:392: Received all query responses
+21-08-2018 10:01:29.846 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:424: Pulling 0 records from cache for _sip._tcp.scscf.sprout.clearwater.local SRV
+21-08-2018 10:01:29.846 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:287: Found result for query _sip._tcp.scscf.sprout.clearwater.local (canonical domain: _sip._tcp.scscf.sprout.clearwater.local)
+21-08-2018 10:01:29.846 UTC [7ffb02fed700] Debug sipresolver.cpp:302: Perform A/AAAA record lookup only, name = scscf.sprout.clearwater.local
+21-08-2018 10:01:29.846 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:250: Searching for DNS record matching scscf.sprout.clearwater.local in the static cache
+21-08-2018 10:01:29.846 UTC [7ffb02fed700] Debug static_dns_cache.cpp:303: No static records found matching scscf.sprout.clearwater.local
+21-08-2018 10:01:29.846 UTC [7ffb02fed700] Verbose static_dns_cache.cpp:327: No matching CNAME record found in static cache
+21-08-2018 10:01:29.846 UTC [7ffb02fed700] Debug static_dns_cache.cpp:303: No static records found matching scscf.sprout.clearwater.local
+21-08-2018 10:01:29.847 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:269: scscf.sprout.clearwater.local not found in the static cache
+21-08-2018 10:01:29.847 UTC [7ffb02fed700] Verbose dnscachedresolver.cpp:314: Check cache for scscf.sprout.clearwater.local type 1
+21-08-2018 10:01:29.847 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:320: No entry found in cache
+21-08-2018 10:01:29.847 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:323: Create cache entry pending query
+21-08-2018 10:01:29.847 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:371: Create and execute DNS query transaction
+21-08-2018 10:01:29.847 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:1074: Executing DNS lookup for scscf.sprout.clearwater.local (type A)
+21-08-2018 10:01:29.847 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:384: Wait for query responses
+21-08-2018 10:01:29.847 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:120: Pausing stopwatch due to DNS query
+21-08-2018 10:01:29.847 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:553: Received DNS response for scscf.sprout.clearwater.local type A - status is 0 (Successful completion)
+21-08-2018 10:01:29.847 UTC [7ffb02fed700] Debug dnsparser.cpp:65: Parsing DNS message
+000000: 497a8580 00010002 00010002 05736373 63660673 70726f75 740a636c 65617277    Iz.. .... .... .scs cf.s prou t.cl earw 
+000020: 61746572 056c6f63 616c0000 010001c0 0c000100 01000001 2c000428 282805c0    ater .loc al.. .... .... .... ,..( ((.. 
+000040: 0c000100 01000001 2c0004ab a801a2c0 19000200 0100000e 10000502 6e73c019    .... .... ,... .... .... .... .... ns.. 
+000060: c05b0001 00010000 0e100004 aba801ae c05b0001 00010000 0e100004 2828280d    .[.. .... .... .... .[.. .... .... (((. 
+
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:70: Parsing header at offset 0x0
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:73: 1 questions, 2 answers, 1 authorities, 2 additional records
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:78: Parsing question 1 at offset 0xc
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:204: Parsed domain name = scscf.sprout.clearwater.local, encoded length = 31
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:87: Parsing answer 1 at offset 0x2f
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:204: Parsed domain name = scscf.sprout.clearwater.local, encoded length = 2
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:257: Resource Record NAME=scscf.sprout.clearwater.local TYPE=A CLASS=IN TTL=300 RDLENGTH=4
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:262: Parse A record RDATA
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:87: Parsing answer 2 at offset 0x3f
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:204: Parsed domain name = scscf.sprout.clearwater.local, encoded length = 2
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:257: Resource Record NAME=scscf.sprout.clearwater.local TYPE=A CLASS=IN TTL=300 RDLENGTH=4
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:262: Parse A record RDATA
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:96: Parsing NS record 1 at offset 0x4f
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:204: Parsed domain name = clearwater.local, encoded length = 2
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:257: Resource Record NAME=clearwater.local TYPE=NS CLASS=IN TTL=3600 RDLENGTH=5
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:105: Parsing additional record 1 at offset 0x60
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:204: Parsed domain name = ns.clearwater.local, encoded length = 2
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:257: Resource Record NAME=ns.clearwater.local TYPE=A CLASS=IN TTL=3600 RDLENGTH=4
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:262: Parse A record RDATA
+21-08-2018 10:01:29.848 UTC [7ffb02fed700] Debug dnsparser.cpp:105: Parsing additional record 2 at offset 0x70
+21-08-2018 10:01:29.849 UTC [7ffb02fed700] Debug dnsparser.cpp:204: Parsed domain name = ns.clearwater.local, encoded length = 2
+21-08-2018 10:01:29.849 UTC [7ffb02fed700] Debug dnsparser.cpp:257: Resource Record NAME=ns.clearwater.local TYPE=A CLASS=IN TTL=3600 RDLENGTH=4
+21-08-2018 10:01:29.849 UTC [7ffb02fed700] Debug dnsparser.cpp:262: Parse A record RDATA
+21-08-2018 10:01:29.849 UTC [7ffb02fed700] Debug dnsparser.cpp:117: Answer records
+scscf.sprout.clearwater.local 300     IN      A       40.40.40.5
+scscf.sprout.clearwater.local 300     IN      A       171.168.1.162
+
+21-08-2018 10:01:29.849 UTC [7ffb02fed700] Debug dnsparser.cpp:118: Authority records
+clearwater.local        3600    IN      NS     
+
+21-08-2018 10:01:29.849 UTC [7ffb02fed700] Debug dnsparser.cpp:119: Additional records
+ns.clearwater.local     3600    IN      A       171.168.1.174
+ns.clearwater.local     3600    IN      A       40.40.40.13
+
+21-08-2018 10:01:29.849 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:586: DNS response for scscf.sprout.clearwater.local - response contains 2 answers
+21-08-2018 10:01:29.849 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:885: Adding record to cache entry, TTL=300, expiry=1534845989
+21-08-2018 10:01:29.849 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:892: Update cache entry expiry to 1534845989
+21-08-2018 10:01:29.849 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:885: Adding record to cache entry, TTL=300, expiry=1534845989
+21-08-2018 10:01:29.849 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:885: Adding record to cache entry, TTL=3600, expiry=1534849289
+21-08-2018 10:01:29.849 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:892: Update cache entry expiry to 1534849289
+21-08-2018 10:01:29.849 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:885: Adding record to cache entry, TTL=3600, expiry=1534849289
+21-08-2018 10:01:29.849 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:829: Adding ns.clearwater.local to cache expiry list with deletion time of 1534849589
+21-08-2018 10:01:29.849 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:829: Adding scscf.sprout.clearwater.local to cache expiry list with deletion time of 1534846289
+21-08-2018 10:01:29.849 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:126: Resuming stopwatch after DNS query
+21-08-2018 10:01:29.849 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:392: Received all query responses
+21-08-2018 10:01:29.849 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:424: Pulling 2 records from cache for scscf.sprout.clearwater.local A
+21-08-2018 10:01:29.850 UTC [7ffb02fed700] Debug dnscachedresolver.cpp:287: Found result for query scscf.sprout.clearwater.local (canonical domain: scscf.sprout.clearwater.local)
+21-08-2018 10:01:29.850 UTC [7ffb02fed700] Debug baseresolver.cpp:192: Found 2 A/AAAA records, creating iterator
+21-08-2018 10:01:29.850 UTC [7ffb02fed700] Info pjutils.cpp:1001: Resolved destination URI sip:scscf.sprout.clearwater.local;transport=TCP;lr;orig;username=6505550288%40clearwater.opnfv;nonce=74d8483d78adebc7
+21-08-2018 10:01:29.850 UTC [7ffb02fed700] Debug baseresolver.cpp:812: Attempting to get 5 targets for host:scscf.sprout.clearwater.local. allowed_host_state = 3
+21-08-2018 10:01:29.850 UTC [7ffb02fed700] Debug baseresolver.cpp:575: 40.40.40.5:5060;transport=TCP graylist time elapsed
+21-08-2018 10:01:29.850 UTC [7ffb02fed700] Debug baseresolver.cpp:587: 40.40.40.5:5060;transport=TCP has state: WHITE
+21-08-2018 10:01:29.850 UTC [7ffb02fed700] Debug baseresolver.cpp:575: 171.168.1.162:5060;transport=TCP graylist time elapsed
+21-08-2018 10:01:29.850 UTC [7ffb02fed700] Debug baseresolver.cpp:587: 171.168.1.162:5060;transport=TCP has state: WHITE
+21-08-2018 10:01:29.850 UTC [7ffb02fed700] Debug baseresolver.cpp:587: 40.40.40.5:5060;transport=TCP has state: WHITE
+21-08-2018 10:01:29.850 UTC [7ffb02fed700] Debug baseresolver.cpp:883: Added a whitelisted server to targets, now have 1 of 5
+21-08-2018 10:01:29.850 UTC [7ffb02fed700] Debug baseresolver.cpp:587: 171.168.1.162:5060;transport=TCP has state: WHITE
+21-08-2018 10:01:29.850 UTC [7ffb02fed700] Debug baseresolver.cpp:883: Added a whitelisted server to targets, now have 2 of 5
+21-08-2018 10:01:29.850 UTC [7ffb02fed700] Debug bono.cpp:2769: Sending request for sip:6505550596 at clearwater.opnfv;transport=UDP
+21-08-2018 10:01:29.850 UTC [7ffb02fed700] Debug pjsip: tsx0x7ffaf8003 Sending Request msg INVITE/cseq=1 (tdta0x7ffaf80fa300) in state Null
+21-08-2018 10:01:29.850 UTC [7ffb02fed700] Debug pjsip:       endpoint Request msg INVITE/cseq=1 (tdta0x7ffaf80fa300): skipping target resolution because address is already set
+21-08-2018 10:01:29.851 UTC [7ffb02fed700] Verbose pjsip: tcpc0x7ffaf811 tcp->base.local_name: 40.40.40.6
+21-08-2018 10:01:29.851 UTC [7ffb02fed700] Verbose pjsip: tcpc0x7ffaf811 TCP client transport created
+21-08-2018 10:01:29.851 UTC [7ffb02fed700] Verbose pjsip: tcpc0x7ffaf811 TCP transport 40.40.40.6:5058 is connecting to 40.40.40.5:5060...
+21-08-2018 10:01:29.851 UTC [7ffb02fed700] Verbose common_sip_processing.cpp:103: TX 1281 bytes Request msg INVITE/cseq=1 (tdta0x7ffaf80fa300) to TCP 40.40.40.5:5060:
+--start msg--
+
+INVITE sip:6505550596 at clearwater.opnfv;transport=UDP SIP/2.0
+Record-Route: <sip:40.40.40.6:5058;transport=TCP;lr>
+Record-Route: <sip:fRmE9KkKHY at bono-6u36f7.clearwater.local:5060;transport=UDP;lr>
+Via: SIP/2.0/TCP 40.40.40.6:5058;rport;branch=z9hG4bKPj0Tebo.vd80-5akZcKfLDUvUHb5WUkvGb
+Via: SIP/2.0/UDP 171.168.1.1:53782;received=171.168.1.1;branch=z9hG4bK-d8754z-6510dfc0584fdd17-1---d8754z-
+Max-Forwards: 70
+Contact: <sip:6505550288 at 171.168.1.1:53782;transport=UDP>
+To: <sip:6505550596 at clearwater.opnfv>
+From: <sip:6505550288 at clearwater.opnfv>;tag=d2855c60
+Call-ID: NTAxODE3ZjA5OWJkMzI3ZjFiMzEyMGE1NzA3ZDJmMWU.
+CSeq: 1 INVITE
+Allow: INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, MESSAGE, OPTIONS, INFO, SUBSCRIBE
+Supported: replaces, norefersub, extended-refer, timer, X-cisco-serviceuri
+User-Agent: Z 3.3.25608 r25552
+Allow-Events: presence, kpml
+P-Asserted-Identity: <sip:6505550288 at clearwater.opnfv>
+Session-Expires: 600
+Route: <sip:scscf.sprout.clearwater.local;transport=TCP;lr;orig;username=6505550288%40clearwater.opnfv;nonce=74d8483d78adebc7>
+Content-Type: application/sdp
+Content-Length:   161
+
+v=0
+o=Z 0 0 IN IP4 171.168.1.1
+s=Z
+c=IN IP4 171.168.1.1
+t=0 0
+m=audio 8000 RTP/AVP 8 0 101
+a=rtpmap:101 telephone-event/8000
+a=fmtp:101 0-15
+a=sendrecv
+
+--end msg--
+21-08-2018 10:01:29.851 UTC [7ffb02fed700] Debug pjsip: tsx0x7ffaf8003 State changed from Null to Calling, event=TX_MSG
+21-08-2018 10:01:29.851 UTC [7ffb02fed700] Debug bono.cpp:347: tsx0x7ffaf8003fd8 - tu_on_tsx_state UAC, TSX_STATE TX_MSG state=Calling
+21-08-2018 10:01:29.851 UTC [7ffb02fed700] Debug bono.cpp:2869: tsx0x7ffaf8003fd8 - uac_data = 0x7ffaf809f670, uas_data = 0x7ffaf8008000
+21-08-2018 10:01:29.851 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:273: Worker thread completed processing message 0x7ffaf401c888
+21-08-2018 10:01:29.851 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:287: Request latency = 9347us
+21-08-2018 10:01:29.852 UTC [7ffb02fed700] Debug event_statistic_accumulator.cpp:32: Accumulate 9347 for 0x3943b08
+21-08-2018 10:01:29.852 UTC [7ffb02fed700] Debug event_statistic_accumulator.cpp:32: Accumulate 9347 for 0x3943b50
+21-08-2018 10:01:29.852 UTC [7ffb02fed700] Debug load_monitor.cpp:341: Not recalculating rate as we haven't processed 20 requests yet (only 3).
+21-08-2018 10:01:29.852 UTC [7ffb02fed700] Debug utils.cpp:878: Removed IOHook 0x7ffb02fecdf0 to stack. There are now 0 hooks
+21-08-2018 10:01:29.852 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:161: Attempting to process queue element
+21-08-2018 10:01:29.856 UTC [7ffb027ec700] Info pjsip: tcpc0x7ffaf811 TCP connect() error: Connection refused [code=120111]
+21-08-2018 10:01:29.857 UTC [7ffb027ec700] Info pjsip: tcpc0x7ffaf811 Unable to connect to 40.40.40.5:5060
+21-08-2018 10:01:29.857 UTC [7ffb027ec700] Info pjsip: tsx0x7ffaf8003 Failed to send Request msg INVITE/cseq=1 (tdta0x7ffaf80fa300)! err=120111 (Connection refused)
+21-08-2018 10:01:29.857 UTC [7ffb027ec700] Debug pjsip: tsx0x7ffaf8003 State changed from Calling to Terminated, event=TRANSPORT_ERROR
+21-08-2018 10:01:29.857 UTC [7ffb027ec700] Debug bono.cpp:347: tsx0x7ffaf8003fd8 - tu_on_tsx_state UAC, TSX_STATE TRANSPORT_ERROR state=Terminated
+21-08-2018 10:01:29.857 UTC [7ffb027ec700] Debug bono.cpp:2869: tsx0x7ffaf8003fd8 - uac_data = 0x7ffaf809f670, uas_data = 0x7ffaf8008000
+21-08-2018 10:01:29.857 UTC [7ffb027ec700] Debug bono.cpp:2888: Failed to connected to server, so add to blacklist
+21-08-2018 10:01:29.857 UTC [7ffb027ec700] Debug baseresolver.cpp:226: Add 40.40.40.5:5060;transport=TCP to blacklist for 30 seconds, graylist for 0 seconds
+21-08-2018 10:01:29.857 UTC [7ffb027ec700] Debug bono.cpp:2980: Attempt to retry request to alternate server
+21-08-2018 10:01:29.857 UTC [7ffb027ec700] Debug pjsip: tsx0x7ffaf4001 Transaction created for Request msg INVITE/cseq=1 (tdta0x7ffaf80fa300)
+21-08-2018 10:01:29.857 UTC [7ffb027ec700] Debug bono.cpp:2992: Created transaction for retry, so send request
+21-08-2018 10:01:29.857 UTC [7ffb027ec700] Debug pjsip: tsx0x7ffaf4001 Sending Request msg INVITE/cseq=1 (tdta0x7ffaf80fa300) in state Null
+21-08-2018 10:01:29.857 UTC [7ffb027ec700] Debug pjsip:       endpoint Request msg INVITE/cseq=1 (tdta0x7ffaf80fa300): skipping target resolution because address is already set
+21-08-2018 10:01:29.857 UTC [7ffb027ec700] Verbose pjsip: tcpc0x7ffaf401 tcp->base.local_name: 40.40.40.6
+21-08-2018 10:01:29.857 UTC [7ffb027ec700] Verbose pjsip: tcpc0x7ffaf401 TCP client transport created
+21-08-2018 10:01:29.858 UTC [7ffb027ec700] Verbose pjsip: tcpc0x7ffaf401 TCP transport 40.40.40.6:5058 is connecting to 171.168.1.162:5060...
+21-08-2018 10:01:29.858 UTC [7ffb027ec700] Verbose common_sip_processing.cpp:103: TX 1281 bytes Request msg INVITE/cseq=1 (tdta0x7ffaf80fa300) to TCP 171.168.1.162:5060:
+--start msg--
+
+INVITE sip:6505550596 at clearwater.opnfv;transport=UDP SIP/2.0
+Record-Route: <sip:40.40.40.6:5058;transport=TCP;lr>
+Record-Route: <sip:fRmE9KkKHY at bono-6u36f7.clearwater.local:5060;transport=UDP;lr>
+Via: SIP/2.0/TCP 40.40.40.6:5058;rport;branch=z9hG4bKPj34GGiocxLYZJgWuwJQSoqXPTuYRE3ySJ
+Via: SIP/2.0/UDP 171.168.1.1:53782;received=171.168.1.1;branch=z9hG4bK-d8754z-6510dfc0584fdd17-1---d8754z-
+Max-Forwards: 70
+Contact: <sip:6505550288 at 171.168.1.1:53782;transport=UDP>
+To: <sip:6505550596 at clearwater.opnfv>
+From: <sip:6505550288 at clearwater.opnfv>;tag=d2855c60
+Call-ID: NTAxODE3ZjA5OWJkMzI3ZjFiMzEyMGE1NzA3ZDJmMWU.
+CSeq: 1 INVITE
+Allow: INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, MESSAGE, OPTIONS, INFO, SUBSCRIBE
+Supported: replaces, norefersub, extended-refer, timer, X-cisco-serviceuri
+User-Agent: Z 3.3.25608 r25552
+Allow-Events: presence, kpml
+P-Asserted-Identity: <sip:6505550288 at clearwater.opnfv>
+Session-Expires: 600
+Route: <sip:scscf.sprout.clearwater.local;transport=TCP;lr;orig;username=6505550288%40clearwater.opnfv;nonce=74d8483d78adebc7>
+Content-Type: application/sdp
+Content-Length:   161
+
+v=0
+o=Z 0 0 IN IP4 171.168.1.1
+s=Z
+c=IN IP4 171.168.1.1
+t=0 0
+m=audio 8000 RTP/AVP 8 0 101
+a=rtpmap:101 telephone-event/8000
+a=fmtp:101 0-15
+a=sendrecv
+
+--end msg--
+21-08-2018 10:01:29.858 UTC [7ffb027ec700] Debug pjsip: tsx0x7ffaf4001 State changed from Null to Calling, event=TX_MSG
+21-08-2018 10:01:29.858 UTC [7ffb027ec700] Debug bono.cpp:347: tsx0x7ffaf40019c8 - tu_on_tsx_state UAC, TSX_STATE TX_MSG state=Calling
+21-08-2018 10:01:29.858 UTC [7ffb027ec700] Debug bono.cpp:2869: tsx0x7ffaf40019c8 - uac_data = 0x7ffaf809f670, uas_data = 0x7ffaf8008000
+21-08-2018 10:01:29.858 UTC [7ffb027ec700] Debug pjsip: tcpc0x7ffaf811 TCP send() error, sent=-120111
+21-08-2018 10:01:29.858 UTC [7ffb027ec700] Debug pjsip: tsx0x7ffaf8003 Timeout timer event
+21-08-2018 10:01:29.858 UTC [7ffb027ec700] Debug pjsip: tsx0x7ffaf8003 State changed from Terminated to Destroyed, event=TIMER
+21-08-2018 10:01:29.858 UTC [7ffb027ec700] Debug bono.cpp:347: tsx0x7ffaf8003fd8 - tu_on_tsx_state UAC, TSX_STATE TIMER state=Destroyed
+21-08-2018 10:01:29.859 UTC [7ffb027ec700] Verbose pjsip: tcpc0x7ffaf811 TCP transport destroyed with reason 120111: Connection refused
+21-08-2018 10:01:29.859 UTC [7ffb027ec700] Info pjsip: tcpc0x7ffaf401 TCP connect() error: Connection refused [code=120111]
+21-08-2018 10:01:29.859 UTC [7ffb027ec700] Info pjsip: tcpc0x7ffaf401 Unable to connect to 171.168.1.162:5060
+21-08-2018 10:01:29.859 UTC [7ffb027ec700] Info pjsip: tsx0x7ffaf4001 Failed to send Request msg INVITE/cseq=1 (tdta0x7ffaf80fa300)! err=120111 (Connection refused)
+21-08-2018 10:01:29.859 UTC [7ffb027ec700] Debug pjsip: tsx0x7ffaf4001 State changed from Calling to Terminated, event=TRANSPORT_ERROR
+21-08-2018 10:01:29.859 UTC [7ffb027ec700] Debug bono.cpp:347: tsx0x7ffaf40019c8 - tu_on_tsx_state UAC, TSX_STATE TRANSPORT_ERROR state=Terminated
+21-08-2018 10:01:29.859 UTC [7ffb027ec700] Debug bono.cpp:2869: tsx0x7ffaf40019c8 - uac_data = 0x7ffaf809f670, uas_data = 0x7ffaf8008000
+21-08-2018 10:01:29.859 UTC [7ffb027ec700] Debug bono.cpp:2888: Failed to connected to server, so add to blacklist
+21-08-2018 10:01:29.859 UTC [7ffb027ec700] Debug baseresolver.cpp:226: Add 171.168.1.162:5060;transport=TCP to blacklist for 30 seconds, graylist for 0 seconds
+21-08-2018 10:01:29.859 UTC [7ffb027ec700] Debug bono.cpp:2930: tsx0x7ffaf40019c8 - UAC tsx terminated while still connected to UAS tsx
+21-08-2018 10:01:29.859 UTC [7ffb027ec700] Debug bono.cpp:2933: Timeout or transport error
+21-08-2018 10:01:29.859 UTC [7ffb027ec700] Debug bono.cpp:2149: tsx0x7ffaf40019c8 - Not forked request
+21-08-2018 10:01:29.859 UTC [7ffb027ec700] Debug acr.cpp:581: Failed to start session, change record type to EVENT_RECORD
+21-08-2018 10:01:29.859 UTC [7ffb027ec700] Debug pjsip: tsx0x7ffaf8039 Sending Response msg 408/INVITE/cseq=1 (tdta0x7ffaf80b6f00) in state Trying
+21-08-2018 10:01:29.859 UTC [7ffb027ec700] Debug pjsip:  sip_resolve.c Target '171.168.1.1:53782' type=UDP resolved to '171.168.1.1:53782' type=UDP (UDP transport)
+21-08-2018 10:01:29.859 UTC [7ffb027ec700] Verbose common_sip_processing.cpp:103: TX 371 bytes Response msg 408/INVITE/cseq=1 (tdta0x7ffaf80b6f00) to UDP 171.168.1.1:53782:
+--start msg--
+
+SIP/2.0 408 Request Timeout
+Via: SIP/2.0/UDP 171.168.1.1:53782;received=171.168.1.1;branch=z9hG4bK-d8754z-6510dfc0584fdd17-1---d8754z-
+Call-ID: NTAxODE3ZjA5OWJkMzI3ZjFiMzEyMGE1NzA3ZDJmMWU.
+From: <sip:6505550288 at clearwater.opnfv>;tag=d2855c60
+To: <sip:6505550596 at clearwater.opnfv>;tag=z9hG4bK-d8754z-6510dfc0584fdd17-1---d8754z-
+CSeq: 1 INVITE
+Content-Length:  0
+
+
+--end msg--
+21-08-2018 10:01:29.860 UTC [7ffb027ec700] Debug pjsip: tsx0x7ffaf8039 State changed from Trying to Completed, event=TX_MSG
+21-08-2018 10:01:29.860 UTC [7ffb027ec700] Debug bono.cpp:347: tsx0x7ffaf8039c88 - tu_on_tsx_state UAS, TSX_STATE TX_MSG state=Completed
+21-08-2018 10:01:29.860 UTC [7ffb027ec700] Debug bono.cpp:775: Request received on non-trusted port 5060
+21-08-2018 10:01:29.860 UTC [7ffb027ec700] Debug bono.cpp:2332: Report SAS end marker - trail (d3f0)
+21-08-2018 10:01:29.860 UTC [7ffb027ec700] Debug bono.cpp:2156: tsx0x7ffaf40019c8 - Disconnect UAS tsx from UAC tsx
+21-08-2018 10:01:29.860 UTC [7ffb027ec700] Debug bono.cpp:2534: Dissociate UAC transaction 0x7ffaf809f670 (0)
+21-08-2018 10:01:29.860 UTC [7ffb027ec700] Debug pjsip: tcpc0x7ffaf401 TCP send() error, sent=-120111
+21-08-2018 10:01:29.860 UTC [7ffb027ec700] Debug pjsip: tsx0x7ffaf4001 Timeout timer event
+21-08-2018 10:01:29.860 UTC [7ffb027ec700] Debug pjsip: tsx0x7ffaf4001 State changed from Terminated to Destroyed, event=TIMER
+21-08-2018 10:01:29.860 UTC [7ffb027ec700] Debug bono.cpp:347: tsx0x7ffaf40019c8 - tu_on_tsx_state UAC, TSX_STATE TIMER state=Destroyed
+21-08-2018 10:01:29.860 UTC [7ffb027ec700] Debug bono.cpp:2869: tsx0x7ffaf40019c8 - uac_data = 0x7ffaf809f670, uas_data = (nil)
+21-08-2018 10:01:29.861 UTC [7ffb027ec700] Debug bono.cpp:2956: tsx0x7ffaf40019c8 - UAC tsx destroyed
+21-08-2018 10:01:29.861 UTC [7ffb027ec700] Debug pjsip: tdta0x7ffaf80f Destroying txdata Request msg INVITE/cseq=1 (tdta0x7ffaf80fa300)
+21-08-2018 10:01:29.861 UTC [7ffb027ec700] Verbose pjsip: tcpc0x7ffaf401 TCP transport destroyed with reason 120111: Connection refused
+21-08-2018 10:01:29.861 UTC [7ffb027ec700] Debug pjsip: sip_endpoint.c Processing incoming message: Request msg ACK/cseq=1 (rdata0x3f63788)
+21-08-2018 10:01:29.861 UTC [7ffb027ec700] Verbose common_sip_processing.cpp:87: RX 540 bytes Request msg ACK/cseq=1 (rdata0x3f63788) from UDP 171.168.1.1:53782:
+--start msg--
+
+ACK sip:6505550596 at clearwater.opnfv;transport=UDP SIP/2.0
+Via: SIP/2.0/UDP 171.168.1.1:53782;branch=z9hG4bK-d8754z-6510dfc0584fdd17-1---d8754z-
+Max-Forwards: 70
+Route: <sip:scscf.sprout.clearwater.local;transport=TCP;lr;username="6505550288%40clearwater.opnfv";nonce="74d8483d78adebc7";orig>
+To: <sip:6505550596 at clearwater.opnfv>;tag=z9hG4bK-d8754z-6510dfc0584fdd17-1---d8754z-
+From: <sip:6505550288 at clearwater.opnfv;transport=UDP>;tag=d2855c60
+Call-ID: NTAxODE3ZjA5OWJkMzI3ZjFiMzEyMGE1NzA3ZDJmMWU.
+CSeq: 1 ACK
+Content-Length: 0
+
+
+--end msg--
+21-08-2018 10:01:29.861 UTC [7ffb027ec700] Debug thread_dispatcher.cpp:568: Received message 0x3f63788
+21-08-2018 10:01:29.861 UTC [7ffb027ec700] Debug thread_dispatcher.cpp:585: Admitted request 0x3f63788
+21-08-2018 10:01:29.861 UTC [7ffb027ec700] Debug thread_dispatcher.cpp:620: Incoming message 0x3f63788 cloned to 0x7ffaf401c888
+21-08-2018 10:01:29.861 UTC [7ffb027ec700] Debug thread_dispatcher.cpp:639: Queuing cloned received message 0x7ffaf401c888 for worker threads with priority 0
+21-08-2018 10:01:29.861 UTC [7ffb027ec700] Debug event_statistic_accumulator.cpp:32: Accumulate 0 for 0x3947a58
+21-08-2018 10:01:29.861 UTC [7ffb027ec700] Debug event_statistic_accumulator.cpp:32: Accumulate 0 for 0x3947ad0
+21-08-2018 10:01:29.861 UTC [7ffb02fed700] Debug utils.cpp:872: Added IOHook 0x7ffb02fecdf0 to stack. There are now 1 hooks
+21-08-2018 10:01:29.861 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:181: Worker thread dequeue message 0x7ffaf401c888
+21-08-2018 10:01:29.861 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:186: Request latency so far = 329us
+21-08-2018 10:01:29.861 UTC [7ffb02fed700] Debug pjsip: sip_endpoint.c Distributing rdata to modules: Request msg ACK/cseq=1 (rdata0x7ffaf401c888)
+21-08-2018 10:01:29.861 UTC [7ffb02fed700] Debug uri_classifier.cpp:139: home domain: true, local_to_node: false, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+21-08-2018 10:01:29.862 UTC [7ffb02fed700] Debug uri_classifier.cpp:173: Classified URI sip:6505550596 at clearwater.opnfv;transport=UDP as 4
+21-08-2018 10:01:29.862 UTC [7ffb02fed700] Debug pjsip: tsx0x7ffaf8039 Incoming Request msg ACK/cseq=1 (rdata0x7ffaf401c888) in state Completed
+21-08-2018 10:01:29.862 UTC [7ffb02fed700] Debug pjsip: tsx0x7ffaf8039 State changed from Completed to Confirmed, event=RX_MSG
+21-08-2018 10:01:29.862 UTC [7ffb02fed700] Debug bono.cpp:347: tsx0x7ffaf8039c88 - tu_on_tsx_state UAS, TSX_STATE RX_MSG state=Confirmed
+21-08-2018 10:01:29.862 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:273: Worker thread completed processing message 0x7ffaf401c888
+21-08-2018 10:01:29.862 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:287: Request latency = 729us
+21-08-2018 10:01:29.862 UTC [7ffb02fed700] Debug event_statistic_accumulator.cpp:32: Accumulate 729 for 0x3943b08
+21-08-2018 10:01:29.862 UTC [7ffb02fed700] Debug event_statistic_accumulator.cpp:32: Accumulate 729 for 0x3943b50
+21-08-2018 10:01:29.862 UTC [7ffb02fed700] Debug load_monitor.cpp:341: Not recalculating rate as we haven't processed 20 requests yet (only 4).
+21-08-2018 10:01:29.862 UTC [7ffb02fed700] Debug utils.cpp:878: Removed IOHook 0x7ffb02fecdf0 to stack. There are now 0 hooks
+21-08-2018 10:01:29.862 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:161: Attempting to process queue element
+21-08-2018 10:01:29.872 UTC [7ffb027ec700] Debug pjsip: tsx0x7ffaf8039 Timeout timer event
+21-08-2018 10:01:29.872 UTC [7ffb027ec700] Debug pjsip: tsx0x7ffaf8039 State changed from Confirmed to Terminated, event=TIMER
+21-08-2018 10:01:29.872 UTC [7ffb027ec700] Debug bono.cpp:347: tsx0x7ffaf8039c88 - tu_on_tsx_state UAS, TSX_STATE TIMER state=Terminated
+21-08-2018 10:01:29.872 UTC [7ffb027ec700] Debug pjsip: tsx0x7ffaf8039 Timeout timer event
+21-08-2018 10:01:29.872 UTC [7ffb027ec700] Debug pjsip: tsx0x7ffaf8039 State changed from Terminated to Destroyed, event=TIMER
+21-08-2018 10:01:29.872 UTC [7ffb027ec700] Debug bono.cpp:347: tsx0x7ffaf8039c88 - tu_on_tsx_state UAS, TSX_STATE TIMER state=Destroyed
+21-08-2018 10:01:29.872 UTC [7ffb027ec700] Debug bono.cpp:2189: tsx0x7ffaf8039c88 - UAS tsx destroyed
+21-08-2018 10:01:29.872 UTC [7ffb027ec700] Debug bono.cpp:2496: tsx0x7ffaf8039c88 - Cancel 0 pending UAC transactions
+21-08-2018 10:01:29.872 UTC [7ffb027ec700] Debug bono.cpp:2505: tsx0x7ffaf8039c88 - Check target 0, UAC data = (nil), UAC tsx = (nil)
+21-08-2018 10:01:29.872 UTC [7ffb027ec700] Debug bono.cpp:1786: UASTransaction destructor (0x7ffaf8008000)
+21-08-2018 10:01:29.872 UTC [7ffb027ec700] Debug bono.cpp:1806: Disconnect UAC transactions from UAS transaction
+21-08-2018 10:01:29.872 UTC [7ffb027ec700] Debug bono.cpp:1816: Upstream ACR = 0x7ffaf815a6f0, Downstream ACR = 0x7ffaf815a6f0
+21-08-2018 10:01:29.872 UTC [7ffb027ec700] Verbose acr.cpp:641: Sending P-CSCF Ralf ACR (0x7ffaf815a6f0)
+21-08-2018 10:01:29.872 UTC [7ffb027ec700] Debug acr.cpp:674: Building message
+21-08-2018 10:01:29.872 UTC [7ffb027ec700] Debug acr.cpp:691: Adding peers meta-data, 1 ccfs, 0 ecfs
+21-08-2018 10:01:29.872 UTC [7ffb027ec700] Debug acr.cpp:730: Building event
+21-08-2018 10:01:29.872 UTC [7ffb027ec700] Debug acr.cpp:735: Adding Account-Record-Type AVP 1
+21-08-2018 10:01:29.873 UTC [7ffb027ec700] Debug acr.cpp:755: Adding Service-Information AVP group
+21-08-2018 10:01:29.873 UTC [7ffb027ec700] Debug acr.cpp:765: Adding 0 Subscription-Id AVPs
+21-08-2018 10:01:29.873 UTC [7ffb027ec700] Debug acr.cpp:791: Adding IMS-Information AVP group
+21-08-2018 10:01:29.873 UTC [7ffb027ec700] Debug acr.cpp:796: Adding Event-Type AVP group
+21-08-2018 10:01:29.873 UTC [7ffb027ec700] Debug acr.cpp:825: Adding 0 Calling-Party-Address AVPs
+21-08-2018 10:01:29.873 UTC [7ffb027ec700] Debug acr.cpp:845: Adding Called-Party-Address AVP
+21-08-2018 10:01:29.873 UTC [7ffb027ec700] Debug acr.cpp:866: Adding 0 Called-Asserted-Identity AVPs
+21-08-2018 10:01:29.873 UTC [7ffb027ec700] Debug acr.cpp:887: Adding 0 Associated-URI AVPs
+21-08-2018 10:01:29.873 UTC [7ffb027ec700] Debug acr.cpp:906: Adding Time-Stamps AVP group
+21-08-2018 10:01:29.873 UTC [7ffb027ec700] Debug acr.cpp:996: Adding 0 Transit-IOI-List AVPs
+21-08-2018 10:01:29.873 UTC [7ffb027ec700] Debug acr.cpp:1072: Adding 0 Early-Media-Description AVPs
+21-08-2018 10:01:29.873 UTC [7ffb027ec700] Debug acr.cpp:1104: Adding 0 Message-Body AVPs
+21-08-2018 10:01:29.874 UTC [7ffb027ec700] Debug acr.cpp:1198: Adding Cause-Code(408) AVP to ACR[Interim]
+21-08-2018 10:01:29.874 UTC [7ffb027ec700] Debug acr.cpp:1204: Adding 0 Reason-Header AVPs
+21-08-2018 10:01:29.874 UTC [7ffb027ec700] Debug acr.cpp:1222: Adding 0 Access-Network-Information AVPs
+21-08-2018 10:01:29.874 UTC [7ffb027ec700] Debug acr.cpp:1240: Adding From-Address AVP
+21-08-2018 10:01:29.874 UTC [7ffb027ec700] Debug acr.cpp:1255: Adding Route-Header-Received AVP
+21-08-2018 10:01:29.874 UTC [7ffb027ec700] Debug acr.cpp:1262: Adding Route-Header-Transmitted AVP
+21-08-2018 10:01:29.874 UTC [7ffb0affd700] Debug a_record_resolver.cpp:57: ARecordResolver::resolve_iter for host dime.clearwater.local, port 10888, family 2
+21-08-2018 10:01:29.874 UTC [7ffb0affd700] Debug utils.cpp:446: Attempt to parse dime.clearwater.local as IP address
+21-08-2018 10:01:29.874 UTC [7ffb0affd700] Debug dnscachedresolver.cpp:250: Searching for DNS record matching dime.clearwater.local in the static cache
+21-08-2018 10:01:29.874 UTC [7ffb0affd700] Debug static_dns_cache.cpp:303: No static records found matching dime.clearwater.local
+21-08-2018 10:01:29.874 UTC [7ffb0affd700] Verbose static_dns_cache.cpp:327: No matching CNAME record found in static cache
+21-08-2018 10:01:29.874 UTC [7ffb0affd700] Debug static_dns_cache.cpp:303: No static records found matching dime.clearwater.local
+21-08-2018 10:01:29.874 UTC [7ffb0affd700] Debug dnscachedresolver.cpp:269: dime.clearwater.local not found in the static cache
+21-08-2018 10:01:29.874 UTC [7ffb0affd700] Verbose dnscachedresolver.cpp:314: Check cache for dime.clearwater.local type 1
+21-08-2018 10:01:29.874 UTC [7ffb0affd700] Debug dnscachedresolver.cpp:424: Pulling 2 records from cache for dime.clearwater.local A
+21-08-2018 10:01:29.874 UTC [7ffb0affd700] Debug dnscachedresolver.cpp:287: Found result for query dime.clearwater.local (canonical domain: dime.clearwater.local)
+21-08-2018 10:01:29.874 UTC [7ffb0affd700] Debug baseresolver.cpp:192: Found 2 A/AAAA records, creating iterator
+21-08-2018 10:01:29.874 UTC [7ffb0affd700] Debug utils.cpp:446: Attempt to parse dime.clearwater.local as IP address
+21-08-2018 10:01:29.874 UTC [7ffb0affd700] Debug baseresolver.cpp:812: Attempting to get 1 targets for host:dime.clearwater.local. allowed_host_state = 3
+21-08-2018 10:01:29.874 UTC [7ffb0affd700] Debug baseresolver.cpp:587: 171.168.1.176:10888;transport=TCP has state: WHITE
+21-08-2018 10:01:29.875 UTC [7ffb0affd700] Debug baseresolver.cpp:587: 40.40.40.12:10888;transport=TCP has state: WHITE
+21-08-2018 10:01:29.875 UTC [7ffb0affd700] Debug baseresolver.cpp:587: 171.168.1.176:10888;transport=TCP has state: WHITE
+21-08-2018 10:01:29.875 UTC [7ffb0affd700] Debug baseresolver.cpp:883: Added a whitelisted server to targets, now have 1 of 1
+21-08-2018 10:01:29.875 UTC [7ffb0affd700] Debug connection_pool.h:207: Request for connection to IP: 171.168.1.176, port: 10888
+21-08-2018 10:01:29.875 UTC [7ffb0affd700] Debug connection_pool.h:220: Found existing connection 0x7ffafc0028e0 in pool
+21-08-2018 10:01:29.875 UTC [7ffb0affd700] Debug httpclient.cpp:312: Set CURLOPT_RESOLVE: dime.clearwater.local:10888:171.168.1.176
+21-08-2018 10:01:29.875 UTC [7ffb0affd700] Debug httpclient.cpp:343: Sending HTTP request : http://dime.clearwater.local:10888/call-id/NTAxODE3ZjA5OWJkMzI3ZjFiMzEyMGE1NzA3ZDJmMWU. (trying 171.168.1.176)
+21-08-2018 10:01:29.875 UTC [7ffb027ec700] Debug acr.cpp:29: Destroyed ACR (0x7ffaf815a6f0)
+21-08-2018 10:01:29.876 UTC [7ffb027ec700] Debug bono.cpp:1835: Free original request (0x7ffaf80885a8)
+21-08-2018 10:01:29.876 UTC [7ffb027ec700] Debug pjsip: tdta0x7ffaf808 Destroying txdata Request msg INVITE/cseq=1 (tdta0x7ffaf8088500)
+21-08-2018 10:01:29.876 UTC [7ffb027ec700] Debug bono.cpp:1851: UASTransaction destructor completed
+21-08-2018 10:01:29.876 UTC [7ffb027ec700] Debug pjsip: tdta0x7ffaf80b Destroying txdata Response msg 408/INVITE/cseq=1 (tdta0x7ffaf80b6f00)
+21-08-2018 10:01:29.876 UTC [7ffb027ec700] Info pjsip:        timer.c The transport thread spent 4163 microseconds processing a callback.
+21-08-2018 10:01:29.876 UTC [7ffb027ec700] Debug pjsip: tsx0x7ffaf8039 Transaction destroyed!
+21-08-2018 10:01:29.876 UTC [7ffb027ec700] Debug pjsip: tsx0x7ffaf8003 Transaction destroyed!
+21-08-2018 10:01:29.876 UTC [7ffb027ec700] Debug pjsip: tsx0x7ffaf4001 Transaction destroyed!
+21-08-2018 10:01:29.877 UTC [7ffb0affd700] Debug httpclient.cpp:719: Received header http/1.1200ok with value 
+21-08-2018 10:01:29.877 UTC [7ffb0affd700] Debug httpclient.cpp:720: Header pointer: 0x7ffb0affcbf0
+21-08-2018 10:01:29.877 UTC [7ffb0affd700] Debug httpclient.cpp:719: Received header content-length with value 0
+21-08-2018 10:01:29.877 UTC [7ffb0affd700] Debug httpclient.cpp:720: Header pointer: 0x7ffb0affcbf0
+21-08-2018 10:01:29.878 UTC [7ffb0affd700] Debug httpclient.cpp:719: Received header  with value 
+21-08-2018 10:01:29.878 UTC [7ffb0affd700] Debug httpclient.cpp:720: Header pointer: 0x7ffb0affcbf0
+21-08-2018 10:01:29.878 UTC [7ffb0affd700] Debug httpclient.cpp:383: Received HTTP response: status=200, doc=
+21-08-2018 10:01:29.878 UTC [7ffb0affd700] Debug baseresolver.cpp:672: Successful response from  171.168.1.176:10888;transport=TCP
+21-08-2018 10:01:29.878 UTC [7ffb0affd700] Debug connection_pool.h:244: Release connection to IP: 171.168.1.176, port: 10888 to pool
+21-08-2018 10:01:29.878 UTC [7ffb0affd700] Debug communicationmonitor.cpp:57: Checking communication changes - successful attempts 2, failures 0
+21-08-2018 10:01:31.157 UTC [7ffb027ec700] Verbose pjsip:    tcplis:5058 TCP listener 40.40.40.6:5058: got incoming TCP connection from 40.40.40.6:43620, sock=130
+21-08-2018 10:01:31.157 UTC [7ffb027ec700] Verbose pjsip: tcps0x7ffaf401 tcp->base.local_name: 40.40.40.6
+21-08-2018 10:01:31.157 UTC [7ffb027ec700] Verbose pjsip: tcps0x7ffaf401 TCP server transport created
+21-08-2018 10:01:31.158 UTC [7ffb027ec700] Debug pjsip: sip_endpoint.c Processing incoming message: Request msg OPTIONS/cseq=1050567 (rdata0x7ffaf401cb40)
+21-08-2018 10:01:31.158 UTC [7ffb027ec700] Verbose common_sip_processing.cpp:87: RX 345 bytes Request msg OPTIONS/cseq=1050567 (rdata0x7ffaf401cb40) from TCP 40.40.40.6:43620:
+--start msg--
+
+OPTIONS sip:poll-sip at 40.40.40.6:5058 SIP/2.0
+Via: SIP/2.0/TCP 40.40.40.6;rport;branch=z9hG4bK-1050567
+Max-Forwards: 2
+To: <sip:poll-sip at 40.40.40.6:5058>
+From: poll-sip <sip:poll-sip at 40.40.40.6>;tag=1050567
+Call-ID: poll-sip-1050567
+CSeq: 1050567 OPTIONS
+Contact: <sip:40.40.40.6>
+Accept: application/sdp
+Content-Length: 0
+User-Agent: poll-sip
+
+
+--end msg--
+21-08-2018 10:01:31.158 UTC [7ffb027ec700] Debug uri_classifier.cpp:139: home domain: false, local_to_node: true, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+21-08-2018 10:01:31.158 UTC [7ffb027ec700] Debug uri_classifier.cpp:173: Classified URI sip:poll-sip at 40.40.40.6:5058 as 3
+21-08-2018 10:01:31.158 UTC [7ffb027ec700] Debug common_sip_processing.cpp:180: Skipping SAS logging for OPTIONS request
+21-08-2018 10:01:31.158 UTC [7ffb027ec700] Debug thread_dispatcher.cpp:568: Received message 0x7ffaf401cb40
+21-08-2018 10:01:31.158 UTC [7ffb027ec700] Debug thread_dispatcher.cpp:585: Admitted request 0x7ffaf401cb40
+21-08-2018 10:01:31.158 UTC [7ffb027ec700] Debug thread_dispatcher.cpp:620: Incoming message 0x7ffaf401cb40 cloned to 0x7ffaf401f0a8
+21-08-2018 10:01:31.158 UTC [7ffb027ec700] Debug thread_dispatcher.cpp:639: Queuing cloned received message 0x7ffaf401f0a8 for worker threads with priority 15
+21-08-2018 10:01:31.158 UTC [7ffb027ec700] Debug event_statistic_accumulator.cpp:32: Accumulate 0 for 0x3947a88
+21-08-2018 10:01:31.158 UTC [7ffb027ec700] Debug event_statistic_accumulator.cpp:32: Accumulate 0 for 0x3947ad0
+21-08-2018 10:01:31.158 UTC [7ffb02fed700] Debug utils.cpp:872: Added IOHook 0x7ffb02fecdf0 to stack. There are now 1 hooks
+21-08-2018 10:01:31.158 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:181: Worker thread dequeue message 0x7ffaf401f0a8
+21-08-2018 10:01:31.158 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:186: Request latency so far = 104us
+21-08-2018 10:01:31.158 UTC [7ffb02fed700] Debug pjsip: sip_endpoint.c Distributing rdata to modules: Request msg OPTIONS/cseq=1050567 (rdata0x7ffaf401f0a8)
+21-08-2018 10:01:31.158 UTC [7ffb02fed700] Debug uri_classifier.cpp:139: home domain: false, local_to_node: true, is_gruu: false, enforce_user_phone: false, prefer_sip: true, treat_number_as_phone: false
+21-08-2018 10:01:31.158 UTC [7ffb02fed700] Debug uri_classifier.cpp:173: Classified URI sip:poll-sip at 40.40.40.6:5058 as 3
+21-08-2018 10:01:31.158 UTC [7ffb02fed700] Debug pjsip:       endpoint Response msg 200/OPTIONS/cseq=1050567 (tdta0x7ffaf8088500) created
+21-08-2018 10:01:31.158 UTC [7ffb02fed700] Verbose common_sip_processing.cpp:103: TX 279 bytes Response msg 200/OPTIONS/cseq=1050567 (tdta0x7ffaf8088500) to TCP 40.40.40.6:43620:
+--start msg--
+
+SIP/2.0 200 OK
+Via: SIP/2.0/TCP 40.40.40.6;rport=43620;received=40.40.40.6;branch=z9hG4bK-1050567
+Call-ID: poll-sip-1050567
+From: "poll-sip" <sip:poll-sip at 40.40.40.6>;tag=1050567
+To: <sip:poll-sip at 40.40.40.6>;tag=z9hG4bK-1050567
+CSeq: 1050567 OPTIONS
+Content-Length:  0
+
+
+--end msg--
+21-08-2018 10:01:31.158 UTC [7ffb02fed700] Debug common_sip_processing.cpp:275: Skipping SAS logging for OPTIONS response
+21-08-2018 10:01:31.158 UTC [7ffb02fed700] Debug pjsip: tdta0x7ffaf808 Destroying txdata Response msg 200/OPTIONS/cseq=1050567 (tdta0x7ffaf8088500)
+21-08-2018 10:01:31.158 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:273: Worker thread completed processing message 0x7ffaf401f0a8
+21-08-2018 10:01:31.158 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:287: Request latency = 292us
+21-08-2018 10:01:31.158 UTC [7ffb02fed700] Debug event_statistic_accumulator.cpp:32: Accumulate 292 for 0x3943ad8
+21-08-2018 10:01:31.158 UTC [7ffb02fed700] Debug event_statistic_accumulator.cpp:32: Accumulate 292 for 0x3943b50
+21-08-2018 10:01:31.158 UTC [7ffb02fed700] Debug load_monitor.cpp:341: Not recalculating rate as we haven't processed 20 requests yet (only 5).
+21-08-2018 10:01:31.158 UTC [7ffb02fed700] Debug utils.cpp:878: Removed IOHook 0x7ffb02fecdf0 to stack. There are now 0 hooks
+21-08-2018 10:01:31.158 UTC [7ffb02fed700] Debug thread_dispatcher.cpp:161: Attempting to process queue element
+21-08-2018 10:01:33.160 UTC [7ffb027ec700] Verbose pjsip: tcps0x7ffaf401 TCP connection closed
+21-08-2018 10:01:33.160 UTC [7ffb027ec700] Debug connection_tracker.cpp:67: Connection 0x7ffaf401c808 has been destroyed
+21-08-2018 10:01:33.160 UTC [7ffb027ec700] Verbose pjsip: tcps0x7ffaf401 TCP transport destroyed with reason 70016: End of file (PJ_EEOF)
+
+From nishank.trivedi at gmail.com  Tue Aug 21 07:11:31 2018
+From: nishank.trivedi at gmail.com (Nishank Trivedi)
+Date: Tue, 21 Aug 2018 16:41:31 +0530
+Subject: [Project Clearwater] Multi-VM setup + 408 Request timeout +
+ Request reaches Bono
+In-Reply-To: <CAN4rA97KQd5zYmqXAYUucpdqyBvQ-fdEccjBivLX_SA0xbej7w@mail.gmail.com>
+References: <BLUPR0201MB1489C544A70F8F8BCE29141581310@BLUPR0201MB1489.namprd02.prod.outlook.com>
+	<CAN4rA97KQd5zYmqXAYUucpdqyBvQ-fdEccjBivLX_SA0xbej7w@mail.gmail.com>
+Message-ID: <CAN4rA95KiEMi31gEJyCuhvfMQLq7kUA6meiK544KsqsqniwjUA@mail.gmail.com>
+
+I can see 408 Request timeout in bono logs, as I mentioned in the initial
+mail also.
+
+What could be going wrong, here? Some zoiper setting? But, the request is
+reaching Bono, so some clearwater setting,right.
+
+Thanks,
+Nishank
+
+On Tuesday, August 21, 2018, Nishank Trivedi <nishank.trivedi at gmail.com>
+wrote:
+
+> Hi Anne,
+>
+> Thanks for replying.
+>
+> Attaching the file for the relevant duration.
+>
+> Thanks,
+> Nishank
+>
+> On Tue, Aug 21, 2018 at 2:34 PM, Anne Boffey <Anne.Boffey at metaswitch.com>
+> wrote:
+>
+>> Hi Nishank,
+>>
+>>
+>>
+>> A 408 Request Timeout could be coming from Clearwater (because its
+>> requests upstream are timing out) or from Zoiper (because its requests to
+>> Clearwater are timing out).
+>>
+>>
+>>
+>> To help tell which is the case, could you turn on debug logging on Bono, by following the steps here:
+>>
+>> http://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html#bono and see if the SIP INVITE and 408 appear in Bono?s logs.
+>>
+>>
+>>
+>> Then if you reproduce the problem, and send us the logs from the time of the reproduced problem (the logs are in /var/log/bono/bono*.txt) we can take a look at those and see if that shows where the problem is.
+>>
+>>
+>>
+>> Thanks,
+>>
+>> Anne.
+>>
+>>
+>>
+>> _______________________________________________
+>> Clearwater mailing list
+>> Clearwater at lists.projectclearwater.org
+>> http://lists.projectclearwater.org/mailman/listinfo/
+>> clearwater_lists.projectclearwater.org
+>>
+>>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180821/e40a6b19/attachment.html>
+
+From nishank.trivedi at gmail.com  Tue Aug 21 08:23:53 2018
+From: nishank.trivedi at gmail.com (Nishank Trivedi)
+Date: Tue, 21 Aug 2018 17:53:53 +0530
+Subject: [Project Clearwater] Multi-VM setup + 408 Request timeout +
+ Request reaches Bono
+In-Reply-To: <CAN4rA95KiEMi31gEJyCuhvfMQLq7kUA6meiK544KsqsqniwjUA@mail.gmail.com>
+References: <BLUPR0201MB1489C544A70F8F8BCE29141581310@BLUPR0201MB1489.namprd02.prod.outlook.com>
+	<CAN4rA97KQd5zYmqXAYUucpdqyBvQ-fdEccjBivLX_SA0xbej7w@mail.gmail.com>
+	<CAN4rA95KiEMi31gEJyCuhvfMQLq7kUA6meiK544KsqsqniwjUA@mail.gmail.com>
+Message-ID: <CAN4rA94qVhYpsZRBB6A3Hi5SJR7S4ZK15KSSnp3WKugxWmMsuw@mail.gmail.com>
+
+Further investigation of bono_current. Txt shows some errors of not able to
+connect to 40.40.40.5 (sprout node) on port 5060. Using netstat - tulpn ?
+grep 5060 confirmed that nothing was running on 5060 on sprout.
+
+Fishy?
+
+I stopped sprout service via sudo service sprout stop... Did so  so that
+monit can restart. No change in error.
+
+The next time, I also removed port 5060 from Outbound proxy setting on
+zoiper. No change still.
+
+
+Regards,
+Nishank
+
+On Tuesday, August 21, 2018, Nishank Trivedi <nishank.trivedi at gmail.com>
+wrote:
+
+> I can see 408 Request timeout in bono logs, as I mentioned in the initial
+> mail also.
+>
+> What could be going wrong, here? Some zoiper setting? But, the request is
+> reaching Bono, so some clearwater setting,right.
+>
+> Thanks,
+> Nishank
+>
+> On Tuesday, August 21, 2018, Nishank Trivedi <nishank.trivedi at gmail.com>
+> wrote:
+>
+>> Hi Anne,
+>>
+>> Thanks for replying.
+>>
+>> Attaching the file for the relevant duration.
+>>
+>> Thanks,
+>> Nishank
+>>
+>> On Tue, Aug 21, 2018 at 2:34 PM, Anne Boffey <Anne.Boffey at metaswitch.com>
+>> wrote:
+>>
+>>> Hi Nishank,
+>>>
+>>>
+>>>
+>>> A 408 Request Timeout could be coming from Clearwater (because its
+>>> requests upstream are timing out) or from Zoiper (because its requests to
+>>> Clearwater are timing out).
+>>>
+>>>
+>>>
+>>> To help tell which is the case, could you turn on debug logging on Bono, by following the steps here:
+>>>
+>>> http://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html#bono and see if the SIP INVITE and 408 appear in Bono?s logs.
+>>>
+>>>
+>>>
+>>> Then if you reproduce the problem, and send us the logs from the time of the reproduced problem (the logs are in /var/log/bono/bono*.txt) we can take a look at those and see if that shows where the problem is.
+>>>
+>>>
+>>>
+>>> Thanks,
+>>>
+>>> Anne.
+>>>
+>>>
+>>>
+>>> _______________________________________________
+>>> Clearwater mailing list
+>>> Clearwater at lists.projectclearwater.org
+>>> http://lists.projectclearwater.org/mailman/listinfo/clearwat
+>>> er_lists.projectclearwater.org
+>>>
+>>>
+>>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180821/f3bb44fd/attachment.html>
+
+From nishank.trivedi at gmail.com  Tue Aug 21 09:21:54 2018
+From: nishank.trivedi at gmail.com (Nishank Trivedi)
+Date: Tue, 21 Aug 2018 18:51:54 +0530
+Subject: [Project Clearwater] Multi-VM setup + 408 Request timeout +
+ Request reaches Bono
+In-Reply-To: <CAN4rA94qVhYpsZRBB6A3Hi5SJR7S4ZK15KSSnp3WKugxWmMsuw@mail.gmail.com>
+References: <BLUPR0201MB1489C544A70F8F8BCE29141581310@BLUPR0201MB1489.namprd02.prod.outlook.com>
+	<CAN4rA97KQd5zYmqXAYUucpdqyBvQ-fdEccjBivLX_SA0xbej7w@mail.gmail.com>
+	<CAN4rA95KiEMi31gEJyCuhvfMQLq7kUA6meiK544KsqsqniwjUA@mail.gmail.com>
+	<CAN4rA94qVhYpsZRBB6A3Hi5SJR7S4ZK15KSSnp3WKugxWmMsuw@mail.gmail.com>
+Message-ID: <CAN4rA94gjqgqycCfSV2n-GW9yMANqW1FZr1dm2Q672bkvnknUQ@mail.gmail.com>
+
+Sorry for incessant posting, but I wish to update as I am making progress
+(?).
+
+I am attaching the bind DNS file for domain clearwater,opnfv and
+clearwater.local for reference.
+
+DO you see a missing something there?
+
+When I compare this file against what's mentioned here "
+https://github.com/Metaswitch/clearwater-readthedocs/blob/master/docs/Clearwater_DNS_Usage.md",
+I do see some differences.
+
+For example, in my attached under the bono section, I don't see records for
+_sip._tcp    IN SRV   0 0 5060 bono and udp as I see in above referred
+doc.Is it of interest?
+
+Thanks,
+Nishank
+
+On Tue, Aug 21, 2018 at 5:53 PM, Nishank Trivedi <nishank.trivedi at gmail.com>
+wrote:
+
+> Further investigation of bono_current. Txt shows some errors of not able
+> to connect to 40.40.40.5 (sprout node) on port 5060. Using netstat - tulpn
+> ? grep 5060 confirmed that nothing was running on 5060 on sprout.
+>
+> Fishy?
+>
+> I stopped sprout service via sudo service sprout stop... Did so  so that
+> monit can restart. No change in error.
+>
+> The next time, I also removed port 5060 from Outbound proxy setting on
+> zoiper. No change still.
+>
+>
+> Regards,
+> Nishank
+>
+> On Tuesday, August 21, 2018, Nishank Trivedi <nishank.trivedi at gmail.com>
+> wrote:
+>
+>> I can see 408 Request timeout in bono logs, as I mentioned in the initial
+>> mail also.
+>>
+>> What could be going wrong, here? Some zoiper setting? But, the request is
+>> reaching Bono, so some clearwater setting,right.
+>>
+>> Thanks,
+>> Nishank
+>>
+>> On Tuesday, August 21, 2018, Nishank Trivedi <nishank.trivedi at gmail.com>
+>> wrote:
+>>
+>>> Hi Anne,
+>>>
+>>> Thanks for replying.
+>>>
+>>> Attaching the file for the relevant duration.
+>>>
+>>> Thanks,
+>>> Nishank
+>>>
+>>> On Tue, Aug 21, 2018 at 2:34 PM, Anne Boffey <Anne.Boffey at metaswitch.com
+>>> > wrote:
+>>>
+>>>> Hi Nishank,
+>>>>
+>>>>
+>>>>
+>>>> A 408 Request Timeout could be coming from Clearwater (because its
+>>>> requests upstream are timing out) or from Zoiper (because its requests to
+>>>> Clearwater are timing out).
+>>>>
+>>>>
+>>>>
+>>>> To help tell which is the case, could you turn on debug logging on Bono, by following the steps here:
+>>>>
+>>>> http://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html#bono and see if the SIP INVITE and 408 appear in Bono?s logs.
+>>>>
+>>>>
+>>>>
+>>>> Then if you reproduce the problem, and send us the logs from the time of the reproduced problem (the logs are in /var/log/bono/bono*.txt) we can take a look at those and see if that shows where the problem is.
+>>>>
+>>>>
+>>>>
+>>>> Thanks,
+>>>>
+>>>> Anne.
+>>>>
+>>>>
+>>>>
+>>>> _______________________________________________
+>>>> Clearwater mailing list
+>>>> Clearwater at lists.projectclearwater.org
+>>>> http://lists.projectclearwater.org/mailman/listinfo/clearwat
+>>>> er_lists.projectclearwater.org
+>>>>
+>>>>
+>>>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180821/b071e6ca/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: db.clearwater.local
+Type: application/octet-stream
+Size: 1825 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180821/b071e6ca/attachment.obj>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: db.clearwater.opnfv
+Type: application/octet-stream
+Size: 2309 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180821/b071e6ca/attachment-0001.obj>
+
+From nishank.trivedi at gmail.com  Tue Aug 21 09:44:08 2018
+From: nishank.trivedi at gmail.com (Nishank Trivedi)
+Date: Tue, 21 Aug 2018 19:14:08 +0530
+Subject: [Project Clearwater] Multi-VM setup + 408 Request timeout +
+ Request reaches Bono
+In-Reply-To: <CAN4rA94gjqgqycCfSV2n-GW9yMANqW1FZr1dm2Q672bkvnknUQ@mail.gmail.com>
+References: <BLUPR0201MB1489C544A70F8F8BCE29141581310@BLUPR0201MB1489.namprd02.prod.outlook.com>
+	<CAN4rA97KQd5zYmqXAYUucpdqyBvQ-fdEccjBivLX_SA0xbej7w@mail.gmail.com>
+	<CAN4rA95KiEMi31gEJyCuhvfMQLq7kUA6meiK544KsqsqniwjUA@mail.gmail.com>
+	<CAN4rA94qVhYpsZRBB6A3Hi5SJR7S4ZK15KSSnp3WKugxWmMsuw@mail.gmail.com>
+	<CAN4rA94gjqgqycCfSV2n-GW9yMANqW1FZr1dm2Q672bkvnknUQ@mail.gmail.com>
+Message-ID: <CAN4rA94Vt9cnDG9N9=zKPS9pSJGe5yuGL3R-SRF2iu4wov9zRQ@mail.gmail.com>
+
+Bingo! That was the error. Have a zinging call now!!
+
+Missing SRV records for Scscf sprout resolving to 5054 and icscf sprout
+resolving to 5052.
+
+For the reference for someone else who hits a similar issue, it looked like:
+
+_sip._tcp       IN SRV  0 0 5060 bono
+_sip._udp       IN SRV  0 0 5060 bono
+
+
+For sprout:
+
+_sip._tcp.icscf.sprout       IN SRV  0 0 5054 icscf.sprout
+_sip._tcp.scscf.sprout       IN SRV  0 0 5052 scscf.sprout
+
+
+Remember, these changes are required to be made for both the domains ie
+clearwater.opnfv and clearwater.local.
+
+Many thanks for this wonderful software which lets us research in this
+complex area!
+
+Thanks,
+Nishank
+
+On Tue, Aug 21, 2018 at 6:51 PM, Nishank Trivedi <nishank.trivedi at gmail.com>
+wrote:
+
+> Sorry for incessant posting, but I wish to update as I am making progress
+> (?).
+>
+> I am attaching the bind DNS file for domain clearwater,opnfv and
+> clearwater.local for reference.
+>
+> DO you see a missing something there?
+>
+> When I compare this file against what's mentioned here "
+> https://github.com/Metaswitch/clearwater-readthedocs/blob/master/docs/
+> Clearwater_DNS_Usage.md", I do see some differences.
+>
+> For example, in my attached under the bono section, I don't see records
+> for _sip._tcp    IN SRV   0 0 5060 bono and udp as I see in above referred
+> doc.Is it of interest?
+>
+> Thanks,
+> Nishank
+>
+> On Tue, Aug 21, 2018 at 5:53 PM, Nishank Trivedi <
+> nishank.trivedi at gmail.com> wrote:
+>
+>> Further investigation of bono_current. Txt shows some errors of not able
+>> to connect to 40.40.40.5 (sprout node) on port 5060. Using netstat - tulpn
+>> ? grep 5060 confirmed that nothing was running on 5060 on sprout.
+>>
+>> Fishy?
+>>
+>> I stopped sprout service via sudo service sprout stop... Did so  so that
+>> monit can restart. No change in error.
+>>
+>> The next time, I also removed port 5060 from Outbound proxy setting on
+>> zoiper. No change still.
+>>
+>>
+>> Regards,
+>> Nishank
+>>
+>> On Tuesday, August 21, 2018, Nishank Trivedi <nishank.trivedi at gmail.com>
+>> wrote:
+>>
+>>> I can see 408 Request timeout in bono logs, as I mentioned in the
+>>> initial mail also.
+>>>
+>>> What could be going wrong, here? Some zoiper setting? But, the request
+>>> is reaching Bono, so some clearwater setting,right.
+>>>
+>>> Thanks,
+>>> Nishank
+>>>
+>>> On Tuesday, August 21, 2018, Nishank Trivedi <nishank.trivedi at gmail.com>
+>>> wrote:
+>>>
+>>>> Hi Anne,
+>>>>
+>>>> Thanks for replying.
+>>>>
+>>>> Attaching the file for the relevant duration.
+>>>>
+>>>> Thanks,
+>>>> Nishank
+>>>>
+>>>> On Tue, Aug 21, 2018 at 2:34 PM, Anne Boffey <
+>>>> Anne.Boffey at metaswitch.com> wrote:
+>>>>
+>>>>> Hi Nishank,
+>>>>>
+>>>>>
+>>>>>
+>>>>> A 408 Request Timeout could be coming from Clearwater (because its
+>>>>> requests upstream are timing out) or from Zoiper (because its requests to
+>>>>> Clearwater are timing out).
+>>>>>
+>>>>>
+>>>>>
+>>>>> To help tell which is the case, could you turn on debug logging on Bono, by following the steps here:
+>>>>>
+>>>>> http://clearwater.readthedocs.io/en/stable/Troubleshooting_and_Recovery.html#bono and see if the SIP INVITE and 408 appear in Bono?s logs.
+>>>>>
+>>>>>
+>>>>>
+>>>>> Then if you reproduce the problem, and send us the logs from the time of the reproduced problem (the logs are in /var/log/bono/bono*.txt) we can take a look at those and see if that shows where the problem is.
+>>>>>
+>>>>>
+>>>>>
+>>>>> Thanks,
+>>>>>
+>>>>> Anne.
+>>>>>
+>>>>>
+>>>>>
+>>>>> _______________________________________________
+>>>>> Clearwater mailing list
+>>>>> Clearwater at lists.projectclearwater.org
+>>>>> http://lists.projectclearwater.org/mailman/listinfo/clearwat
+>>>>> er_lists.projectclearwater.org
+>>>>>
+>>>>>
+>>>>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180821/3e81fbb7/attachment.html>
+
+From Anne.Boffey at metaswitch.com  Tue Aug 21 10:02:13 2018
+From: Anne.Boffey at metaswitch.com (Anne Boffey)
+Date: Tue, 21 Aug 2018 14:02:13 +0000
+Subject: [Project Clearwater] Multi-VM setup + 408 Request timeout +
+ Request reaches Bono
+Message-ID: <BLUPR0201MB1489A3F7FF219EFF9FD89E1C81310@BLUPR0201MB1489.namprd02.prod.outlook.com>
+
+Hi Nishank,
+
+Glad you got it sorted.
+
+Regards
+
+Anne
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180821/4c25658c/attachment.html>
+

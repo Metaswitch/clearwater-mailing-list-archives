@@ -1,0 +1,49 @@
+From restu.nursobah at gmail.com  Sat Jul  6 06:48:01 2019
+From: restu.nursobah at gmail.com (Restu Nursobah)
+Date: Sat, 06 Jul 2019 10:48:01 -0000
+Subject: [Project Clearwater] Cannot create number and failed to update the
+ server
+Message-ID: <CAK5SHV0wQq+4Y7FTBN=v=RqwdsMEWS2EWA1TZjtveff=kYrdVw@mail.gmail.com>
+
+Hi, I installed Clearwater on openstack all do all setup with the dns. I
+can access Ellis but i can?t create number and after a while always get
+this message. Anybody had a solution ?
+
+
+[image: clearwater.jpg]
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190706/f6c4349c/attachment-0001.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: clearwater.jpg
+Type: image/jpeg
+Size: 159555 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190706/f6c4349c/attachment-0001.jpg>
+
+From restu.nursobah at gmail.com  Sat Jul  6 06:54:05 2019
+From: restu.nursobah at gmail.com (Restu Nursobah)
+Date: Sat, 06 Jul 2019 10:54:05 -0000
+Subject: [Project Clearwater] Cannot create number and failed to update the
+ server
+Message-ID: <5d207da2.1c69fb81.bd614.dc03@mx.google.com>
+
+Hi, I installed Clearwater on openstack all do all setup with the dns. I can access Ellis but i can?t create number and after a while always get this message. Can someone help me ?
+
+
+
+
+Sent from Mail for Windows 10
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190706/69af7b22/attachment-0001.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: clearwater.jpg
+Type: image/jpeg
+Size: 159555 bytes
+Desc: not available
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20190706/69af7b22/attachment-0001.jpg>
+

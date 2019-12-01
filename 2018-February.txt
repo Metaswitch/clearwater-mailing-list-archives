@@ -1,0 +1,2215 @@
+From code+clearwater at rueschel.de  Fri Feb  2 04:22:57 2018
+From: code+clearwater at rueschel.de (chbndrhnns)
+Date: Fri, 2 Feb 2018 10:22:57 +0100
+Subject: [Project Clearwater] docker-compose setup: cannot add users in web
+ interface
+Message-ID: <CAK+ZkjOt7xcDhjxQm2Fibe+xVt-2V9coxDHDA9vX5Jq+Dptzpw@mail.gmail.com>
+
+Hey,
+
+I am trying to get Clearwater release-129 running with docker-compose and I
+can reach the web interface but when I create a user and login, I see the
+error:
+
+{"status": 503, "message": "Service Unavailable", "reason": "No available
+numbers", "detail": {}, "error": true}
+
+Can someone guide me to resolve this error?
+What log files would be important to post here?
+
+Bye,
+Jo
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180202/707cd54f/attachment.html>
+
+From anthonynlee at gmail.com  Sun Feb  4 16:53:51 2018
+From: anthonynlee at gmail.com (Anthony Lee)
+Date: Sun, 4 Feb 2018 16:53:51 -0500
+Subject: [Project Clearwater] Why P-Charging-Vector header is removed in
+ Invite request?
+Message-ID: <CA+pBo5EvNcPp1-6NGOQApKMJUddrjTmyVti7rfX=KGG_W0zfXw@mail.gmail.com>
+
+I'm using clearwater All-In-One installation on my laptop.
+
+>From the wireshark trace, the incoming Invite to P-CSCF contains
+P-Charging-Vector but the outgoing Invite doesn't.
+Do I need to enable Rf billing to make it keep this header?
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180204/a1ea8933/attachment.html>
+
+From anthonynlee at gmail.com  Sun Feb  4 18:00:30 2018
+From: anthonynlee at gmail.com (Anthony Lee)
+Date: Sun, 4 Feb 2018 18:00:30 -0500
+Subject: [Project Clearwater] Why P-Charging-Vector header is removed in
+ Invite request?
+In-Reply-To: <CA+pBo5EvNcPp1-6NGOQApKMJUddrjTmyVti7rfX=KGG_W0zfXw@mail.gmail.com>
+References: <CA+pBo5EvNcPp1-6NGOQApKMJUddrjTmyVti7rfX=KGG_W0zfXw@mail.gmail.com>
+Message-ID: <CA+pBo5FYi6aiVF=sbxRxqeWumMcZULnZPC1fDKcnvCxf5dck3g@mail.gmail.com>
+
+>From Bono's log I see that the message the process listening on 5058
+received has P-Charging-Vector,
+but the message this process sent doesn't have it anymore.
+There is log  saying that "bono.cpp: message received on not trusted port
+5060".
+Is it because the message comes from untrustred network so that the
+P-Charging-Vector header is removed?
+
+Also, there is log saying that "trustboundary.cpp: add P-Charging headers".
+But there is no P-Charging-Vector in the outgoing message
+from 5058 to sprout 5054.
+
+Any idea?
+
+
+On Sun, Feb 4, 2018 at 4:53 PM, Anthony Lee <anthonynlee at gmail.com> wrote:
+
+> I'm using clearwater All-In-One installation on my laptop.
+>
+> From the wireshark trace, the incoming Invite to P-CSCF contains
+> P-Charging-Vector but the outgoing Invite doesn't.
+> Do I need to enable Rf billing to make it keep this header?
+>
+>
+>
+>
+>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180204/48678983/attachment.html>
+
+From anthonynlee at gmail.com  Sun Feb  4 18:09:39 2018
+From: anthonynlee at gmail.com (Anthony Lee)
+Date: Sun, 4 Feb 2018 18:09:39 -0500
+Subject: [Project Clearwater] Why P-Charging-Vector header is removed in
+ Invite request?
+In-Reply-To: <CA+pBo5FYi6aiVF=sbxRxqeWumMcZULnZPC1fDKcnvCxf5dck3g@mail.gmail.com>
+References: <CA+pBo5EvNcPp1-6NGOQApKMJUddrjTmyVti7rfX=KGG_W0zfXw@mail.gmail.com>
+	<CA+pBo5FYi6aiVF=sbxRxqeWumMcZULnZPC1fDKcnvCxf5dck3g@mail.gmail.com>
+Message-ID: <CA+pBo5HpgPUY6U1vxPUEGScuQWjsfkE1nuBOgou-3eUFpeqhjA@mail.gmail.com>
+
+trustboundary.cpp line 48
+if (cdf_domain != ""){
+// really add P-Charging headers
+}
+
+Looks like my clearwater all-in-one vm need to setup CTF.
+
+Anyidea about how to set it up in All-In-One?
+
+On Sun, Feb 4, 2018 at 6:00 PM, Anthony Lee <anthonynlee at gmail.com> wrote:
+
+> From Bono's log I see that the message the process listening on 5058
+> received has P-Charging-Vector,
+> but the message this process sent doesn't have it anymore.
+> There is log  saying that "bono.cpp: message received on not trusted port
+> 5060".
+> Is it because the message comes from untrustred network so that the
+> P-Charging-Vector header is removed?
+>
+> Also, there is log saying that "trustboundary.cpp: add P-Charging
+> headers". But there is no P-Charging-Vector in the outgoing message
+> from 5058 to sprout 5054.
+>
+> Any idea?
+>
+>
+> On Sun, Feb 4, 2018 at 4:53 PM, Anthony Lee <anthonynlee at gmail.com> wrote:
+>
+>> I'm using clearwater All-In-One installation on my laptop.
+>>
+>> From the wireshark trace, the incoming Invite to P-CSCF contains
+>> P-Charging-Vector but the outgoing Invite doesn't.
+>> Do I need to enable Rf billing to make it keep this header?
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180204/fef38803/attachment.html>
+
+From richard.whitehouse at projectclearwater.org  Thu Feb  8 14:04:39 2018
+From: richard.whitehouse at projectclearwater.org (Richard Whitehouse (projectclearwater.org))
+Date: Thu, 8 Feb 2018 19:04:39 +0000
+Subject: [Project Clearwater] Why P-Charging-Vector header is removed in
+ Invite request?
+In-Reply-To: <CA+pBo5HpgPUY6U1vxPUEGScuQWjsfkE1nuBOgou-3eUFpeqhjA@mail.gmail.com>
+References: <CA+pBo5EvNcPp1-6NGOQApKMJUddrjTmyVti7rfX=KGG_W0zfXw@mail.gmail.com>
+	<CA+pBo5FYi6aiVF=sbxRxqeWumMcZULnZPC1fDKcnvCxf5dck3g@mail.gmail.com>
+	<CA+pBo5HpgPUY6U1vxPUEGScuQWjsfkE1nuBOgou-3eUFpeqhjA@mail.gmail.com>
+Message-ID: <BN6PR02MB336245065FCC8FADCC6E742CF0F30@BN6PR02MB3362.namprd02.prod.outlook.com>
+
+Anthony,
+
+The reason that the P-Charging-Vector is stripped on the incoming INVITE, is because the P-CSCF (Bono) doesn?t trust the value received from the UE ? which is required by the IMS standards.
+
+If you want Bono to add a P-Charging-Vector, then yes, you?ll need to configure a CDF for Bono. You can do so by specifying cdf_identity in Shared Config. For further information on integrating a CDF with Project Clearwater, see the docs at http://clearwater.readthedocs.io/en/stable/CDF_Integration.html
+
+
+Thanks!
+
+Richard
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Anthony Lee
+Sent: 04 February 2018 23:10
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Why P-Charging-Vector header is removed in Invite request?
+
+trustboundary.cpp line 48
+if (cdf_domain != ""){
+// really add P-Charging headers
+}
+
+Looks like my clearwater all-in-one vm need to setup CTF.
+
+Anyidea about how to set it up in All-In-One?
+
+On Sun, Feb 4, 2018 at 6:00 PM, Anthony Lee <anthonynlee at gmail.com<mailto:anthonynlee at gmail.com>> wrote:
+From Bono's log I see that the message the process listening on 5058 received has P-Charging-Vector,
+but the message this process sent doesn't have it anymore.
+There is log  saying that "bono.cpp: message received on not trusted port 5060".
+Is it because the message comes from untrustred network so that the P-Charging-Vector header is removed?
+
+Also, there is log saying that "trustboundary.cpp: add P-Charging headers". But there is no P-Charging-Vector in the outgoing message
+from 5058 to sprout 5054.
+
+Any idea?
+
+
+On Sun, Feb 4, 2018 at 4:53 PM, Anthony Lee <anthonynlee at gmail.com<mailto:anthonynlee at gmail.com>> wrote:
+I'm using clearwater All-In-One installation on my laptop.
+
+From the wireshark trace, the incoming Invite to P-CSCF contains P-Charging-Vector but the outgoing Invite doesn't.
+Do I need to enable Rf billing to make it keep this header?
+
+
+
+
+
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180208/010d99e3/attachment.html>
+
+From richard.whitehouse at projectclearwater.org  Thu Feb  8 14:22:26 2018
+From: richard.whitehouse at projectclearwater.org (Richard Whitehouse (projectclearwater.org))
+Date: Thu, 8 Feb 2018 19:22:26 +0000
+Subject: [Project Clearwater] docker-compose setup: cannot add users in
+ web interface
+In-Reply-To: <CAK+ZkjOt7xcDhjxQm2Fibe+xVt-2V9coxDHDA9vX5Jq+Dptzpw@mail.gmail.com>
+References: <CAK+ZkjOt7xcDhjxQm2Fibe+xVt-2V9coxDHDA9vX5Jq+Dptzpw@mail.gmail.com>
+Message-ID: <BN6PR02MB3362421140458181BCAABE45F0F30@BN6PR02MB3362.namprd02.prod.outlook.com>
+
+Jo,
+
+I think you?ll need to provision some phone numbers in Ellis to proceed ? see http://clearwater.readthedocs.io/en/stable/Manual_Install.html?highlight=available%20numbers#provision-telephone-numbers-in-ellis
+
+You?ll need to run this in your Ellis container using docker exec.
+
+Richard
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of chbndrhnns
+Sent: 02 February 2018 09:23
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] docker-compose setup: cannot add users in web interface
+
+Hey,
+
+I am trying to get Clearwater release-129 running with docker-compose and I can reach the web interface but when I create a user and login, I see the error:
+
+{"status": 503, "message": "Service Unavailable", "reason": "No available numbers", "detail": {}, "error": true}
+
+Can someone guide me to resolve this error?
+What log files would be important to post here?
+
+Bye,
+Jo
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180208/97e15692/attachment.html>
+
+From chirag.arora at india.nec.com  Fri Feb  2 00:43:34 2018
+From: chirag.arora at india.nec.com (Chirag Arora)
+Date: Fri, 2 Feb 2018 05:43:34 +0000
+Subject: [Project Clearwater] Issue with Clearwater deployment on Stackube
+Message-ID: <OS2PR01MB0610620FD5F08AD293014578CFF90@OS2PR01MB0610.jpnprd01.prod.outlook.com>
+
+Dear All,
+
+
+We at NEC technologies, have been looking into Clearwater IMS on Kubernetes, using STACKUBE.
+
+(https://stackube.readthedocs.io/en/latest/single_node.html#spawn-up-kubernetes-and-openstack).
+
+After preparing setup with STACKUBE, we went on to deploy Clearwater IMS on top of it. Ref (https://github.com/Metaswitch/clearwater-docker/tree/master)
+
+
+
+But we think we are facing an issue with "supervisord" due to with our pods keeps on restarting. Debugging onto the same we looked into container logs(/var/log/containers/) and found below suspicious logs.
+
+=================================================================
+
+"CRIT Supervisor running as root (no user in config file)\n","stream":"stdout",""
+
+"Error: Cannot open an HTTP server: socket.error reported errno.ENXIO (6)\n"
+
+=================================================================
+
+
+
+We are not sure if we are looking into the right direction but if anyone can share his/her expertise in debugging the same or help us in providing any pointers it would be really helpful.
+
+
+
+Warm Regards,
+
+Chirag Arora
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180202/20e1f58e/attachment.html>
+
+From juan_qiu at tongji.edu.cn  Sat Feb 10 11:27:38 2018
+From: juan_qiu at tongji.edu.cn (=?UTF-8?B?6YKx5aif?=)
+Date: Sun, 11 Feb 2018 00:27:38 +0800
+Subject: [Project Clearwater] How to setup stress-node for the
+ clearwater-docker deployment
+Message-ID: <002401d3a28c$116291b0$3427b510$@tongji.edu.cn>
+
+Hi clearwater team,
+
+ 
+
+I am writing to ask how to set up the stress node for the clearwater-docker deployment?
+
+I am deploying the Clearwater with clearwater-docker (https://github.com/Metaswitch/clearwater-docker) on one single host. Now the deployment works when I verify it with two X-lite client, However, I am now in trouble to run the stress test for the all-in-one docker deployment.
+
+So far, I have tried two ways ,both failed ?:
+
+?1?     Installing the stress test tool on host server, mainly by runing ?sudo apt-get install clearwater-sip-stress? and ?sudo apt-get install clearwater-sip-stress-coreonly?  
+
+And then I want to try the following command line:?/usr/share/clearwater/bin/run_stress example.com 100 10? , it tells me that could not resolve ?sprout.example.com?, then I replace the home_domain with empty string.
+
+2018-02-11      00:17:38.948706 1518279458.948706: Unknown remote host 'sprout.' (Name or service not known, Success)
+
+?2?     Installing the stress test tool in the docker container.
+
+As I think it could be the networking issue, I login the homestead container to run ?sudo apt-get install clearwater-sip-stress? and ?sudo apt-get install clearwater-sip-stress-coreonly? , and then try running /usr/share/clearwater/bin/run_stress ? ? 100 10 , still fails with the result as following?
+
+?receive timeout on message Clearwater registration:1 without label to jump to (ontimeout attribute): aborting call. ?
+
+ 
+
+Please help! Looking forward to your reply.
+
+ 
+
+Best Regards & Thanks, Jasper
+
+ 
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180211/16d928b5/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Wed Feb 14 11:08:56 2018
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Wed, 14 Feb 2018 16:08:56 +0000
+Subject: [Project Clearwater] How to setup stress-node for the
+ clearwater-docker deployment
+In-Reply-To: <002401d3a28c$116291b0$3427b510$@tongji.edu.cn>
+References: <002401d3a28c$116291b0$3427b510$@tongji.edu.cn>
+Message-ID: <SN1PR02MB1664EDB1BAD32C489DF625E58FF50@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Hi Jasper,
+
+I?m not aware of anyone who?s tried running clearwater-sip-stress or clearwater-sip-stress-coreonly against Clearwater running under Docker, so we don?t have any pre-written guidelines on how to do it. Obviously, the level of load that the deployment will be able to handle will depend on the power of your docker host.
+
+Unless you specifically need to be running high load, you may want to consider running the Live Tests, as mentioned here: https://github.com/Metaswitch/clearwater-docker#what-next. To do that, you run the Clearwater Live Tests as if you had an All-in-One node (http://clearwater.readthedocs.io/en/stable/Running_the_live_tests.html#running-the-tests-against-an-all-in-one-node) pointing at the Docker Host.
+
+If you do want to try running stress, then first off you only need to install one of ?clearwater-sip-stress? and ?clearwater-sip-stress-coreonly?. The difference between them is that ?clearwater-sip-stress? sends traffic to Bono, whereas ?clearwater-sip-stress-coreonly? sends traffic directly to Sprout. Because Sprout doesn?t expose any external interfaces, where you should run the stress from depends on the tool you want to use:
+
+
+1)      Using ?clearwater-sip-stress?
+
+These scripts are older, and we tend to prefer using the other ones. However, these may be more appropriate to run against docker, because you run load against Bono. Bono exposes port 5060 on the docker host, and hence the stress tool doesn?t have to be run from inside your Docker deployment.
+
+
+
+To use these scripts, you should create a stress node *outside* the docker deployment (but which has network connectivity to your Docker host), and install the scripts as per http://clearwater.readthedocs.io/en/stable/Clearwater_stress_testing.html#running-stress-ims-core-and-p-cscf. You would then need to set the `shared_config` settings that those docs mention. Specifically:
+
+?         `home_domain` should match the `home_domain` you?ve got set in your Clearwater-Docker deployment (?example.com?, unless you?ve changed it)
+
+?         `bono_servers` should be the Docker host that?s running the Clearwater deployment
+All the other settings recommended in the docs should also be set to what you want (e.g. the number of subscribers you?re using etc.)
+
+
+2)      Using ?clearwater-sip-stress-coreonly?
+
+These scripts are newer, and send traffic directly to Sprout. Because Sprout doesn?t expose any services on the docker host, if you want to use these scripts then you?ll need to run stress from a container inside the docker deployment. Rather than installing on the Homestead container (which will impact the amount of load you can handle), I would suggest creating a new Ubuntu container and running them from that.
+
+
+
+For these scripts, you should follow the instructions here: http://clearwater.readthedocs.io/en/stable/Clearwater_stress_testing.html#running-stress-ims-core-only, noting especially that you will need to set the ?--icscf-target? and ?--scscf-target? to be your sprout hostname. If you?re using the default domain of ?example.com?, then the sprout hostname will just be ?sprout?.
+
+Hopefully this helps.
+
+Regards,
+Seb.
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of ??
+Sent: 10 February 2018 16:28
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] How to setup stress-node for the clearwater-docker deployment
+
+Hi clearwater team,
+
+I am writing to ask how to set up the stress node for the clearwater-docker deployment?
+I am deploying the Clearwater with clearwater-docker (https://github.com/Metaswitch/clearwater-docker) on one single host. Now the deployment works when I verify it with two X-lite client, However, I am now in trouble to run the stress test for the all-in-one docker deployment.
+So far, I have tried two ways ,both failed ?:
+
+?1?       Installing the stress test tool on host server, mainly by runing ?sudo apt-get install clearwater-sip-stress? and ?sudo apt-get install clearwater-sip-stress-coreonly?
+And then I want to try the following command line:?/usr/share/clearwater/bin/run_stress example.com 100 10? , it tells me that could not resolve ?sprout.example.com?, then I replace the home_domain with empty string.
+2018-02-11      00:17:38.948706 1518279458.948706: Unknown remote host 'sprout.' (Name or service not known, Success)
+
+?2?       Installing the stress test tool in the docker container.
+As I think it could be the networking issue, I login the homestead container to run ?sudo apt-get install clearwater-sip-stress? and ?sudo apt-get install clearwater-sip-stress-coreonly? , and then try running /usr/share/clearwater/bin/run_stress ? ? 100 10 , still fails with the result as following?
+?receive timeout on message Clearwater registration:1 without label to jump to (ontimeout attribute): aborting call. ?
+
+Please help! Looking forward to your reply.
+
+Best Regards & Thanks, Jasper
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180214/e182cd96/attachment.html>
+
+From Sebastian.Rex at metaswitch.com  Wed Feb 14 11:25:28 2018
+From: Sebastian.Rex at metaswitch.com (Sebastian Rex)
+Date: Wed, 14 Feb 2018 16:25:28 +0000
+Subject: [Project Clearwater] Why Clearwater send two register request
+ to my ApplicationServer?
+In-Reply-To: <CA+pBo5F47-TVSx5padHK763eDJKFw=i4UDU+2dppmmv8aqFWhQ@mail.gmail.com>
+References: <CA+pBo5F47-TVSx5padHK763eDJKFw=i4UDU+2dppmmv8aqFWhQ@mail.gmail.com>
+Message-ID: <SN1PR02MB1664AB2FCF09248D4927E67A8FF50@SN1PR02MB1664.namprd02.prod.outlook.com>
+
+Anthony,
+
+Without seeing the trace for myself, I can?t really say.
+
+Did you take this capture from the docker host, or from the Sprout node? If it was from the docker host, then it?s likely that what you?re seeing is:
+
+?         Sprout sends a message to the Docker host at 192.168.43.94
+
+?         Docker translates that into a message to 172.17.0.2, as it knows that?s the App Server?s internal IP address
+
+Regards,
+Seb.
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Anthony Lee
+Sent: 31 January 2018 16:17
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Why Clearwater send two register request to my ApplicationServer?
+
+I defined my application server's IP address in IFC for specific user in Clearwater.
+The application server is running in a Docker container.
+The IP address in IFC is something like "192.168.43.94".
+The internal IP address of the Docker container is "172.17.0.2".
+
+From the wireshark Clearwater sends two Register request to Application server:
+One to 192.168.43.94 and another one to 172.17.0.2.
+
+Why it does this? From where it knows 172.17.0.2?
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180214/f6014cb4/attachment.html>
+
+From Adam.Lindley at metaswitch.com  Wed Feb 14 12:06:29 2018
+From: Adam.Lindley at metaswitch.com (Adam Lindley)
+Date: Wed, 14 Feb 2018 17:06:29 +0000
+Subject: [Project Clearwater] Issue with Clearwater deployment on
+ Stackube
+In-Reply-To: <OS2PR01MB0610620FD5F08AD293014578CFF90@OS2PR01MB0610.jpnprd01.prod.outlook.com>
+References: <OS2PR01MB0610620FD5F08AD293014578CFF90@OS2PR01MB0610.jpnprd01.prod.outlook.com>
+Message-ID: <BY2PR02MB2037FE853231EE08D23DDF64E2F50@BY2PR02MB2037.namprd02.prod.outlook.com>
+
+Hi Chirag,
+
+I'm afraid I can't help that much from just that log snippet, without knowing what containers you're seeing them in, or other information/logs.
+I've taken a look at some of the logs on one of our test set ups, and find a number of instances of the "CRIT Supervisor running as root (no user in config file)\n","stream":"stdout","" log, when that deployment is running healthily. I think that may be a symptom of the fact that some of our processes run as root within the container, which is not a typical behaviour, but I don't believe this log is a cause for concern, and so don't think your issue is due to supervisord.
+
+However, I can't find any instances of the Error log you have included, which suggests that may be a part of your issue. I would suggest investigating that a bit more. Possibly there is an issue in the networking meaning that your pods cannot bind to sockets correctly. Are there security groups causing issues maybe?
+
+If you can't resolve the issue, can you provide some more detailed information. Which pods are restarting? Which logs are the 'Error' logs found in? Are there any other errors shown in other outputs?
+I'm afraid we have no direct experience of Stackube, so I'm not sure what else to suggest.
+
+Best of luck, and let us know how you progress,
+Adam
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Chirag Arora
+Sent: 02 February 2018 05:44
+To: Clearwater at lists.projectclearwater.org
+Cc: Parwinder Singh <parwinder.singh at nectechnologies.in>; Atul Pandey <atul.pandey at india.nec.com>
+Subject: [Project Clearwater] Issue with Clearwater deployment on Stackube
+
+Dear All,
+
+
+We at NEC technologies, have been looking into Clearwater IMS on Kubernetes, using STACKUBE.
+
+(https://stackube.readthedocs.io/en/latest/single_node.html#spawn-up-kubernetes-and-openstack).
+
+After preparing setup with STACKUBE, we went on to deploy Clearwater IMS on top of it. Ref (https://github.com/Metaswitch/clearwater-docker/tree/master)
+
+
+
+But we think we are facing an issue with "supervisord" due to with our pods keeps on restarting. Debugging onto the same we looked into container logs(/var/log/containers/) and found below suspicious logs.
+
+=================================================================
+
+"CRIT Supervisor running as root (no user in config file)\n","stream":"stdout",""
+
+"Error: Cannot open an HTTP server: socket.error reported errno.ENXIO (6)\n"
+
+=================================================================
+
+
+
+We are not sure if we are looking into the right direction but if anyone can share his/her expertise in debugging the same or help us in providing any pointers it would be really helpful.
+
+
+
+Warm Regards,
+
+Chirag Arora
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180214/ee33e635/attachment.html>
+
+From anthonynlee at gmail.com  Sun Feb 18 23:08:03 2018
+From: anthonynlee at gmail.com (Anthony Lee)
+Date: Sun, 18 Feb 2018 23:08:03 -0500
+Subject: [Project Clearwater] How does Clearwater decide if the session case
+ is originating or terminating?
+In-Reply-To: <CA+pBo5EQiHJqo=arQU9GzSgvEcgbVbMKyxRF-gZJ6m6Ys5o=eA@mail.gmail.com>
+References: <CA+pBo5E5P2_7u8WEtAyO2pbtK_3aE7Vx3=Ysmk8DtWY+WPSweg@mail.gmail.com>
+	<CA+pBo5HNCCti9ptmGU9vu=vmrgi+BhvLvgrx-N2QjO7xXH+yzg@mail.gmail.com>
+	<CA+pBo5FKSb30U0BDat=PEudKbeUo2JRvAizr33uiG6o-05=3nw@mail.gmail.com>
+	<CA+pBo5GehNzxfMpLyc9TbZO8_NudsKF80yE+Uwdo1cOpgsiYwA@mail.gmail.com>
+	<CA+pBo5Fe7Ua5wWLCzUkhPP9n9WSr=ae=LOtYjKF4Dp+fKSHKRQ@mail.gmail.com>
+	<CA+pBo5EBLkyav_ERfx-FdHcWxXvXd9xi0yj28J_+yVCtywqjMw@mail.gmail.com>
+	<CA+pBo5E1qEPXkU+HrFOUKWAQ8qpqbyiz3y_wxG6aEFvomYDBbQ@mail.gmail.com>
+	<CA+pBo5Ev3npL2A_ZsfAqeSrW7fpJGmVcYUbPYCjQpjKcf+FmVw@mail.gmail.com>
+	<CA+pBo5EQiHJqo=arQU9GzSgvEcgbVbMKyxRF-gZJ6m6Ys5o=eA@mail.gmail.com>
+Message-ID: <CA+pBo5FfRfi+ttj8wzPq3W+zi2DGnCyAWZw0AuSzcSVSELbZEw@mail.gmail.com>
+
+I have a test that sends a request from user a to user b, a and b both have
+a iFC that point to a application server, for different session case a
+different server parameter is used.
+Now from the sprout log I see that for the request sent from a it ask for
+b's profile and the session case is term ,why?
+
+Should it be originating for a, and then when application server send it
+back to scscf, then apply for b terminating?
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180218/3467c1f7/attachment.html>
+
+From kevin.salaun at orange.com  Mon Feb 19 05:06:14 2018
+From: kevin.salaun at orange.com (kevin.salaun at orange.com)
+Date: Mon, 19 Feb 2018 10:06:14 +0000
+Subject: [Project Clearwater]  How to configure the etcd cluster
+Message-ID: <30838_1519034775_5A8AA197_30838_334_1_3F0639227D52B843A99BAD4211EC6A718B7FB9@OPEXCLILM43.corporate.adroot.infra.ftgroup>
+
+Hello,
+
+
+
+My problem is the next, I would like implement etcd cluster for broadcast the "shared_config", but the nodes seem not communicate.
+
+In the screenshots, I have four machines (bono, sprout, vellum, homer) which respectively have the IP addresses next : 6.6.6.5, 6.6.6.7, 6.6.6.11, 6.6.6.13.
+
+
+
+bono, sprout, vellum are cluster masters and homer a proxy.
+
+
+
+Firstly, I configured the etcd on each machine with the "local_config" file as below and I restarted the "clearwater-infrastructure" service.
+
+For bono, sprout and vellum :
+local_ip=<private IP>
+public_ip=<public IP>
+public_hostname=<node name>
+etcd_cluster="6.6.6.5,6.6.6.7,6.6.6.11"
+local_site_name=<site name>
+
+
+
+
+For homer:
+local_ip= 6.6.6.13
+public_ip=<public IP>
+public_hostname=homer
+etcd_proxy="6.6.6.5,6.6.6.7,6.6.6.11"
+local_site_name=<site name>
+
+
+
+
+Secondly, on vellum, I stopped etcs services, create the file "/etc/clearwater/no_cluster_manager" for force the generation of cluster and start the etcs services, then, I only restarted the etcd services on other computers (first the masters machines, then the proxy machine).
+
+
+
+Bono:
+~$ sudo monit stop -g etcd
+~$ sudo monit stop -g clearwater_cluster_manager
+~$ sudo monit stop -g clearwater_config_manager
+~$ sudo monit stop -g clearwater_queue_manager
+~$ sudo touch /etc/clearwater/no_cluster_manager
+~$ sudo monit start -g clearwater_queue_manager
+~$ sudo monit start -g clearwater_config_manager
+~$ sudo monit start -g clearwater_cluster_manager
+~$ sudo monit start -g etcd
+~$ sudo service clearwater-etcd restart
+* Restarting etcd clearwater-etcd
+start-stop-daemon : warning : failed to kill 17932 : No such process
+Failed to get leader : client : etcd cluster is unavailable or misconfigured ; error #0 : client ; etcd member http://6.6.6.5:4000 has no leader
+; error #1 : dial tcp 6.6.6.11:4000 : getsockopt : connection refused
+
+Provide a single member ID
+Creating new cluster...
+Etcd failed to start
+
+
+
+
+Sprout
+~$ sudo monit stop -g etcd
+~$ sudo monit stop -g clearwater_cluster_manager
+~$ sudo monit stop -g clearwater_config_manager
+~$ sudo monit stop -g clearwater_queue_manager
+~$ sudo monit start -g clearwater_queue_manager
+~$ sudo monit start -g clearwater_config_manager
+~$ sudo monit start -g clearwater_cluster_manager
+~$ sudo monit start -g etcd
+~$ sudo service clearwater-etcd restart
+* Restarting etcd clearwater-etcd
+client : etcd cluster is unavailable or misconfigured ; error #0 : dial tcp 6.6.6.11:4000 : getsockopt : connection refused
+; error #1 : http : no Host in request URL
+Rejoining cluster ...
+[ OK ]
+
+
+
+
+Vellum
+~$ sudo monit stop -g etcd
+~$ sudo monit stop -g clearwater_cluster_manager
+~$ sudo monit stop -g clearwater_config_manager
+~$ sudo monit stop -g clearwater_queue_manager
+~$ sudo monit start -g clearwater_queue_manager
+~$ sudo monit start -g clearwater_config_manager
+~$ sudo monit start -g clearwater_cluster_manager
+~$ sudo monit start -g etcd
+~$ sudo service clearwater-etcd restart
+* Restarting etcd clearwater-etcd
+client : etcd cluster is unavailable or misconfigured ; error #0 : dial tcp 6.6.6.11:4000 : getsockopt : connection refused
+; error #1 : client : endpoint http://6.6.6.5:4000 exceeded header timeout
+; error #2 : http : no Host in request URL
+Rejoining cluster ...
+[ OK ]
+
+
+
+
+Homer
+~$ sudo monit stop -g etcd
+~$ sudo monit stop -g clearwater_cluster_manager
+~$ sudo monit stop -g clearwater_config_manager
+~$ sudo monit stop -g clearwater_queue_manager
+~$ sudo monit start -g clearwater_queue_manager
+~$ sudo monit start -g clearwater_config_manager
+~$ sudo monit start -g clearwater_cluster_manager
+~$ sudo monit start -g etcd
+cat : /var/run/clearwater-etcd/clearwater-etcd.pid : No such file or directory
+cat : /var/run/clearwater-etcd/clearwater-etcd.pid : No such file or directory
+* Restarting etcd clearwater-etcd
+context deadline exceeded
+Provide a single member ID
+Joining cluster as proxy...
+[ fail ]
+~$ sudo service clearwater-etcd restart
+context deadline exceeded
+Provide a single member ID
+Joining cluster as proxy...
+[ OK ]
+
+
+
+
+Machines seem do not can communicate between them (with etcd), so I executed the command "netstat" and we can see that the computers don't listen on the 4000 port for TCP (IPv4).
+
+
+
+Bono
+~$ sudo netstat -putln | grep etcd
+~$
+
+
+
+
+Sprout
+~$ sudo netstat -putln | grep etcd
+tcp 0 0 6.6.6.7:2380 0.0.0.0:* LISTEN 22804/etcd
+tcp6 0 0 :::4000 :::* LISTEN 22804/etcd
+
+
+
+
+Vellum
+~$ sudo netstat -putln | grep etcd
+tcp 0 0 6.6.6.5:2380 0.0.0.0:* LISTEN 14650/etcd
+tcp6 0 0 :::4000 :::* LISTEN 14650/etcd
+
+
+
+
+Homer
+~$ sudo netstat -putln | grep etcd
+tcp6 0 0 :::4000 :::* LISTEN 27288/etcd
+
+
+
+
+
+
+I also made some commands to get more information about the state of the cluster :
+
+Bono
+~$ sudo cw-check_cluster_state
+This script prints the status of the Cassandra, Chronos, and Memcached clusters.
+This node (6.6.6.5) should not be in any cluster.
+
+~$ sudo clearwater-etcdctl cluster-health
+cluster may be unhealthy : failed to list members
+Error : http://6.6.6.5:4000 exceeded header timeout
+
+error #0 : client : endpoint http://6.6.6.5:4000 exceeded header timeout
+
+~$ sudo clearwater-etcdctl member list
+client : etcd cluster is unavailable or misconfigured ; error #0 : client : endpoint http://6.6.6.5:4000 exceeded header timeout
+
+
+
+
+Homer
+~$ sudo cw-check_cluster_state
+This script prints the status of the Cassandra, Chronos, and Memcached clusters.
+This node (6.6.6.13) should not be in any cluster.
+
+~$ sudo clearwater-etcdctl cluster-health
+cluster may be unhealthy : failed to list members
+Error : client: etcd cluster is unavailable or misconfigured; error #0: client: endpoint http://6.6.6.13:4000 exceeded header timeout
+
+error #0 : client : endpoint http://6.6.6.13:4000 exceeded header timeout
+
+~$ sudo clearwater-etcdctl member list
+client : etcd cluster is unavailable or misconfigured ; error #0 : client : endpoint http://6.6.6.13:4000 exceeded header timeout
+
+
+
+
+Did I make a mistake in the configuration?
+
+
+
+Best regards,
+
+K?vin SALA?N
+
+
+Cordialement,
+
+[Logo Orange]<http://www.orange.com/>
+
+K?vin Sala?n
+Apprenti virtualisation de l'IMS
+IMT/OLN
+
+Fixe : +33296070406 <https://monsi.sso.francetelecom.fr/index.asp?target=http%3A%2F%2Fclicvoice.sso.francetelecom.fr%2FClicvoiceV2%2FToolBar.do%3Faction%3Ddefault%26rootservice%3DSIGNATURE%26to%3D+33296070406>
+kevin.salaun at orange.com<mailto:kevin.salaun at orange.com>
+
+D?partement Innovation, Marketing and Technologies
+www.orange.com<http://www.orange.com/>
+
+
+_________________________________________________________________________________________________________________________
+
+Ce message et ses pieces jointes peuvent contenir des informations confidentielles ou privilegiees et ne doivent donc
+pas etre diffuses, exploites ou copies sans autorisation. Si vous avez recu ce message par erreur, veuillez le signaler
+a l'expediteur et le detruire ainsi que les pieces jointes. Les messages electroniques etant susceptibles d'alteration,
+Orange decline toute responsabilite si ce message a ete altere, deforme ou falsifie. Merci.
+
+This message and its attachments may contain confidential or privileged information that may be protected by law;
+they should not be distributed, used or copied without authorisation.
+If you have received this email in error, please notify the sender and delete this message and its attachments.
+As emails may be altered, Orange is not liable for messages that have been modified, changed or falsified.
+Thank you.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180219/44399e03/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 605 bytes
+Desc: image001.png
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180219/44399e03/attachment.png>
+
+From anthonynlee at gmail.com  Mon Feb 19 10:35:44 2018
+From: anthonynlee at gmail.com (Anthony Lee)
+Date: Mon, 19 Feb 2018 10:35:44 -0500
+Subject: [Project Clearwater] How does Clearwater decide if the session
+ case is originating or terminating?
+In-Reply-To: <CA+pBo5FfRfi+ttj8wzPq3W+zi2DGnCyAWZw0AuSzcSVSELbZEw@mail.gmail.com>
+References: <CA+pBo5E5P2_7u8WEtAyO2pbtK_3aE7Vx3=Ysmk8DtWY+WPSweg@mail.gmail.com>
+	<CA+pBo5HNCCti9ptmGU9vu=vmrgi+BhvLvgrx-N2QjO7xXH+yzg@mail.gmail.com>
+	<CA+pBo5FKSb30U0BDat=PEudKbeUo2JRvAizr33uiG6o-05=3nw@mail.gmail.com>
+	<CA+pBo5GehNzxfMpLyc9TbZO8_NudsKF80yE+Uwdo1cOpgsiYwA@mail.gmail.com>
+	<CA+pBo5Fe7Ua5wWLCzUkhPP9n9WSr=ae=LOtYjKF4Dp+fKSHKRQ@mail.gmail.com>
+	<CA+pBo5EBLkyav_ERfx-FdHcWxXvXd9xi0yj28J_+yVCtywqjMw@mail.gmail.com>
+	<CA+pBo5E1qEPXkU+HrFOUKWAQ8qpqbyiz3y_wxG6aEFvomYDBbQ@mail.gmail.com>
+	<CA+pBo5Ev3npL2A_ZsfAqeSrW7fpJGmVcYUbPYCjQpjKcf+FmVw@mail.gmail.com>
+	<CA+pBo5EQiHJqo=arQU9GzSgvEcgbVbMKyxRF-gZJ6m6Ys5o=eA@mail.gmail.com>
+	<CA+pBo5FfRfi+ttj8wzPq3W+zi2DGnCyAWZw0AuSzcSVSELbZEw@mail.gmail.com>
+Message-ID: <CA+pBo5F64z6S3rrAj3LyJ-fdonsv0YAAEVTMejEAoGvUdY3jDQ@mail.gmail.com>
+
+Please forget my testcase, it turns out that I put SessionCase as 1 in SPT
+for term_registered while it should be 2.
+
+But it would be great if someone could answer the question in the title.
+
+>From the 3gpp technical spec I read it seems like its is the original
+dialog identifier that s-cscf  placed that let the s-cscf determined what's
+the session case.
+Am I right?
+
+On Sun, Feb 18, 2018 at 11:08 PM, Anthony Lee <anthonynlee at gmail.com> wrote:
+
+> I have a test that sends a request from user a to user b, a and b both
+> have a iFC that point to a application server, for different session case a
+> different server parameter is used.
+> Now from the sprout log I see that for the request sent from a it ask for
+> b's profile and the session case is term ,why?
+>
+> Should it be originating for a, and then when application server send it
+> back to scscf, then apply for b terminating?
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180219/599e19f2/attachment.html>
+
+From Richard.Whitehouse at metaswitch.com  Mon Feb 19 16:24:39 2018
+From: Richard.Whitehouse at metaswitch.com (Richard Whitehouse)
+Date: Mon, 19 Feb 2018 21:24:39 +0000
+Subject: [Project Clearwater] Unable to locate package
+In-Reply-To: <CAPqjCcGpk599sgYw8_GS7dD6MobyPjkCky78oSJpgAN-QgUY_Q@mail.gmail.com>
+References: <CAPqjCcHJpbfxCeeGCZT=afwzdyZtGU7aop_pYc_HZ+iC0TfYYg@mail.gmail.com>
+	<CAPqjCcGpk599sgYw8_GS7dD6MobyPjkCky78oSJpgAN-QgUY_Q@mail.gmail.com>
+Message-ID: <BN6PR02MB336269C8DB404BEC5C36B4FFF0C80@BN6PR02MB3362.namprd02.prod.outlook.com>
+
+Pushpendra,
+
+I assume you are following the instructions on Read the Docs and have configured the APT software source as shown under http://clearwater.readthedocs.io/en/stable/Manual_Install.html#configure-the-apt-software-sources ?
+
+
+Can you double check that you?ve added ?deb http://repo.cw-ngv.com/stable binary/<http://repo.cw-ngv.com/stable%20binary/>? to /etc/apt/sources.list.d/clearwater.list?
+
+
+
+What output do you get when you run ?sudo apt-get update??
+
+
+
+It should contain the following lines, amongst many others:
+
+
+
+Hit http://repo.cw-ngv.com binary/ Packages
+
+Hit http://repo.cw-ngv.com binary/ Release.gpg
+
+Hit http://repo.cw-ngv.com binary/ Release
+
+
+
+
+
+Richard
+
+
+From: Clearwater On Behalf Of Pushpendra
+Sent: 16 February 2018 17:18
+To: clearwater-owner at lists.projectclearwater.org
+Subject: Unable to locate package
+
+
+Hi sir,
+Hi,
+I am using virtualbox and install 6 ubuntu machine 14.04.1 version. I am following the manual installation in the doc. When I install machine in every vm luke ellis, bono etc but the command give unable to locate package ellis, unable to locate package bono resutund etc. I am using bridge adapter in network instead NAT or anything. I have set the proxy in every machine. I got ip of every vm in the same network as that of host machine(x.x.x.201) vms having (x.x.x.152, x.x.x.157, x.x.x.206, x.x.x.207, x.x.x.208, x.x.x.209). I am able ping each vm from other but I got unable to locate package ellis, bono, restund, sprout, vellum, etc. Please help me out.. I have tried various ways but not able to fix that. Thanx in advance.
+
+Thanks
+Pushpendra
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180219/52a28455/attachment.html>
+
+From richard.whitehouse at projectclearwater.org  Mon Feb 19 16:31:47 2018
+From: richard.whitehouse at projectclearwater.org (Richard Whitehouse (projectclearwater.org))
+Date: Mon, 19 Feb 2018 21:31:47 +0000
+Subject: [Project Clearwater] How does Clearwater decide if the session
+ case is originating or terminating?
+In-Reply-To: <CA+pBo5F64z6S3rrAj3LyJ-fdonsv0YAAEVTMejEAoGvUdY3jDQ@mail.gmail.com>
+References: <CA+pBo5E5P2_7u8WEtAyO2pbtK_3aE7Vx3=Ysmk8DtWY+WPSweg@mail.gmail.com>
+	<CA+pBo5HNCCti9ptmGU9vu=vmrgi+BhvLvgrx-N2QjO7xXH+yzg@mail.gmail.com>
+	<CA+pBo5FKSb30U0BDat=PEudKbeUo2JRvAizr33uiG6o-05=3nw@mail.gmail.com>
+	<CA+pBo5GehNzxfMpLyc9TbZO8_NudsKF80yE+Uwdo1cOpgsiYwA@mail.gmail.com>
+	<CA+pBo5Fe7Ua5wWLCzUkhPP9n9WSr=ae=LOtYjKF4Dp+fKSHKRQ@mail.gmail.com>
+	<CA+pBo5EBLkyav_ERfx-FdHcWxXvXd9xi0yj28J_+yVCtywqjMw@mail.gmail.com>
+	<CA+pBo5E1qEPXkU+HrFOUKWAQ8qpqbyiz3y_wxG6aEFvomYDBbQ@mail.gmail.com>
+	<CA+pBo5Ev3npL2A_ZsfAqeSrW7fpJGmVcYUbPYCjQpjKcf+FmVw@mail.gmail.com>
+	<CA+pBo5EQiHJqo=arQU9GzSgvEcgbVbMKyxRF-gZJ6m6Ys5o=eA@mail.gmail.com>
+	<CA+pBo5FfRfi+ttj8wzPq3W+zi2DGnCyAWZw0AuSzcSVSELbZEw@mail.gmail.com>
+	<CA+pBo5F64z6S3rrAj3LyJ-fdonsv0YAAEVTMejEAoGvUdY3jDQ@mail.gmail.com>
+Message-ID: <BN6PR02MB3362F1A3FAD6E16D929F8CB4F0C80@BN6PR02MB3362.namprd02.prod.outlook.com>
+
+Anthony,
+
+No, it?s not the originating dialog identifier, or at least not solely the ODI token. This can?t be used, as the ODI is only added by the S-CSCF when the call is sent to an application server.
+
+TS 24.229 is the correct spec to use here ? see section 5.4.3.1, and it identifies three different ways the S-CSCF should do this.
+
+
+-          The S-CSCF can use information included on the Service-Route which was sent in response to the REGISTER, e.g. a specific user part, parameter or port to identifying an originating request, and compare it to the topmost Route header, or the port it was received upon
+
+
+-          The S-CSCF can look at whether the request contains the ?orig? parameter in the topmost Route header.
+
+
+-          If neither of these match, the S-CSCF should assume it?s terminating.
+
+For Clearwater, the Service-Route header that Clearwater responds to messages contains an ?orig? parameter. As such Clearwater essentially uses whether the request contains the orig parameter.
+
+Richard
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Anthony Lee
+Sent: 19 February 2018 15:36
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] How does Clearwater decide if the session case is originating or terminating?
+
+Please forget my testcase, it turns out that I put SessionCase as 1 in SPT for term_registered while it should be 2.
+
+But it would be great if someone could answer the question in the title.
+
+From the 3gpp technical spec I read it seems like its is the original dialog identifier that s-cscf  placed that let the s-cscf determined what's the session case.
+Am I right?
+
+On Sun, Feb 18, 2018 at 11:08 PM, Anthony Lee <anthonynlee at gmail.com<mailto:anthonynlee at gmail.com>> wrote:
+I have a test that sends a request from user a to user b, a and b both have a iFC that point to a application server, for different session case a different server parameter is used.
+Now from the sprout log I see that for the request sent from a it ask for b's profile and the session case is term ,why?
+
+Should it be originating for a, and then when application server send it back to scscf, then apply for b terminating?
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180219/2ee4ea0f/attachment.html>
+
+From anthonynlee at gmail.com  Mon Feb 19 17:59:38 2018
+From: anthonynlee at gmail.com (Anthony Lee)
+Date: Mon, 19 Feb 2018 17:59:38 -0500
+Subject: [Project Clearwater] How does Clearwater decide if the session
+ case is originating or terminating?
+In-Reply-To: <BN6PR02MB3362F1A3FAD6E16D929F8CB4F0C80@BN6PR02MB3362.namprd02.prod.outlook.com>
+References: <CA+pBo5E5P2_7u8WEtAyO2pbtK_3aE7Vx3=Ysmk8DtWY+WPSweg@mail.gmail.com>
+	<CA+pBo5HNCCti9ptmGU9vu=vmrgi+BhvLvgrx-N2QjO7xXH+yzg@mail.gmail.com>
+	<CA+pBo5FKSb30U0BDat=PEudKbeUo2JRvAizr33uiG6o-05=3nw@mail.gmail.com>
+	<CA+pBo5GehNzxfMpLyc9TbZO8_NudsKF80yE+Uwdo1cOpgsiYwA@mail.gmail.com>
+	<CA+pBo5Fe7Ua5wWLCzUkhPP9n9WSr=ae=LOtYjKF4Dp+fKSHKRQ@mail.gmail.com>
+	<CA+pBo5EBLkyav_ERfx-FdHcWxXvXd9xi0yj28J_+yVCtywqjMw@mail.gmail.com>
+	<CA+pBo5E1qEPXkU+HrFOUKWAQ8qpqbyiz3y_wxG6aEFvomYDBbQ@mail.gmail.com>
+	<CA+pBo5Ev3npL2A_ZsfAqeSrW7fpJGmVcYUbPYCjQpjKcf+FmVw@mail.gmail.com>
+	<CA+pBo5EQiHJqo=arQU9GzSgvEcgbVbMKyxRF-gZJ6m6Ys5o=eA@mail.gmail.com>
+	<CA+pBo5FfRfi+ttj8wzPq3W+zi2DGnCyAWZw0AuSzcSVSELbZEw@mail.gmail.com>
+	<CA+pBo5F64z6S3rrAj3LyJ-fdonsv0YAAEVTMejEAoGvUdY3jDQ@mail.gmail.com>
+	<BN6PR02MB3362F1A3FAD6E16D929F8CB4F0C80@BN6PR02MB3362.namprd02.prod.outlook.com>
+Message-ID: <CA+pBo5H3DFdkyZnSC1vKNhYWZ4e-ETpbA0Bbz6v9dh6KFwPwTA@mail.gmail.com>
+
+Thanks, Richard.
+I just extracted the ServiceRoute header from the response of Register and
+use it as Route of Invite.
+
+Another question:
+My Application has two roles: Originating and Terminating, I set up the
+same service triggers(Originating, Term_Registered) for UeA and UeB;
+The expected path will be UeA -> CSCF -> OriginAS -> CSCF -> TermAS ->UeB,
+but now the path is UeA -> CSCF -> OriginAS -> CSCF -> TermAS -> CSCF ->
+TermAS ...
+Because the request from TermAS is always matched with iFC service trigger
+as it is always Term( Term_Registered or Term_Unregistered).
+I have to  removed the service trigger(Term_Registered) for UeB to make it
+work.
+
+What's the right solution?
+
+
+
+On Mon, Feb 19, 2018 at 4:31 PM, Richard Whitehouse (projectclearwater.org)
+<richard.whitehouse at projectclearwater.org> wrote:
+
+> Anthony,
+>
+>
+>
+> No, it?s not the originating dialog identifier, or at least not solely the
+> ODI token. This can?t be used, as the ODI is only added by the S-CSCF when
+> the call is sent to an application server.
+>
+>
+>
+> TS 24.229 is the correct spec to use here ? see section 5.4.3.1, and it
+> identifies three different ways the S-CSCF should do this.
+>
+>
+>
+> -          The S-CSCF can use information included on the Service-Route
+> which was sent in response to the REGISTER, e.g. a specific user part,
+> parameter or port to identifying an originating request, and compare it to
+> the topmost Route header, or the port it was received upon
+>
+> -          The S-CSCF can look at whether the request contains the ?orig?
+> parameter in the topmost Route header.
+>
+> -          If neither of these match, the S-CSCF should assume it?s
+> terminating.
+>
+>
+>
+> For Clearwater, the Service-Route header that Clearwater responds to
+> messages contains an ?orig? parameter. As such Clearwater essentially uses
+> whether the request contains the orig parameter.
+>
+>
+>
+> Richard
+>
+>
+>
+> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+> *On Behalf Of *Anthony Lee
+> *Sent:* 19 February 2018 15:36
+> *To:* clearwater at lists.projectclearwater.org
+> *Subject:* Re: [Project Clearwater] How does Clearwater decide if the
+> session case is originating or terminating?
+>
+>
+>
+> Please forget my testcase, it turns out that I put SessionCase as 1 in SPT
+> for term_registered while it should be 2.
+>
+>
+>
+> But it would be great if someone could answer the question in the title.
+>
+>
+>
+> From the 3gpp technical spec I read it seems like its is the original
+> dialog identifier that s-cscf  placed that let the s-cscf determined what's
+> the session case.
+>
+> Am I right?
+>
+>
+>
+> On Sun, Feb 18, 2018 at 11:08 PM, Anthony Lee <anthonynlee at gmail.com>
+> wrote:
+>
+> I have a test that sends a request from user a to user b, a and b both
+> have a iFC that point to a application server, for different session case a
+> different server parameter is used.
+>
+> Now from the sprout log I see that for the request sent from a it ask for
+> b's profile and the session case is term ,why?
+>
+>
+>
+> Should it be originating for a, and then when application server send it
+> back to scscf, then apply for b terminating?
+>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180219/1e6b0cab/attachment.html>
+
+From anthonynlee at gmail.com  Mon Feb 19 23:36:39 2018
+From: anthonynlee at gmail.com (Anthony Lee)
+Date: Mon, 19 Feb 2018 23:36:39 -0500
+Subject: [Project Clearwater] How does Clearwater decide if the session
+ case is originating or terminating?
+In-Reply-To: <CA+pBo5H3DFdkyZnSC1vKNhYWZ4e-ETpbA0Bbz6v9dh6KFwPwTA@mail.gmail.com>
+References: <CA+pBo5E5P2_7u8WEtAyO2pbtK_3aE7Vx3=Ysmk8DtWY+WPSweg@mail.gmail.com>
+	<CA+pBo5HNCCti9ptmGU9vu=vmrgi+BhvLvgrx-N2QjO7xXH+yzg@mail.gmail.com>
+	<CA+pBo5FKSb30U0BDat=PEudKbeUo2JRvAizr33uiG6o-05=3nw@mail.gmail.com>
+	<CA+pBo5GehNzxfMpLyc9TbZO8_NudsKF80yE+Uwdo1cOpgsiYwA@mail.gmail.com>
+	<CA+pBo5Fe7Ua5wWLCzUkhPP9n9WSr=ae=LOtYjKF4Dp+fKSHKRQ@mail.gmail.com>
+	<CA+pBo5EBLkyav_ERfx-FdHcWxXvXd9xi0yj28J_+yVCtywqjMw@mail.gmail.com>
+	<CA+pBo5E1qEPXkU+HrFOUKWAQ8qpqbyiz3y_wxG6aEFvomYDBbQ@mail.gmail.com>
+	<CA+pBo5Ev3npL2A_ZsfAqeSrW7fpJGmVcYUbPYCjQpjKcf+FmVw@mail.gmail.com>
+	<CA+pBo5EQiHJqo=arQU9GzSgvEcgbVbMKyxRF-gZJ6m6Ys5o=eA@mail.gmail.com>
+	<CA+pBo5FfRfi+ttj8wzPq3W+zi2DGnCyAWZw0AuSzcSVSELbZEw@mail.gmail.com>
+	<CA+pBo5F64z6S3rrAj3LyJ-fdonsv0YAAEVTMejEAoGvUdY3jDQ@mail.gmail.com>
+	<BN6PR02MB3362F1A3FAD6E16D929F8CB4F0C80@BN6PR02MB3362.namprd02.prod.outlook.com>
+	<CA+pBo5H3DFdkyZnSC1vKNhYWZ4e-ETpbA0Bbz6v9dh6KFwPwTA@mail.gmail.com>
+Message-ID: <CA+pBo5HK8UqSaFAMcpZ82u6_rCEx5q7wGZRj-3wSU2PivC=kKg@mail.gmail.com>
+
+I need to correct my last email:
+
+The expected path should be:
+UeA->pCscf->sCscf->originAs->sCscf->termAs->pCscf->UeB.
+
+Now as the invite forwarded by sCscf always contains route header which
+points back to sCscf so the termAs keep send it back to it and becomes a
+loop.
+I guess termAs need to send invite to configured iCscf which would know
+which pCscf to use.
+Am I right?
+
+Am I right
+
+On Feb 19, 2018 17:59, "Anthony Lee" <anthonynlee at gmail.com> wrote:
+
+> Thanks, Richard.
+> I just extracted the ServiceRoute header from the response of Register and
+> use it as Route of Invite.
+>
+> Another question:
+> My Application has two roles: Originating and Terminating, I set up the
+> same service triggers(Originating, Term_Registered) for UeA and UeB;
+> The expected path will be UeA -> CSCF -> OriginAS -> CSCF -> TermAS ->UeB,
+> but now the path is UeA -> CSCF -> OriginAS -> CSCF -> TermAS -> CSCF ->
+> TermAS ...
+> Because the request from TermAS is always matched with iFC service trigger
+> as it is always Term( Term_Registered or Term_Unregistered).
+> I have to  removed the service trigger(Term_Registered) for UeB to make it
+> work.
+>
+> What's the right solution?
+>
+>
+>
+> On Mon, Feb 19, 2018 at 4:31 PM, Richard Whitehouse (projectclearwater.org)
+> <richard.whitehouse at projectclearwater.org> wrote:
+>
+>> Anthony,
+>>
+>>
+>>
+>> No, it?s not the originating dialog identifier, or at least not solely
+>> the ODI token. This can?t be used, as the ODI is only added by the S-CSCF
+>> when the call is sent to an application server.
+>>
+>>
+>>
+>> TS 24.229 is the correct spec to use here ? see section 5.4.3.1, and it
+>> identifies three different ways the S-CSCF should do this.
+>>
+>>
+>>
+>> -          The S-CSCF can use information included on the Service-Route
+>> which was sent in response to the REGISTER, e.g. a specific user part,
+>> parameter or port to identifying an originating request, and compare it to
+>> the topmost Route header, or the port it was received upon
+>>
+>> -          The S-CSCF can look at whether the request contains the
+>> ?orig? parameter in the topmost Route header.
+>>
+>> -          If neither of these match, the S-CSCF should assume it?s
+>> terminating.
+>>
+>>
+>>
+>> For Clearwater, the Service-Route header that Clearwater responds to
+>> messages contains an ?orig? parameter. As such Clearwater essentially uses
+>> whether the request contains the orig parameter.
+>>
+>>
+>>
+>> Richard
+>>
+>>
+>>
+>> *From:* Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org]
+>> *On Behalf Of *Anthony Lee
+>> *Sent:* 19 February 2018 15:36
+>> *To:* clearwater at lists.projectclearwater.org
+>> *Subject:* Re: [Project Clearwater] How does Clearwater decide if the
+>> session case is originating or terminating?
+>>
+>>
+>>
+>> Please forget my testcase, it turns out that I put SessionCase as 1 in
+>> SPT for term_registered while it should be 2.
+>>
+>>
+>>
+>> But it would be great if someone could answer the question in the title.
+>>
+>>
+>>
+>> From the 3gpp technical spec I read it seems like its is the original
+>> dialog identifier that s-cscf  placed that let the s-cscf determined what's
+>> the session case.
+>>
+>> Am I right?
+>>
+>>
+>>
+>> On Sun, Feb 18, 2018 at 11:08 PM, Anthony Lee <anthonynlee at gmail.com>
+>> wrote:
+>>
+>> I have a test that sends a request from user a to user b, a and b both
+>> have a iFC that point to a application server, for different session case a
+>> different server parameter is used.
+>>
+>> Now from the sprout log I see that for the request sent from a it ask for
+>> b's profile and the session case is term ,why?
+>>
+>>
+>>
+>> Should it be originating for a, and then when application server send it
+>> back to scscf, then apply for b terminating?
+>>
+>>
+>>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180219/4a6490da/attachment.html>
+
+From anthonynlee at gmail.com  Fri Feb 23 14:21:45 2018
+From: anthonynlee at gmail.com (Anthony Lee)
+Date: Fri, 23 Feb 2018 14:21:45 -0500
+Subject: [Project Clearwater] Is it a bug that Clearwater invalidate the ODI
+ once it receives 200OK response?
+Message-ID: <CA+pBo5GYDWB6riVQhiB9fLH82jfbgnXiBYr5v6vq2qi94xsvtw@mail.gmail.com>
+
+In my case, there is a application service in terminating side doing
+message Store-And-Forward.
+So when the service receives an Invite it replies 200OK response
+immiediately and then it create a new Invite  to the user.
+
+Since scscf invalidated the AS chain when it receives 200OK response the
+Invite request is matched with iFC again from the beginning instead just
+match with the rest iFCs. So it fail to send to the user.
+
+Is it a bug?
+
+
+Anthony
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180223/57d35bc4/attachment.html>
+
+From anthonynlee at gmail.com  Fri Feb 23 20:53:03 2018
+From: anthonynlee at gmail.com (Anthony Lee)
+Date: Fri, 23 Feb 2018 20:53:03 -0500
+Subject: [Project Clearwater] Is it a bug that Clearwater invalidate the
+ ODI once it receives 200OK response?
+In-Reply-To: <CA+pBo5GYDWB6riVQhiB9fLH82jfbgnXiBYr5v6vq2qi94xsvtw@mail.gmail.com>
+References: <CA+pBo5GYDWB6riVQhiB9fLH82jfbgnXiBYr5v6vq2qi94xsvtw@mail.gmail.com>
+Message-ID: <CA+pBo5F3CT=DCu45DVCFgFG0BuoYFgG0aO5So2Mtw8OeAHAXgg@mail.gmail.com>
+
+>From TS 124.229 V12.6.0, the spec doesn't say anything about the 200OK
+response from the request.
+It only talks about the subsequent request should be co-related with the
+previous request by using ODI in route header.
+To me it looks like a bug.
+
+On Fri, Feb 23, 2018 at 2:21 PM, Anthony Lee <anthonynlee at gmail.com> wrote:
+
+> In my case, there is a application service in terminating side doing
+> message Store-And-Forward.
+> So when the service receives an Invite it replies 200OK response
+> immiediately and then it create a new Invite  to the user.
+>
+> Since scscf invalidated the AS chain when it receives 200OK response the
+> Invite request is matched with iFC again from the beginning instead just
+> match with the rest iFCs. So it fail to send to the user.
+>
+> Is it a bug?
+>
+>
+> Anthony
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180223/5e53b3cd/attachment.html>
+
+From pushpendra16mnnit at gmail.com  Mon Feb 26 09:57:48 2018
+From: pushpendra16mnnit at gmail.com (Pushpendra)
+Date: Mon, 26 Feb 2018 20:27:48 +0530
+Subject: [Project Clearwater] Problems in Manual installation
+Message-ID: <CAPqjCcEzsDOMVhDRYDLkhmmUQPi0MeA2=ftDk8JcCyRVpg=wxw@mail.gmail.com>
+
+Hi,
+i am installing the clearwater usingg manual installation. I have created
+the 6 VMs on virtualbox (using bridge adapter in network setting, used the
+same IP as public_ip and local_ip in local.conf) as I follow
+http://clearwater.readthedocs.io/en/stable/Manual_Install.html. while
+installing I have faced some problems, it will be your great help if u
+guide some solutions for them:
+1. while installing ellis it give some error like-
+dpkg: error processing package ellis (--configure):
+ subprocess installed post-installation script returned error exit status 8
+Errors were encountered while processing:
+ ellis
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+
+2. In homer installation it give like(same in sprout and vellum)
+dnsmasq:failed to create listen socket for 127.0.0.1 : address already in
+use      *fail*
+
+homer.sh:   not found
+
+3. I have uploaded the shared.conf (i used example.com, i have not created
+anything for it , i just use it please guide how to use <zone>)file from
+bono as follow:
+
+[bono]bono at bono:~/clearwater-config-manager/bono$ cw-config upload
+shared_config
+Config successfully validated
+Configuration file change: user bono has modified shared_config.
+ Lines added:
+# Deployment definitions
+home_domain=example.com
+sprout_hostname=sprout.example.com
+sprout_registration_store=vellum.example.com
+hs_hostname=hs.example.com:8888
+hs_provisioning_hostname=hs.example.com:8889
+homestead_impu_store=vellum.example.com
+ralf_hostname=ralf.example.com:10888
+ralf_session_store=vellum.example.com
+xdms_hostname=homer.example.com:7888
+chronos_hostname=vellum.example.com
+cassandra_hostname=vellum.example.com
+# Email server configuration
+smtp_smarthost=<smtp server>
+smtp_username=<username>
+smtp_password=<password>
+email_recovery_sender=clearwater at example.org
+# Keys
+signup_key="secret"
+turn_workaround="secret"
+ellis_api_key="secret"
+ellis_cookie_key="secret"
+
+Please check the config changes and confirm that you wish to continue with
+the config upload.
+Do you want to continue?  [yes/no] yes
+/etc/clearwater/shared_config: line 19: syntax error near unexpected token
+`newline'
+/etc/clearwater/shared_config: line 19: `smtp_smarthost=<smtp server>'
+/etc/clearwater/shared_config: line 19: syntax error near unexpected token
+`newline'
+shared_config successfully uploaded
+
+4. After that I tried to connect to ellis using http://ellis.example.com
+but it is not connecting.
+
+Please through some light on this, it will be your great help.
+
+
+Thanks and Regards
+Pushpendra Kumar
+MNNIT Allahabad
+Mob: 8574870095
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180226/a1fc936c/attachment.html>
+
+From pushpendra16mnnit at gmail.com  Tue Feb 27 04:39:49 2018
+From: pushpendra16mnnit at gmail.com (Pushpendra)
+Date: Tue, 27 Feb 2018 15:09:49 +0530
+Subject: [Project Clearwater] problem in Manual installation
+Message-ID: <CAPqjCcFMvndqpCtkd3nJtrud4jwzO74ZYDZKAE4NC2LBX9pdjQ@mail.gmail.com>
+
+Hi,
+As I send earlier message in addition that one more error I faced, when I
+try to connect to ellis using the IP it showing the 502 Bad Gateway
+nginx/1.4.6
+(Ubuntu). As I faced some problem in installing the ellis (detailed in
+previous mail), I have not resolved that and continued to next step, may be
+due to that error i faced this. Is there way to fix this problem.
+
+Thanks
+Pushpendra
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180227/5be509de/attachment.html>
+
+From Muhammad.Shaikh at huawei.com  Tue Feb 27 20:02:34 2018
+From: Muhammad.Shaikh at huawei.com (Muhammad Shaikh (Salman))
+Date: Wed, 28 Feb 2018 01:02:34 +0000
+Subject: [Project Clearwater]  Live Test Failures.
+Message-ID: <BE94A67F9CCBC0409944CFAEE0FE797F1303D1FB@sjceml521-mbs.china.huawei.com>
+
+
+I am trying to test Clearwater deployment using ?clearwater live test?, but I am getting following errors, all the tests are failing.
+
+Basic Call ? Mainline (TCP) - ? Failed?.
+            RuntimeError thrown:
+
+-          Account creation failed with HTTP code 503, body {?status?: 503, ?message?: ?Service Unavailable?, ?reason?: ?No available numbers?, ?details?: {}, ?error?: true}
+
+I also check my ellis log and see following error message:
+WARNING: _base.py:138: 503 POST /accounts/live.tests at example.com/numbers/<mailto:/accounts/live.tests at example.com/numbers/> (0.0.0.0): No available numbers
+
+
+Please let me know if there is any configuration or change is needed?
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180228/128e9a46/attachment.html>
+
+From Muhammad.Shaikh at huawei.com  Tue Feb 27 20:12:49 2018
+From: Muhammad.Shaikh at huawei.com (Muhammad Shaikh (Salman))
+Date: Wed, 28 Feb 2018 01:12:49 +0000
+Subject: [Project Clearwater] Live Test Failures.
+Message-ID: <BE94A67F9CCBC0409944CFAEE0FE797F1303D210@sjceml521-mbs.china.huawei.com>
+
+
+Never mind I got the answer. I have provisioned the numbers and now able to run the test without this error, but now I see other errors for which I will further investigate.
+
+
+From: Muhammad Shaikh (Salman)
+Sent: Tuesday, February 27, 2018 5:03 PM
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Live Test Failures.
+
+
+I am trying to test Clearwater deployment using ?clearwater live test?, but I am getting following errors, all the tests are failing.
+
+Basic Call ? Mainline (TCP) - ? Failed?.
+            RuntimeError thrown:
+
+-          Account creation failed with HTTP code 503, body {?status?: 503, ?message?: ?Service Unavailable?, ?reason?: ?No available numbers?, ?details?: {}, ?error?: true}
+
+I also check my ellis log and see following error message:
+WARNING: _base.py:138: 503 POST /accounts/live.tests at example.com/numbers/<mailto:/accounts/live.tests at example.com/numbers/> (0.0.0.0): No available numbers
+
+
+Please let me know if there is any configuration or change is needed?
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180228/77c88376/attachment.html>
+
+From Muhammad.Shaikh at huawei.com  Tue Feb 27 20:45:13 2018
+From: Muhammad.Shaikh at huawei.com (Muhammad Shaikh (Salman))
+Date: Wed, 28 Feb 2018 01:45:13 +0000
+Subject: [Project Clearwater]  Live Test Errors
+Message-ID: <BE94A67F9CCBC0409944CFAEE0FE797F1303D246@sjceml521-mbs.china.huawei.com>
+
+
+I am running clearwater live test and see following errors, it looks like Basic call is failing, any idean why?
+
+
+Basic Call - Mainline (TCP) - (6505550002, 6505550005) ESC[37;41mFailedESC[37;0m
+Exception in quaff_cleanup_blk:
+- Expected 401|200, got 480 (call ID 6010ee4ef4aad7c14b1d7ee4a430f5d9)
+ESC[37;41mFailedESC[37;0m
+  RuntimeError thrown:
+   - Expected 401|200, got 480 (call ID 6010ee4ef4aad7c14b1d7ee4a430f5d9)
+     - /home/muhammad_shaikh/clearwater-live-test/quaff/lib/call.rb:223:in `recv_response'
+     - /home/muhammad_shaikh/clearwater-live-test/quaff/lib/endpoint.rb:175:in `register'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/tests/basic-call.rb:25:in `block (2 levels) in <top (required)>'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:258:in `run'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:126:in `block (2 levels) in run_all'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:112:in `collect'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:112:in `block in run_all'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:111:in `each'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:111:in `run_all'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/live-test.rb:23:in `run_tests'
+     - /home/muhammad_shaikh/clearwater-live-test/Rakefile:18:in `block in <top (required)>'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:240:in `block in execute'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:235:in `each'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:235:in `execute'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:179:in `block in invoke_with_call_chain'
+     - /usr/lib/ruby/2.3.0/monitor.rb:214:in `mon_synchronize'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:172:in `invoke_with_call_chain'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:165:in `invoke'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:150:in `invoke_task'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:106:in `block (2 levels) in top_level'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:106:in `each'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:106:in `block in top_level'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:115:in `run_with_threads'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:100:in `top_level'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:78:in `block in run'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:176:in `standard_exception_handling'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:75:in `run'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/bin/rake:33:in `<top (required)>'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/bin/rake:23:in `load'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/bin/rake:23:in `<main>'
+Basic Call - SDP (TCP) - (6505550005, 6505550007) ESC[37;41mFailedESC[37;0m
+Exception in quaff_cleanup_blk:
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180228/6eb13e38/attachment.html>
+
+From Muhammad.Shaikh at huawei.com  Wed Feb 28 00:41:33 2018
+From: Muhammad.Shaikh at huawei.com (Muhammad Shaikh (Salman))
+Date: Wed, 28 Feb 2018 05:41:33 +0000
+Subject: [Project Clearwater]  Live Test Errors
+Message-ID: <BE94A67F9CCBC0409944CFAEE0FE797F1303D2FE@sjceml521-mbs.china.huawei.com>
+
+
+I further looked into the homestead and see following errors reported in homestead_current.txt, any idea what is missing in this case? I don?t have hss deployed, why does hss is being called by dnscachedresolver?
+
+28-02-2018 05:28:19.832 UTC [7efd8a7f4700] Warning dnscachedresolver.cpp:836: Failed to retrieve record for hss.example.com: Domain name not found
+28-02-2018 05:28:19.832 UTC [7efd8a7f4700] Error diameterstack.cpp:853: No Diameter peers have been found
+28-02-2018 05:28:47.203 UTC [7efe78c04700] Status alarm.cpp:244: Reraising all alarms with a known state
+28-02-2018 05:28:47.203 UTC [7efe78c04700] Status alarm.cpp:37: homestead issued 1502.3 alarm
+28-02-2018 05:29:17.203 UTC [7efe78c04700] Status alarm.cpp:244: Reraising all alarms with a known state
+28-02-2018 05:29:17.203 UTC [7efe78c04700] Status alarm.cpp:37: homestead issued 1502.3 alarm
+28-02-2018 05:29:47.203 UTC [7efe78c04700] Status alarm.cpp:244: Reraising all alarms with a known state
+28-02-2018 05:29:47.203 UTC [7efe78c04700] Status alarm.cpp:37: homestead issued 1502.3 alarm
+28-02-2018 05:30:17.203 UTC [7efe78c04700] Status alarm.cpp:244: Reraising all alarms with a known state
+28-02-2018 05:30:17.203 UTC [7efe78c04700] Status alarm.cpp:37: homestead issued 1502.3 alarm
+28-02-2018 05:30:36.754 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:36.755 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:36.812 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:36.813 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:37.628 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:37.629 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:37.656 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:37.657 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:38.325 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:38.326 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:38.379 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:38.379 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:38.981 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:38.982 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:39.027 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:39.028 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:39.803 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:39.803 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:39.850 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:39.851 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:40.625 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:40.626 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:40.671 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:40.673 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:41.354 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:41.355 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:41.401 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:41.402 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:42.076 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:42.077 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:43.077 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:43.078 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:43.593 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:43.593 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:44.593 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:44.594 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.166 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.167 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.209 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.210 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.882 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.883 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.920 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.921 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:47.035 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:47.036 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:47.110 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+:
+
+
+From: Muhammad Shaikh (Salman)
+Sent: Tuesday, February 27, 2018 5:45 PM
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Live Test Errors
+
+
+I am running clearwater live test and see following errors, it looks like Basic call is failing, any idean why?
+
+
+Basic Call - Mainline (TCP) - (6505550002, 6505550005) ESC[37;41mFailedESC[37;0m
+Exception in quaff_cleanup_blk:
+- Expected 401|200, got 480 (call ID 6010ee4ef4aad7c14b1d7ee4a430f5d9)
+ESC[37;41mFailedESC[37;0m
+  RuntimeError thrown:
+   - Expected 401|200, got 480 (call ID 6010ee4ef4aad7c14b1d7ee4a430f5d9)
+     - /home/muhammad_shaikh/clearwater-live-test/quaff/lib/call.rb:223:in `recv_response'
+     - /home/muhammad_shaikh/clearwater-live-test/quaff/lib/endpoint.rb:175:in `register'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/tests/basic-call.rb:25:in `block (2 levels) in <top (required)>'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:258:in `run'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:126:in `block (2 levels) in run_all'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:112:in `collect'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:112:in `block in run_all'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:111:in `each'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:111:in `run_all'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/live-test.rb:23:in `run_tests'
+     - /home/muhammad_shaikh/clearwater-live-test/Rakefile:18:in `block in <top (required)>'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:240:in `block in execute'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:235:in `each'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:235:in `execute'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:179:in `block in invoke_with_call_chain'
+     - /usr/lib/ruby/2.3.0/monitor.rb:214:in `mon_synchronize'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:172:in `invoke_with_call_chain'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:165:in `invoke'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:150:in `invoke_task'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:106:in `block (2 levels) in top_level'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:106:in `each'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:106:in `block in top_level'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:115:in `run_with_threads'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:100:in `top_level'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:78:in `block in run'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:176:in `standard_exception_handling'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:75:in `run'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/bin/rake:33:in `<top (required)>'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/bin/rake:23:in `load'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/bin/rake:23:in `<main>'
+Basic Call - SDP (TCP) - (6505550005, 6505550007) ESC[37;41mFailedESC[37;0m
+Exception in quaff_cleanup_blk:
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180228/b10bb24b/attachment.html>
+
+From richard.whitehouse at projectclearwater.org  Wed Feb 28 17:19:12 2018
+From: richard.whitehouse at projectclearwater.org (Richard Whitehouse (projectclearwater.org))
+Date: Wed, 28 Feb 2018 22:19:12 +0000
+Subject: [Project Clearwater] Live Test Errors
+In-Reply-To: <BE94A67F9CCBC0409944CFAEE0FE797F1303D2FE@sjceml521-mbs.china.huawei.com>
+References: <BE94A67F9CCBC0409944CFAEE0FE797F1303D2FE@sjceml521-mbs.china.huawei.com>
+Message-ID: <BN6PR02MB33620FE885CCB3AFB539A573F0C70@BN6PR02MB3362.namprd02.prod.outlook.com>
+
+Muhammad,
+
+Homestead supports being configured in two different modes:
+
+
+-          With a HSS
+
+In this case, either hss_realm or hss_hostname, or both will be configured in /etc/clearwater/shared_config in order to configure the Diameter stack to communicate with the HSS.
+
+
+-          Without a HSS, using the built in Subscriber Store (known as Homestead Prov).
+
+In this case, hss_realm should not be configured and hss_hostname should not be configured, or should be configured to be 0.0.0.0.
+
+It looks like in your case, it?s configured it with a HSS of `hss.example.com`.
+
+You can check what?s currently configured by running `cat /etc/clearwater/config` on your node.
+
+You can see the options that homestead is currently running with by doing `ps aux | grep homestead`.
+
+On startup, Homestead will emit one of the following two logs to indicate which mode it?s running in:
+
+"HSS configured - using diameter connection"
+
+"No HSS configured - using Homestead-prov"
+
+
+Richard
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Muhammad Shaikh (Salman)
+Sent: 28 February 2018 05:42
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Live Test Errors
+
+
+I further looked into the homestead and see following errors reported in homestead_current.txt, any idea what is missing in this case? I don?t have hss deployed, why does hss is being called by dnscachedresolver?
+
+
+28-02-2018 05:28:19.832 UTC [7efd8a7f4700] Warning dnscachedresolver.cpp:836: Failed to retrieve record for hss.example.com: Domain name not found
+28-02-2018 05:28:19.832 UTC [7efd8a7f4700] Error diameterstack.cpp:853: No Diameter peers have been found
+28-02-2018 05:28:47.203 UTC [7efe78c04700] Status alarm.cpp:244: Reraising all alarms with a known state
+28-02-2018 05:28:47.203 UTC [7efe78c04700] Status alarm.cpp:37: homestead issued 1502.3 alarm
+28-02-2018 05:29:17.203 UTC [7efe78c04700] Status alarm.cpp:244: Reraising all alarms with a known state
+28-02-2018 05:29:17.203 UTC [7efe78c04700] Status alarm.cpp:37: homestead issued 1502.3 alarm
+28-02-2018 05:29:47.203 UTC [7efe78c04700] Status alarm.cpp:244: Reraising all alarms with a known state
+28-02-2018 05:29:47.203 UTC [7efe78c04700] Status alarm.cpp:37: homestead issued 1502.3 alarm
+28-02-2018 05:30:17.203 UTC [7efe78c04700] Status alarm.cpp:244: Reraising all alarms with a known state
+28-02-2018 05:30:17.203 UTC [7efe78c04700] Status alarm.cpp:37: homestead issued 1502.3 alarm
+28-02-2018 05:30:36.754 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:36.755 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:36.812 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:36.813 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:37.628 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:37.629 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:37.656 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:37.657 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:38.325 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:38.326 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:38.379 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:38.379 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:38.981 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:38.982 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:39.027 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:39.028 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:39.803 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:39.803 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:39.850 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:39.851 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:40.625 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:40.626 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:40.671 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:40.673 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:41.354 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:41.355 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:41.401 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:41.402 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:42.076 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:42.077 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:43.077 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:43.078 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:43.593 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:43.593 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:44.593 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:44.594 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.166 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.167 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.209 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.210 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.882 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.883 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.920 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.921 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:47.035 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:47.036 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:47.110 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+:
+
+
+From: Muhammad Shaikh (Salman)
+Sent: Tuesday, February 27, 2018 5:45 PM
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Live Test Errors
+
+
+I am running clearwater live test and see following errors, it looks like Basic call is failing, any idean why?
+
+
+Basic Call - Mainline (TCP) - (6505550002, 6505550005) ESC[37;41mFailedESC[37;0m
+Exception in quaff_cleanup_blk:
+- Expected 401|200, got 480 (call ID 6010ee4ef4aad7c14b1d7ee4a430f5d9)
+ESC[37;41mFailedESC[37;0m
+  RuntimeError thrown:
+   - Expected 401|200, got 480 (call ID 6010ee4ef4aad7c14b1d7ee4a430f5d9)
+     - /home/muhammad_shaikh/clearwater-live-test/quaff/lib/call.rb:223:in `recv_response'
+     - /home/muhammad_shaikh/clearwater-live-test/quaff/lib/endpoint.rb:175:in `register'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/tests/basic-call.rb:25:in `block (2 levels) in <top (required)>'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:258:in `run'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:126:in `block (2 levels) in run_all'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:112:in `collect'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:112:in `block in run_all'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:111:in `each'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:111:in `run_all'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/live-test.rb:23:in `run_tests'
+     - /home/muhammad_shaikh/clearwater-live-test/Rakefile:18:in `block in <top (required)>'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:240:in `block in execute'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:235:in `each'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:235:in `execute'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:179:in `block in invoke_with_call_chain'
+     - /usr/lib/ruby/2.3.0/monitor.rb:214:in `mon_synchronize'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:172:in `invoke_with_call_chain'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:165:in `invoke'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:150:in `invoke_task'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:106:in `block (2 levels) in top_level'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:106:in `each'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:106:in `block in top_level'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:115:in `run_with_threads'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:100:in `top_level'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:78:in `block in run'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:176:in `standard_exception_handling'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:75:in `run'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/bin/rake:33:in `<top (required)>'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/bin/rake:23:in `load'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/bin/rake:23:in `<main>'
+Basic Call - SDP (TCP) - (6505550005, 6505550007) ESC[37;41mFailedESC[37;0m
+Exception in quaff_cleanup_blk:
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180228/a124b37f/attachment.html>
+
+From richard.whitehouse at projectclearwater.org  Wed Feb 28 17:24:35 2018
+From: richard.whitehouse at projectclearwater.org (Richard Whitehouse (projectclearwater.org))
+Date: Wed, 28 Feb 2018 22:24:35 +0000
+Subject: [Project Clearwater] Is it a bug that Clearwater invalidate the
+ ODI once it receives 200OK response?
+In-Reply-To: <CA+pBo5F3CT=DCu45DVCFgFG0BuoYFgG0aO5So2Mtw8OeAHAXgg@mail.gmail.com>
+References: <CA+pBo5GYDWB6riVQhiB9fLH82jfbgnXiBYr5v6vq2qi94xsvtw@mail.gmail.com>
+	<CA+pBo5F3CT=DCu45DVCFgFG0BuoYFgG0aO5So2Mtw8OeAHAXgg@mail.gmail.com>
+Message-ID: <BN6PR02MB33628546C8BDA1C3FE63A1F6F0C70@BN6PR02MB3362.namprd02.prod.outlook.com>
+
+Anthony,
+
+Can you explain more about what your application server is doing, and why it?s responding on the ISC interface in this fashion?
+
+Can you point to anything in the TS specs which suggests that it?s supported for an AS to behave in this fashion?
+
+From Clearwater?s perspective, we need to invalidate the Original Dialog Identifier information at some point, and once we?ve received a 200 OK on the transaction, we don?t expect to hear anything more the Application Server as the 200 OK represents a final response for that SIP transaction.
+
+If the Application Server is allowed to send a SIP INVITE with a correlating ODI token to Clearwater at any point after we?ve sent it the request, we may need to keep that state around for an arbitrarily long period of time, which isn?t tenable.
+
+
+Richard
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Anthony Lee
+Sent: 24 February 2018 01:53
+To: clearwater at lists.projectclearwater.org
+Subject: Re: [Project Clearwater] Is it a bug that Clearwater invalidate the ODI once it receives 200OK response?
+
+From TS 124.229 V12.6.0, the spec doesn't say anything about the 200OK response from the request.
+It only talks about the subsequent request should be co-related with the previous request by using ODI in route header.
+To me it looks like a bug.
+
+On Fri, Feb 23, 2018 at 2:21 PM, Anthony Lee <anthonynlee at gmail.com<mailto:anthonynlee at gmail.com>> wrote:
+In my case, there is a application service in terminating side doing message Store-And-Forward.
+So when the service receives an Invite it replies 200OK response immiediately and then it create a new Invite  to the user.
+
+Since scscf invalidated the AS chain when it receives 200OK response the Invite request is matched with iFC again from the beginning instead just match with the rest iFCs. So it fail to send to the user.
+
+Is it a bug?
+
+
+Anthony
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180228/52817193/attachment.html>
+
+From Richard.Whitehouse at metaswitch.com  Wed Feb 28 17:50:39 2018
+From: Richard.Whitehouse at metaswitch.com (Richard Whitehouse)
+Date: Wed, 28 Feb 2018 22:50:39 +0000
+Subject: [Project Clearwater] Problems in manual installation of
+ clearwater
+In-Reply-To: <B89A1E0D519F0B44A3E67F67A33D3AE472D9CA@BGSMSX108.gar.corp.intel.com>
+References: <B89A1E0D519F0B44A3E67F67A33D3AE472D9CA@BGSMSX108.gar.corp.intel.com>
+Message-ID: <BN6PR02MB3362B779BC0E5BEC0D206659F0C70@BN6PR02MB3362.namprd02.prod.outlook.com>
+
+Pushpendra,
+
+usermod: user ellis is currently used by process 1343
+dpkg: error processing package ellis (--configure):
+subprocess installed post-installation script returned error exit status 8
+Processing triggers for libc-bin (2.19-0ubuntu6.9) ...
+Processing triggers for ureadahead (0.100.0-16) ...
+Errors were encountered while processing:
+ellis
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+
+It sounds like you attempted to install ellis on a node was installed on a node in which there already was an ellis user - is that correct?
+
+Ellis requires a user to run the components as for security so that we aren't running components as root which don't require root privileges, and this is required to be ellis.
+
+dnsmasq: failed to create listening socket for 127.0.0.1: Address already in use
+dnsmasq: failed to create listening socket for port 53: Address already in use
+
+
+$sudo DEBIAN_FRONTEND=noninteractive apt-get install clearwater-management --yes
+
+Errors were encountered while processing:
+ellis
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+
+>From these logs, and the similar  logs regarding bono, sprout and clearwater-management it looks like there's already a service running on the nodes which is bound to port 53 before you install Clearwater.
+
+We've only regularly tested performing the manual install on a clean Ubuntu box, and if I create a new Ubuntu VM (e.g. the basic Ubuntu 14.0.4 VM in Amazon EC2 - ami-a22323d8 ) I don't see anything already running on Port 53 before I install Clearwater.
+
+ubuntu at ip-10-0-162-214:~$ sudo netstat -pltun
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1133/sshd
+tcp6       0      0 :::22                   :::*                    LISTEN      1133/sshd
+udp        0      0 0.0.0.0:5254            0.0.0.0:*                           582/dhclient
+udp        0      0 0.0.0.0:68              0.0.0.0:*                           582/dhclient
+udp6       0      0 :::21727                :::*                                582/dhclient
+
+Can you clarify what image you are attempting to install ellis on where you are seeing these errors, and what's already installed on the box? Can you run the above netstat command?
+
+For the error:
+
+reload: Job is not running: clearwater-monit
+/usr/share/clearwater/infrastructure/scripts/memcached: line 43: /etc/memcached.conf: No such file or directory
+reload: Job is not running: clearwater-monit
+
+Can you provide the complete output of the vellum build log? It'd be useful to know in what context this error was output - had something in the build already failed? It sounds like it failed to install memcached on the vellum node.
+
+Regarding smtp_smarthost - this needs to be an SMTP server which can send mail so that Ellis can send password recovery emails. If it's not configured then password recovery emails won't work. See the entry in http://clearwater.readthedocs.io/en/stable/Clearwater_Configuration_Options_Reference.html#core-options for details about the SMTP options.
+
+Regarding home_domain, it's described in Clearwater Options reference - see http://clearwater.readthedocs.io/en/stable/Clearwater_Configuration_Options_Reference.html#core-options  - it needs to be a domain which will resolve to the P-CSCFs (e.g. the bono nodes in the deployment). It's usually also the root domain for all of the domains used.
+
+iind.intel.com might be a good choice if you can configure DNS entries under that domain - you'll need to configure the DNS entries listed in http://clearwater.readthedocs.io/en/stable/Clearwater_DNS_Usage.html in this domain
+
+You will need to complete the DNS configuration before Ellis will work - it needs a DNS entry to exist in order to communicate with the other nodes in the deployment.
+
+
+
+Richard
+
+From: Kumar, Pushpendra [mailto:pushpendra.kumar at intel.com]
+Sent: 28 February 2018 19:00
+To: Richard Whitehouse <Richard.Whitehouse at metaswitch.com>
+Subject: Problems in manual installation of clearwater
+
+Hi Richards,
+I need your help in Clearwater project manual installation, Its on high priority so please consider that.
+
+I am installing the clearwater usingg manual installation. I have created the 6 VMs on virtualbox (using bridge adapter in network setting, used the same IP as public_ip and local_ip in local.conf) as I follow http://clearwater.readthedocs.io/en/stable/Manual_Install.html. while installing I have faced some errors (mentioned below), it will be your great help if u guide some solutions for them:
+
+One more thing as I am using bridge adapter in network, I have not did any port forwarding as mention in document (I am able to ping vm from one to another i.e. they are are communicating)
+
+1.in installtion of ellis:
+
+$sudo DEBIAN_FRONTEND=noninteractive apt-get install ellis --yes
+
+usermod: user ellis is currently used by process 1343
+dpkg: error processing package ellis (--configure):
+subprocess installed post-installation script returned error exit status 8
+Processing triggers for libc-bin (2.19-0ubuntu6.9) ...
+Processing triggers for ureadahead (0.100.0-16) ...
+Errors were encountered while processing:
+ellis
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+
+Note: First time I install ellis I got this error, then I installed again in new node from scratch then also got the same error.
+
+
+dnsmasq: failed to create listening socket for 127.0.0.1: Address already in use
+dnsmasq: failed to create listening socket for port 53: Address already in use
+
+
+$sudo DEBIAN_FRONTEND=noninteractive apt-get install clearwater-management --yes
+
+Errors were encountered while processing:
+ellis
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+
+
+
+2.in installation of bono:
+
+$sudo DEBIAN_FRONTEND=noninteractive apt-get install bono restund --yes
+
+dnsmasq: failed to create listening socket for 127.0.0.1: Address already in use
+dnsmasq: failed to create listening socket for port 53: Address already in use
+
+
+
+3.in installation of sprout:
+
+$sudo DEBIAN_FRONTEND=noninteractive apt-get install sprout --yes
+
+dnsmasq: failed to create listening socket for port 53: Address already in use
+dnsmasq: failed to create listening socket for port 53: Address already in use
+dnsmasq: failed to create listening socket for 127.0.0.1: Address already in use
+dnsmasq: failed to create listening socket for 127.0.0.1: Address already in use
+
+$sudo DEBIAN_FRONTEND=noninteractive apt-get install clearwater-management --yes
+
+dnsmasq: failed to create listening socket for port 53: Address already in use
+dnsmasq: failed to create listening socket for 127.0.0.1: Address already in use
+
+
+
+4.in installtion of homer:
+
+$sudo DEBIAN_FRONTEND=noninteractive apt-get install homer --yes
+
+dnsmasq: failed to create listening socket for port 53: Address already in use
+                                                                                                                                                                                                                                      [fail]
+invoke-rc.d: initscript dnsmasq, action "start" failed.
+dnsmasq: failed to create listening socket for 127.0.0.1: Address already in use
+
+
+5.in installtion of dime:
+$sudo DEBIAN_FRONTEND=noninteractive apt-get install dime clearwater-prov-tools --yes
+
+
+dnsmasq: failed to create listening socket for port 53: Address already in use
+dnsmasq: failed to create listening socket for 127.0.0.1: Address already in use
+
+
+
+
+6.in installtion of vellum:
+
+* Starting DNS forwarder and DHCP server dnsmasq
+dnsmasq: failed to create listening socket for port 53: Address already in use
+
+* Restarting DNS forwarder and DHCP server dnsmasq
+dnsmasq: failed to create listening socket for 127.0.0.1: Address already in use
+
+                                                                                                                                                                                                                                      [fail]
+reload: Job is not running: clearwater-monit
+/usr/share/clearwater/infrastructure/scripts/memcached: line 43: /etc/memcached.conf: No such file or directory
+reload: Job is not running: clearwater-monit
+
+-->I ignore above errors and move on to next step i.e. editing shared_config file and uploading
+
+
+-->shared_config file:
+
+[bono]bono at Bono:/etc/clearwater$ cat shared_config
+#####################################################################
+# No Shared Config has been provided
+# Replace this file with the Shared Configuration for your deployment
+#####################################################################
+# Deployment definitions
+home_domain=iind.intel.com
+sprout_hostname=sprout.iind.intel.com
+sprout_registration_store=vellum.iind.intel.com
+hs_hostname=hs.iind.intel.com:8888
+hs_provisioning_hostname=hs.iind.intel.com:8889
+homestead_impu_store=vellum.iind.intel.com
+ralf_hostname=ralf.iind.intel.com:10888
+ralf_session_store=vellum.iind.intel.com
+xdms_hostname=homer.iind.intel.com:7888
+chronos_hostname=vellum.iind.intel.com
+cassandra_hostname=vellum.iin.intel.com
+
+# Email server configuration
+smtp_smarthost=
+smtp_username=username
+smtp_password=password
+email_recovery_sender=clearwater at example.org<mailto:email_recovery_sender=clearwater at example.org>
+
+# Keys
+signup_key=secret
+turn_workaround=secret
+ellis_api_key=secret
+ellis_cookie_key=secret
+
+
+?  What would I use in smtp_smarthost=   (is it localhost?)
+
+ques: Is home_domain =iind.intel.com is right? (when I ping using #ping ellis it automatically takes like ellis.iind.intel.com) , it basically the intel's domain.
+
+
+-->local_config : (IP ans hostname changed in every node)
+
+local_ip=10.224.61.25
+public_ip=10.224.61.25
+public_hostname=Ellis
+etcd_cluster="10.224.61.20,10.224.61.21,10.224.61.22,10.224.61.25,10.224.61.48,10.224.61.50"
+
+
+
+?  After that when I am trying to connect to ellis using http://ellis.iind.intel.com or http://10.224.61.25 it is giving like 502 Bad Gateway nginx /1.4.6 (Ubuntu). I have not did any DNS configuration yet (because I am using the intel domain or do I need to do it... in which node and how).
+
+?  I will love to hear your response
+
+
+Thanks
+Pushpendra
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180228/7c992cab/attachment.html>
+
+From Muhammad.Shaikh at huawei.com  Wed Feb 28 18:06:40 2018
+From: Muhammad.Shaikh at huawei.com (Muhammad Shaikh (Salman))
+Date: Wed, 28 Feb 2018 23:06:40 +0000
+Subject: [Project Clearwater] Live Test Errors
+In-Reply-To: <BN6PR02MB33620FE885CCB3AFB539A573F0C70@BN6PR02MB3362.namprd02.prod.outlook.com>
+References: <BE94A67F9CCBC0409944CFAEE0FE797F1303D2FE@sjceml521-mbs.china.huawei.com>
+	<BN6PR02MB33620FE885CCB3AFB539A573F0C70@BN6PR02MB3362.namprd02.prod.outlook.com>
+Message-ID: <5EA29EAF-86CB-4F18-B00C-6F25F9A9B0EF@huawei.com>
+
+
+Thanks for your response, I got it resolved now and removed the hss configurations and it is working now.
+
+Salman Shaikh
+
+
+From: "Richard Whitehouse (projectclearwater.org)" <richard.whitehouse at projectclearwater.org>
+Date: Wednesday, February 28, 2018 at 2:19 PM
+To: "clearwater at lists.projectclearwater.org" <clearwater at lists.projectclearwater.org>, Muhammad Shaikh 00396391 <Muhammad.Shaikh at huawei.com>
+Subject: RE: [Project Clearwater] Live Test Errors
+
+Muhammad,
+
+Homestead supports being configured in two different modes:
+
+
+-          With a HSS
+
+In this case, either hss_realm or hss_hostname, or both will be configured in /etc/clearwater/shared_config in order to configure the Diameter stack to communicate with the HSS.
+
+
+
+-          Without a HSS, using the built in Subscriber Store (known as Homestead Prov).
+
+In this case, hss_realm should not be configured and hss_hostname should not be configured, or should be configured to be 0.0.0.0.
+
+It looks like in your case, it?s configured it with a HSS of `hss.example.com`.
+
+You can check what?s currently configured by running `cat /etc/clearwater/config` on your node.
+
+You can see the options that homestead is currently running with by doing `ps aux | grep homestead`.
+
+On startup, Homestead will emit one of the following two logs to indicate which mode it?s running in:
+
+"HSS configured - using diameter connection"
+
+"No HSS configured - using Homestead-prov"
+
+
+Richard
+
+
+From: Clearwater [mailto:clearwater-bounces at lists.projectclearwater.org] On Behalf Of Muhammad Shaikh (Salman)
+Sent: 28 February 2018 05:42
+To: clearwater at lists.projectclearwater.org
+Subject: [Project Clearwater] Live Test Errors
+
+
+I further looked into the homestead and see following errors reported in homestead_current.txt, any idea what is missing in this case? I don?t have hss deployed, why does hss is being called by dnscachedresolver?
+
+
+28-02-2018 05:28:19.832 UTC [7efd8a7f4700] Warning dnscachedresolver.cpp:836: Failed to retrieve record for hss.example.com: Domain name not found
+28-02-2018 05:28:19.832 UTC [7efd8a7f4700] Error diameterstack.cpp:853: No Diameter peers have been found
+28-02-2018 05:28:47.203 UTC [7efe78c04700] Status alarm.cpp:244: Reraising all alarms with a known state
+28-02-2018 05:28:47.203 UTC [7efe78c04700] Status alarm.cpp:37: homestead issued 1502.3 alarm
+28-02-2018 05:29:17.203 UTC [7efe78c04700] Status alarm.cpp:244: Reraising all alarms with a known state
+28-02-2018 05:29:17.203 UTC [7efe78c04700] Status alarm.cpp:37: homestead issued 1502.3 alarm
+28-02-2018 05:29:47.203 UTC [7efe78c04700] Status alarm.cpp:244: Reraising all alarms with a known state
+28-02-2018 05:29:47.203 UTC [7efe78c04700] Status alarm.cpp:37: homestead issued 1502.3 alarm
+28-02-2018 05:30:17.203 UTC [7efe78c04700] Status alarm.cpp:244: Reraising all alarms with a known state
+28-02-2018 05:30:17.203 UTC [7efe78c04700] Status alarm.cpp:37: homestead issued 1502.3 alarm
+28-02-2018 05:30:36.754 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:36.755 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:36.812 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:36.813 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:37.628 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:37.629 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:37.656 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:37.657 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:38.325 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:38.326 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:38.379 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:38.379 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:38.981 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:38.982 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:39.027 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:39.028 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:39.803 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:39.803 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:39.850 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:39.851 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:40.625 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:40.626 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:40.671 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:40.673 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:41.354 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:41.355 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:41.401 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:41.402 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:42.076 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:42.077 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:43.077 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:43.078 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:43.593 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:43.593 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:44.593 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:44.594 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.166 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.167 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.209 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.210 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.882 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.883 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.920 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:45.921 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:47.035 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:47.036 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+28-02-2018 05:30:47.110 UTC [7efdd57fa700] Error diameterstack.cpp:268: Routing error: 'No remaining suitable candidate to route the message to' for message with Command-Code 300, Destination-Host hss.example.com and Destination-Realm example.com
+:
+
+
+From: Muhammad Shaikh (Salman)
+Sent: Tuesday, February 27, 2018 5:45 PM
+To: clearwater at lists.projectclearwater.org<mailto:clearwater at lists.projectclearwater.org>
+Subject: [Project Clearwater] Live Test Errors
+
+
+I am running clearwater live test and see following errors, it looks like Basic call is failing, any idean why?
+
+
+Basic Call - Mainline (TCP) - (6505550002, 6505550005) ESC[37;41mFailedESC[37;0m
+Exception in quaff_cleanup_blk:
+- Expected 401|200, got 480 (call ID 6010ee4ef4aad7c14b1d7ee4a430f5d9)
+ESC[37;41mFailedESC[37;0m
+  RuntimeError thrown:
+   - Expected 401|200, got 480 (call ID 6010ee4ef4aad7c14b1d7ee4a430f5d9)
+     - /home/muhammad_shaikh/clearwater-live-test/quaff/lib/call.rb:223:in `recv_response'
+     - /home/muhammad_shaikh/clearwater-live-test/quaff/lib/endpoint.rb:175:in `register'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/tests/basic-call.rb:25:in `block (2 levels) in <top (required)>'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:258:in `run'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:126:in `block (2 levels) in run_all'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:112:in `collect'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:112:in `block in run_all'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:111:in `each'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/test-definition.rb:111:in `run_all'
+     - /home/muhammad_shaikh/clearwater-live-test/lib/live-test.rb:23:in `run_tests'
+     - /home/muhammad_shaikh/clearwater-live-test/Rakefile:18:in `block in <top (required)>'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:240:in `block in execute'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:235:in `each'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:235:in `execute'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:179:in `block in invoke_with_call_chain'
+     - /usr/lib/ruby/2.3.0/monitor.rb:214:in `mon_synchronize'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:172:in `invoke_with_call_chain'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/task.rb:165:in `invoke'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:150:in `invoke_task'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:106:in `block (2 levels) in top_level'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:106:in `each'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:106:in `block in top_level'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:115:in `run_with_threads'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:100:in `top_level'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:78:in `block in run'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:176:in `standard_exception_handling'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/lib/rake/application.rb:75:in `run'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/gems/rake-10.4.2/bin/rake:33:in `<top (required)>'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/bin/rake:23:in `load'
+     - /home/muhammad_shaikh/.rvm/gems/ruby-1.9.3-p551/bin/rake:23:in `<main>'
+Basic Call - SDP (TCP) - (6505550005, 6505550007) ESC[37;41mFailedESC[37;0m
+Exception in quaff_cleanup_blk:
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.projectclearwater.org/pipermail/clearwater_lists.projectclearwater.org/attachments/20180228/d286b76f/attachment.html>
+
